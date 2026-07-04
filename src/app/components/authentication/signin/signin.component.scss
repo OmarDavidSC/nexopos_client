@@ -1,0 +1,211 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    background: #f1f5f9;
+}
+
+/* LEFT */
+.login-banner {
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg,
+            rgba(15, 23, 42, 0.95),
+            rgba(30, 41, 59, 0.92)),
+        url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.4),
+            transparent 35%);
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+    color: white;
+}
+
+.banner-logo {
+    width: 220px;
+    object-fit: contain;
+    margin-bottom: 40px;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, .3));
+}
+
+.banner-title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.banner-description {
+    font-size: 17px;
+    line-height: 1.7;
+    opacity: .9;
+    margin-bottom: 35px;
+}
+
+.banner-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    opacity: .95;
+}
+
+/* RIGHT */
+.login-form-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    border-radius: 28px;
+    padding: 45px;
+    box-shadow:
+        0 10px 40px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.mobile-logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.mobile-logo img {
+    width: 170px;
+    object-fit: contain;
+}
+
+.login-header {
+    margin-bottom: 30px;
+}
+
+.login-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: #64748b;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+/* FORM */
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.custom-field {
+    width: 100%;
+}
+
+.custom-field ::ng-deep .mat-mdc-text-field-wrapper {
+    border-radius: 16px !important;
+    background: #f8fafc;
+}
+
+.custom-field ::ng-deep .mat-mdc-form-field-flex {
+    align-items: center;
+}
+
+.custom-field mat-icon {
+    color: #64748b;
+}
+
+.login-options {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+}
+
+.forgot-password {
+    color: #2563eb;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.forgot-password:hover {
+    opacity: .8;
+}
+
+/* BUTTON */
+.login-button {
+    width: 100%;
+    height: 54px;
+    border-radius: 16px !important;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: none !important;
+}
+
+.login-button .mat-mdc-progress-spinner {
+    --mdc-circular-progress-active-indicator-color: white;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+
+    .login-container {
+        background:
+            linear-gradient(135deg,
+                #eff6ff 0%,
+                #f8fafc 100%);
+    }
+
+    .login-form-section {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 35px 24px;
+        border-radius: 24px;
+    }
+
+    .login-header h2 {
+        font-size: 28px;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    .login-card {
+        padding: 28px 20px;
+    }
+
+    .login-header h2 {
+        font-size: 24px;
+    }
+
+    .mobile-logo img {
+        width: 140px;
+    }
+
+}

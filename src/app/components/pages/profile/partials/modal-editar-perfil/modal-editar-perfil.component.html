@@ -1,0 +1,84 @@
+<h2 mat-dialog-title class="dialog-title">
+    <div class="d-flex align-items-center gap-2">
+        <mat-icon color="primary">account_circle</mat-icon>
+        <span>{{ TituloPopup }}</span>
+    </div>
+</h2>
+
+<mat-dialog-content class="px-2 px-md-3 pb-2">
+    <form [formGroup]="Form">
+        <!-- FOTO -->
+        <div class="perfil-header mb-4">
+
+            <div class="foto-wrapper">
+                <img [src]="FotoPreview" class="foto-perfil" (click)="seleccionarFoto()" />
+                <button mat-mini-fab color="primary" type="button" class="btn-camera" (click)="seleccionarFoto()">
+                    <mat-icon>photo_camera</mat-icon>
+                </button>
+            </div>
+            <input #inputFoto type="file" hidden accept="image/*" (change)="onFotoSeleccionada($event)" />
+            <div class="text-center mt-3">
+                <h5 class="fw-bold mb-1">
+                    {{ Form.get('name')?.value }} {{ Form.get('paternal_surname')?.value }}
+                </h5>
+                <div class="text-muted small">
+                    Personaliza tu información de perfil
+                </div>
+            </div>
+            <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
+                <button mat-stroked-button color="primary" type="button" (click)="seleccionarFoto()">
+                    <mat-icon>upload</mat-icon>
+                    Cambiar foto
+                </button>
+                <button mat-stroked-button color="warn" type="button" (click)="eliminarFoto()">
+                    <mat-icon>delete</mat-icon>
+                    Eliminar
+                </button>
+            </div>
+        </div>
+        <!-- FORM -->
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Apellido paterno</mat-label>
+                    <input matInput formControlName="paternal_surname">
+                    <mat-icon matSuffix>badge</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Apellido materno</mat-label>
+                    <input matInput formControlName="maternal_surname">
+                    <mat-icon matSuffix>badge</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput formControlName="username">
+                    <mat-icon matSuffix>alternate_email</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+
+<mat-dialog-actions class="px-3 py-3">
+    <div class="w-100 d-flex flex-column flex-md-row justify-content-end gap-2">
+        <button mat-stroked-button mat-dialog-close>
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" [disabled]="isLoading" (click)="eventoGuardar()">
+            <mat-icon>save</mat-icon>
+            {{ TituloButton }}
+        </button>
+    </div>
+</mat-dialog-actions>

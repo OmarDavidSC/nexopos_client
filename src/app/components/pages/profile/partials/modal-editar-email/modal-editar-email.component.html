@@ -1,0 +1,80 @@
+<h2 mat-dialog-title class="border-bottom pb-3">
+    <div class="d-flex align-items-center gap-2">
+        <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
+            style="width: 42px; height: 42px;">
+            <mat-icon color="primary">alternate_email</mat-icon>
+        </div>
+        <div>
+            <div class="fw-bold fs-5">{{ TituloPopup }}</div>
+            <small class="text-muted">Actualiza tu correo de acceso al sistema</small>
+        </div>
+    </div>
+</h2>
+
+<mat-dialog-content class="py-4">
+    <form [formGroup]="Form">
+        <div class="row g-3">
+
+            <div class="col-12">
+                <div class="bg-light border rounded-3 p-3 d-flex align-items-start gap-3">
+                    <mat-icon color="primary">info</mat-icon>
+                    <div>
+                        <div class="fw-semibold">Correo actual</div>
+                        <div class="text-muted small">{{ data?.Email }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Nuevo correo electrónico</mat-label>
+                    <input matInput type="email" formControlName="new_email" placeholder="correo@empresa.com">
+                    <mat-icon matSuffix>mail</mat-icon>
+                    <mat-error *ngIf="Form.get('new_email')?.invalid">
+                        Ingresa un correo válido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Contraseña actual</mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="Ingresa tu contraseña">
+                    <mat-icon matSuffix>lock</mat-icon>
+                    <mat-error *ngIf="Form.get('password')?.invalid">
+                        La contraseña es obligatoria
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12">
+                <div class="border rounded-3 p-3 bg-warning bg-opacity-10">
+                    <div class="d-flex align-items-start gap-2">
+                        <mat-icon color="warn">security</mat-icon>
+                        <div>
+                            <div class="fw-semibold text-dark">Validación de seguridad</div>
+                            <small class="text-muted">
+                                Por seguridad, deberás ingresar tu contraseña actual para confirmar el cambio de correo.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="border-top pt-3 px-4 pb-3">
+    <button mat-stroked-button mat-dialog-close [disabled]="isLoading">
+        Cancelar
+    </button>
+
+    <button mat-raised-button color="primary" (click)="eventoGuardar()" [disabled]="isLoading">
+        <div class="d-flex align-items-center gap-2">
+            <mat-spinner *ngIf="isLoading" diameter="18"></mat-spinner>
+            <mat-icon *ngIf="!isLoading">save</mat-icon>
+            <span>{{ isLoading ? 'Actualizando...' : TituloButton }}</span>
+        </div>
+    </button>
+</mat-dialog-actions>

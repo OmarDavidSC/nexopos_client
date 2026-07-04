@@ -1,0 +1,123 @@
+<div class="container py-4" *ngIf="CompaniaActual">
+
+    <div class="card shadow border-0">
+
+        <!-- HEADER -->
+        <div class="card-body text-center border-bottom">
+
+            <img [src]="CompaniaActual.LogoUrl || 'https://via.placeholder.com/150'" class="img-fluid rounded mb-3"
+                style="max-height: 120px;">
+
+            <h4 class="fw-bold mb-1">
+                {{ CompaniaActual.Nombre || 'Nombre de la empresa' }}
+            </h4>
+
+            <span class="badge" [ngClass]="CompaniaActual.Estado ? 'bg-success' : 'bg-secondary'">
+                {{ CompaniaActual.Estado ? 'Activa' : 'Inactiva' }}
+            </span>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <!-- NOMBRE -->
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput [(ngModel)]="CompaniaActual.Nombre" [disabled]="!Editando">
+                    </mat-form-field>
+                </div>
+
+                <!-- ESTADO -->
+                <div class="col-12 col-md-6 d-flex align-items-center">
+                    <mat-slide-toggle [(ngModel)]="CompaniaActual.Estado" [disabled]="!Editando">
+                        Activa
+                    </mat-slide-toggle>
+                </div>
+
+                <!-- LOGO -->
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Logo URL</mat-label>
+                        <input matInput [(ngModel)]="CompaniaActual.LogoUrl" [disabled]="!Editando">
+                    </mat-form-field>
+                </div>
+
+                <!-- ICONO -->
+                <div class="col-12 col-md-6">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Icono URL</mat-label>
+                        <input matInput [(ngModel)]="CompaniaActual.IconoUrl" [disabled]="!Editando">
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <!-- EDITOR TERMINOS -->
+            <div class="mt-4">
+
+                <h6 class="fw-bold">Términos y Condiciones</h6>
+
+                <!-- SOLO VISTA -->
+                <div *ngIf="!Editando" class="border rounded p-3" style="max-height: 200px; overflow:auto;"
+                    [innerHTML]="CompaniaActual.TCondiciones">
+                </div>
+
+                <!-- EDITOR -->
+                <mat-form-field *ngIf="Editando" [(ngModel)]="CompaniaActual.TCondiciones" [style]="{height: '200px'}">
+                </mat-form-field>
+
+            </div>
+
+            <!-- EDITOR POLITICAS -->
+            <div class="mt-4">
+
+                <h6 class="fw-bold">Políticas de Privacidad</h6>
+
+                <div *ngIf="!Editando" class="border rounded p-3" style="max-height: 200px; overflow:auto;"
+                    [innerHTML]="CompaniaActual.PPolitica">
+                </div>
+
+                <mat-form-field *ngIf="Editando" [(ngModel)]="CompaniaActual.PPolitica" [style]="{height: '200px'}">
+                </mat-form-field>
+
+            </div>
+
+            <!-- ACCIONES -->
+            <div class="mt-4 d-flex flex-wrap gap-2 justify-content-center">
+
+                <button *ngIf="!Editando" mat-raised-button color="primary" (click)="activarEdicion()">
+                    Editar
+                </button>
+
+                <ng-container *ngIf="Editando">
+
+                    <button mat-raised-button color="primary" (click)="guardarCambios()">
+                        Guardar
+                    </button>
+
+                    <button mat-stroked-button color="warn" (click)="cancelarEdicion()">
+                        Cancelar
+                    </button>
+
+                </ng-container>
+
+                <!-- POPUPS -->
+                <button mat-button color="accent" (click)="abrirTerminos()">
+                    Términos
+                </button>
+
+                <button mat-button color="accent" (click)="abrirPoliticas()">
+                    Políticas
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

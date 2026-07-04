@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="fw-bold">
+    {{ data.titulo }}
+</h2>
+
+<mat-dialog-content class="p-3">
+
+    <div class="border rounded p-3" style="max-height: 400px; overflow-y: auto;" [innerHTML]="data.contenido">
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="primary">
+        Cerrar
+    </button>
+</mat-dialog-actions>

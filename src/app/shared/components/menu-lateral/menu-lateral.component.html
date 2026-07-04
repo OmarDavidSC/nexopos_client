@@ -1,0 +1,105 @@
+<mat-sidenav-container class="layout-container">
+    <!-- SIDEBAR -->
+    <mat-sidenav #drawer mode="over" [opened]="false" [autoFocus]="false" class="sidebar">
+        <!-- HEADER EMPRESA -->
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img [src]="CompaniaActual?.LogoUrl || '../../../assets/img/logoe.png'" alt="Logo Empresa"
+                    class="company-logo">
+            </div>
+            <!-- <div class="company-info">
+                <h6 class="company-name mb-0">
+                    {{ CompaniaActual?.Nombre }}
+                </h6>
+                <small class="company-role">
+                    {{ RolActual?.Nombre }}
+                </small>
+            </div> -->
+        </div>
+        <!-- MENU -->
+        <div class="menu-content">
+            <!-- ITEM PRINCIPAL -->
+            <mat-nav-list class="px-2">
+                <a mat-list-item class="menu-item active-item" (click)="navigateTo(menuItems[0].route)">
+                    <mat-icon>{{ menuItems[0].icon }}</mat-icon>
+                    <span>{{ menuItems[0].label }} </span>
+                </a>
+            </mat-nav-list>
+            <!-- ITEMS CON SUBMENU -->
+            <mat-accordion displayMode="flat" class="menu-accordion">
+                <mat-expansion-panel *ngFor="let item of menuItems.slice(1)" class="menu-panel" hideToggle>
+                    <mat-expansion-panel-header class="menu-header">
+                        <mat-panel-title class="d-flex align-items-center">
+                            <mat-icon class="menu-icon"> {{ item.icon }} </mat-icon>
+                            <span class="menu-title"> {{ item.label }} </span>
+                        </mat-panel-title>
+                        <mat-icon class="expand-icon"> expand_more </mat-icon>
+                    </mat-expansion-panel-header>
+                    <ng-container *ngIf="item.children; else noChildren">
+                        <mat-nav-list class="submenu-list">
+                            <a mat-list-item *ngFor="let child of item.children" class="submenu-item"
+                                (click)="navigateTo(child.route)">
+                                <mat-icon>{{ child.icon }} </mat-icon>
+                                <span>{{ child.label }} </span>
+                            </a>
+                        </mat-nav-list>
+                    </ng-container>
+                    <ng-template #noChildren>
+                        <mat-nav-list class="submenu-list">
+                            <a mat-list-item class="submenu-item" (click)="navigateTo(item.route)">
+                                <mat-icon> {{ item.icon }} </mat-icon>
+                                <span> {{ item.label }} </span>
+                            </a>
+                        </mat-nav-list>
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <!-- FOOTER -->
+        <div class="sidebar-footer">
+            <div class="user-box">
+                <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'" alt="Usuario" class="user-avatar">
+                <div class="user-info">
+                    <div class="user-name">
+                        {{ UsuarioActual?.NombreCompleto }}
+                    </div>
+                    <small class="user-role">
+                        {{ RolActual?.Nombre }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </mat-sidenav>
+    <!-- CONTENT -->
+    <mat-sidenav-content>
+        <!-- TOPBAR -->
+        <mat-toolbar color="primary" class="topbar">
+            <div class="d-flex align-items-center gap-2">
+                <button mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="toolbar-title"> {{ CompaniaActual?.Nombre }} </span>
+            </div>
+            <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
+                <span class="d-none d-lg-inline">
+                    ¡Hola! {{ UsuarioActual?.NombreCompleto }}
+                </span>
+                <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'" alt="Usuario" class="toolbar-avatar">
+            </button>
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="irAPerfil()">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>Mi Perfil</span>
+                </button>
+                <button mat-menu-item (click)="OnClickLogout()">
+                    <mat-icon>power_settings_new</mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
+        </mat-toolbar>
+        <!-- BODY -->
+        <div class="content-wrapper">
+            <ng-content select="[Body]"></ng-content>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
