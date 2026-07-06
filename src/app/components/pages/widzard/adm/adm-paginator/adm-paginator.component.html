@@ -1,0 +1,21 @@
+<div class="paginador-container">
+    <!-- ANTERIOR -->
+    <button mat-stroked-button class="btn-page" (click)="cambiarPagina(PaginaActual - 1)"
+        [disabled]="PaginaActual === 1">
+        <mat-icon>chevron_left</mat-icon>
+        Anterior
+    </button>
+    <!-- INFO -->
+    <div class="page-info">
+        <span>Página</span>
+        <strong>{{PaginaActual}}</strong>
+        <span> de</span>
+        <strong>{{TotalPaginas}}</strong>
+    </div>
+    <!-- SIGUIENTE -->
+    <button mat-stroked-button class="btn-page" (click)="cambiarPagina(PaginaActual + 1)"
+        [disabled]="PaginaActual === TotalPaginas">
+        Siguiente
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+</div>

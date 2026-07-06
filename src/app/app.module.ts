@@ -30,6 +30,16 @@ import { ModalEditarPasswordComponent } from './components/pages/profile/partial
 import { ModalEditarEmailComponent } from './components/pages/profile/partials/modal-editar-email/modal-editar-email.component';
 import { PanelCompanyComponent } from './components/pages/company/panel-company/panel-company.component';
 import { ModalHtmlViewerComponent } from './components/pages/company/partials/modal-html-viewer/modal-html-viewer.component';
+import { AdmCategoriasComponent } from './components/pages/almacen/adm-categorias/adm-categorias.component';
+import { AdmMarcasComponent } from './components/pages/almacen/adm-marcas/adm-marcas.component';
+import { AdmUnidadesComponent } from './components/pages/almacen/adm-unidades/adm-unidades.component';
+import { AdmProductosComponent } from './components/pages/almacen/adm-productos/adm-productos.component';
+import { ModalCategoriaComponent } from './components/pages/almacen/modals/modal-categoria/modal-categoria.component';
+import { ModalProductoComponent } from './components/pages/almacen/modals/modal-producto/modal-producto.component';
+import { ModalMarcaComponent } from './components/pages/almacen/modals/modal-marca/modal-marca.component';
+import { ModalUnidadComponent } from './components/pages/almacen/modals/modal-unidad/modal-unidad.component';
+import { AdmHeaderComponent } from './components/pages/widzard/adm/adm-header/adm-header.component';
+import { AdmPaginatorComponent } from './components/pages/widzard/adm/adm-paginator/adm-paginator.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +60,16 @@ import { ModalHtmlViewerComponent } from './components/pages/company/partials/mo
     ModalEditarEmailComponent,
     PanelCompanyComponent,
     ModalHtmlViewerComponent,
+    AdmCategoriasComponent,
+    AdmMarcasComponent,
+    AdmUnidadesComponent,
+    AdmProductosComponent,
+    ModalCategoriaComponent,
+    ModalProductoComponent,
+    ModalMarcaComponent,
+    ModalUnidadComponent,
+    AdmHeaderComponent,
+    AdmPaginatorComponent,
   ],
   imports: [
     ComunModule,

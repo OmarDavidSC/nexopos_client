@@ -3,16 +3,18 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog } from "@angular/material/dialog";
 import { IDialogData, ModalDialog } from "../components/modal/modal.component";
 import { ModalType } from "src/app/utils/Enumeradores";
+import { ERol } from "../models/entidades/ERol";
+import { ToastrService } from "ngx-toastr";
 
 
 export class FormularioBase {
   nombrePagina: string;
   submitted: boolean
- 
+
   constructor(nombrePagina: string, public dialog: MatDialog, public route: ActivatedRoute, public router: Router, public spinner: NgxSpinnerService) {
     this.nombrePagina = nombrePagina;
     this.submitted = false;
-  }  
+  }
 
   mostrarProgreso() {
     this.spinner.show();
@@ -30,8 +32,8 @@ export class FormularioBase {
     }
 
     return valor;
-  } 
-  
+  }
+
   mostrarModalError(mensaje: string, error: any, callback?: any): void {
     this.ocultarProgreso();
 
@@ -78,7 +80,7 @@ export class FormularioBase {
     });
   }
 
-  mostrarModalSuccess(titulo: string, mensaje: string, callback: any, textoBotonSi : string): void {
+  mostrarModalSuccess(titulo: string, mensaje: string, callback: any, textoBotonSi: string): void {
     this.ocultarProgreso();
 
     const dialogData = <IDialogData>{};
@@ -114,7 +116,7 @@ export class FormularioBase {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
   mostrarModalConfirmacion(mensaje: string, callback: any, textoBotonSi: string, textoBotonNo: string): void {
@@ -138,9 +140,9 @@ export class FormularioBase {
         callback(result);
       }
     });
-  }  
+  }
 
-  mostrarModalInformativoConAccion(titulo: string, mensaje: string, callback: any, textoBotonSi : string): void {
+  mostrarModalInformativoConAccion(titulo: string, mensaje: string, callback: any, textoBotonSi: string): void {
     this.ocultarProgreso();
 
     const dialogData = <IDialogData>{};
@@ -160,6 +162,50 @@ export class FormularioBase {
         callback(result);
       }
     });
+  }
+
+  validarPermisos(
+    role: ERol | null,
+    permisosPermitidos: string[],
+    router: Router,
+    toastService: ToastrService
+  ): boolean {
+    if (!role) {
+      toastService.warning(
+        'No tienes permisos para acceder a esta página.',
+        'Acceso denegado'
+      );
+      setTimeout(() => {
+        router.navigate(['/inicio']);
+      }, 1000);
+      return false;
+    }
+    const tieneAcceso = role.Permisos?.some(
+      x => permisosPermitidos.includes(x.Key)
+    );
+    if (!tieneAcceso) {
+      toastService.warning(
+        'No tienes permisos para acceder a esta página.',
+        'Acceso denegado'
+      );
+      setTimeout(() => {
+        router.navigate(['']);
+      }, 1000);
+      return false;
+    }
+    return true;
+  }
+
+  tienePermiso(
+    role: ERol | null,
+    permisos: string[]
+  ): boolean {
+
+    if (!role) return false;
+
+    return role.Permisos?.some(
+      x => permisos.includes(x.Key)
+    ) || false;
   }
 
 }

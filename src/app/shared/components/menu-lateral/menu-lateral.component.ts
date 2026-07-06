@@ -36,62 +36,58 @@ export class MenuLateralComponent implements OnInit {
   filteredMenu: { label: string; icon: string; route: string }[] = [];
 
   menuItems: MenuItem[] = [
+    { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
     {
-      label: 'Home',
-      icon: 'home',
-      route: '/bandeja-contratos'
-    },
-    {
-      label: 'Mi Espacio',
-      icon: 'space_dashboard',
+      label: 'Mi Empresa',
+      icon: 'business',
       children: [
-        { label: 'Mi Compañia', icon: 'corporate_fare', route: '/mi-compania' },
-        { label: 'Mi Perfil', icon: 'account_circle', route: '/mi-perfil' },
+        { label: 'Mi Compañía', icon: 'corporate_fare', route: '/mi-compania' },
+        { label: 'Mi Perfil', icon: 'account_circle', route: '/mi-perfil' }
       ]
     },
     {
-      label: 'Administraciones',
-      icon: 'settings',
+      label: 'Almacén',
+      icon: 'inventory_2',
       children: [
-        { label: 'Áreas', icon: 'business', route: '/administracion-areas' },
-        { label: 'Cargos', icon: 'badge', route: '/administracion-cargos' },
-        { label: 'Usuarios', icon: 'people', route: '/administracion-usuarios' }
+        { label: 'Productos', icon: 'inventory', route: '/administracion-productos' },
+        { label: 'Categorías', icon: 'category', route: '/administracion-categorias' },
+        { label: 'Marcas', icon: 'branding_watermark', route: '/administracion-marcas' },
+        { label: 'Unidades', icon: 'straighten', route: '/administracion-unidades' }
       ]
     },
-    // {
-    //   label: 'Adm. Asistencias',
-    //   icon: 'assignment',
-    //   children: [
-    //     { label: 'Horarios', icon: 'schedule', route: '/administracion-horarios' },
-    //     { label: 'Feriados', icon: 'event_busy', route: '/administracion-feriados' }
-    //   ]
-    // },
     {
-      label: 'Gestión de Incidencias',
-      icon: 'build_circle',
+      label: 'Compras',
+      icon: 'shopping_cart',
       children: [
-        { label: 'Incidencias', icon: 'support_agent', route: '/bandeja-incidencias' },
-        { label: 'Tipos de Incidencia', icon: 'category', route: '/administracion-tipos-incidencia' },
-        { label: 'Reporte General', icon: 'assessment', route: '/reporte-general' },
-        { label: 'Reporte Avanzado', icon: 'analytics', route: '/reporte-avanzado' },
-        { label: 'Reporte Pago Incidencia', icon: 'receipt_long', route: '/reporte-pagos-incidencias' },
+        { label: 'Proveedores', icon: 'local_shipping', route: '/administracion-proveedores' },
+        { label: 'Compras', icon: 'receipt_long', route: '/compras' }
       ]
     },
-    // {
-    //   label: 'Reportes',
-    //   icon: 'assessment',
-    //   children: [
-    //     { label: 'Reporte General', icon: 'bar_chart', route: '/reporte-general' },
-    //     { label: 'Estadísticas', icon: 'pie_chart', route: '/estadisticas' }
-    //   ]
-    // },
-    // {
-    //   label: 'Dashboard',
-    //   icon: 'grid_view',
-    //   children: [
-    //     { label: 'Sub Dashboard', icon: 'view_module', route: '/sub-dashboard' }
-    //   ]
-    // }
+    {
+      label: 'Ventas',
+      icon: 'point_of_sale',
+      children: [
+        { label: 'Clientes', icon: 'groups', route: '/administracion-clientes' },
+        { label: 'Punto de Venta', icon: 'point_of_sale', route: '/ventas' }
+      ]
+    },
+    {
+      label: 'Caja',
+      icon: 'payments',
+      children: [
+        { label: 'Caja', icon: 'account_balance_wallet', route: '/caja' },
+        { label: 'Movimientos', icon: 'swap_horiz', route: '/movimientos-caja' }
+      ]
+    },
+    {
+      label: 'Reportes',
+      icon: 'assessment',
+      children: [
+        { label: 'Ventas', icon: 'bar_chart', route: '/reporte-ventas' },
+        { label: 'Compras', icon: 'shopping_bag', route: '/reporte-compras' },
+        { label: 'Inventario', icon: 'inventory', route: '/reporte-inventario' }
+      ]
+    }
   ];
 
   constructor(

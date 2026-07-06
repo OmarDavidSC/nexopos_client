@@ -1,0 +1,21 @@
+<div class="header-admin">
+    <div class="header-left">
+        <button mat-icon-button class="btn-back" (click)="regresar()" matTooltip="Regresar">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+            <h2 class="titulo-admin">{{ titulo }}</h2>
+            <p class="subtitulo-admin"> {{ descripcion }}</p>
+        </div>
+    </div>
+    <div *ngIf="visible" class="header-actions">
+        <div class="contador-box">
+            <span class="contador-total">{{ totalRegistros }}</span>
+            <span class="contador-text"> Registros </span>
+        </div>
+        <button mat-raised-button class="btn-nuevo" (click)="accionNuevo.emit()">
+            <mat-icon> add</mat-icon>
+            {{ textoBoton }}
+        </button>
+    </div>
+</div>
