@@ -12,7 +12,7 @@ import { ProductFilter } from "../models/base/ProductFilter";
     providedIn: "root"
 })
 
-export class CategoryService {
+export class ProductService {
     private urlBase = environment.uriApiBack + "/product";
 
     constructor(
