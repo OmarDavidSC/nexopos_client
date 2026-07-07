@@ -1,1 +1,21 @@
-<p>adm-productos works!</p>
+<div class="container-fluid py-4">
+    <!-- Encabezado -->
+    <app-adm-header [titulo]="'Administración de Productos'"
+        [descripcion]="'Gestión y mantenimiento de los productos registradas'" [totalRegistros]="TotalRegistros"
+        [textoBoton]="'Nuevo Producto'" [rutaRegreso]="'/inicio'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+        [visible]="true">
+    </app-adm-header>
+    <!-- Estadísticas -->
+    <app-product-summary [summary]="Resumen">
+    </app-product-summary>
+    <!-- Filtros -->
+    <app-product-filters [filter]="Filtro" [categories]="ListaCategorias" [brands]="ListaMarcas" (search)="onSearch()"
+        (categoryChange)="onCategoryChange()" (brandChange)="onBrandChange()" (statusChange)="onStatusChange()"
+        (clear)="clearFilters()">>
+    </app-product-filters>
+    <!-- Tabla -->
+    <app-product-table [products]="ListaProductos" [loading]="Loading" [total]="TotalRegistros"
+        [currentPage]="PaginaActual" [totalPages]="TotalPaginas" (edit)="eventoMostrarPopupEditar($event)"
+        (remove)="eventoEliminar($event)" (pageChange)="OnchangedPage($event)">
+    </app-product-table>
+</div>

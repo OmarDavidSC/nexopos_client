@@ -14,6 +14,12 @@ import { ModalProductoComponent } from '../modals/modal-producto/modal-producto.
 import { ToastConfirmComponent } from 'src/app/shared/components/toast-confirm/toast-confirm.component';
 import { ToastLoadingComponent } from 'src/app/shared/components/toast-loading/toast-loading.component';
 import { ProductFilter } from 'src/app/shared/models/base/ProductFilter';
+import { EMarca } from 'src/app/shared/models/entidades/EMarca';
+import { ECategoria } from 'src/app/shared/models/entidades/ECategoria';
+import { CategoryService } from 'src/app/shared/services/category.service';
+import { BrandService } from 'src/app/shared/services/brand.service';
+import { UnitService } from 'src/app/shared/services/unit.service';
+import { EUnidad } from 'src/app/shared/models/entidades/EUnidad';
 
 @Component({
   selector: 'app-adm-productos',
@@ -41,6 +47,10 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     status: null
   };
 
+  ListaCategorias: ECategoria[] = [];
+  ListaMarcas: EMarca[] = [];
+  ListaUnidades: EUnidad[] = [];
+
   constructor(
     public dialog: MatDialog,
     public route: ActivatedRoute,
@@ -50,6 +60,9 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     public productoService: ProductService,
     public auhtStore: AuthStoreService,
     public toastService: ToastrService,
+    public categoriaService: CategoryService,
+    public marcaService: BrandService,
+    public unidadService: UnitService
   ) {
     super('adm-productos', dialog, route, router, spinner)
   }
@@ -57,11 +70,18 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
   ngOnInit(): void {
     Promise.all([
       this.auhtStore.getUser(),
+
       this.auhtStore.getRole(),
+      this.categoriaService.adm(),
+      this.marcaService.adm(),
+      this.unidadService.adm()
     ]
-    ).then(([resultadoUsuario, resultadoRole]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoCategorias, resultadoMarcas, resultadoUnidades]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
+      this.ListaCategorias = resultadoCategorias;
+      this.ListaMarcas = resultadoMarcas;
+      this.ListaUnidades = resultadoUnidades;
       const tienePermiso = this.validarPermisos(
         this.Role,
         ['administrator'],
@@ -127,7 +147,12 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     const dialogRef = this.dialog.open(ModalProductoComponent, {
       width: '600px',
       disableClose: true,
-      data: null
+      data: {
+        producto: null,
+        categorias: this.ListaCategorias,
+        marcas: this.ListaMarcas,
+        unidades: this.ListaUnidades,
+      }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();
     if (respuesta) {
@@ -139,7 +164,12 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     const dialogRef = this.dialog.open(ModalProductoComponent, {
       width: '600px',
       disableClose: true,
-      data: item
+      data: {
+        producto: item,
+        categorias: this.ListaCategorias,
+        marcas: this.ListaMarcas,
+        unidades: this.ListaUnidades,
+      }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();
     if (respuesta) {
@@ -181,5 +211,18 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     } else {
       this.router.navigate([site]);
     }
+  }
+
+  async clearFilters() {
+    this.Filtro = {
+      page: 1,
+      search: '',
+      category_id: null,
+      brand_id: null,
+      status: null
+    };
+    this.PaginaActual = 1;
+    await this.obtenerMaestros();
+
   }
 }

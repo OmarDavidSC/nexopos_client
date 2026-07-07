@@ -6,6 +6,7 @@ import { ApiResponse } from "src/app/utils/ApiResponse";
 import { ApiService } from "./api.service";
 import { ToastrService } from "ngx-toastr";
 import { ECategoria } from "../models/entidades/ECategoria";
+import { EUnidad } from "../models/entidades/EUnidad";
 
 @Injectable({
     providedIn: "root"
@@ -39,14 +40,14 @@ export class UnitService {
         }
     }
 
-    async adm(): Promise<ECategoria[]> {
+    async adm(): Promise<EUnidad[]> {
         try {
             const url = this.urlBase + '/adm';
             const { success, data, message } = await this.httpCient.get<ApiResponse<any>>(url).toPromise();
             if (!success) {
                 this.toastService.error(message);
             }
-            return ECategoria.parseJsonList(data);
+            return EUnidad.parseJsonList(data);
         } catch (error) {
             throw error;
         }

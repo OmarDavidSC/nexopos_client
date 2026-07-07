@@ -23,6 +23,7 @@
     "@angular/router": "~13.3.0",
     "@auth0/auth0-angular": "^2.2.1",
     "@fortawesome/angular-fontawesome": "^0.10.0",
+    "@fortawesome/fontawesome-free": "^7.3.0",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@pnp/pnpjs": "^2.11.0",
     "@pnp/sp": "^2.11.0",

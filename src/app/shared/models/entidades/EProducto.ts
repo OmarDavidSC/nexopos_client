@@ -15,6 +15,7 @@ export class EProducto {
     StockActual: number;
     StockMinimo: number;
     Estado: string;
+    EstadoLabel: string;
     FechaCreacion: string;
     FechaModificacion: string;
 
@@ -33,6 +34,7 @@ export class EProducto {
         this.StockActual = 0;
         this.StockMinimo = 0;
         this.Estado = "";
+        this.EstadoLabel = "";
         this.FechaCreacion = "";
         this.FechaModificacion = "";
     }
@@ -54,6 +56,7 @@ export class EProducto {
         objeto.StockActual = SPParse.getNumber(element["current_stock"]);
         objeto.StockMinimo = SPParse.getNumber(element["minimum_stock"]);
         objeto.Estado = SPParse.getString(element["status"]);
+        objeto.EstadoLabel = SPParse.getString(element["status_label"]);
         objeto.FechaCreacion = SPParse.getString(element["datecreated_label"]);
         objeto.FechaModificacion = SPParse.getString(element["dateupdated_label"]);
         return objeto;

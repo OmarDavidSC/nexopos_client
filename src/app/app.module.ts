@@ -40,6 +40,9 @@ import { ModalMarcaComponent } from './components/pages/almacen/modals/modal-mar
 import { ModalUnidadComponent } from './components/pages/almacen/modals/modal-unidad/modal-unidad.component';
 import { AdmHeaderComponent } from './components/pages/widzard/adm/adm-header/adm-header.component';
 import { AdmPaginatorComponent } from './components/pages/widzard/adm/adm-paginator/adm-paginator.component';
+import { ProductSummaryComponent } from './components/pages/almacen/adm-productos/partials/product-summary/product-summary.component';
+import { ProductFiltersComponent } from './components/pages/almacen/adm-productos/partials/product-filters/product-filters.component';
+import { ProductTableComponent } from './components/pages/almacen/adm-productos/partials/product-table/product-table.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,9 @@ import { AdmPaginatorComponent } from './components/pages/widzard/adm/adm-pagina
     ModalUnidadComponent,
     AdmHeaderComponent,
     AdmPaginatorComponent,
+    ProductSummaryComponent,
+    ProductFiltersComponent,
+    ProductTableComponent,
   ],
   imports: [
     ComunModule,

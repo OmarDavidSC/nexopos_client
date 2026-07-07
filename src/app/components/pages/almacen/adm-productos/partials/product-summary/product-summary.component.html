@@ -1,0 +1,47 @@
+<div class="row g-4 mb-4">
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="summary-card total">
+            <div class="summary-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <div class="summary-info">
+                <span>Total Productos</span>
+                <h3>{{summary?.total_products || 0}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="summary-card active">
+            <div class="summary-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="summary-info">
+                <span>Productos Activos</span>
+                <h3>{{summary?.active_productos || 0}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="summary-card warning">
+            <div class="summary-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="summary-info">
+                <span>Stock Bajo</span>
+                <h3>{{summary?.low_stock || 0}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xl-3">
+        <div class="summary-card danger">
+            <div class="summary-icon">
+                <i class="fa-solid fa-ban"></i>
+            </div>
+            <div class="summary-info">
+                <span>Productos Agotados</span>
+                <h3>{{summary?.out_stock || 0}}</h3>
+            </div>
+        </div>
+    </div>
+</div>

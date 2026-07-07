@@ -10,6 +10,7 @@ import { PanelCompanyComponent } from './components/pages/company/panel-company/
 import { AdmCategoriasComponent } from './components/pages/almacen/adm-categorias/adm-categorias.component';
 import { AdmMarcasComponent } from './components/pages/almacen/adm-marcas/adm-marcas.component';
 import { AdmUnidadesComponent } from './components/pages/almacen/adm-unidades/adm-unidades.component';
+import { AdmProductosComponent } from './components/pages/almacen/adm-productos/adm-productos.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'mi-compania', component: PanelCompanyComponent, canActivate: [AuthGuard] },
 
   //almacen
+  { path: 'administracion-productos', component: AdmProductosComponent, canActivate: [AuthGuard] },
   { path: 'administracion-categorias', component: AdmCategoriasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-marcas', component: AdmMarcasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-unidades', component: AdmUnidadesComponent, canActivate: [AuthGuard] },
