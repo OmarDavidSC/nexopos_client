@@ -11,6 +11,7 @@ import { AdmCategoriasComponent } from './components/pages/almacen/adm-categoria
 import { AdmMarcasComponent } from './components/pages/almacen/adm-marcas/adm-marcas.component';
 import { AdmUnidadesComponent } from './components/pages/almacen/adm-unidades/adm-unidades.component';
 import { AdmProductosComponent } from './components/pages/almacen/adm-productos/adm-productos.component';
+import { ProovedorComponent } from './components/pages/compras/proovedor/proovedor.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -25,6 +26,8 @@ const routes: Routes = [
   { path: 'administracion-categorias', component: AdmCategoriasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-marcas', component: AdmMarcasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-unidades', component: AdmUnidadesComponent, canActivate: [AuthGuard] },
+  //compras
+  { path: 'administracion-proveedores', component: ProovedorComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

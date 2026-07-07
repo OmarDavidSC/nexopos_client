@@ -43,6 +43,8 @@ import { AdmPaginatorComponent } from './components/pages/widzard/adm/adm-pagina
 import { ProductSummaryComponent } from './components/pages/almacen/adm-productos/partials/product-summary/product-summary.component';
 import { ProductFiltersComponent } from './components/pages/almacen/adm-productos/partials/product-filters/product-filters.component';
 import { ProductTableComponent } from './components/pages/almacen/adm-productos/partials/product-table/product-table.component';
+import { ProovedorComponent } from './components/pages/compras/proovedor/proovedor.component';
+import { ModalProveedorComponent } from './components/pages/compras/modals/modal-proveedor/modal-proveedor.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { ProductTableComponent } from './components/pages/almacen/adm-productos/
     ProductSummaryComponent,
     ProductFiltersComponent,
     ProductTableComponent,
+    ProovedorComponent,
+    ModalProveedorComponent,
   ],
   imports: [
     ComunModule,

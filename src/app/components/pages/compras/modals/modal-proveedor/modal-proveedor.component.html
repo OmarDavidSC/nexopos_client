@@ -1,0 +1,68 @@
+<div mat-dialog-content>
+    <div class="row" *ngIf="Form" [formGroup]="Form">
+        <!-- Documento -->
+        <mat-form-field class="col-12 col-md-4" appearance="outline">
+            <mat-label>Número de documento <span class="text-danger">(*)</span></mat-label>
+            <input matInput formControlName="document_number" [disabled]="Loading" maxlength="20" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('document_number')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- Empresa -->
+        <mat-form-field class="col-12 col-md-8" appearance="outline">
+            <mat-label>Nombre de la empresa <span class="text-danger">(*)</span></mat-label>
+            <input matInput formControlName="business_name" [disabled]="Loading" maxlength="255" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('business_name')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- Contacto -->
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+            <mat-label>Persona de contacto</mat-label>
+            <input matInput formControlName="contact" [disabled]="Loading" maxlength="255" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('contact')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- Teléfono -->
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="phone" [disabled]="Loading" maxlength="20" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('phone')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- Correo -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" formControlName="email" [disabled]="Loading" maxlength="255"
+                autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('email')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- Dirección -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <textarea matInput rows="3" formControlName="address" [disabled]="Loading" maxlength="255">
+            </textarea>
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('address')">
+                </app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button color="primary" [disabled]="Loading" (click)="dialogRef.close()">
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" cdkFocusInitial [disabled]="Loading" (click)="eventoGuardar()">
+        {{TituloButton}}
+    </button>
+</div>
