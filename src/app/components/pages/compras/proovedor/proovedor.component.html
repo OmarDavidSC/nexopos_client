@@ -2,10 +2,9 @@
 
 <div class="contenedor-admin">
     <!-- HEADER -->
-    <app-adm-header [titulo]="'Administración de Proovedores'"
-        [descripcion]="'Gestión y mantenimiento de proovedores registrados'" [totalRegistros]="TotalRegistros"
-        [textoBoton]="'Nuevo Proovedor'" [rutaRegreso]="'/inicio'" (accionNuevo)="eventoMostrarPopupRegistrar()"
-        [visible]="true">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de proovedores registrados'"
+        [breadcrumbs]="[{nombre:'Compras'},{nombre:'Administración de Proovedores'}]" [visible]="true"
+        [textoBoton]="'Nuevo Proveedor'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
     </app-adm-header>
     <!-- TABLA -->
     <div class="table-container">

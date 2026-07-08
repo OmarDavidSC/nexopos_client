@@ -2,10 +2,9 @@
 
 <div class="contenedor-admin">
     <!-- HEADER -->
-    <app-adm-header [titulo]="'Administración de Categorías'"
-        [descripcion]="'Gestión y mantenimiento de categorías registradas'" [totalRegistros]="TotalRegistros"
-        [textoBoton]="'Nueva Categoría'" [rutaRegreso]="'/inicio'" (accionNuevo)="eventoMostrarPopupRegistrar()"
-        [visible]="true">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de categorías registradas'"
+        [breadcrumbs]="[{nombre:'Almacen'},{nombre:'Administración de Categorías'}]" [visible]="true"
+        [textoBoton]="'Nueva Categoria'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
     </app-adm-header>
     <!-- TABLA -->
     <div class="table-container">

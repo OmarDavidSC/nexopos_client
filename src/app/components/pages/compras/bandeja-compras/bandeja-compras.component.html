@@ -1,8 +1,9 @@
-<app-adm-header [titulo]="'Gestión de compras'" [descripcion]="'Gestión y mantenimiento de las compras registradas'"
-    [totalRegistros]="TotalRegistros" [textoBoton]="'Nueva Compra'" [rutaRegreso]="'/inicio'"
-    (accionNuevo)="Navegar('nueva-compra')" [visible]="true">
-</app-adm-header>
+<app-adm-header
+    [descripcion]="'Consulta y administra las compras registradas en el sistema'"
+    [breadcrumbs]="[{nombre:'Compras'},{nombre:'Bandeja de compras'}]" [visible]="true" [textoBoton]="'Nueva compra'"
+    (accionNuevo)="Navegar('nueva-compra')" [rutaRegreso]="'/inicio'">
 
+</app-adm-header>
 <app-purchase-summary [summary]="Resumen">
 </app-purchase-summary>
 
