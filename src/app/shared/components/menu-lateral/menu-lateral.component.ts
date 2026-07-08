@@ -68,7 +68,7 @@ export class MenuLateralComponent implements OnInit {
       icon: 'point_of_sale',
       children: [
         { label: 'Clientes', icon: 'groups', route: '/administracion-clientes' },
-        { label: 'Punto de Venta', icon: 'point_of_sale', route: '/ventas' }
+        { label: 'Punto de Venta', icon: 'point_of_sale', route: '/bandeja-ventas' }
       ]
     },
     {

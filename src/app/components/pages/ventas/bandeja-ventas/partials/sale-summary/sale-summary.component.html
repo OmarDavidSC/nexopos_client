@@ -1,0 +1,84 @@
+<div class="row g-4">
+    <!-- Total Compras -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card total">
+            <div class="summary-icon">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Total Ventas</span>
+                <h2>
+                    {{summary?.total_sales || 0}}
+                </h2>
+                <small>Compras registradas</small>
+            </div>
+        </div>
+    </div>
+    <!-- Completadas -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card completed">
+            <div class="summary-icon">
+                <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Completadas</span>
+                <h2>{{summary?.completed || 0}}</h2>
+                <small>Compras finalizadas</small>
+            </div>
+        </div>
+    </div>
+    <!-- Pendientes -->
+    <!-- <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card pending">
+            <div class="summary-icon">
+                <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Pendientes</span>
+                <h2>{{summary?.pending || 0}}</h2>
+                <small>Esperando confirmación</small>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Canceladas -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card cancelled">
+            <div class="summary-icon">
+                <mat-icon>cancel</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Anuladas</span>
+                <h2>{{summary?.cancelled || 0}}</h2>
+                <small>Compras anuladas</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card amount">
+            <div class="summary-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Ventas Totales</span>
+                <h2>S/ {{summary?.total_amount || 0 | number:'1.2-2'}}</h2>
+                <small>Importe acumulado</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Este Mes -->
+    <!-- <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card month">
+            <div class="summary-icon">
+                <mat-icon>calendar_month</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Este Mes</span>
+                <h2>S/ {{summary?.this_month_amount || 0 | number:'1.2-2'}}</h2>
+                <small>Ventas del mes</small>
+            </div>
+        </div>
+    </div> -->
+</div>

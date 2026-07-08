@@ -1,0 +1,16 @@
+<app-adm-header [descripcion]="'Consulta y administra las ventas registradas en el sistema'"
+    [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Bandeja de Ventas'}]" [visible]="true" [textoBoton]="'Nueva Venta'"
+    (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')" [rutaRegreso]="'/inicio'">
+</app-adm-header>
+
+<app-sale-summary [summary]="Resumen">
+</app-sale-summary>
+
+<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" (search)="OnSearchFiltro()"
+    (customerChange)="OnCustomerChange()" (statusChange)="onStatusChange()" (payment_methodChange)="onPayMethodChange()"
+    (clear)="clearFilters()">
+</app-sale-filters>
+
+<app-sale-timeline [sales]="ListaVentas" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
+    (cancel)="OnEventoCancelar($event)" (cancel)="null">
+</app-sale-timeline> 

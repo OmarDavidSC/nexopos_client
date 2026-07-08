@@ -54,6 +54,16 @@ import { FormularioNuevaCompraComponent } from './components/pages/compras/formu
 import { VerDetalleCompraComponent } from './components/pages/compras/ver-detalle-compra/ver-detalle-compra.component';
 import { ModalCancelarCompraComponent } from './components/pages/compras/modals/modal-cancelar-compra/modal-cancelar-compra.component';
 import { StepVerticalComponent } from './components/pages/widzard/step-vertical/step-vertical.component';
+import { BandejaVentasComponent } from './components/pages/ventas/bandeja-ventas/bandeja-ventas.component';
+import { FormularioNuevaVentaComponent } from './components/pages/ventas/formulario-nueva-venta/formulario-nueva-venta.component';
+import { VerDetalleVentaComponent } from './components/pages/ventas/ver-detalle-venta/ver-detalle-venta.component';
+import { ClientesComponent } from './components/pages/ventas/clientes/clientes.component';
+import { ModalClienteComponent } from './components/pages/ventas/modals/modal-cliente/modal-cliente.component';
+import { ModalAnularVentaComponent } from './components/pages/ventas/modals/modal-anular-venta/modal-anular-venta.component';
+import { SaleCardComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-card/sale-card.component';
+import { SaleFiltersComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-filters/sale-filters.component';
+import { SaleSummaryComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-summary/sale-summary.component';
+import { SaleTimelineComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-timeline/sale-timeline.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +108,16 @@ import { StepVerticalComponent } from './components/pages/widzard/step-vertical/
     VerDetalleCompraComponent,
     ModalCancelarCompraComponent,
     StepVerticalComponent,
+    BandejaVentasComponent,
+    FormularioNuevaVentaComponent,
+    VerDetalleVentaComponent,
+    ClientesComponent,
+    ModalClienteComponent,
+    ModalAnularVentaComponent,
+    SaleCardComponent,
+    SaleFiltersComponent,
+    SaleSummaryComponent,
+    SaleTimelineComponent,
   ],
   imports: [
     ComunModule,

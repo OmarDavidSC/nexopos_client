@@ -1,0 +1,24 @@
+<div class="timeline-container">
+    <!-- Loading -->
+    <div class="loading" *ngIf="loading">
+        <mat-spinner diameter="55"></mat-spinner>
+        <p>Cargando ventas...</p>
+    </div>
+    <!-- Lista -->
+    <ng-container *ngIf="!loading">
+        <ng-container *ngIf="sales.length > 0; else empty">
+            <app-sale-card *ngFor="let item of sales" [sale]="item" (view)="view.emit($event)"
+                (cancel)="cancel.emit($event)">
+            </app-sale-card>
+        </ng-container>
+    </ng-container>
+    <ng-template #empty>
+        <div class="empty-state">
+            <mat-icon>inventory_1</mat-icon>
+            <h4>No existen ventas registradas</h4>
+            <p>
+                Cuando registres una venta aparecerá aquí.
+            </p>
+        </div>
+    </ng-template>
+</div>

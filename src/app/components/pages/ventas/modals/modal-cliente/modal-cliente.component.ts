@@ -5,16 +5,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ToastConfirmComponent } from 'src/app/shared/components/toast-confirm/toast-confirm.component';
 import { ToastLoadingComponent } from 'src/app/shared/components/toast-loading/toast-loading.component';
-import { EProveedor } from 'src/app/shared/models/entidades/EProveedor';
-import { SupplierService } from 'src/app/shared/services/supplier.service';
+import { ECliente } from 'src/app/shared/models/entidades/ECliente';
+import { CustomerService } from 'src/app/shared/services/customer.service';
 import { FormHelper } from 'src/app/utils/form-helper';
 
 @Component({
-  selector: 'app-modal-proveedor',
-  templateUrl: './modal-proveedor.component.html',
-  styleUrls: ['./modal-proveedor.component.scss']
+  selector: 'app-modal-cliente',
+  templateUrl: './modal-cliente.component.html',
+  styleUrls: ['./modal-cliente.component.scss']
 })
-export class ModalProveedorComponent implements OnInit {
+export class ModalClienteComponent implements OnInit {
 
   public TituloPopup: string;
   public TituloButton: string;
@@ -23,22 +23,22 @@ export class ModalProveedorComponent implements OnInit {
   LoadingToast: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: EProveedor,
+    @Inject(MAT_DIALOG_DATA) public data: ECliente,
     private formBuilder: FormBuilder,
-    private proveedorService: SupplierService,
+    private clienteService: CustomerService,
     private spinnerService: NgxSpinnerService,
     public toastService: ToastrService,
-    public dialogRef: MatDialogRef<ModalProveedorComponent>,
+    public dialogRef: MatDialogRef<ModalClienteComponent>,
     private dialog: MatDialog
   ) {
-    this.TituloPopup = this.data ? 'Editar Proveedor' : 'Nueva Proveedor';
+    this.TituloPopup = this.data ? 'Editar Cliente' : 'Nueva Cliente';
     this.TituloButton = this.data ? 'Actualizar' : 'Registrar';
 
     this.Form = this.formBuilder.group({
       id: new FormControl(this.data?.Id, []),
+      document_type: new FormControl(this.data?.TipoDocumento, [Validators.required]),
       document_number: new FormControl(this.data?.NumeroDocumento, [Validators.required]),
-      business_name: new FormControl(this.data?.NombreEmpresa, [Validators.required]),
-      contact: new FormControl(this.data?.Contacto, [Validators.required]),
+      name: new FormControl(this.data?.NombreCliente, [Validators.required]),
       phone: new FormControl(this.data?.Telefono, [Validators.required]),
       email: new FormControl(this.data?.Correo, [Validators.required]),
       address: new FormControl(this.data?.Direccion, [Validators.required]),
@@ -57,15 +57,15 @@ export class ModalProveedorComponent implements OnInit {
     const item = this.Form.value;
     const formData = new FormData();
     formData.append('id', this.data ? this.data.Id : '');
+    formData.append('document_type', item.document_type);
     formData.append('document_number', item.document_number);
-    formData.append('business_name', item.business_name);
-    formData.append('contact', item.contact);
+    formData.append('name', item.name);
     formData.append('phone', item.phone);
     formData.append('email', item.email);
     formData.append('address', item.address);
 
     const confirmToast = this.toastService.show(
-      this.data ? '¿Deseas actualizar el proveedor?' : '¿Deseas registrar el proveedor?', 'Confirmación',
+      this.data ? '¿Deseas actualizar el cliente?' : '¿Deseas registrar el cliente?', 'Confirmación',
       { toastComponent: ToastConfirmComponent, positionClass: 'toast-center-center', disableTimeOut: true }
     );
 
@@ -79,9 +79,9 @@ export class ModalProveedorComponent implements OnInit {
       try {
         let response;
         if (this.data) {
-          response = await this.proveedorService.update(formData);
+          response = await this.clienteService.update(formData);
         } else {
-          response = await this.proveedorService.store(formData);
+          response = await this.clienteService.store(formData);
         }
         this.Loading = false;
         this.toastService.clear();

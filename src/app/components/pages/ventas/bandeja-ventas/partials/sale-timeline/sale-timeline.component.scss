@@ -1,0 +1,45 @@
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 0;
+    gap: 18px;
+}
+
+.loading p {
+    color: #6b7280;
+    margin: 0;
+}
+
+.empty-state {
+    background: white;
+    border-radius: 18px;
+    padding: 70px 20px;
+    text-align: center;
+    border: 1px dashed #d1d5db;
+}
+
+.empty-state mat-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 70px;
+    color: #cbd5e1;
+}
+
+.empty-state h4 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.empty-state p {
+    color: #6b7280;
+    margin: 0;
+}

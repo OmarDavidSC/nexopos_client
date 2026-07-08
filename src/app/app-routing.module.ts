@@ -15,6 +15,10 @@ import { ProovedorComponent } from './components/pages/compras/proovedor/prooved
 import { BandejaComprasComponent } from './components/pages/compras/bandeja-compras/bandeja-compras.component';
 import { FormularioNuevaCompraComponent } from './components/pages/compras/formulario-nueva-compra/formulario-nueva-compra.component';
 import { VerDetalleCompraComponent } from './components/pages/compras/ver-detalle-compra/ver-detalle-compra.component';
+import { ClientesComponent } from './components/pages/ventas/clientes/clientes.component';
+import { BandejaVentasComponent } from './components/pages/ventas/bandeja-ventas/bandeja-ventas.component';
+import { FormularioNuevaVentaComponent } from './components/pages/ventas/formulario-nueva-venta/formulario-nueva-venta.component';
+import { VerDetalleVentaComponent } from './components/pages/ventas/ver-detalle-venta/ver-detalle-venta.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -34,6 +38,12 @@ const routes: Routes = [
   { path: 'bandeja-compras', component: BandejaComprasComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-compras/nueva-compra', component: FormularioNuevaCompraComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-compras/:id/detalle-compra', component: VerDetalleCompraComponent, canActivate: [AuthGuard] },
+  //ventas
+  //compras
+  { path: 'administracion-clientes', component: ClientesComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-ventas', component: BandejaVentasComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

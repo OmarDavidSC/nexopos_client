@@ -1,0 +1,236 @@
+.purchase-page {
+    background: #f4f7fb;
+    min-height: 100vh;
+    padding: 28px;
+}
+
+.card-section,
+.purchase-card,
+.summary-card {
+    border: none;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.card-section,
+.purchase-card {
+    padding: 26px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.section-header mat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    font-size: 30px;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.section-header span {
+    color: #64748b;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    border-radius: 16px !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+::ng-deep .mat-mdc-form-field {
+    width: 100%;
+}
+
+.btn-action {
+    border-radius: 16px !important;
+}
+
+.btn-add-product {
+    border-radius: 16px !important;
+    // font-weight: 700;
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+}
+
+.purchase-card:hover,
+.card-section:hover {
+    transform: translateY(-3px);
+    transition: .25s;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, .08);
+}
+
+
+.purchase-table {
+    width: 100%;
+}
+
+.purchase-table thead {
+    background: #f8fafc;
+}
+
+.purchase-table th {
+    color: #475569;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.purchase-table th,
+.purchase-table td {
+    padding: 18px;
+}
+
+.purchase-table tbody tr {
+    transition: .25s;
+}
+
+.purchase-table tbody tr:hover {
+    background: #f9fbff;
+}
+
+.badge-total {
+    margin-left: auto;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.summary-card {
+    position: sticky;
+    top: 20px;
+    padding: 30px;
+    background: linear-gradient(180deg, #ffffff, #fafcff);
+}
+
+.summary-card h3 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    font-size: 15px;
+}
+
+.summary-item strong {
+    color: #0f172a;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.summary-total span {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.summary-total strong {
+    color: white;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.summary-card button {
+    height: 60px;
+    border-radius: 16px !important;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 28px;
+}
+
+.product-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.product-option strong {
+    font-size: 15px;
+}
+
+// .product-option small {
+//     background: #dcfce7;
+//     color: #166534;
+//     padding: 4px 10px;
+//     border-radius: 20px;
+//     font-weight: 600;
+// }
+
+@media(max-width:1200px) {
+    .summary-card {
+        position: relative;
+        top: auto;
+    }
+
+}
+
+@media(max-width:768px) {
+
+    .purchase-page {
+        padding: 15px;
+    }
+
+    .card-section,
+    .purchase-card,
+    .summary-card {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .section-header mat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .section-header h3 {
+        font-size: 18px;
+    }
+
+    .btn-action {
+        margin-top: 0;
+    }
+
+    .summary-total strong {
+        font-size: 24px;
+    }
+
+}

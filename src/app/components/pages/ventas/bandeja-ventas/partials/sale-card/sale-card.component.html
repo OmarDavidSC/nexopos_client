@@ -1,0 +1,48 @@
+<div class="sale-item mt-2">
+    <div class="sale-main">
+        <div class="sale-left">
+            <span class="status-dot" [ngClass]="{
+                    'completed': sale.Estado == 'COMPLETED',
+                    'pending': sale.Estado == 'PENDING',
+                    'cancelled': sale.Estado == 'CANCELLED'
+                }">
+            </span>
+            <div class="sale-content">
+                <div class="sale-top">
+                    <div class="document">
+                        {{sale.Documento}}
+                    </div>
+                    <div class="amount">
+                        S/ {{sale.Total}}
+                    </div>
+                </div>
+                <div class="supplier">
+                    {{sale.NombreCliente}}
+                </div>
+                <div class="meta">
+                    <span>
+                        {{sale.ProductoTotales}} productos
+                    </span>
+                    <span>•</span>
+                    <span>
+                        {{sale.NombreUsuarioRegistrador}}
+                    </span>
+                    <span>•</span>
+                    <span>
+                        {{sale.FechaVenta}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="sale-actions">
+            <button mat-stroked-button color="primary" (click)="view.emit(sale)">
+                <mat-icon>visibility</mat-icon>
+                Ver detalle
+            </button>
+            <button *ngIf="sale.Estado=='COMPLETED'" mat-flat-button color="warn" (click)="cancel.emit(sale)">
+                <mat-icon>cancel</mat-icon>
+                Anular
+            </button>
+        </div>
+    </div>
+</div>

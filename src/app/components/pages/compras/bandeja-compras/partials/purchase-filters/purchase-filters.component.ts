@@ -14,8 +14,6 @@ export class PurchaseFiltersComponent {
   @Output() search = new EventEmitter();
   @Output() supplierChange = new EventEmitter();
   @Output() statusChange = new EventEmitter();
-  @Output() dateChange = new EventEmitter();
   @Output() clear = new EventEmitter();
-  @Output() newPurchase = new EventEmitter();
 
 }
