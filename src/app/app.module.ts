@@ -52,6 +52,8 @@ import { PurchaseTimelineComponent } from './components/pages/compras/bandeja-co
 import { PurchaseCardComponent } from './components/pages/compras/bandeja-compras/partials/purchase-card/purchase-card.component';
 import { FormularioNuevaCompraComponent } from './components/pages/compras/formulario-nueva-compra/formulario-nueva-compra.component';
 import { VerDetalleCompraComponent } from './components/pages/compras/ver-detalle-compra/ver-detalle-compra.component';
+import { ModalCancelarCompraComponent } from './components/pages/compras/modals/modal-cancelar-compra/modal-cancelar-compra.component';
+import { StepVerticalComponent } from './components/pages/widzard/step-vertical/step-vertical.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +96,8 @@ import { VerDetalleCompraComponent } from './components/pages/compras/ver-detall
     PurchaseCardComponent,
     FormularioNuevaCompraComponent,
     VerDetalleCompraComponent,
+    ModalCancelarCompraComponent,
+    StepVerticalComponent,
   ],
   imports: [
     ComunModule,

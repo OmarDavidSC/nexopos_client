@@ -1,8 +1,6 @@
-<app-adm-header
-    [descripcion]="'Consulta y administra las compras registradas en el sistema'"
+<app-adm-header [descripcion]="'Consulta y administra las compras registradas en el sistema'"
     [breadcrumbs]="[{nombre:'Compras'},{nombre:'Bandeja de compras'}]" [visible]="true" [textoBoton]="'Nueva compra'"
-    (accionNuevo)="Navegar('nueva-compra')" [rutaRegreso]="'/inicio'">
-
+    (accionNuevo)="Navegar('bandeja-compras/nueva-compra')" [rutaRegreso]="'/inicio'">
 </app-adm-header>
 <app-purchase-summary [summary]="Resumen">
 </app-purchase-summary>
@@ -11,10 +9,6 @@
     (supplierChange)="OnSupplierChange()" (statusChange)="onStatusChange()" (clear)="clearFilters()">
 </app-purchase-filters>
 
-<app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="null" (cancel)="null">
+<app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
+    (cancel)="OnEventoCancelar($event)" (cancel)="null">
 </app-purchase-timeline>
-
-
-<!-- <app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="eventoVerCompra($event)"
-    (cancel)="eventoCancelarCompra($event)">
-</app-purchase-timeline> -->

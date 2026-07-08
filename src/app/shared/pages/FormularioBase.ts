@@ -208,4 +208,18 @@ export class FormularioBase {
     ) || false;
   }
 
+  onEventoFormatearFecha(fecha: any) {
+    const f = new Date(fecha);
+    return `${f.getFullYear()}-${(f.getMonth() + 1).toString().padStart(2, '0')}-${f.getDate().toString().padStart(2, '0')}`;
+  }
+
+  public Navegar(site: string): void {
+    const tieneAspx = site.indexOf('.aspx') !== -1;
+    if (tieneAspx) {
+      location.href = ``;
+    } else {
+      this.router.navigate([site]);
+    }
+  }
+
 }

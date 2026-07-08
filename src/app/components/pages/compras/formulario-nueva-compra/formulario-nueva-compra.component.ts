@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ToastConfirmComponent } from 'src/app/shared/components/toast-confirm/toast-confirm.component';
+import { ToastLoadingComponent } from 'src/app/shared/components/toast-loading/toast-loading.component';
 import { EProducto } from 'src/app/shared/models/entidades/EProducto';
 import { EProveedor } from 'src/app/shared/models/entidades/EProveedor';
 import { ERol } from 'src/app/shared/models/entidades/ERol';
@@ -24,6 +26,7 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
   UsuarioActual: Eusuario | null = null;
   Role: ERol | null = null;
   Loading = false;
+  LoadingToast: any;
 
   ListaProveedores: EProveedor[] = [];
   ListaProductos: EProducto[] = [];
@@ -124,7 +127,7 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     return producto ? producto.Nombre : '';
   }
 
-  agregarProducto() {
+  OnEventoAgregarProducto() {
     if (!this.ProductoSeleccionado) {
       this.toastService.warning('Seleccione un producto');
       return;
@@ -148,7 +151,7 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     this.productoTemporal = { quantity: 1, purchase_price: 0 };
   }
 
-  eliminarProducto(index: number) {
+  OnEventoEliminarProducto(index: number) {
     this.DetallesCompra = this.DetallesCompra.filter((_, i) => i !== index);
     this.OnEventoCalcularTotales();
   }
@@ -159,7 +162,9 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     this.compra.total = this.compra.subtotal + this.compra.tax - this.compra.discount;
   }
 
-  async guardarCompra() {
+  async OnEventoGuardarCompra(): Promise<void> {
+
+    if (this.Loading) return;
     if (!this.compra.supplier_id) {
       this.toastService.warning('Seleccione un proveedor');
       return;
@@ -172,7 +177,7 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
 
     const formData = new FormData();
     formData.append('supplier_id', String(this.compra.supplier_id));
-    formData.append('purchase_date', this.formatearFecha(this.compra.purchase_date));
+    formData.append('purchase_date', this.onEventoFormatearFecha(this.compra.purchase_date));
     formData.append('voucher_type', this.compra.voucher_type);
     formData.append('voucher_series', this.compra.voucher_series);
     formData.append('voucher_number', this.compra.voucher_number);
@@ -183,18 +188,39 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     formData.append('observation', this.compra.observation);
     formData.append('details', JSON.stringify(this.DetallesCompra));
 
-    const response = await this.compraService.store(formData);
-    if (response.success) {
-      this.toastService.success(response.message);
-      this.router.navigate(['/bandeja-compras']);
-    } else {
-      this.toastService.error(response.message);
-    }
-  }
+    const confirmToast = this.toastService.show(
+      '¿Deseas registrar esta compra?', 'Confirmación',
+      { toastComponent: ToastConfirmComponent, positionClass: 'toast-center-center', disableTimeOut: true }
+    );
 
-  formatearFecha(fecha: any) {
-    const f = new Date(fecha);
-    return `${f.getFullYear()}-${(f.getMonth() + 1).toString().padStart(2, '0')}-${f.getDate().toString().padStart(2, '0')}`;
+    confirmToast.onAction.subscribe(async () => {
+      this.toastService.clear();
+      this.Loading = true;
+      this.LoadingToast = this.toastService.show(
+        `<div>
+            <strong>Registrando compra...</strong><br>
+            Actualizando inventario...
+         </div>`,
+        '',
+        { toastComponent: ToastLoadingComponent, positionClass: 'toast-center-center', disableTimeOut: true, tapToDismiss: false, closeButton: false, enableHtml: true }
+      );
+
+      try {
+        const response = await this.compraService.store(formData);
+        this.Loading = false;
+        this.toastService.clear();
+        if (response.success) {
+          this.toastService.success(response.message);
+          this.router.navigate(['/bandeja-compras']);
+        } else {
+          this.toastService.error(response.message);
+        }
+      } catch (error: any) {
+        this.Loading = false;
+        this.toastService.clear();
+        this.toastService.error(error.message ?? 'Ocurrió un error al registrar la compra.');
+      }
+    });
   }
 
   Navegar(site: string) {

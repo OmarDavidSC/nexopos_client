@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="cancel-container">
+        <div class="process">
+            <h3>
+                Proceso de cancelación
+            </h3>
+            <app-step-vertical [steps]="steps">
+            </app-step-vertical>
+        </div>
+        <div class="purchase-info">
+            <h3>
+                Resumen de compra
+            </h3>
+            <div class="info-item">
+                <span>Número</span>
+                <strong>#{{Compra.Id}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Documento</span>
+                <strong>{{Compra.Documento}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Proveedor</span>
+                <strong>{{Compra.NombreProveedor}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Productos</span>
+                <strong>{{Compra.ProductoTotales}}</strong>
+            </div>
+            <div class="info-item total">
+                <span>Total</span>
+                <strong>
+                    S/ {{Compra.Total | number:'1.2-2'}}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="warning-stock">
+        <div class="warning-icon">
+            <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="warning-content">
+            <strong>
+                Impacto en inventario
+            </strong>
+            <p>
+                Al cancelar esta compra, el stock de los productos
+                asociados disminuirá automáticamente y se registrará
+                un movimiento de salida en el inventario.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button color="primary" [disabled]="Loading" (click)="dialogRef.close()">
+        Cerrar
+    </button>
+    <button mat-raised-button color="warn" (click)="OnEventoCancelar()" [disabled]="Loading">
+        {{Loading ? 'Procesando...' : 'Confirmar Cancelación'}}
+    </button>
+</div>

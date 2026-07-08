@@ -14,6 +14,7 @@ import { AdmProductosComponent } from './components/pages/almacen/adm-productos/
 import { ProovedorComponent } from './components/pages/compras/proovedor/proovedor.component';
 import { BandejaComprasComponent } from './components/pages/compras/bandeja-compras/bandeja-compras.component';
 import { FormularioNuevaCompraComponent } from './components/pages/compras/formulario-nueva-compra/formulario-nueva-compra.component';
+import { VerDetalleCompraComponent } from './components/pages/compras/ver-detalle-compra/ver-detalle-compra.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -31,7 +32,8 @@ const routes: Routes = [
   //compras
   { path: 'administracion-proveedores', component: ProovedorComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-compras', component: BandejaComprasComponent, canActivate: [AuthGuard] },
-  { path: 'nueva-compra', component: FormularioNuevaCompraComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-compras/nueva-compra', component: FormularioNuevaCompraComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-compras/:id/detalle-compra', component: VerDetalleCompraComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

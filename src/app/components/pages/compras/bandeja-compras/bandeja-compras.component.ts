@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { PurchaseService } from 'src/app/shared/services/purchase.service';
 import { SupplierService } from 'src/app/shared/services/supplier.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
+import { ModalCancelarCompraComponent } from '../modals/modal-cancelar-compra/modal-cancelar-compra.component';
 
 @Component({
   selector: 'app-bandeja-compras',
@@ -120,29 +121,6 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
     await this.obtenerMaestros();
   }
 
-  async eventoMostrarPopupRegistrar(): Promise<void> {
-    const dialogRef = this.dialog.open(null, {
-      width: '600px',
-      disableClose: true,
-      data: {
-        compra: null,
-      }
-    });
-    const respuesta = await dialogRef.afterClosed().toPromise();
-    if (respuesta) {
-      await this.initialize();
-    }
-  }
-
-  public Navegar(site: string): void {
-    const tieneAspx = site.indexOf('.aspx') !== -1;
-    if (tieneAspx) {
-      location.href = ``;
-    } else {
-      this.router.navigate([site]);
-    }
-  }
-
   async clearFilters() {
     this.Filtro = {
       page: 1,
@@ -152,5 +130,23 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
     };
     this.PaginaActual = 1;
     await this.obtenerMaestros();
+  }
+
+  async OnEventoVerDetalle(compra: ECompra) {
+    this.Navegar(`bandeja-compras/${compra.Id}/detalle-compra`);
+  }
+
+  async OnEventoCancelar(compra: ECompra) {
+    const dialogRef = this.dialog.open(ModalCancelarCompraComponent, {
+      width: '900px',
+      disableClose: true,
+      data: {
+        compra: compra,
+      }
+    });
+    const respuesta = await dialogRef.afterClosed().toPromise();
+    if (respuesta) {
+      await this.initialize();
+    }
   }
 }

@@ -1,0 +1,17 @@
+<div class="step-container">
+    <div class="step-item" *ngFor="let step of steps; let last = last" [ngClass]="step.status">
+        <div class="step-circle">
+            {{ getIcon(step.status) }}
+        </div>
+        <div class="step-content">
+            <h4>
+                {{ step.title }}
+            </h4>
+            <p *ngIf="step.description">
+                {{ step.description }}
+            </p>
+        </div>
+        <div class="step-line" *ngIf="!last">
+        </div>
+    </div>
+</div>

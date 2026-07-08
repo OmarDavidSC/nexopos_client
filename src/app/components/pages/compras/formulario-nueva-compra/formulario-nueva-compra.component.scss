@@ -1,0 +1,289 @@
+.purchase-page {
+    padding: 1.5rem;
+    background: #f5f7fb;
+    min-height: calc(100vh - 70px);
+}
+
+.card-section,
+.summary-card {
+    border: none;
+    border-radius: 18px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .05);
+    overflow: hidden;
+}
+
+.card-section {
+    padding: 1.5rem;
+}
+
+.summary-card {
+    padding: 1.5rem;
+    position: sticky;
+    top: 20px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ececec;
+
+    mat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 26px;
+        border-radius: 12px;
+        background: #1976d2;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #1d2939;
+    }
+
+    span {
+        color: #667085;
+        font-size: 13px;
+    }
+}
+
+.summary-card {
+
+    h3 {
+        margin-bottom: 25px;
+        font-size: 22px;
+        font-weight: 700;
+        text-align: center;
+        color: #1d2939;
+    }
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #475467;
+
+    strong {
+        color: #1d2939;
+        font-weight: 700;
+    }
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed #d0d5dd;
+
+    span {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    strong {
+        font-size: 26px;
+        color: #1976d2;
+    }
+}
+
+.summary-card button {
+    height: 52px;
+    margin-top: 25px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+::ng-deep .mat-mdc-form-field {
+    width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    border-radius: 12px !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+textarea {
+    resize: none;
+}
+
+@media (max-width:1200px) {
+
+    .summary-card {
+        position: relative;
+        top: auto;
+    }
+
+}
+
+@media (max-width:992px) {
+
+    .purchase-page {
+        padding: 1rem;
+    }
+
+}
+
+@media (max-width:768px) {
+
+    .card-section {
+        padding: 1rem;
+    }
+
+    .section-header {
+
+        mat-icon {
+            width: 42px;
+            height: 42px;
+            font-size: 22px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        span {
+            font-size: 12px;
+        }
+
+    }
+
+    .summary-total strong {
+        font-size: 22px;
+    }
+
+}
+
+@media (max-width:576px) {
+
+    .purchase-page {
+        padding: .75rem;
+    }
+
+    .summary-card,
+    .card-section {
+        border-radius: 14px;
+    }
+
+    .summary-card button {
+        height: 48px;
+    }
+
+}
+
+.purchase-card{
+    border-radius:16px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.product-option{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+}
+
+.product-option small{
+    color:#777;
+}
+
+.btn-add-product{
+    height:56px;
+}
+
+.purchase-table{
+    width:100%;
+}
+
+.purchase-table th{
+    font-weight:600;
+    background:#f7f9fc;
+}
+
+.purchase-table td,
+.purchase-table th{
+    padding:16px;
+}
+
+.badge-total{
+    margin-left:auto;
+    background:#1976d2;
+    color:#fff;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.resume-box{
+    background:#fafafa;
+    border-radius:14px;
+    padding:25px;
+    border:1px solid #e5e5e5;
+}
+
+.resume-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+    font-size:15px;
+}
+
+.resume-total{
+    margin-top:15px;
+    border-top:1px solid #ddd;
+    padding-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:23px;
+    font-weight:700;
+}
+
+.resume-total span{
+    color:#1976d2;
+}
+
+.btn-save{
+    width:100%;
+    margin-top:25px;
+    height:50px;
+    font-size:15px;
+}
+
+@media(max-width:992px){
+
+    .resume-box{
+        margin-top:20px;
+    }
+
+    .btn-add-product{
+        width:100%;
+    }
+
+}
