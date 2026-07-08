@@ -1,0 +1,71 @@
+<div class="purchase-card">
+    <!-- Timeline -->
+    <div class="timeline-dot"></div>
+    <!-- Header -->
+    <div class="card-header">
+        <div>
+            <div class="purchase-date">
+                {{ purchase.FechaCompra }}
+            </div>
+            <div class="purchase-code">
+                {{ purchase.Documento }}
+            </div>
+        </div>
+        <span class="status" [ngClass]="{
+                'completed': purchase.Estado == 'COMPLETED',
+                'pending': purchase.Estado == 'PENDING',
+                'cancelled': purchase.Estado == 'CANCELLED'
+            }">
+            {{ purchase.EstadoLabel }}
+        </span>
+    </div>
+    <!-- Body -->
+    <div class="card-body">
+        <div class="info">
+            <mat-icon>business</mat-icon>
+            <div>
+                <small>Proveedor</small>
+                <strong> {{ purchase.NombreProveedor }}</strong>
+            </div>
+        </div>
+        <div class="info">
+            <mat-icon>person</mat-icon>
+            <div>
+                <small>Registrado por</small>
+                <strong> {{ purchase.NombreUsuarioRegistrador }}</strong>
+            </div>
+        </div>
+        <div class="info">
+            <mat-icon>inventory_2</mat-icon>
+            <div>
+                <small>Productos</small>
+                <strong> {{ purchase.ProductoTotales }}</strong>
+            </div>
+        </div>
+        <div class="info">
+            <mat-icon>payments</mat-icon>
+            <div>
+                <small>Total</small>
+                <strong> S/ {{ purchase.Total | number:'1.2-2' }}</strong>
+            </div>
+        </div>
+        <div class="info" *ngIf="purchase.Observacion">
+            <mat-icon>description</mat-icon>
+            <div>
+                <small>Observación</small>
+                <strong> {{ purchase.Observacion }}</strong>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="card-footer">
+        <button mat-stroked-button color="primary" (click)="view.emit(purchase)">
+            <mat-icon>visibility</mat-icon>
+            Ver detalle
+        </button>
+        <button *ngIf="purchase.Estado == 'COMPLETED'" mat-flat-button color="warn" (click)="cancel.emit(purchase)">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+        </button>
+    </div>
+</div>

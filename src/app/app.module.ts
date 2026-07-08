@@ -45,6 +45,13 @@ import { ProductFiltersComponent } from './components/pages/almacen/adm-producto
 import { ProductTableComponent } from './components/pages/almacen/adm-productos/partials/product-table/product-table.component';
 import { ProovedorComponent } from './components/pages/compras/proovedor/proovedor.component';
 import { ModalProveedorComponent } from './components/pages/compras/modals/modal-proveedor/modal-proveedor.component';
+import { BandejaComprasComponent } from './components/pages/compras/bandeja-compras/bandeja-compras.component';
+import { PurchaseSummaryComponent } from './components/pages/compras/bandeja-compras/partials/purchase-summary/purchase-summary.component';
+import { PurchaseFiltersComponent } from './components/pages/compras/bandeja-compras/partials/purchase-filters/purchase-filters.component';
+import { PurchaseTimelineComponent } from './components/pages/compras/bandeja-compras/partials/purchase-timeline/purchase-timeline.component';
+import { PurchaseCardComponent } from './components/pages/compras/bandeja-compras/partials/purchase-card/purchase-card.component';
+import { FormularioNuevaCompraComponent } from './components/pages/compras/formulario-nueva-compra/formulario-nueva-compra.component';
+import { VerDetalleCompraComponent } from './components/pages/compras/ver-detalle-compra/ver-detalle-compra.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +87,13 @@ import { ModalProveedorComponent } from './components/pages/compras/modals/modal
     ProductTableComponent,
     ProovedorComponent,
     ModalProveedorComponent,
+    BandejaComprasComponent,
+    PurchaseSummaryComponent,
+    PurchaseFiltersComponent,
+    PurchaseTimelineComponent,
+    PurchaseCardComponent,
+    FormularioNuevaCompraComponent,
+    VerDetalleCompraComponent,
   ],
   imports: [
     ComunModule,

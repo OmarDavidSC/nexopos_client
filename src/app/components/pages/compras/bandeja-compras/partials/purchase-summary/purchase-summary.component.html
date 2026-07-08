@@ -1,0 +1,56 @@
+<div class="row g-4">
+    <!-- Total Compras -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card total">
+            <div class="summary-icon">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Total Compras</span>
+                <h2>
+                    {{summary?.total_purchases || 0}}
+                </h2>
+                <small>Compras registradas</small>
+            </div>
+        </div>
+    </div>
+    <!-- Pendientes -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card pending">
+            <div class="summary-icon">
+                <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Pendientes</span>
+                <h2>{{summary?.pending || 0}}</h2>
+                <small>Esperando confirmación</small>
+            </div>
+        </div>
+    </div>
+    <!-- Completadas -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card completed">
+            <div class="summary-icon">
+                <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Completadas</span>
+                <h2>{{summary?.completed || 0}}</h2>
+                <small>Compras finalizadas</small>
+            </div>
+        </div>
+    </div>
+    <!-- Canceladas -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+        <div class="summary-card cancelled">
+            <div class="summary-icon">
+                <mat-icon>cancel</mat-icon>
+            </div>
+            <div class="summary-content">
+                <span class="summary-title">Canceladas</span>
+                <h2>{{summary?.cancelled || 0}}</h2>
+                <small>Compras anuladas</small>
+            </div>
+        </div>
+    </div>
+</div>

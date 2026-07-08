@@ -1,0 +1,39 @@
+.filters-card {
+    background: #fff;
+    border: 1px solid #edf2f7;
+    border-radius: 18px;
+    padding: 22px;
+    margin-top: 20px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    border-radius: 14px !important;
+}
+
+.btn-clear {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    transition: .2s;
+}
+
+.btn-clear:hover {
+    background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+
+    .filters-card {
+        padding: 18px;
+    }
+
+    .btn-clear {
+        width: 100%;
+    }
+
+}

@@ -12,6 +12,8 @@ import { AdmMarcasComponent } from './components/pages/almacen/adm-marcas/adm-ma
 import { AdmUnidadesComponent } from './components/pages/almacen/adm-unidades/adm-unidades.component';
 import { AdmProductosComponent } from './components/pages/almacen/adm-productos/adm-productos.component';
 import { ProovedorComponent } from './components/pages/compras/proovedor/proovedor.component';
+import { BandejaComprasComponent } from './components/pages/compras/bandeja-compras/bandeja-compras.component';
+import { FormularioNuevaCompraComponent } from './components/pages/compras/formulario-nueva-compra/formulario-nueva-compra.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -28,6 +30,8 @@ const routes: Routes = [
   { path: 'administracion-unidades', component: AdmUnidadesComponent, canActivate: [AuthGuard] },
   //compras
   { path: 'administracion-proveedores', component: ProovedorComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-compras', component: BandejaComprasComponent, canActivate: [AuthGuard] },
+  { path: 'nueva-compra', component: FormularioNuevaCompraComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

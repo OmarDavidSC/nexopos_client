@@ -60,7 +60,7 @@ export class MenuLateralComponent implements OnInit {
       icon: 'shopping_cart',
       children: [
         { label: 'Proveedores', icon: 'local_shipping', route: '/administracion-proveedores' },
-        { label: 'Compras', icon: 'receipt_long', route: '/compras' }
+        { label: 'Compras', icon: 'receipt_long', route: '/bandeja-compras' }
       ]
     },
     {

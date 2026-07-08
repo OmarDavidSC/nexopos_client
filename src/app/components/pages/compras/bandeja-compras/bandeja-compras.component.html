@@ -1,0 +1,19 @@
+<app-adm-header [titulo]="'Gestión de compras'" [descripcion]="'Gestión y mantenimiento de las compras registradas'"
+    [totalRegistros]="TotalRegistros" [textoBoton]="'Nueva Compra'" [rutaRegreso]="'/inicio'"
+    (accionNuevo)="Navegar('nueva-compra')" [visible]="true">
+</app-adm-header>
+
+<app-purchase-summary [summary]="Resumen">
+</app-purchase-summary>
+
+<app-purchase-filters [filter]="Filtro" [suppliers]="ListaProveedores" (search)="OnSearchFiltro()"
+    (supplierChange)="OnSupplierChange()" (statusChange)="onStatusChange()" (clear)="clearFilters()">
+</app-purchase-filters>
+
+<app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="null" (cancel)="null">
+</app-purchase-timeline>
+
+
+<!-- <app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="eventoVerCompra($event)"
+    (cancel)="eventoCancelarCompra($event)">
+</app-purchase-timeline> -->
