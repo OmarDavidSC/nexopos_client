@@ -86,7 +86,6 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
 
   async obtenerMaestros() {
     this.Loading = true;
-    debugger;
     const data = await this.ventaService.index(this.Filtro)
     this.ListaVentas = EVenta.parseJsonList(data.data);
     this.PaginaActual = data.page;
