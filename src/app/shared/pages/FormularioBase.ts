@@ -221,5 +221,4 @@ export class FormularioBase {
       this.router.navigate([site]);
     }
   }
-
 }

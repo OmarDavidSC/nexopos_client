@@ -1,1 +1,126 @@
-<p>ver-detalle-venta works!</p>
+<app-adm-header
+    [descripcion]="'Consulta la información completa de la venta, incluyendo clientes, productos vendidos, cantidades, precios y estado del registro.'"
+    [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Bandeja de Ventas', ruta:'/bandeja-ventas'}, {nombre:'Detalle de Venta'}]"
+    [visible]="true" [textoBoton]="'Nueva Venta'" (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')"
+    [rutaRegreso]="'/bandeja-ventas'">
+</app-adm-header>
+<div class="container-fluid" *ngIf="!Loading && Venta">
+    <!-- HEADER -->
+    <div class="header-card">
+        <div class="left">
+            <div class="title">
+                <mat-icon>receipt_long</mat-icon>
+                Venta {{Venta.voucher_series}}-{{Venta.voucher_number}}
+            </div>
+            <div class="status" [ngClass]="Venta.status.toLowerCase()">
+                <mat-icon>{{Venta.status=='COMPLETED' ? 'check_circle' :Venta.status=='CANCELLED' ? 'cancel'
+                    :'schedule'}}</mat-icon>
+                {{Venta.status=='COMPLETED' ? 'Completada' :Venta.status=='CANCELLED' ? 'Anulada' :'Pendiente'}}
+            </div>
+        </div>
+        <div class="right">
+            <div class="amount">S/ {{Venta.total}}</div>
+            <small>Total Venta</small>
+        </div>
+    </div>
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">
+                <mat-icon>person</mat-icon>
+            </div>
+            <div>
+                <span>Cliente</span>
+                <strong>{{Venta.customer}}</strong>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="icon">
+                <mat-icon>event</mat-icon>
+            </div>
+            <div>
+                <span>Fecha</span>
+                <strong>{{Venta.sale_date}}</strong>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="icon">
+                <mat-icon>payments</mat-icon>
+            </div>
+            <div>
+                <span>Método Pago</span>
+                <strong>{{Venta.payment_method}}</strong>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="icon">
+                <mat-icon>description</mat-icon>
+            </div>
+            <div>
+                <span>Documento</span>
+                <strong>
+                    {{Venta.voucher_type}}
+                    {{Venta.voucher_series}}-{{Venta.voucher_number}}
+                </strong>
+            </div>
+        </div>
+    </div>
+    <div class="products-card">
+        <div class="section-title">
+            <mat-icon>inventory_2</mat-icon>
+            Productos vendidos
+        </div>
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Producto</th>
+                    <th class="text-center">Cant.</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-end">Desc.</th>
+                    <th class="text-end">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of DetalleVenta; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.code}}</td>
+                    <td>
+                        <strong>{{item.product}}</strong>
+                    </td>
+                    <td class="text-center">
+                        {{item.quantity}}
+                    </td>
+                    <td class="text-end">
+                        S/ {{item.sale_price}}
+                    </td>
+                    <td class="text-end">
+                        S/ {{item.discount}}
+                    </td>
+                    <td class="text-end fw-bold">
+                        S/ {{item.subtotal}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="totals">
+        <div>
+
+            <span>Subtotal</span>
+            <strong>S/ {{Venta.subtotal}}</strong>
+        </div>
+        <div>
+            <span>Impuesto</span>
+            <strong>S/ {{Venta.tax}}</strong>
+        </div>
+        <div>
+            <span>Descuento</span>
+            <strong>S/ {{Venta.discount}}</strong>
+        </div>
+        <div class="grand">
+            <span>Total</span>
+            <strong>S/ {{Venta.total}}</strong>
+        </div>
+    </div>
+</div>

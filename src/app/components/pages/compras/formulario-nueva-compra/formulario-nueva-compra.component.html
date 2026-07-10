@@ -18,7 +18,7 @@
                         <span>Complete los datos generales.</span>
                     </div>
                 </div>
-                <div class="row g-3">
+                <div class="row g-3 align-items-center">
                     <div class="col-lg-6">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Proveedor</mat-label>
@@ -41,10 +41,26 @@
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </div>
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>N° Documento</mat-label>
+                            <input matInput [(ngModel)]="compra.document_number" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Nombre de Proveedor</mat-label>
+                            <input matInput [(ngModel)]="compra.business_name" readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row g-3 mt-1">
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Tipo</mat-label>
-                            <mat-select [(ngModel)]="compra.voucher_type">
+                            <mat-select [(ngModel)]="compra.voucher_type" (selectionChange)="cambiarSerie()">
                                 <mat-option value="FACTURA">Factura</mat-option>
                                 <mat-option value="BOLETA">Boleta</mat-option>
                                 <mat-option value="NOTA">Nota</mat-option>
@@ -73,7 +89,7 @@
                     Agregar producto
                 </div>
                 <div class="row g-3 align-items-end">
-                    <div class="col-lg-6">
+                    <div class="col-lg-10">
                         <mat-form-field appearance="outline" class="w-100">
                             <mat-label>Buscar producto</mat-label>
                             <input matInput [(ngModel)]="textoProducto" (input)="filtrarProducto()"
@@ -89,24 +105,44 @@
                             </mat-autocomplete>
                         </mat-form-field>
                     </div>
-                    <div class="col-lg-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Cantidad</mat-label>
-                            <input matInput type="number" min="1" [(ngModel)]="productoTemporal.quantity">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Costo</mat-label>
-                            <input matInput type="number" min="0" [(ngModel)]="productoTemporal.purchase_price">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-2 d-grid">
+                       <div class="col-lg-2 d-grid">
                         <button mat-raised-button color="primary" class="btn-add-product"
                             (click)="OnEventoAgregarProducto()">
                             <mat-icon>add</mat-icon>
                             Agregar
                         </button>
+                    </div>                    
+                </div>
+                <div class="row g-3 mt-1">
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Código</mat-label>
+                            <input matInput [(ngModel)]="productoTemporal.code" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Producto</mat-label>
+                            <input matInput [(ngModel)]="productoTemporal.name" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Stock</mat-label>
+                            <input matInput [(ngModel)]="productoTemporal.stock" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Costo Compra</mat-label>
+                            <input matInput [(ngModel)]="productoTemporal.purchase_price">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Cantidad</mat-label>
+                            <input matInput type="number" min="1" [(ngModel)]="productoTemporal.quantity">
+                        </mat-form-field>
                     </div>
                 </div>
             </mat-card>

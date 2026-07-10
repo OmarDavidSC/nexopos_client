@@ -1,34 +1,51 @@
 <div class="sale-item mt-2">
     <div class="sale-main">
         <div class="sale-left">
-            <span class="status-dot" [ngClass]="{
-                    'completed': sale.Estado == 'COMPLETED',
-                    'pending': sale.Estado == 'PENDING',
-                    'cancelled': sale.Estado == 'CANCELLED'
-                }">
-            </span>
+            <div class="status-dot" [ngClass]="{
+                'completed': sale.Estado == 'COMPLETED',
+                'pending': sale.Estado == 'PENDING',
+                'cancelled': sale.Estado == 'CANCELLED'
+            }">
+            </div>
             <div class="sale-content">
                 <div class="sale-top">
-                    <div class="document">
-                        {{sale.Documento}}
+                    <div class="sale-info">
+                        <div class="document">
+                            {{sale.Documento}}
+                        </div>
+                        <div class="customer">
+                            <mat-icon>person</mat-icon> Cliente: 
+                            {{sale.NombreCliente}}
+                        </div>
                     </div>
-                    <div class="amount">
-                        S/ {{sale.Total}}
+                    <div class="sale-right">
+                        <div class="amount">
+                            S/ {{sale.Total | number:'1.2-2'}}
+                        </div>
+                        <span class="badge" [ngClass]="{
+                                'badge-success': sale.Estado=='COMPLETED',
+                                'badge-warning': sale.Estado=='PENDING',
+                                'badge-danger': sale.Estado=='CANCELLED'
+                            }">
+                            {{sale.EstadoLabel}}
+                        </span>
                     </div>
-                </div>
-                <div class="supplier">
-                    {{sale.NombreCliente}}
                 </div>
                 <div class="meta">
                     <span>
-                        {{sale.ProductoTotales}} productos
+                        <mat-icon>inventory_2</mat-icon>
+                        {{sale.ProductoTotales}} Productos
                     </span>
-                    <span>•</span>
                     <span>
+                        <mat-icon>payments</mat-icon>
+                        {{sale.MetodoPago}}
+                    </span>
+                    <span>
+                        <mat-icon>badge</mat-icon> Registrado por: 
                         {{sale.NombreUsuarioRegistrador}}
                     </span>
-                    <span>•</span>
                     <span>
+                        <mat-icon>calendar_today</mat-icon> Fecha Venta: 
                         {{sale.FechaVenta}}
                     </span>
                 </div>

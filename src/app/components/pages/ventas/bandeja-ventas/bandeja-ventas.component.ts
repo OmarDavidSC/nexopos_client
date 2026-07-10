@@ -144,12 +144,12 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
     this.Navegar(`bandeja-ventas/${compra.Id}/detalle-venta`);
   }
 
-  async OnEventoCancelar(compra: EVenta) {
+  async OnEventoCancelar(venta: EVenta) {
     const dialogRef = this.dialog.open(ModalAnularVentaComponent, {
       width: '900px',
       disableClose: true,
       data: {
-        compra: compra,
+        venta: venta,
       }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();

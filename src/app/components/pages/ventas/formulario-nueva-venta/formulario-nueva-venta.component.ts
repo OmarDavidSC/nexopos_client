@@ -45,8 +45,10 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
 
   venta: any = {
     customer_id: null,
+    customer_document: '',
+    customer_name: '',
     sale_date: new Date(),
-    voucher_type: 'CASH',
+    voucher_type: '',
     voucher_series: '',
     voucher_number: '',
     payment_method: '',
@@ -58,7 +60,10 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
 
   productoTemporal: any = {
     quantity: 1,
-    sale_price: 0
+    sale_price: 0,
+    code: '',
+    name: '',
+    stock: 0,
   };
 
   constructor(
@@ -95,41 +100,63 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
     });
   }
 
-
   async cargarClientes() {
     this.ListaClientes = await this.clienteService.adm();
     this.clientesFiltrados = [...this.ListaClientes];
   }
 
+  cambiarSerie() {
+    switch (this.venta.voucher_type) {
+      case 'FACTURA': this.venta.voucher_series = 'FA';
+        break;
+      case 'BOLETA': this.venta.voucher_series = 'BO';
+        break;
+      case 'NOTA': this.venta.voucher_series = 'NT';
+        break;
+      case 'TICKET': this.venta.voucher_series = 'TK';
+        break;
+      default: this.venta.voucher_series = '';
+        break;
+    }
+  }
+
   filtrarCliente() {
     const texto = this.textoCliente.toLowerCase();
     this.clientesFiltrados = this.ListaClientes.filter((x: any) =>
-      x.NombreEmpresa.toLowerCase().includes(texto));
+      x.NombreCliente.toLowerCase().includes(texto) || x.NumeroDocumento.toLowerCase().includes(texto));
   }
 
   seleccionarCliente(cliente: any) {
     this.ClienteSeleccionado = cliente;
     this.venta.customer_id = cliente.Id;
+    this.venta.customer_document = cliente.NumeroDocumento;
+    this.venta.customer_name = cliente.NombreCliente;
   }
 
   mostrarCliente(cliente: any): string {
-    return cliente ? cliente.NombreCliente : '';
+    return cliente ? `${cliente.NumeroDocumento} - ${cliente.NombreCliente}` : '';
   }
 
   filtrarProducto() {
     const texto = this.textoProducto.toLowerCase();
     this.productosFiltrados = this.ListaProductos.filter((x: any) =>
-      x.Nombre.toLowerCase().includes(texto)
+      x.Nombre.toLowerCase().includes(texto) ||
+      x.Codigo.toLowerCase().includes(texto)
     );
   }
 
   seleccionarProducto(producto: any) {
     this.ProductoSeleccionado = producto;
-    this.productoTemporal.sale_price = producto.PrecioVenta ?? 0;
+    // this.productoTemporal.sale_price = producto.PrecioVenta ?? 0;
+    this.productoTemporal.product_id = producto.Id;
+    this.productoTemporal.code = producto.Codigo;
+    this.productoTemporal.name = producto.Nombre;
+    this.productoTemporal.stock = producto.StockActual;
+    this.productoTemporal.sale_price = producto.PrecioVenta;
   }
 
   mostrarProducto(producto: any): string {
-    return producto ? producto.Nombre : '';
+    return producto ? `${producto.Codigo} - ${producto.Nombre}` : '';
   }
 
   OnEventoAgregarProducto() {

@@ -42,9 +42,11 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
 
   compra: any = {
     supplier_id: null,
+    document_number: '',
+    business_name: '',
     purchase_date: new Date(),
     voucher_type: 'FACTURA',
-    voucher_series: '',
+    voucher_series: 'FA',
     voucher_number: '',
     subtotal: 0,
     tax: 0,
@@ -55,6 +57,9 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
 
   productoTemporal: any = {
     quantity: 1,
+    code: '',
+    name: '',
+    stock: 0,
     purchase_price: 0
   };
 
@@ -92,6 +97,20 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     });
   }
 
+  cambiarSerie() {
+    switch (this.compra.voucher_type) {
+      case 'FACTURA': this.compra.voucher_series = 'FA';
+        break;
+      case 'BOLETA': this.compra.voucher_series = 'BO';
+        break;
+      case 'NOTA': this.compra.voucher_series = 'NT';
+        break;
+      case 'TICKET': this.compra.voucher_series = 'TK';
+        break;
+      default: this.compra.voucher_series = '';
+        break;
+    }
+  }
 
   initialize() {
   }
@@ -99,32 +118,40 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
   filtrarProveedor() {
     const texto = this.textoProveedor.toLowerCase();
     this.proveedoresFiltrados = this.ListaProveedores.filter((x: any) =>
-      x.NombreEmpresa.toLowerCase().includes(texto));
+      x.NombreEmpresa.toLowerCase().includes(texto) || x.NumeroDocumento.toLowerCase().includes(texto));
   }
 
   seleccionarProveedor(proveedor: any) {
     this.ProveedorSeleccionado = proveedor;
+    this.textoProveedor = '';
     this.compra.supplier_id = proveedor.Id;
+    this.compra.document_number = proveedor.NumeroDocumento;
+    this.compra.business_name = proveedor.NombreEmpresa;
   }
 
   mostrarProveedor(proveedor: any): string {
-    return proveedor ? proveedor.NombreEmpresa : '';
+    return proveedor ? `${proveedor.NumeroDocumento} - ${proveedor.NombreEmpresa}` : '';
   }
 
   filtrarProducto() {
     const texto = this.textoProducto.toLowerCase();
     this.productosFiltrados = this.ListaProductos.filter((x: any) =>
-      x.Nombre.toLowerCase().includes(texto)
+      x.Nombre.toLowerCase().includes(texto) ||
+      x.Codigo.toLowerCase().includes(texto)
     );
   }
 
   seleccionarProducto(producto: any) {
     this.ProductoSeleccionado = producto;
+    this.textoProducto = '';
+    this.productoTemporal.code = producto.Codigo;
+    this.productoTemporal.name = producto.Nombre;
+    this.productoTemporal.stock = producto.StockActual;
     this.productoTemporal.purchase_price = producto.PrecioCompra ?? 0;
   }
 
   mostrarProducto(producto: any): string {
-    return producto ? producto.Nombre : '';
+    return producto ? `${producto.Codigo} - ${producto.Nombre}` : '';
   }
 
   OnEventoAgregarProducto() {

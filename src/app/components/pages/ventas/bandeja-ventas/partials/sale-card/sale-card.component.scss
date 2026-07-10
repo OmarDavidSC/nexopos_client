@@ -8,140 +8,164 @@
 
 .sale-item:hover {
     border-color: #2563EB;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
 }
 
-.sale-main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+.sale-main{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
-.sale-left {
-    display: flex;
-    align-items: flex-start;
-    gap: 18px;
-    flex: 1;
+.sale-left{
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+    flex:1;
 }
 
-.status-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    margin-top: 8px;
-    flex-shrink: 0;
+.sale-content{
+    width:100%;
 }
 
-.completed {
-    background: #22C55E;
+.sale-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
 }
 
-.pending {
-
-    background: #F59E0B;
-
+.sale-info{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
 }
 
-.cancelled {
-    background: #EF4444;
+.document{
+    font-size:18px;
+    font-weight:700;
+    color:#111827;
 }
 
-.sale-content {
-    width: 100%;
+.customer{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:#4B5563;
+    font-size:14px;
+    font-weight:600;
 }
 
-.sale-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+.customer mat-icon{
+    font-size:18px;
+    width:18px;
+    height:18px;
+    color:#2563EB;
 }
 
-.document {
-    font-size: 18px;
-    font-weight: 700;
-    color: #111827;
+.sale-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.amount {
-    font-size: 22px;
-    font-weight: 700;
-    color: #2563EB;
+.amount{
+    font-size:22px;
+    font-weight:700;
+    color:#2563EB;
 }
 
-.supplier {
-    font-size: 16px;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 6px;
+.badge{
+    padding:5px 12px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
 }
 
-.meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    color: #6B7280;
-    font-size: 13px;
+.badge-success{
+    background:#DCFCE7;
+    color:#15803D;
 }
 
-.sale-actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+.badge-warning{
+    background:#FEF3C7;
+    color:#B45309;
 }
 
-.sale-actions button {
-    white-space: nowrap;
+.badge-danger{
+    background:#FEE2E2;
+    color:#B91C1C;
 }
 
-@media(max-width:992px) {
+.meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    font-size:13px;
+    color:#6B7280;
+}
 
-    .sale-main {
-        flex-direction: column;
-        align-items: flex-start;
+.meta span{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.meta mat-icon{
+    font-size:16px;
+    width:16px;
+    height:16px;
+    color:#9CA3AF;
+}
+
+.sale-actions{
+    display:flex;
+    gap:10px;
+}
+
+.status-dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    margin-top:8px;
+}
+
+.completed{
+    background:#22C55E;
+}
+
+.pending{
+    background:#F59E0B;
+}
+
+.cancelled{
+    background:#EF4444;
+}
+
+@media(max-width:992px){
+
+    .sale-main{
+        flex-direction:column;
+        align-items:flex-start;
     }
 
-    .sale-top {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
+    .sale-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
     }
 
-    .sale-actions {
-        width: 100%;
+    .sale-right{
+        width:100%;
+        justify-content:space-between;
     }
 
-    .sale-actions button {
-        flex: 1;
-    }
-}
-
-@media(max-width:576px) {
-    .sale-item {
-        padding: 16px;
+    .sale-actions{
+        width:100%;
     }
 
-    .sale-left {
-        gap: 12px;
+    .sale-actions button{
+        flex:1;
     }
-
-    .document {
-        font-size: 16px;
-    }
-
-    .supplier {
-        font-size: 14px;
-    }
-
-    .amount {
-        font-size: 20px;
-    }
-
-    .meta {
-        flex-direction: column;
-        gap: 3px;
-
-    }
-
 }

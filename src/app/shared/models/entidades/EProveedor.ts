@@ -27,7 +27,7 @@ export class EProveedor {
         const objeto = new EProveedor();
 
         objeto.Id = SPParse.getNumber(element["id"]);
-        objeto.NumeroDocumento = SPParse.getNumber(element["document_number"]);
+        objeto.NumeroDocumento = SPParse.getString(element["document_number"]);
         objeto.NombreEmpresa = SPParse.getString(element["business_name"]);
         objeto.Contacto = SPParse.getString(element["contact"]);
         objeto.Telefono = SPParse.getNumber(element["phone"]);
@@ -39,7 +39,6 @@ export class EProveedor {
     }
 
     public static parseJsonList(elements: any): EProveedor[] {
-
         const listado: EProveedor[] = [];
         if (elements != null) {
             Object.keys(elements).forEach(key => {

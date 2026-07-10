@@ -43,7 +43,6 @@ const routes: Routes = [
   { path: 'bandeja-compras/nueva-compra', component: FormularioNuevaCompraComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-compras/:id/detalle-compra', component: VerDetalleCompraComponent, canActivate: [AuthGuard] },
   //ventas
-  //compras
   { path: 'administracion-clientes', component: ClientesComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas', component: BandejaVentasComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },

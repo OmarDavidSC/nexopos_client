@@ -1,1 +1,65 @@
-<p>modal-anular-venta works!</p>
+<div class="modal-content">
+    <div class="cancel-container">
+        <div class="process">
+            <h3>
+                Proceso de Anulación
+            </h3>
+            <app-step-vertical [steps]="steps">
+            </app-step-vertical>
+        </div>
+        <div class="purchase-info">
+            <h3>
+                Resumen de Venta
+            </h3>
+            <div class="info-item">
+                <span>Número</span>
+                <strong>#{{Venta.Id}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Documento</span>
+                <strong>{{Venta.Documento}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Cliente</span>
+                <strong>{{Venta.NombreCliente}}</strong>
+            </div>
+            <div class="info-item">
+                <span>Productos</span>
+                <strong>{{Venta.ProductoTotales}}</strong>
+            </div>
+            <div class="info-item total">
+                <span>Total</span>
+                <strong>
+                    S/ {{Venta.Total | number:'1.2-2'}}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="warning-stock">
+        <div class="warning-icon">
+            <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="warning-content">
+            <strong>
+                Impacto en inventario
+            </strong>
+            <p>
+                Al anular esta venta, las cantidades de todos los productos serán
+                devueltas automáticamente al inventario. Además, se registrará un
+                movimiento de entrada para mantener el historial y la trazabilidad
+                del stock.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button color="primary" [disabled]="Loading" (click)="dialogRef.close()">
+        Cerrar
+    </button>
+    <button mat-raised-button color="warn" (click)="OnEventoCancelar()" [disabled]="Loading">
+        {{Loading ? 'Procesando...' : 'Confirmar anulación'}}
+    </button>
+</div>
