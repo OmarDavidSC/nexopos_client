@@ -64,6 +64,10 @@ import { SaleCardComponent } from './components/pages/ventas/bandeja-ventas/part
 import { SaleFiltersComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-filters/sale-filters.component';
 import { SaleSummaryComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-summary/sale-summary.component';
 import { SaleTimelineComponent } from './components/pages/ventas/bandeja-ventas/partials/sale-timeline/sale-timeline.component';
+import { AdmUsuarioComponent } from './components/pages/usuario/adm-usuario/adm-usuario.component';
+import { ModalUsuarioComponent } from './components/pages/usuario/modals/modal-usuario/modal-usuario.component';
+import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/adm-sucursal.component';
+import { ModalSucursalComponent } from './components/pages/sucursal/modals/modal-sucursal/modal-sucursal.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +122,10 @@ import { SaleTimelineComponent } from './components/pages/ventas/bandeja-ventas/
     SaleFiltersComponent,
     SaleSummaryComponent,
     SaleTimelineComponent,
+    AdmUsuarioComponent,
+    ModalUsuarioComponent,
+    AdmSucursalComponent,
+    ModalSucursalComponent,
   ],
   imports: [
     ComunModule,

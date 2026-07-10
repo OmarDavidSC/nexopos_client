@@ -1,0 +1,98 @@
+<h2 mat-dialog-title>{{TituloPopup}}</h2>
+
+<div mat-dialog-content>
+    <div class="row" *ngIf="Form" [formGroup]="Form">
+        <!-- NOMBRE -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Nombre <span style="color:red;">(*)</span></mat-label>
+            <input matInput formControlName="name" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('name')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- APELLIDO PATERNO -->
+        <mat-form-field class="col-md-6 col-12" appearance="outline">
+            <mat-label>Apellido paterno <span style="color:red;">(*)</span></mat-label>
+            <input matInput formControlName="paternal_surname" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display
+                    [FormControl]="Form.get('paternal_surname')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- APELLIDO MATERNO -->
+        <mat-form-field class="col-md-6 col-12" appearance="outline">
+            <mat-label>Apellido materno <span style="color:red;">(*)</span></mat-label>
+            <input matInput formControlName="maternal_surname" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display
+                    [FormControl]="Form.get('maternal_surname')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- EMAIL -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Email <span style="color:red;">(*)</span></mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('email')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- USUARIO -->
+        <mat-form-field class="col-md-6 col-12" appearance="outline">
+            <mat-label>Usuario <span style="color:red;">(*)</span></mat-label>
+            <input matInput formControlName="username" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('username')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <ng-container *ngIf="!Form.get('id')?.value">
+            <!-- PASSWORD -->
+            <mat-form-field class="col-md-6 col-12" appearance="outline">
+                <mat-label>Contraseña <span style="color:red;">(*)</span></mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error>
+                    <app-error-validation-display [FormControl]="Form.get('password')"></app-error-validation-display>
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+        <!-- CARGO -->
+        <mat-form-field class="col-md-6 col-12" appearance="outline">
+            <mat-label>Sucursales <span style="color:red;">(*)</span></mat-label>
+            <mat-select formControlName="branch_id">
+                <mat-option *ngIf="Loading" disabled>
+                    <mat-spinner diameter="20"></mat-spinner>
+                    Cargando sucursales...
+                </mat-option>
+                <mat-option *ngFor="let item of ListaSucursales" [value]="item.Id">
+                    {{ item.Nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('branch_id')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+        <!-- ROL -->
+        <mat-form-field class="col-md-6 col-12" appearance="outline">
+            <mat-label>Rol <span style="color:red;">(*)</span></mat-label>
+            <mat-select formControlName="role_id">
+                <mat-option *ngIf="Loading" disabled>
+                    <mat-spinner diameter="20"></mat-spinner>
+                    Cargando roles...
+                </mat-option>
+                <mat-option *ngFor="let item of ListaRoles" [value]="item.Id">
+                    {{ item.Nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('role_id')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions class="text-center block-full-width" style="display:block">
+    <button mat-stroked-button color="primary" (click)="dialogRef.close()">
+        Cancelar
+    </button>
+    <button mat-raised-button color="primary" (click)="eventoGuardar()">
+        {{TituloButton}}
+    </button>
+</div>

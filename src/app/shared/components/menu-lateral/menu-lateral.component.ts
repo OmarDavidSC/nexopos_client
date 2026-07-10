@@ -42,7 +42,9 @@ export class MenuLateralComponent implements OnInit {
       icon: 'business',
       children: [
         { label: 'Mi Compañía', icon: 'corporate_fare', route: '/mi-compania' },
-        { label: 'Mi Perfil', icon: 'account_circle', route: '/mi-perfil' }
+        { label: 'Mis Sucursales', icon: 'place', route: '/mis-sucursales' },
+        { label: 'Mi Perfil', icon: 'account_circle', route: '/mi-perfil' },
+        { label: 'Mis Usuarios', icon: 'supervisor_account', route: '/mis-usuarios' },
       ]
     },
     {

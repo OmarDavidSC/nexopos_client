@@ -19,6 +19,8 @@ import { ClientesComponent } from './components/pages/ventas/clientes/clientes.c
 import { BandejaVentasComponent } from './components/pages/ventas/bandeja-ventas/bandeja-ventas.component';
 import { FormularioNuevaVentaComponent } from './components/pages/ventas/formulario-nueva-venta/formulario-nueva-venta.component';
 import { VerDetalleVentaComponent } from './components/pages/ventas/ver-detalle-venta/ver-detalle-venta.component';
+import { AdmUsuarioComponent } from './components/pages/usuario/adm-usuario/adm-usuario.component';
+import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/adm-sucursal.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -27,6 +29,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'mi-perfil', component: BandejaPerfilComponent, canActivate: [AuthGuard] },
   { path: 'mi-compania', component: PanelCompanyComponent, canActivate: [AuthGuard] },
+  { path: 'mis-sucursales', component: AdmSucursalComponent, canActivate: [AuthGuard] },
+  { path: 'mis-usuarios', component: AdmUsuarioComponent, canActivate: [AuthGuard] },
 
   //almacen
   { path: 'administracion-productos', component: AdmProductosComponent, canActivate: [AuthGuard] },

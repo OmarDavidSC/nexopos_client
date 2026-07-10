@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>{{TituloPopup}}</h2>
+
+<div mat-dialog-content>
+    <div class="row" *ngIf="Form" [formGroup]="Form">
+
+        <!-- Nombre -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Nombre <span class="text-danger">(*)</span></mat-label>
+            <input matInput formControlName="name" [disabled]="Loading" maxlength="255" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('name')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Código -->
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+            <mat-label>Código <span class="text-danger">(*)</span></mat-label>
+            <input matInput formControlName="code" [disabled]="Loading" maxlength="50" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('code')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Teléfono -->
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+            <mat-label>Teléfono <span class="text-danger">(*)</span></mat-label>
+            <input matInput formControlName="phone" [disabled]="Loading" maxlength="20" autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('phone')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Correo -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Correo electrónico <span class="text-danger">(*)</span></mat-label>
+            <input matInput type="email" formControlName="email" [disabled]="Loading" maxlength="150"
+                autocomplete="off">
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('email')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Dirección -->
+        <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Dirección <span class="text-danger">(*)</span></mat-label>
+            <textarea matInput formControlName="address" [disabled]="Loading" rows="3" maxlength="255"></textarea>
+            <mat-error>
+                <app-error-validation-display [FormControl]="Form.get('address')"></app-error-validation-display>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="col-12">
+            <hr>
+        </div>
+
+    </div>
+</div>
+
+<div mat-dialog-actions class="text-center block-full-width" style="display: block;">
+    <button mat-stroked-button color="primary" [disabled]="Loading" (click)="dialogRef.close()">
+        Cancelar
+    </button>
+
+    <button mat-raised-button color="primary" cdkFocusInitial [disabled]="Loading" (click)="eventoGuardar()">
+        {{TituloButton}}
+    </button>
+</div>
