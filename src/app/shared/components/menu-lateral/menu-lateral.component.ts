@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { Eusuario } from '../../models/entidades/Eusuario';
 import { AuthStoreService } from '../../stores/auth-store.service';
 import { ECompany } from '../../models/entidades/ECompany';
+import { ESucursal } from '../../models/entidades/ESucursal';
 
 interface MenuItem {
   label: string;
@@ -31,6 +32,7 @@ export class MenuLateralComponent implements OnInit {
   UsuarioActual: Eusuario | null = null;
   RolActual: any = null;
   CompaniaActual: ECompany | null = null;
+  SucursalActual: ESucursal | null = null;
 
   flatMenu: { label: string; icon: string; route: string }[] = [];
   filteredMenu: { label: string; icon: string; route: string }[] = [];
@@ -106,6 +108,7 @@ export class MenuLateralComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.UsuarioActual = this.authStore.getUser();
     this.CompaniaActual = this.authStore.getCompany();
+    this.SucursalActual = this.authStore.getBranch();
     this.RolActual = this.authStore.getRole();
     this.buildFlatMenu();
     this.filteredMenu = [...this.flatMenu];

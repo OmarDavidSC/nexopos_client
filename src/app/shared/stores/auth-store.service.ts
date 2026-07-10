@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Eusuario } from '../models/entidades/Eusuario';
 import { ERol } from '../models/entidades/ERol';
 import { ECompany } from '../models/entidades/ECompany';
+import { ESucursal } from '../models/entidades/ESucursal';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthStoreService {
   private Usuario: Eusuario | null = null;
   private Rol: ERol | null = null;
   private Company: ECompany | null = null;
+  private Branch: ESucursal | null = null;
 
   setUser(data: Eusuario) {
     this.Usuario = data;
@@ -48,5 +50,17 @@ export class AuthStoreService {
 
   deleteCompany() {
     this.Company = null;
+  }
+
+  setBranch(branch: ESucursal) {
+    this.Branch = branch;
+  }
+
+  getBranch(): ESucursal | null {
+    return this.Branch;
+  }
+
+  deleteBranch() {
+    this.Branch = null;
   }
 }

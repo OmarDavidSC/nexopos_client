@@ -6,6 +6,7 @@ import { Eusuario } from './shared/models/entidades/Eusuario';
 import { AuthStoreService } from './shared/stores/auth-store.service';
 import { ERol } from './shared/models/entidades/ERol';
 import { ECompany } from './shared/models/entidades/ECompany';
+import { ESucursal } from './shared/models/entidades/ESucursal';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,11 @@ export class AppComponent {
           const user = Eusuario.parseJson(response.data.user);
           const role = ERol.parseJson(response.data.role);
           const company = ECompany.parseJson(response.data.company);
+          const branch = ESucursal.parseJson(response.data.branch);
           this.authStore.setUser(user);
           this.authStore.setRole(role);
           this.authStore.setCompany(company);
+          this.authStore.setBranch(branch);
           this.isAuthenticated = true;
         } else {
           this.authService.logout();
@@ -53,6 +56,7 @@ export class AppComponent {
     this.authStore.deleteUser();
     this.authStore.deleteRole();
     this.authStore.deleteCompany();
+    this.authStore.deleteBranch();
     this.isAuthenticated = false;
     this.Loginloaded = true;
     // this.router.navigate(['/inicio']);
