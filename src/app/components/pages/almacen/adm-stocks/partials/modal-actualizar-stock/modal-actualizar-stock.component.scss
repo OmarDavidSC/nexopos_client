@@ -1,0 +1,145 @@
+.popup-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.header-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background: #eef5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-icon mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    color: #1976d2;
+}
+
+.titulo-popup {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.subtitulo-popup {
+    margin: 4px 0 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.popup-content {
+    padding-top: 8px;
+}
+
+.formulario-producto {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.alert-stock {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    background: #eef6ff;
+    border-left: 4px solid #1976d2;
+}
+
+.alert-stock mat-icon {
+    color: #1976d2;
+    margin-top: 2px;
+}
+
+.alert-stock strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #0d47a1;
+}
+
+.alert-stock p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+}
+
+.section-form {
+    border: 1px solid #ececec;
+    border-radius: 12px;
+    padding: 20px;
+    background: #fafafa;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #424242;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.field-help {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 6px;
+    color: #6c757d;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.help-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    color: #1976d2;
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 18px 24px;
+    border-top: 1px solid #ececec;
+    margin-top: 10px;
+}
+
+.btn-cancelar {
+    min-width: 120px;
+}
+
+.btn-guardar {
+    min-width: 150px;
+}
+
+.btn-guardar mat-icon {
+    margin-right: 6px;
+}
+
+
+@media (max-width: 768px) {
+    .popup-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .popup-actions {
+        flex-direction: column-reverse;
+    }
+
+    .popup-actions button {
+        width: 100%;
+    }
+}

@@ -1,0 +1,22 @@
+<app-adm-header [descripcion]="'Administra el inventario de productos por cada sucursal de la empresa.'" [breadcrumbs]="[
+        { nombre: 'Almacén' },
+        { nombre: 'Inventario por sucursal' }
+    ]" [visible]="false" [rutaRegreso]="'/inicio'">
+</app-adm-header>
+<div class="branches-container">
+    <div class="branch-card" *ngFor="let item of ListaSucursales" (click)="OnEventoAbrirSucursal(item)">
+        <div class="icon">
+            <mat-icon>store</mat-icon>
+        </div>
+        <div class="content">
+            <h3>{{item.Nombre}}</h3>
+            <p>
+                Código:
+                <strong>{{item.Codigo}}</strong>
+            </p>
+        </div>
+        <div class="arrow">
+            <mat-icon>chevron_right</mat-icon>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<!-- HEADER -->
+<div class="popup-header">
+    <div class="header-icon">
+        <mat-icon>inventory_2</mat-icon>
+    </div>
+
+    <div>
+        <h2 mat-dialog-title class="titulo-popup">
+            {{TituloPopup}}
+        </h2>
+        <p class="subtitulo-popup">
+            Configure el inventario del producto para la sucursal seleccionada.
+        </p>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div mat-dialog-content class="popup-content">
+
+    <div class="alert-stock">
+        <mat-icon>info</mat-icon>
+
+        <div>
+            <strong>Inventario por sucursal</strong>
+
+            <p>
+                El stock configurado en este formulario únicamente será aplicado a la
+                <strong>sucursal seleccionada</strong>. Las demás sucursales mantendrán
+                sus propios niveles de inventario de forma independiente.
+            </p>
+        </div>
+    </div>
+
+    <form *ngIf="Form" [formGroup]="Form" class="formulario-producto">
+
+        <div class="section-form">
+
+            <div class="section-title">
+                Configuración del inventario
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <mat-form-field appearance="outline" class="w-100">
+
+                        <mat-label>Stock actual</mat-label>
+
+                        <input matInput type="number" min="0" formControlName="current_stock">
+
+                        <mat-icon matSuffix>
+                            inventory
+                        </mat-icon>
+
+                    </mat-form-field>
+
+                    <small class="field-help">
+                        Cantidad disponible actualmente en esta sucursal.
+                    </small>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <mat-form-field appearance="outline" class="w-100">
+
+                        <mat-label>Stock mínimo</mat-label>
+
+                        <input matInput type="number" min="0" formControlName="minimum_stock">
+
+                        <mat-icon matSuffix>
+                            warning_amber
+                        </mat-icon>
+
+                    </mat-form-field>
+
+                    <small class="field-help">
+                        Cuando el stock actual sea igual o menor a este valor,
+                        el sistema mostrará el estado
+                        <strong>Stock Bajo</strong>.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- FOOTER -->
+
+<div mat-dialog-actions class="popup-actions">
+
+    <button mat-stroked-button class="btn-cancelar" (click)="dialogRef.close()">
+
+        Cancelar
+
+    </button>
+
+    <button mat-raised-button class="btn-guardar" (click)="eventoGuardar()">
+
+        <mat-icon>
+            save
+        </mat-icon>
+
+        {{TituloButton}}
+
+    </button>
+
+</div>

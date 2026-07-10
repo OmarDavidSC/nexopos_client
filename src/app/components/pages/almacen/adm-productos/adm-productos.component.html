@@ -1,12 +1,9 @@
 <div class="container-fluid py-4">
     <!-- Encabezado -->
-    <app-adm-header [descripcion]="'Gestión y mantenimiento de los productos registradas'"
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de los productos registradas de tu compañia'"
         [breadcrumbs]="[{nombre:'Almacen'},{nombre:'Administración de Productos'}]" [visible]="true"
         [textoBoton]="'Nuevo Producto'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
     </app-adm-header>
-    <!-- Estadísticas -->
-    <app-product-summary [summary]="Resumen">
-    </app-product-summary>
     <!-- Filtros -->
     <app-product-filters [filter]="Filtro" [categories]="ListaCategorias" [brands]="ListaMarcas" (search)="onSearch()"
         (categoryChange)="onCategoryChange()" (brandChange)="onBrandChange()" (statusChange)="onStatusChange()"

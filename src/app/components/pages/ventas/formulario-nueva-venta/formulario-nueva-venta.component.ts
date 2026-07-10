@@ -93,7 +93,7 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
       this.ListaProductos = resultadoProductos;
       this.clientesFiltrados = this.ListaClientes;
       this.productosFiltrados = this.ListaProductos;
-      const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
+      const tienePermiso = this.validarPermisos(this.Role, ['administrator', 'seller'], this.router, this.toastService);
       if (tienePermiso) {
         // this.cargarClientes();
       }

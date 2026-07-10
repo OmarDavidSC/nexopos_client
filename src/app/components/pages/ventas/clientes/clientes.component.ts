@@ -56,7 +56,7 @@ export class ClientesComponent extends FormularioBase implements OnInit {
       this.Role = resultadoRole;
       const tienePermiso = this.validarPermisos(
         this.Role,
-        ['administrator'],
+        ['administrator', 'seller'],
         this.router,
         this.toastService
       );

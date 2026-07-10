@@ -1,0 +1,100 @@
+.stocks-container {
+    margin-top: 20px;
+}
+
+.stocks-card {
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.toolbar-left {
+    flex: 1;
+}
+
+.search {
+    width: 100%;
+    max-width: 420px;
+}
+
+.table-responsive {
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 900px;
+}
+
+thead {
+    background: #f8f9fa;
+}
+
+th {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product mat-icon {
+    color: #5c6bc0;
+}
+
+.code {
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.danger {
+    background: #fdecea;
+    color: #c62828;
+}
+
+@media(max-width:768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar-right {
+        width: 100%;
+    }
+
+    .toolbar-right button {
+        width: 100%;
+    }
+}

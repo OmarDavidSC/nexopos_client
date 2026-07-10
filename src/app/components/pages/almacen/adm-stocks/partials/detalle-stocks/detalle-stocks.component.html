@@ -1,0 +1,86 @@
+<app-adm-header [descripcion]="'Consulta y administra el stock de los productos asignados a esta sucursal.'"
+    [breadcrumbs]="[
+        {nombre:'Almacén'},
+        {nombre:'Inventario por sucursal', ruta:'/stock-sucursales'},
+        {nombre:'Detalle de Inventario'}
+    ]" [visible]="false" [rutaRegreso]="'/stock-sucursales'">
+</app-adm-header>
+<app-product-summary [summary]="Resumen">
+</app-product-summary>
+
+<div class="stocks-container">
+    <mat-card class="stocks-card">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <mat-form-field appearance="outline" class="search">
+                    <mat-label>Buscar producto</mat-label>
+
+                    <input matInput placeholder="Código, nombre, categoría...">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="toolbar-right">
+                <button (click)="OnEventoAbrirCrearProducto()" mat-flat-button color="primary">
+                    <mat-icon>add_circle</mat-icon>
+                    Ir a Crear Producto
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Marca</th>
+                        <th>Unidad</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-center">Mínimo</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ListaStocks">
+                        <td>
+                            <span class="code">
+                                {{item.Codigo}}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="product">
+                                <mat-icon>inventory_2</mat-icon>
+                                <span>
+                                    {{item.Nombre}}
+                                </span>
+                            </div>
+                        </td>
+                        <td>{{item.NombreCategoria}}</td>
+                        <td>{{item.NombreMarca}}</td>
+                        <td>{{item.NombreUnidad}}</td>
+                        <td class="text-center">
+                            <strong>
+                                {{item.StockActual}}
+                            </strong>
+                        </td>
+                        <td class="text-center">
+                            {{item.StockMinimo}}
+                        </td>
+                        <td class="text-center">
+                            <span class="badge" [ngClass]="item.ColorStock">
+                                {{item.EstadoStock}}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button (click)="eventoMostrarPopupEditarStock(item)" mat-icon-button color="primary"
+                                matTooltip="Editar Stock">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card>
+</div>

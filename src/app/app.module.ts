@@ -68,6 +68,9 @@ import { AdmUsuarioComponent } from './components/pages/usuario/adm-usuario/adm-
 import { ModalUsuarioComponent } from './components/pages/usuario/modals/modal-usuario/modal-usuario.component';
 import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/adm-sucursal.component';
 import { ModalSucursalComponent } from './components/pages/sucursal/modals/modal-sucursal/modal-sucursal.component';
+import { AdmStocksComponent } from './components/pages/almacen/adm-stocks/adm-stocks.component';
+import { DetalleStocksComponent } from './components/pages/almacen/adm-stocks/partials/detalle-stocks/detalle-stocks.component';
+import { ModalActualizarStockComponent } from './components/pages/almacen/adm-stocks/partials/modal-actualizar-stock/modal-actualizar-stock.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +129,9 @@ import { ModalSucursalComponent } from './components/pages/sucursal/modals/modal
     ModalUsuarioComponent,
     AdmSucursalComponent,
     ModalSucursalComponent,
+    AdmStocksComponent,
+    DetalleStocksComponent,
+    ModalActualizarStockComponent,
   ],
   imports: [
     ComunModule,

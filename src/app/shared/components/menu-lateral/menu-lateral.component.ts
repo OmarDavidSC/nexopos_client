@@ -56,7 +56,8 @@ export class MenuLateralComponent implements OnInit {
         { label: 'Productos', icon: 'inventory', route: '/administracion-productos' },
         { label: 'Categorías', icon: 'category', route: '/administracion-categorias' },
         { label: 'Marcas', icon: 'branding_watermark', route: '/administracion-marcas' },
-        { label: 'Unidades', icon: 'straighten', route: '/administracion-unidades' }
+        { label: 'Unidades', icon: 'straighten', route: '/administracion-unidades' },
+        { label: 'Inventario por sucursal', icon: 'warehouse', route: '/stock-sucursales' }
       ]
     },
     {

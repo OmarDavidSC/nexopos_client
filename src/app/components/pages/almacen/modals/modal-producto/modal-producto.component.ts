@@ -63,10 +63,7 @@ export class ModalProductoComponent implements OnInit {
       code: new FormControl(producto?.Codigo, [Validators.required]),
       name: new FormControl(producto?.Nombre, [Validators.required]),
       purchase_price: new FormControl(producto?.PrecioCompra, [Validators.required]),
-      sale_price: new FormControl(producto?.PrecioVenta, [Validators.required]),
-      minimum_stock: new FormControl(producto?.StockMinimo, [Validators.required]),
-      current_stock: new FormControl(producto?.StockActual, [Validators.required]),
-
+      sale_price: new FormControl(producto?.PrecioVenta, [Validators.required])
     });
   }
 
@@ -87,8 +84,6 @@ export class ModalProductoComponent implements OnInit {
     formData.append('name', item.name);
     formData.append('purchase_price', item.purchase_price);
     formData.append('sale_price', item.sale_price);
-    formData.append('minimum_stock', item.minimum_stock);
-    formData.append('current_stock', item.current_stock);
 
     const confirmToast = this.toastService.show(
       this.Form.get('id')?.value ? '¿Deseas actualizar el producto?' : '¿Deseas registrar el producto?', 'Confirmación',

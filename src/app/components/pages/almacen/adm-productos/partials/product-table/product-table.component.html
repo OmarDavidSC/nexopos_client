@@ -19,10 +19,8 @@
                         <th>Categoría</th>
                         <th>Marca</th>
                         <th>Unidad</th>
-                        <!-- <th class="text-end">Compra</th> -->
-                        <th class="text-end">Venta</th>
-                        <th class="text-center">Stock</th>
-                        <th class="text-center">Estado</th>
+                        <th class="text-end">Precio Compra</th>
+                        <th class="text-end">Precio Venta</th>
                         <th class="text-center" width="130">
                             Acciones
                         </th>
@@ -51,34 +49,13 @@
                             {{ item.NombreUnidad }}
                         </td>
                         <!-- Precio Compra -->
-                        <!-- <td class="text-end">
-
+                        <td class="text-end">
                             S/ {{ item.PrecioCompra }}
-
-                        </td> -->
+                        </td>
                         <!-- Precio Venta -->
                         <td class="text-end">
                             <strong>S/ {{ item.PrecioVenta }}</strong>
-                        </td>
-                        <!-- Stock -->
-                        <td class="text-center">
-                            <span class="badge rounded-pill" [ngClass]="{
-                                'bg-success' : item.StockActual > item.StockMinimo,
-                                'bg-warning text-dark' : item.StockActual > 0 && item.StockActual <= item.StockMinimo,
-                                'bg-danger' : item.StockActual <= 0
-                            }">
-                                {{ item.StockActual }}
-                            </span>
-                        </td>
-                        <!-- Estado -->
-                        <td class="text-center">
-                            <span class="badge rounded-pill" [ngClass]="{
-                                    'bg-success' : item.Estado == '1',
-                                    'bg-danger' : item.Estado == '0'
-                                }">
-                                {{ item.EstadoLabel}}
-                            </span>
-                        </td>
+                        </td>                       
                         <!-- Acciones -->
                         <td class="text-center">
                             <button mat-icon-button color="primary" matTooltip="Editar" (click)="edit.emit(item)">

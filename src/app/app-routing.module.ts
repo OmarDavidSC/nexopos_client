@@ -21,6 +21,8 @@ import { FormularioNuevaVentaComponent } from './components/pages/ventas/formula
 import { VerDetalleVentaComponent } from './components/pages/ventas/ver-detalle-venta/ver-detalle-venta.component';
 import { AdmUsuarioComponent } from './components/pages/usuario/adm-usuario/adm-usuario.component';
 import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/adm-sucursal.component';
+import { AdmStocksComponent } from './components/pages/almacen/adm-stocks/adm-stocks.component';
+import { DetalleStocksComponent } from './components/pages/almacen/adm-stocks/partials/detalle-stocks/detalle-stocks.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'administracion-categorias', component: AdmCategoriasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-marcas', component: AdmMarcasComponent, canActivate: [AuthGuard] },
   { path: 'administracion-unidades', component: AdmUnidadesComponent, canActivate: [AuthGuard] },
+  { path: 'stock-sucursales', component: AdmStocksComponent, canActivate: [AuthGuard] },
+  { path: 'stock-sucursales/:id/detalle-productos', component: DetalleStocksComponent, canActivate: [AuthGuard] },
   //compras
   { path: 'administracion-proveedores', component: ProovedorComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-compras', component: BandejaComprasComponent, canActivate: [AuthGuard] },

@@ -38,7 +38,6 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
 
   Loading: boolean = false;
 
-  Resumen: any;
   Filtro: ProductFilter = {
     page: 1,
     search: '',
@@ -106,7 +105,6 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     this.PaginaActual = data.page;
     this.TotalPaginas = data.total_pages;
     this.TotalRegistros = data.total;
-    this.Resumen = data.summary;
     this.Loading = false;
   }
 
@@ -223,6 +221,5 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
     };
     this.PaginaActual = 1;
     await this.obtenerMaestros();
-
   }
 }

@@ -69,7 +69,7 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
       this.ListaClientes = resultadoClientes;
       const tienePermiso = this.validarPermisos(
         this.Role,
-        ['administrator'],
+        ['administrator', 'seller'],
         this.router,
         this.toastService
       );
