@@ -13,5 +13,6 @@ export class TopProductsComponent implements OnInit {
   }
 
   @Input() data: any[] = [];
+  @Input() moneda: string;
 
 }

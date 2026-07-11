@@ -20,7 +20,7 @@
                     </div>
                     <div class="sale-right">
                         <div class="amount">
-                            S/ {{sale.Total | number:'1.2-2'}}
+                            {{moneda}} {{sale.Total | number:'1.2-2'}}
                         </div>
                         <span class="badge" [ngClass]="{
                                 'badge-success': sale.Estado=='COMPLETED',

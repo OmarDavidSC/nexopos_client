@@ -10,4 +10,5 @@ export class SaleSummaryComponent {
   constructor() { }
 
   @Input() summary: any;
+  @Input() moneda: string;
 }

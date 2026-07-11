@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { ERol } from 'src/app/shared/models/entidades/ERol';
 import { Eusuario } from 'src/app/shared/models/entidades/Eusuario';
 import { FormularioBase } from 'src/app/shared/pages/FormularioBase';
@@ -19,6 +20,7 @@ export class VerDetalleCompraComponent extends FormularioBase implements OnInit 
   DetalleCompra: [] = [];
   Compra: any;
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
   IdCompra: number = 0;
 
@@ -43,10 +45,12 @@ export class VerDetalleCompraComponent extends FormularioBase implements OnInit 
     Promise.all([
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
     ]
-    ).then(([resultadoUsuario, resultadoRole]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoCompania]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
+      this.CompaniaActual = resultadoCompania;
       const tienePermiso = this.validarPermisos(
         this.Role,
         ['administrator'],

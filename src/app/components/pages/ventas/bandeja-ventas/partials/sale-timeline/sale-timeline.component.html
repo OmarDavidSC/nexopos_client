@@ -7,7 +7,7 @@
     <!-- Lista -->
     <ng-container *ngIf="!loading">
         <ng-container *ngIf="sales.length > 0; else empty">
-            <app-sale-card *ngFor="let item of sales" [sale]="item" (view)="view.emit($event)"
+            <app-sale-card *ngFor="let item of sales" [sale]="item" [moneda]="moneda" (view)="view.emit($event)"
                 (cancel)="cancel.emit($event)">
             </app-sale-card>
         </ng-container>

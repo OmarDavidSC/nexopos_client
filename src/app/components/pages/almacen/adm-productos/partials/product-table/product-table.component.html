@@ -50,11 +50,11 @@
                         </td>
                         <!-- Precio Compra -->
                         <td class="text-end">
-                            S/ {{ item.PrecioCompra }}
+                            {{companiaActual.SimboloMoneda}} {{ item.PrecioCompra }}
                         </td>
                         <!-- Precio Venta -->
                         <td class="text-end">
-                            <strong>S/ {{ item.PrecioVenta }}</strong>
+                            <strong>{{companiaActual.SimboloMoneda}} {{ item.PrecioVenta }}</strong>
                         </td>                       
                         <!-- Acciones -->
                         <td class="text-center">

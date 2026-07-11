@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="amount">S/ {{Venta.total}}</div>
+            <div class="amount">{{CompaniaActual.SimboloMoneda}} {{Venta.total}}</div>
             <small>Total Venta</small>
         </div>
     </div>
@@ -92,13 +92,13 @@
                         {{item.quantity}}
                     </td>
                     <td class="text-end">
-                        S/ {{item.sale_price}}
+                        {{CompaniaActual.SimboloMoneda}} {{item.sale_price}}
                     </td>
                     <td class="text-end">
-                        S/ {{item.discount}}
+                        {{CompaniaActual.SimboloMoneda}} {{item.discount}}
                     </td>
                     <td class="text-end fw-bold">
-                        S/ {{item.subtotal}}
+                        {{CompaniaActual.SimboloMoneda}} {{item.subtotal}}
                     </td>
                 </tr>
             </tbody>
@@ -108,19 +108,19 @@
         <div>
 
             <span>Subtotal</span>
-            <strong>S/ {{Venta.subtotal}}</strong>
+            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.subtotal}}</strong>
         </div>
         <div>
             <span>Impuesto</span>
-            <strong>S/ {{Venta.tax}}</strong>
+            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.tax}}</strong>
         </div>
         <div>
             <span>Descuento</span>
-            <strong>S/ {{Venta.discount}}</strong>
+            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.discount}}</strong>
         </div>
         <div class="grand">
             <span>Total</span>
-            <strong>S/ {{Venta.total}}</strong>
+            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.total}}</strong>
         </div>
     </div>
 </div>

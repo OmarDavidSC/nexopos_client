@@ -14,6 +14,7 @@ import { PurchaseService } from 'src/app/shared/services/purchase.service';
 import { SupplierService } from 'src/app/shared/services/supplier.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalCancelarCompraComponent } from '../modals/modal-cancelar-compra/modal-cancelar-compra.component';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 
 @Component({
   selector: 'app-bandeja-compras',
@@ -24,6 +25,7 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
 
   ListaCompras: ECompra[] = [];
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
 
   PaginaActual: number = 1;
@@ -61,11 +63,13 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
       this.proveedorService.adm(),
+      this.auhtStore.getCompany(),
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoProveedores]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoProveedores, resultadoCompania]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.ListaProveedores = resultadoProveedores;
+      this.CompaniaActual = resultadoCompania;
       const tienePermiso = this.validarPermisos(
         this.Role,
         ['administrator'],
@@ -142,6 +146,7 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
       disableClose: true,
       data: {
         compra: compra,
+        moneda: this.CompaniaActual.SimboloMoneda
       }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();

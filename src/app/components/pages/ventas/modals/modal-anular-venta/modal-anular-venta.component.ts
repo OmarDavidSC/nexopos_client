@@ -17,6 +17,7 @@ export class ModalAnularVentaComponent implements OnInit {
   LoadingToast: any;
 
   Venta: any;
+  Moneda: string;
 
   steps: StepVertical[] = [
     {
@@ -47,6 +48,7 @@ export class ModalAnularVentaComponent implements OnInit {
   ) {
     this.TituloPopup = 'Anular Venta';
     this.Venta = data.venta;
+    this.Moneda = data.moneda;
   }
 
   ngOnInit(): void { }

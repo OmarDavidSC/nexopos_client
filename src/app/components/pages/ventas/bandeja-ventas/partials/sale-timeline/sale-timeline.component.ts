@@ -9,6 +9,7 @@ import { EVenta } from 'src/app/shared/models/entidades/EVenta';
 export class SaleTimelineComponent {
 
   @Input() sales: EVenta[] = [];
+  @Input() moneda: string;
   @Input() loading: boolean = false;
   @Output() view = new EventEmitter<EVenta>();
   @Output() cancel = new EventEmitter<EVenta>();

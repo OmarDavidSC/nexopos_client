@@ -10,6 +10,7 @@ export class WelcomeCardComponent implements OnInit {
 
   @Input() usuario: Eusuario | null = null;
   @Input() resumen: any;
+  @Input() moneda: string;
 
   FechaActual: Date = new Date();
 

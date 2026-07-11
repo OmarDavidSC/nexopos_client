@@ -166,12 +166,12 @@
                         </ng-container>
                         <ng-container matColumnDef="precio">
                             <th mat-header-cell *matHeaderCellDef>Costo Unit.</th>
-                            <td mat-cell *matCellDef="let item">S/ {{item.purchase_price | number:'1.2-2'}}</td>
+                            <td mat-cell *matCellDef="let item">{{CompaniaActual.SimboloMoneda}} {{item.purchase_price | number:'1.2-2'}}</td>
                         </ng-container>
                         <ng-container matColumnDef="total">
                             <th mat-header-cell *matHeaderCellDef>Total</th>
                             <td mat-cell *matCellDef="let item">
-                                <strong>S/ {{item.total | number:'1.2-2'}}</strong>
+                                <strong>{{CompaniaActual.SimboloMoneda}} {{item.total | number:'1.2-2'}}</strong>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="accion">
@@ -206,19 +206,19 @@
                 </div>
                 <div class="summary-item">
                     <span>Subtotal</span>
-                    <strong>S/ {{compra.subtotal}}</strong>
+                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.subtotal}}</strong>
                 </div>
                 <div class="summary-item">
                     <span>IGV</span>
-                    <strong>S/ {{compra.tax}}</strong>
+                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.tax}}</strong>
                 </div>
                 <div class="summary-item">
                     <span>Descuento</span>
-                    <strong>S/ {{compra.discount}}</strong>
+                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.discount}}</strong>
                 </div>
                 <div class="summary-total">
                     <span>Total</span>
-                    <strong>S/{{compra.total}}
+                    <strong>{{CompaniaActual.SimboloMoneda}}{{compra.total}}
                     </strong>
                 </div>
                 <button mat-raised-button color="primary" class="w-100 mt-3" (click)="OnEventoGuardarCompra()">

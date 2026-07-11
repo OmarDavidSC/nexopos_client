@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ToastConfirmComponent } from 'src/app/shared/components/toast-confirm/toast-confirm.component';
 import { ToastLoadingComponent } from 'src/app/shared/components/toast-loading/toast-loading.component';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { EProducto } from 'src/app/shared/models/entidades/EProducto';
 import { EProveedor } from 'src/app/shared/models/entidades/EProveedor';
 import { ERol } from 'src/app/shared/models/entidades/ERol';
@@ -24,6 +25,7 @@ import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 export class FormularioNuevaCompraComponent extends FormularioBase implements OnInit {
 
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
   Loading = false;
   LoadingToast: any;
@@ -80,12 +82,14 @@ export class FormularioNuevaCompraComponent extends FormularioBase implements On
     Promise.all([
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
       this.proveedorService.adm(),
       this.productoService.adm()
-    ]).then(([resultadoUsuario, resultadoRol, resultadoProveedores, resultadoProductos]) => {
+    ]).then(([resultadoUsuario, resultadoRol, resultadoCompania, resultadoProveedores, resultadoProductos]) => {
 
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRol;
+      this.CompaniaActual = resultadoCompania;
       this.ListaProveedores = resultadoProveedores;
       this.ListaProductos = resultadoProductos;
       this.proveedoresFiltrados = this.ListaProveedores;

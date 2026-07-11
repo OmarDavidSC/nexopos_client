@@ -12,6 +12,10 @@ export class ECompany {
     Estado: any;
     PPolitica: any;
     TCondiciones: any;
+    CodigoPais: string;
+    CodigoMoneda: string;
+    SimboloMoneda: string;
+    NombreMoneda: string;
 
     constructor() {
         this.Id = "";
@@ -21,6 +25,10 @@ export class ECompany {
         this.Estado = "";
         this.PPolitica = "";
         this.TCondiciones = "";
+        this.CodigoPais = "";
+        this.CodigoMoneda = "";
+        this.SimboloMoneda = "";
+        this.NombreMoneda = "";
     }
 
     public static parseJson(element: any): ECompany {
@@ -35,11 +43,14 @@ export class ECompany {
         objeto.Estado = SPParse.getNumber(element["status"]);
         objeto.PPolitica = SPParse.getString(element["privacy_policies"]);
         objeto.TCondiciones = SPParse.getString(element["terms_conditions"]);
+        objeto.CodigoPais = SPParse.getString(element["country_code"]);
+        objeto.CodigoMoneda = SPParse.getString(element["currency_code"]);
+        objeto.SimboloMoneda = SPParse.getString(element["currency_symbol"]);
+        objeto.NombreMoneda = SPParse.getString(element["currency_name"]);
         return objeto;
     }
 
     public static parseJsonList(elements: any): ECompany[] {
-
         const listado: ECompany[] = [];
         if (elements != null) {
             Object.keys(elements).forEach(key => {

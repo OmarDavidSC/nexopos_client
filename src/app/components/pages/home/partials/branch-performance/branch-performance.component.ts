@@ -12,6 +12,7 @@ export class BranchPerformanceComponent implements OnInit {
   ngOnInit(): void {
   }
 
-   @Input() data: any[] = [];
+  @Input() data: any[] = [];
+  @Input() moneda: string;
 
 }

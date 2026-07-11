@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SalesTodayComponent {
 
   @Input() data: any = null;
+  @Input() moneda: string;
 
   get totalVentas(): number {
     return this.data?.total_sales || 0;

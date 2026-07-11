@@ -11,5 +11,5 @@ export class SaleCardComponent {
   @Input() sale!: EVenta;
   @Output() view = new EventEmitter<EVenta>();
   @Output() cancel = new EventEmitter<EVenta>();
-
+  @Input() moneda: string;
 }

@@ -9,6 +9,6 @@
     (supplierChange)="OnSupplierChange()" (statusChange)="onStatusChange()" (clear)="clearFilters()">
 </app-purchase-filters>
 
-<app-purchase-timeline [purchases]="ListaCompras" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
+<app-purchase-timeline [moneda]="CompaniaActual.SimboloMoneda" [purchases]="ListaCompras" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
     (cancel)="OnEventoCancelar($event)" (cancel)="null">
 </app-purchase-timeline>

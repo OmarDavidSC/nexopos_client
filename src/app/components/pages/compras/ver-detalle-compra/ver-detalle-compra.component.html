@@ -89,10 +89,10 @@
                                 {{item.quantity}}
                             </td>
                             <td class="text-end">
-                                S/ {{item.unit_cost}}
+                                {{CompaniaActual.SimboloMoneda}} {{item.unit_cost}}
                             </td>
                             <td class="text-end">
-                                S/ {{item.subtotal}}
+                                {{CompaniaActual.SimboloMoneda}} {{item.subtotal}}
                             </td>
                         </tr>
                     </tbody>
@@ -108,20 +108,20 @@
                 <mat-card-content>
                     <div class="resume-line">
                         <span>Subtotal</span>
-                        <strong>S/ {{Compra.subtotal}}</strong>
+                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.subtotal}}</strong>
                     </div>
                     <div class="resume-line">
                         <span>IGV</span>
-                        <strong>S/ {{Compra.tax}}</strong>
+                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.tax}}</strong>
                     </div>
                     <div class="resume-line">
                         <span>Descuento</span>
-                        <strong>S/ {{Compra.discount}}</strong>
+                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.discount}}</strong>
                     </div>
                     <hr>
                     <div class="resume-total">
                         <span>Total</span>
-                        <strong>S/ {{Compra.total}}</strong>
+                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.total}}</strong>
                     </div>
                 </mat-card-content>
             </mat-card>

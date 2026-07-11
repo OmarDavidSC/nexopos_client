@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { EProducto } from 'src/app/shared/models/entidades/EProducto';
 
 @Component({
@@ -9,6 +10,7 @@ import { EProducto } from 'src/app/shared/models/entidades/EProducto';
 export class ProductTableComponent {
 
   @Input() products: EProducto[] = [];
+  @Input() companiaActual: ECompany;
   @Input() loading: boolean = false;
   @Input() total: number = 0;
   @Input() currentPage: number = 1;

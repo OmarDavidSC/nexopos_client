@@ -17,6 +17,7 @@ import { SaleService } from 'src/app/shared/services/sale.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalClienteComponent } from '../modals/modal-cliente/modal-cliente.component';
 import { ModalProductoComponent } from '../../almacen/modals/modal-producto/modal-producto.component';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 
 @Component({
   selector: 'app-formulario-nueva-venta',
@@ -26,6 +27,7 @@ import { ModalProductoComponent } from '../../almacen/modals/modal-producto/moda
 export class FormularioNuevaVentaComponent extends FormularioBase implements OnInit {
 
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
   Loading = false;
   LoadingToast: any;
@@ -83,12 +85,14 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
     Promise.all([
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
       this.clienteService.adm(),
       this.productoService.adm()
-    ]).then(([resultadoUsuario, resultadoRol, resultadoClientes, resultadoProductos]) => {
+    ]).then(([resultadoUsuario, resultadoRol, resultadoCompania, resultadoClientes, resultadoProductos]) => {
 
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRol;
+      this.CompaniaActual = resultadoCompania;
       this.ListaClientes = resultadoClientes;
       this.ListaProductos = resultadoProductos;
       this.clientesFiltrados = this.ListaClientes;

@@ -18,6 +18,7 @@ export type ChartOptions = {
 export class SalesChartComponent {
 
   @Input() data: any[] = [];
+  @Input() moneda: string;
 
   public chartOptions: Partial<ChartOptions>;
 
@@ -61,7 +62,7 @@ export class SalesChartComponent {
       ...this.chartOptions,
       series: [
         { name: 'Ventas', data: ventas },
-        { name: 'Monto S/', data: montos }
+        { name: `Monto ${this.moneda}`, data: montos }
       ],
       xaxis: { categories: fechas }
     };

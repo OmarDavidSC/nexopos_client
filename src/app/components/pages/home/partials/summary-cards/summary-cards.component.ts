@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SummaryCardsComponent implements OnInit {
 
   @Input() data: any;
+  @Input() moneda: string;
   Cards: any[] = [];
   constructor() { }
 
@@ -26,19 +27,19 @@ export class SummaryCardsComponent implements OnInit {
       },
       {
         title: 'Ventas del mes',
-        value: `S/ ${this.data?.sales_month ?? '0.00'}`,
+        value: `${this.moneda} ${this.data?.sales_month ?? '0.00'}`,
         icon: 'shopping_cart',
         type: 'sales'
       },
       {
         title: 'Compras del mes',
-        value: `S/ ${this.data?.purchases_month ?? '0.00'}`,
+        value: `${this.moneda} ${this.data?.purchases_month ?? '0.00'}`,
         icon: 'local_shipping',
         type: 'purchases'
       },
       {
         title: 'Valor inventario',
-        value: `S/ ${this.data?.inventory_value ?? '0.00'}`,
+        value: `${this.moneda} ${this.data?.inventory_value ?? '0.00'}`,
         icon: 'warehouse',
         type: 'inventory'
       }

@@ -1,167 +1,59 @@
 <div class="container-fluid dashboard-container">
-
-
     <!-- Loading -->
     <div class="dashboard-loading" *ngIf="Loading">
-
         <mat-spinner diameter="45"></mat-spinner>
-
     </div>
-
-
-
     <ng-container *ngIf="!Loading">
-
-
         <!-- Bienvenida -->
-        <app-welcome-card [usuario]="UsuarioActual" [resumen]="Resumen">
+        <app-welcome-card [moneda]="CompaniaActual.SimboloMoneda" [usuario]="UsuarioActual" [resumen]="Resumen">
         </app-welcome-card>
-
-
-
-
         <!-- Resumen general -->
         <section class="dashboard-section">
-
-            <app-summary-cards [data]="Resumen">
+            <app-summary-cards [moneda]="CompaniaActual.SimboloMoneda"  [data]="Resumen">
             </app-summary-cards>
-
         </section>
-
-
-
-
-
         <!-- Ventas y compras del día -->
-
         <div class="dashboard-grid small-cards">
-
-
             <div class="dashboard-item">
-
-                <app-sales-today [data]="VentasDeHoy">
+                <app-sales-today [moneda]="CompaniaActual.SimboloMoneda"  [data]="VentasDeHoy">
                 </app-sales-today>
-
             </div>
-
-
-
             <div class="dashboard-item">
-
-
-                <app-purchase-today [data]="ComprasDeHoy">
+                <app-purchase-today [moneda]="CompaniaActual.SimboloMoneda"  [data]="ComprasDeHoy">
                 </app-purchase-today>
-
-
             </div>
-
-
         </div>
-
-
-
-
-
         <!-- Inventario y alertas -->
-
         <div class="dashboard-grid">
-
-
             <div class="dashboard-item">
-
                 <app-inventory-summary [data]="Inventario">
                 </app-inventory-summary>
-
             </div>
-
-
-
             <div class="dashboard-item">
-
-
                 <app-alerts-stock [data]="Alertas">
                 </app-alerts-stock>
-
-
             </div>
-
-
         </div>
-
-
-
-
-
-
         <!-- Gráfico ventas -->
-
         <section class="dashboard-section">
-
-
-            <app-sales-chart [data]="GraficoDeVentas">
+            <app-sales-chart [moneda]="CompaniaActual.SimboloMoneda" [data]="GraficoDeVentas">
             </app-sales-chart>
-
-
         </section>
-
-
-
-
-
-
-
         <!-- Productos y categorias -->
-
-
         <div class="dashboard-grid">
-
-
             <div class="dashboard-item">
-
-
-                <app-top-products [data]="ProductosDestacados">
+                <app-top-products [moneda]="CompaniaActual.SimboloMoneda"  [data]="ProductosDestacados">
                 </app-top-products>
-
-
             </div>
-
-
-
-
             <div class="dashboard-item">
-
-
-                <app-top-categories [data]="CategoriasDestacadas">
+                <app-top-categories [moneda]="CompaniaActual.SimboloMoneda"  [data]="CategoriasDestacadas">
                 </app-top-categories>
-
-
             </div>
-
-
         </div>
-
-
-
-
-
-
-
         <!-- Rendimiento sucursales -->
-
-
         <section class="dashboard-section">
-
-
-            <app-branch-performance [data]="RendiemientoPorSucursal">
+            <app-branch-performance [moneda]="CompaniaActual.SimboloMoneda"  [data]="RendiemientoPorSucursal">
             </app-branch-performance>
-
-
         </section>
-
-
-
     </ng-container>
-
-
-
 </div>

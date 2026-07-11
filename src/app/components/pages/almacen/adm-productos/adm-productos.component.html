@@ -10,7 +10,7 @@
         (clear)="clearFilters()">>
     </app-product-filters>
     <!-- Tabla -->
-    <app-product-table [products]="ListaProductos" [loading]="Loading" [total]="TotalRegistros"
+    <app-product-table [companiaActual]="CompaniaActual" [products]="ListaProductos" [loading]="Loading" [total]="TotalRegistros"
         [currentPage]="PaginaActual" [totalPages]="TotalPaginas" (edit)="eventoMostrarPopupEditar($event)"
         (remove)="eventoEliminar($event)" (pageChange)="OnchangedPage($event)">
     </app-product-table>

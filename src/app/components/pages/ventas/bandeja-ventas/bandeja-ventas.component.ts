@@ -14,6 +14,7 @@ import { CustomerService } from 'src/app/shared/services/customer.service';
 import { SaleService } from 'src/app/shared/services/sale.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalAnularVentaComponent } from '../modals/modal-anular-venta/modal-anular-venta.component';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 
 @Component({
   selector: 'app-bandeja-ventas',
@@ -24,6 +25,7 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
 
   ListaVentas: EVenta[] = [];
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
 
   PaginaActual: number = 1;
@@ -61,11 +63,13 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
     Promise.all([
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
       this.clienteService.adm(),
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoClientes]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoCompania,resultadoClientes]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
+      this.CompaniaActual = resultadoCompania;
       this.ListaClientes = resultadoClientes;
       const tienePermiso = this.validarPermisos(
         this.Role,
@@ -150,6 +154,7 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
       disableClose: true,
       data: {
         venta: venta,
+        moneda: this.CompaniaActual.SimboloMoneda
       }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();

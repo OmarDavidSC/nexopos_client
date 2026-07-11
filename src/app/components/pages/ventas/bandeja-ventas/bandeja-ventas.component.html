@@ -3,7 +3,7 @@
     (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')" [rutaRegreso]="'/inicio'">
 </app-adm-header>
 
-<app-sale-summary [summary]="Resumen">
+<app-sale-summary [moneda]="CompaniaActual.SimboloMoneda" [summary]="Resumen">
 </app-sale-summary>
 
 <app-sale-filters [filter]="Filtro" [customers]="ListaClientes" (search)="OnSearchFiltro()"
@@ -11,6 +11,6 @@
     (clear)="clearFilters()">
 </app-sale-filters>
 
-<app-sale-timeline [sales]="ListaVentas" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
+<app-sale-timeline [moneda]="CompaniaActual.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
     (cancel)="OnEventoCancelar($event)" (cancel)="null">
 </app-sale-timeline> 

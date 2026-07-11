@@ -9,6 +9,7 @@ import { ECompra } from 'src/app/shared/models/entidades/ECompra';
 export class PurchaseCardComponent  {
 
   @Input() purchase!: ECompra;
+  @Input() moneda!: string;
   @Output() view = new EventEmitter<ECompra>();
   @Output() cancel = new EventEmitter<ECompra>();
 

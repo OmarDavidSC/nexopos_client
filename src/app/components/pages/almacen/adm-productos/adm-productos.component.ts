@@ -20,6 +20,7 @@ import { CategoryService } from 'src/app/shared/services/category.service';
 import { BrandService } from 'src/app/shared/services/brand.service';
 import { UnitService } from 'src/app/shared/services/unit.service';
 import { EUnidad } from 'src/app/shared/models/entidades/EUnidad';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 
 @Component({
   selector: 'app-adm-productos',
@@ -30,6 +31,7 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
 
   ListaProductos: EProducto[] = [];
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
 
   PaginaActual: number = 1;
@@ -69,14 +71,15 @@ export class AdmProductosComponent extends FormularioBase implements OnInit {
   ngOnInit(): void {
     Promise.all([
       this.auhtStore.getUser(),
-
+      this.auhtStore.getCompany(),
       this.auhtStore.getRole(),
       this.categoriaService.adm(),
       this.marcaService.adm(),
       this.unidadService.adm()
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoCategorias, resultadoMarcas, resultadoUnidades]) => {
+    ).then(([resultadoUsuario, resultadoCompania, resultadoRole, resultadoCategorias, resultadoMarcas, resultadoUnidades]) => {
       this.UsuarioActual = resultadoUsuario;
+      this.CompaniaActual = resultadoCompania;
       this.Role = resultadoRole;
       this.ListaCategorias = resultadoCategorias;
       this.ListaMarcas = resultadoMarcas;

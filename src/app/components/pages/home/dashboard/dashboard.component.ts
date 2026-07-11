@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { ERol } from 'src/app/shared/models/entidades/ERol';
 import { Eusuario } from 'src/app/shared/models/entidades/Eusuario';
 import { FormularioBase } from 'src/app/shared/pages/FormularioBase';
@@ -16,7 +17,9 @@ import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent extends FormularioBase implements OnInit {
+
   UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
 
   Loading: boolean = false;
@@ -48,10 +51,12 @@ export class DashboardComponent extends FormularioBase implements OnInit {
     Promise.all([
       this.auhtStore.getUser(),
       this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
     ]
-    ).then(([resultadoUsuario, resultadoRole]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoComopany]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
+      this.CompaniaActual = resultadoComopany;
       const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
       if (tienePermiso) {
         this.initialize();

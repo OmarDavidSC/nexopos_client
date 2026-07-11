@@ -17,6 +17,7 @@ export class ModalCancelarCompraComponent implements OnInit {
   LoadingToast: any;
 
   Compra: any;
+  Moneda: string;
 
   steps: StepVertical[] = [
     {
@@ -47,7 +48,7 @@ export class ModalCancelarCompraComponent implements OnInit {
   ) {
     this.TituloPopup = 'Cancelar Compra';
     this.Compra = data.compra;
-
+    this.Moneda = data.moneda;
   }
 
   ngOnInit(): void { }
@@ -66,7 +67,7 @@ export class ModalCancelarCompraComponent implements OnInit {
       this.Loading = true;
       this.CambiarEstadoStep(0, 'completed');
       this.CambiarEstadoStep(1, 'active');
-      const response =await this.compraService.cancel(this.Compra.Id);
+      const response = await this.compraService.cancel(this.Compra.Id);
       if (!response.success) {
         this.CambiarEstadoStep(1, 'error');
         this.toastService.error(response.message);
@@ -75,13 +76,13 @@ export class ModalCancelarCompraComponent implements OnInit {
 
       this.CambiarEstadoStep(1, 'completed');
       this.CambiarEstadoStep(2, 'active');
-      await new Promise(resolve =>setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 800));
       this.CambiarEstadoStep(2, 'completed');
       this.toastService.success(response.message);
       this.dialogRef.close(true);
     } catch (error: any) {
       this.CambiarEstadoStep(1, 'error');
-      this.toastService.error(error?.message ??'Error inesperado al cancelar compra');
+      this.toastService.error(error?.message ?? 'Error inesperado al cancelar compra');
     } finally {
       this.Loading = false;
     }
