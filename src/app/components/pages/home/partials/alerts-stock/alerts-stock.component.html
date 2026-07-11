@@ -1,0 +1,150 @@
+<div class="alerts-card">
+
+    <div class="alerts-header">
+
+        <div class="title">
+            <mat-icon>warning</mat-icon>
+            <div>
+                <h3>Alertas de inventario</h3>
+                <span>
+                    Productos que requieren atención
+                </span>
+            </div>
+        </div>
+
+
+        <div class="counter">
+            {{totalAlertas}}
+        </div>
+
+    </div>
+
+
+
+    <div class="summary-alerts">
+
+        <div class="alert-item danger">
+            <mat-icon>
+                remove_shopping_cart
+            </mat-icon>
+
+            <div>
+                <strong>
+                    {{agotados}}
+                </strong>
+                <span>
+                    Agotados
+                </span>
+            </div>
+        </div>
+
+
+
+        <div class="alert-item warning">
+
+            <mat-icon>
+                inventory
+            </mat-icon>
+
+            <div>
+                <strong>
+                    {{bajoStock}}
+                </strong>
+                <span>
+                    Bajo stock
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="products-list">
+
+
+        <ng-container *ngIf="data?.length; else empty">
+
+
+            <div class="product-row" *ngFor="let item of data">
+
+
+                <div class="product-info">
+
+                    <div class="icon">
+                        <mat-icon>
+                            inventory_2
+                        </mat-icon>
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            {{item.product}}
+                        </strong>
+
+                        <small>
+                            Código: {{item.code}}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="branch">
+
+                    <mat-icon>
+                        store
+                    </mat-icon>
+
+                    {{item.branch}}
+
+                </div>
+
+
+
+                <div class="stock">
+
+                    <span>
+                        Stock
+                    </span>
+
+                    <strong>
+                        {{item.current_stock}}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </ng-container>
+
+
+
+        <ng-template #empty>
+
+            <div class="empty">
+
+                <mat-icon>
+                    check_circle
+                </mat-icon>
+
+                <p>
+                    No existen alertas de inventario
+                </p>
+
+            </div>
+
+        </ng-template>
+
+
+    </div>
+
+
+</div>

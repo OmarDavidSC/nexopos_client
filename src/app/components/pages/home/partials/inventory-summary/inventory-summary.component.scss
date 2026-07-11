@@ -1,0 +1,185 @@
+.inventory-card {
+
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+
+}
+
+
+
+.header {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+
+    h3 {
+
+        margin: 0;
+        font-size: 18px;
+        color: #1e293b;
+
+    }
+
+
+    p {
+
+        margin: 5px 0 0;
+        color: #64748b;
+        font-size: 13px;
+
+    }
+
+
+    mat-icon {
+
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        color: #64748b;
+
+    }
+
+}
+
+
+
+
+.inventory-items {
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+}
+
+
+
+
+.item {
+
+    padding: 15px;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+
+    .icon {
+
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        mat-icon {
+
+            font-size: 25px;
+            width: 25px;
+            height: 25px;
+
+        }
+
+    }
+
+
+    .info {
+
+
+        span {
+
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+
+        }
+
+
+        strong {
+
+            display: block;
+            margin-top: 5px;
+            font-size: 22px;
+            color: #1e293b;
+
+        }
+
+
+    }
+
+
+}
+
+
+
+
+.stock {
+
+    background: #eff6ff;
+
+
+    .icon {
+
+        background: #dbeafe;
+        color: #2563eb;
+
+    }
+
+}
+
+
+
+.danger {
+
+    background: #fef2f2;
+
+
+    .icon {
+
+        background: #fee2e2;
+        color: #dc2626;
+
+    }
+
+}
+
+
+
+
+.warning {
+
+    background: #fffbeb;
+
+
+    .icon {
+
+        background: #fef3c7;
+        color: #d97706;
+
+    }
+
+}
+
+
+
+
+@media(max-width:700px) {
+
+
+    .inventory-items {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+}

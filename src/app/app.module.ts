@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { MenuLateralComponent } from './shared/components/menu-lateral/menu-lateral.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { ModalDialog } from "./shared/components/modal/modal.component";
@@ -17,7 +16,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
 import { SigninComponent } from './components/authentication/signin/signin.component';
 import { AddTokenInterceptor } from './shared/components/authentication/add-token.interceptor';
 import { BandejaContratosComponent } from './components/pages/bandejas/bandeja-contratos/bandeja-contratos.component';
@@ -71,6 +69,18 @@ import { ModalSucursalComponent } from './components/pages/sucursal/modals/modal
 import { AdmStocksComponent } from './components/pages/almacen/adm-stocks/adm-stocks.component';
 import { DetalleStocksComponent } from './components/pages/almacen/adm-stocks/partials/detalle-stocks/detalle-stocks.component';
 import { ModalActualizarStockComponent } from './components/pages/almacen/adm-stocks/partials/modal-actualizar-stock/modal-actualizar-stock.component';
+import { DashboardComponent } from './components/pages/home/dashboard/dashboard.component';
+import { WelcomeCardComponent } from './components/pages/home/partials/welcome-card/welcome-card.component';
+import { SummaryCardsComponent } from './components/pages/home/partials/summary-cards/summary-cards.component';
+import { InventorySummaryComponent } from './components/pages/home/partials/inventory-summary/inventory-summary.component';
+import { AlertsStockComponent } from './components/pages/home/partials/alerts-stock/alerts-stock.component';
+import { SalesChartComponent } from './components/pages/home/partials/sales-chart/sales-chart.component';
+import { TopProductsComponent } from './components/pages/home/partials/top-products/top-products.component';
+import { TopCategoriesComponent } from './components/pages/home/partials/top-categories/top-categories.component';
+import { BranchPerformanceComponent } from './components/pages/home/partials/branch-performance/branch-performance.component';
+import { SalesTodayComponent } from './components/pages/home/partials/sales-today/sales-today.component';
+import { PurchaseTodayComponent } from './components/pages/home/partials/purchase-today/purchase-today.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -79,7 +89,6 @@ import { ModalActualizarStockComponent } from './components/pages/almacen/adm-st
     HeaderComponent,
     GridLoaderComponent,
     ModalDialog,
-    HomeComponent,
     SigninComponent,
     BandejaContratosComponent,
     BandejaAdendasComponent,
@@ -132,6 +141,17 @@ import { ModalActualizarStockComponent } from './components/pages/almacen/adm-st
     AdmStocksComponent,
     DetalleStocksComponent,
     ModalActualizarStockComponent,
+    DashboardComponent,
+    WelcomeCardComponent,
+    SummaryCardsComponent,
+    InventorySummaryComponent,
+    AlertsStockComponent,
+    SalesChartComponent,
+    TopProductsComponent,
+    TopCategoriesComponent,
+    BranchPerformanceComponent,
+    SalesTodayComponent,
+    PurchaseTodayComponent,
   ],
   imports: [
     ComunModule,
@@ -143,6 +163,7 @@ import { ModalActualizarStockComponent } from './components/pages/almacen/adm-st
     HttpClientModule,
     MatButtonToggleModule,
     NgxSpinnerModule,
+    NgApexchartsModule,
     ToastrModule.forRoot()
   ],
   exports: [

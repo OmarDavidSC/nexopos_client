@@ -1,0 +1,16 @@
+<div class="chart-card">
+    <div class="header">
+        <div class="icon">
+            <mat-icon>show_chart</mat-icon>
+        </div>
+        <div>
+            <h3>Evolución de ventas</h3>
+            <span>Comportamiento de ventas por fecha</span>
+        </div>
+    </div>
+    <div class="chart-content">
+        <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
+            [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!" [dataLabels]="chartOptions.dataLabels!">
+        </apx-chart>
+    </div>
+</div>

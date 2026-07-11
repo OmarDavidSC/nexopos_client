@@ -1,0 +1,113 @@
+<div class="welcome-card">
+
+    <div class="welcome-content">
+
+        <div class="welcome-icon">
+
+            <mat-icon>
+                store
+            </mat-icon>
+
+        </div>
+
+
+        <div class="welcome-text">
+
+            <h1>
+                Bienvenido a NexoPOS
+            </h1>
+
+            <p>
+                Hola
+                <strong>{{nombreUsuario}}</strong>,
+                aquí tienes el resumen general de tu negocio.
+            </p>
+
+
+            <span class="date">
+
+                <mat-icon>calendar_today</mat-icon>
+
+                {{FechaActual | date:'EEEE, dd MMMM yyyy'}}
+
+            </span>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="welcome-stats">
+
+
+        <div class="stat">
+
+            <mat-icon>
+                inventory_2
+            </mat-icon>
+
+            <div>
+
+                <span>
+                    Productos
+                </span>
+
+                <strong>
+                    {{resumen?.total_products || 0}}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat">
+
+            <mat-icon>
+                point_of_sale
+            </mat-icon>
+
+            <div>
+
+                <span>
+                    Ventas del mes
+                </span>
+
+                <strong>
+                    S/ {{resumen?.sales_month || '0.00'}}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat">
+
+            <mat-icon>
+                shopping_cart
+            </mat-icon>
+
+            <div>
+
+                <span>
+                    Compras del mes
+                </span>
+
+                <strong>
+                    S/ {{resumen?.purchases_month || '0.00'}}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>

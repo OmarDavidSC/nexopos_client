@@ -1,0 +1,113 @@
+<div class="card-dashboard">
+
+
+    <div class="card-header">
+
+
+        <div class="icon">
+
+            <mat-icon>
+                category
+            </mat-icon>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                Categorías destacadas
+            </h3>
+
+            <p>
+                Categorías con mayor movimiento
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="categories-list" *ngIf="data.length > 0">
+
+
+        <div class="category-item" *ngFor="let item of data; let i=index">
+
+
+            <div class="position">
+
+                {{i + 1}}
+
+            </div>
+
+
+
+            <div class="category-info">
+
+
+                <h4>
+                    {{item.category}}
+                </h4>
+
+
+                <small>
+                    Ventas realizadas
+                </small>
+
+
+            </div>
+
+
+
+            <div class="quantity">
+
+
+                <strong>
+                    {{item.quantity}}
+                </strong>
+
+
+                <small>
+                    unidades
+                </small>
+
+
+            </div>
+
+
+
+            <div class="amount">
+
+                S/ {{item.amount}}
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="empty" *ngIf="data.length === 0">
+
+
+        <mat-icon>
+            category
+        </mat-icon>
+
+
+        <p>
+            No hay categorías registradas
+        </p>
+
+
+    </div>
+
+
+
+</div>

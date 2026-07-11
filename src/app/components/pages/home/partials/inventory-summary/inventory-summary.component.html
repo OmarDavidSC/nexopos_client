@@ -1,0 +1,62 @@
+<div class="inventory-card">
+
+
+    <div class="header">
+
+        <div>
+
+            <h3>
+                Estado del Inventario
+            </h3>
+
+            <p>
+                Resumen actual de productos
+            </p>
+
+        </div>
+
+
+        <mat-icon>
+            warehouse
+        </mat-icon>
+
+
+    </div>
+
+
+
+    <div class="inventory-items">
+
+
+        <div class="item" *ngFor="let item of Cards" [ngClass]="item.class">
+
+
+            <div class="icon">
+
+                <mat-icon>
+                    {{item.icon}}
+                </mat-icon>
+
+            </div>
+
+
+            <div class="info">
+
+                <span>
+                    {{item.title}}
+                </span>
+
+                <strong>
+                    {{item.value}}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>

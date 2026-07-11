@@ -1,0 +1,207 @@
+.card-dashboard {
+
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
+
+}
+
+
+.card-header {
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+
+
+    .icon {
+
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef4ff;
+
+        mat-icon {
+            color: #2563eb;
+        }
+
+    }
+
+
+    h3 {
+
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+
+    }
+
+
+    p {
+
+        margin: 3px 0 0;
+        color: #777;
+        font-size: 13px;
+
+    }
+
+}
+
+
+
+.products-list {
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+}
+
+
+
+.product-item {
+
+    display: grid;
+    grid-template-columns: 45px 1fr auto auto;
+    align-items: center;
+    gap: 15px;
+
+    padding: 12px;
+    border-radius: 12px;
+    background: #fafafa;
+
+
+    &:hover {
+
+        background: #f5f7fb;
+
+    }
+
+}
+
+
+
+.position {
+
+
+    span {
+
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #2563eb;
+        color: white;
+
+        font-weight: 600;
+
+    }
+
+}
+
+
+
+.product-info {
+
+
+    h4 {
+
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+
+    }
+
+
+    small {
+
+        color: #777;
+
+    }
+
+}
+
+
+
+.product-data {
+
+    text-align: center;
+
+
+    strong {
+
+        display: block;
+        font-size: 16px;
+
+    }
+
+
+    small {
+
+        color: #777;
+
+    }
+
+}
+
+
+
+.amount {
+
+    font-weight: 700;
+    color: #16a34a;
+
+}
+
+
+
+.empty {
+
+    height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #888;
+
+
+    mat-icon {
+
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+
+    }
+
+}
+
+
+
+@media(max-width:600px) {
+
+
+    .product-item {
+
+        grid-template-columns: 40px 1fr;
+    }
+
+
+    .product-data,
+    .amount {
+
+        display: none;
+
+    }
+
+}

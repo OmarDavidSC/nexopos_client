@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
 import { SigninComponent } from './components/authentication/signin/signin.component';
 import { AuthGuard } from './shared/components/authentication/auth.guard';
 import { ForgotPasswordComponent } from './components/authentication/forgot-password/forgot-password.component';
@@ -23,12 +22,13 @@ import { AdmUsuarioComponent } from './components/pages/usuario/adm-usuario/adm-
 import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/adm-sucursal.component';
 import { AdmStocksComponent } from './components/pages/almacen/adm-stocks/adm-stocks.component';
 import { DetalleStocksComponent } from './components/pages/almacen/adm-stocks/partials/detalle-stocks/detalle-stocks.component';
+import { DashboardComponent } from './components/pages/home/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
   { path: 'forgot-password', component: ForgotPasswordComponent, },
   { path: 'restore-password', component: RestorePasswordComponent, },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'mi-perfil', component: BandejaPerfilComponent, canActivate: [AuthGuard] },
   { path: 'mi-compania', component: PanelCompanyComponent, canActivate: [AuthGuard] },
   { path: 'mis-sucursales', component: AdmSucursalComponent, canActivate: [AuthGuard] },

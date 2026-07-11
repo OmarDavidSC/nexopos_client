@@ -1,0 +1,194 @@
+.welcome-card {
+
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .05);
+
+}
+
+
+
+.welcome-content {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+
+
+
+.welcome-icon {
+
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1976d2;
+    color: white;
+
+
+    mat-icon {
+
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+
+    }
+
+}
+
+
+
+.welcome-text {
+
+
+    h1 {
+
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+        color: #1f2937;
+
+    }
+
+
+    p {
+
+        margin: 8px 0;
+        color: #6b7280;
+        font-size: 15px;
+
+    }
+
+
+}
+
+
+
+.date {
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #64748b;
+    font-size: 13px;
+
+
+    mat-icon {
+
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+
+    }
+
+}
+
+
+
+
+.welcome-stats {
+
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+}
+
+
+
+.stat {
+
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 150px;
+
+
+    mat-icon {
+
+        color: #1976d2;
+
+    }
+
+
+    span {
+
+        display: block;
+        color: #64748b;
+        font-size: 12px;
+
+    }
+
+
+    strong {
+
+        display: block;
+        margin-top: 3px;
+        font-size: 18px;
+        color: #111827;
+
+    }
+
+}
+
+
+
+
+@media(max-width:1200px) {
+
+
+    .welcome-card {
+
+        flex-direction: column;
+
+    }
+
+
+    .welcome-stats {
+
+        width: 100%;
+        justify-content: space-between;
+
+    }
+
+}
+
+
+
+@media(max-width:700px) {
+
+
+    .welcome-content {
+
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+
+    .welcome-stats {
+
+        flex-direction: column;
+
+    }
+
+
+    .stat {
+
+        width: 100%;
+
+    }
+
+
+}

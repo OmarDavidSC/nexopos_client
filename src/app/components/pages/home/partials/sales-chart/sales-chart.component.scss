@@ -1,0 +1,42 @@
+.chart-card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .06);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    .icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 14px;
+        background: #ede9fe;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+            color: #7c3aed;
+        }
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    span {
+        color: #777;
+        font-size: 13px;
+    }
+}
+
+.chart-content {
+    width: 100%;
+}

@@ -1,0 +1,82 @@
+<div class="card-dashboard">
+
+    <div class="card-header">
+
+        <div class="icon">
+            <mat-icon>inventory_2</mat-icon>
+        </div>
+
+        <div>
+            <h3>Productos destacados</h3>
+            <p>Productos con mayor venta</p>
+        </div>
+
+    </div>
+
+
+    <div class="products-list" *ngIf="data.length > 0">
+
+        <div class="product-item" *ngFor="let item of data; let i=index">
+
+
+            <div class="position">
+
+                <span>
+                    {{i + 1}}
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h4>
+                    {{item.name}}
+                </h4>
+
+                <small>
+                    Código: {{item.code}}
+                </small>
+
+            </div>
+
+
+            <div class="product-data">
+
+                <strong>
+                    {{item.quantity}}
+                </strong>
+
+                <small>
+                    unidades
+                </small>
+
+            </div>
+
+
+            <div class="amount">
+
+                S/ {{item.amount}}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="empty" *ngIf="data.length === 0">
+
+        <mat-icon>
+            inventory
+        </mat-icon>
+
+        <p>
+            No hay ventas registradas
+        </p>
+
+    </div>
+
+
+</div>
