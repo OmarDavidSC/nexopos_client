@@ -1,33 +1,19 @@
 <div class="summary-container">
-
-
-    <div class="summary-card" *ngFor="let item of Cards" [ngClass]="item.type">
-
-
-        <div class="icon">
-
-            <mat-icon>
-                {{item.icon}}
-            </mat-icon>
-
-        </div>
-
-
-        <div class="content">
-
-            <span>
-                {{item.title}}
-            </span>
-
-
-            <h2>
-                {{item.value}}
-            </h2>
-
-        </div>
-
-
+  <div class="summary-card" *ngFor="let item of Cards" [ngClass]="item.type">
+    <div class="icon">
+      <mat-icon>
+        {{ item.icon }}
+      </mat-icon>
     </div>
 
+    <div class="content">
+      <span>
+        {{ item.title }}
+      </span>
 
+      <h2>
+        {{ item.value }}
+      </h2>
+    </div>
+  </div>
 </div>

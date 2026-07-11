@@ -1,107 +1,39 @@
 <div class="sales-card">
-
-
     <div class="header">
-
-
         <div class="icon">
-
-            <mat-icon>
-                shopping_cart
-            </mat-icon>
-
+            <mat-icon> shopping_cart </mat-icon>
         </div>
-
 
         <div>
+            <h3>Ventas de hoy</h3>
 
-            <h3>
-                Ventas de hoy
-            </h3>
-
-            <span>
-                Resumen del día
-            </span>
-
+            <span> Resumen del día </span>
         </div>
-
-
     </div>
-
-
-
-
 
     <div class="content">
-
-
         <div class="amount">
+            <span> Total vendido </span>
 
-
-            <span>
-                Total vendido
-            </span>
-
-
-            <h2>
-
-                {{moneda}} {{montoTotal | number:'1.2-2'}}
-
-            </h2>
-
-
+            <h2>{{ moneda }} {{ montoTotal | number: "1.2-2" }}</h2>
         </div>
-
-
-
-
 
         <div class="quantity">
-
-
-            <mat-icon>
-                receipt_long
-            </mat-icon>
-
+            <mat-icon> receipt_long </mat-icon>
 
             <div>
-
                 <strong>
-                    {{totalVentas}}
+                    {{ totalVentas }}
                 </strong>
 
-
-                <span>
-                    ventas realizadas
-                </span>
-
-
+                <span> ventas realizadas </span>
             </div>
-
-
         </div>
-
-
-
     </div>
-
-
-
-
 
     <div class="footer">
-
-
-        <mat-icon>
-            today
-        </mat-icon>
-
+        <mat-icon> today </mat-icon>
 
         Hoy
-
-
     </div>
-
-
-
 </div>

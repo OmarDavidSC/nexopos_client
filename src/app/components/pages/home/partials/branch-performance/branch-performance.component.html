@@ -1,119 +1,38 @@
 <div class="card-dashboard">
-
-
     <div class="card-header">
-
-
         <div class="icon">
-
-            <mat-icon>
-                store
-            </mat-icon>
-
+            <mat-icon>store</mat-icon>
         </div>
-
-
         <div>
-
-            <h3>
-                Rendimiento por sucursal
-            </h3>
-
-            <p>
-                Comparación de ventas por local
-            </p>
-
+            <h3>Rendimiento por sucursal </h3>
+            <p>Comparación de ventas por local</p>
         </div>
-
-
     </div>
-
-
-
     <div class="branch-list" *ngIf="data.length > 0">
-
-
         <div class="branch-item" *ngFor="let item of data; let i=index">
-
-
             <div class="position">
-
                 {{i + 1}}
-
             </div>
-
-
-
             <div class="branch-info">
-
-
-                <h4>
-
-                    {{item.branch}}
-
-                </h4>
-
-
+                <h4>{{item.branch}}</h4>
                 <small>
-
                     Ventas realizadas:
                     {{item.total_sales}}
-
                 </small>
-
-
             </div>
-
-
-
             <div class="sales">
-
-
-                <strong>
-
-                    {{item.total_sales}}
-
-                </strong>
-
-
-                <small>
-                    ventas
-                </small>
-
-
+                <strong>{{item.total_sales}}</strong>
+                <small>ventas</small>
             </div>
-
-
-
             <div class="amount">
-
                 {{moneda}} {{item.total_amount}}
-
             </div>
-
-
         </div>
-
-
     </div>
-
-
-
     <div class="empty" *ngIf="data.length === 0">
-
-
-        <mat-icon>
-            store
-        </mat-icon>
-
-
+        <mat-icon>store</mat-icon>
         <p>
             No hay información de sucursales
         </p>
-
-
     </div>
-
-
-
 </div>

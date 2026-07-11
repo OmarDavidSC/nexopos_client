@@ -4,10 +4,9 @@ import { Eusuario } from 'src/app/shared/models/entidades/Eusuario';
 @Component({
   selector: 'app-welcome-card',
   templateUrl: './welcome-card.component.html',
-  styleUrls: ['./welcome-card.component.scss']
+  styleUrls: ['./welcome-card.component.scss'],
 })
 export class WelcomeCardComponent implements OnInit {
-
   @Input() usuario: Eusuario | null = null;
   @Input() resumen: any;
   @Input() moneda: string;
@@ -16,20 +15,13 @@ export class WelcomeCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-
-  }
-
+  ngOnInit(): void { }
 
   get nombreUsuario(): string {
-
     if (!this.usuario) {
       return 'Usuario';
     }
 
     return `${this.usuario.NombreCompleto ?? ''}`;
-
   }
-
-
 }

@@ -1,35 +1,21 @@
 .purchase-card {
-
-
     background: white;
 
     border-radius: 18px;
 
     padding: 20px;
 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, .06);
-
-
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
-
-
-
-
 .header {
-
-
     display: flex;
 
     align-items: center;
 
     gap: 12px;
 
-
-
     .icon {
-
-
         width: 45px;
 
         height: 45px;
@@ -38,92 +24,50 @@
 
         background: #dbeafe;
 
-
         display: flex;
 
         justify-content: center;
 
         align-items: center;
 
-
-
         mat-icon {
-
             color: #2563eb;
-
         }
-
-
     }
 
-
-
-
-
     h3 {
-
         margin: 0;
 
         font-size: 17px;
 
         font-weight: 600;
-
     }
 
-
-
     span {
-
         color: #777;
 
         font-size: 13px;
-
     }
-
-
 }
 
-
-
-
-
-
 .content {
-
-
     margin-top: 25px;
-
 
     display: flex;
 
     justify-content: space-between;
 
     align-items: center;
-
-
 }
 
-
-
-
-
-
 .amount {
-
-
     span {
-
         font-size: 13px;
 
         color: #777;
-
     }
 
-
-
     h2 {
-
-
         margin: 5px 0 0;
 
         font-size: 28px;
@@ -131,74 +75,39 @@
         font-weight: 700;
 
         color: #111827;
-
-
     }
-
-
 }
 
-
-
-
-
-
-
 .quantity {
-
-
     display: flex;
 
     align-items: center;
 
     gap: 10px;
 
-
-
     mat-icon {
-
         color: #2563eb;
-
     }
 
-
-
     strong {
-
         display: block;
 
         font-size: 22px;
-
     }
 
-
-
     span {
-
         font-size: 12px;
 
         color: #777;
-
     }
-
-
 }
 
-
-
-
-
-
-
 .footer {
-
-
     margin-top: 20px;
 
     padding-top: 15px;
 
     border-top: 1px solid #eee;
-
 
     display: flex;
 
@@ -206,23 +115,15 @@
 
     gap: 5px;
 
-
     color: #666;
 
     font-size: 13px;
 
-
-
-
     mat-icon {
-
         font-size: 18px;
 
         width: 18px;
 
         height: 18px;
-
     }
-
-
 }
