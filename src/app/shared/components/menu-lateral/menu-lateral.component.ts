@@ -76,14 +76,14 @@ export class MenuLateralComponent implements OnInit {
         { label: 'Punto de Venta', icon: 'point_of_sale', route: '/bandeja-ventas' }
       ]
     },
-    {
-      label: 'Caja',
-      icon: 'payments',
-      children: [
-        { label: 'Caja', icon: 'account_balance_wallet', route: '/caja' },
-        { label: 'Movimientos', icon: 'swap_horiz', route: '/movimientos-caja' }
-      ]
-    },
+    // {
+    //   label: 'Caja',
+    //   icon: 'payments',
+    //   children: [
+    //     { label: 'Caja', icon: 'account_balance_wallet', route: '/caja' },
+    //     { label: 'Movimientos', icon: 'swap_horiz', route: '/movimientos-caja' }
+    //   ]
+    // },
     {
       label: 'Reportes',
       icon: 'assessment',
