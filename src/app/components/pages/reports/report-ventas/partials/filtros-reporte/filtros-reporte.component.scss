@@ -1,0 +1,184 @@
+.filter-card {
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.header-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.header-icon mat-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+}
+
+.header-info h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.header-info p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/*==========================================
+=                FILTROS                   =
+==========================================*/
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns: repeat(8, minmax(170px, 1fr));
+
+  gap: 16px;
+
+  align-items: start;
+}
+
+/*==========================================
+=            FORMULARIOS                   =
+==========================================*/
+
+mat-form-field {
+  width: 100%;
+}
+
+/*==========================================
+=               BOTONES                    =
+==========================================*/
+
+.filter-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 22px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #edf2f7;
+}
+
+.filter-actions button {
+  min-width: 140px;
+
+  height: 46px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+}
+
+.filter-actions mat-icon {
+  margin-right: 6px;
+}
+
+/*==========================================
+=               SCROLL                     =
+==========================================*/
+
+.filter-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.filter-grid::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+.filter-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/*==========================================
+=              RESPONSIVE                  =
+==========================================*/
+
+@media (max-width: 1600px) {
+  .filter-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-card {
+    padding: 18px;
+  }
+
+  .filter-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .header-info {
+    text-align: center;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .filter-actions button {
+    width: 100%;
+  }
+}
+
+.filter-accordion {
+  margin-bottom: 20px;
+}
+
+.filter-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.filter-title mat-icon {
+  color: #2563eb;
+}
+
+.filter-content {
+  padding-top: 15px;
+}

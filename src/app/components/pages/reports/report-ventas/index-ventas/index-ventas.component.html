@@ -1,1 +1,37 @@
-<p>index-ventas works!</p>
+<app-filtros-reporte [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Clientes]="ListaClientes"
+    [Usuarios]="ListaUsuarios" (buscar)="obtenerMaestros()" (limpiar)="clearFilters()">
+</app-filtros-reporte>
+
+<app-resumen-reporte [Resumen]="Resumen"> </app-resumen-reporte>
+
+<div class="row">
+    <div class="col-lg-6">
+        <app-grafico-ventas-dia [Datos]="VentasPorDia"> </app-grafico-ventas-dia>
+    </div>
+
+    <div class="col-lg-6">
+        <app-grafico-ventas-mes [Datos]="VentasPorMes"> </app-grafico-ventas-mes>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6">
+        <app-top-productos [Datos]="TopProductos"> </app-top-productos>
+    </div>
+
+    <div class="col-lg-6">
+        <app-top-clientes [Datos]="TopClientes"> </app-top-clientes>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-lg-6">
+        <app-metodos-pago [Datos]="MetodosDePago"> </app-metodos-pago>
+    </div>
+
+    <div class="col-lg-6">
+        <app-tipos-voucher [Datos]="TiposDeVoucher"> </app-tipos-voucher>
+    </div>
+</div>
+
+<!-- <app-tabla-ventas [Ventas]="Ventas"> </app-tabla-ventas> -->

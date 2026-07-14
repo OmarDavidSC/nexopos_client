@@ -1,0 +1,30 @@
+<mat-card class="chart-card">
+
+    <div class="card-header">
+
+        <div>
+
+            <h3>Ventas por Día</h3>
+
+            <span>Evolución diaria de las ventas</span>
+
+        </div>
+
+        <div class="icon">
+
+            <mat-icon>show_chart</mat-icon>
+
+        </div>
+
+    </div>
+
+    <div class="chart-container">
+
+        <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
+            [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels" [xaxis]="chartOptions.xaxis"
+            [yaxis]="chartOptions.yaxis" [tooltip]="chartOptions.tooltip">
+        </apx-chart>
+
+    </div>
+
+</mat-card>

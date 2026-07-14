@@ -84,6 +84,15 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { IndexVentasComponent } from './components/pages/reports/report-ventas/index-ventas/index-ventas.component';
 import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
 import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
+import { FiltrosReporteComponent } from './components/pages/reports/report-ventas/partials/filtros-reporte/filtros-reporte.component';
+import { ResumenReporteComponent } from './components/pages/reports/report-ventas/partials/resumen-reporte/resumen-reporte.component';
+import { GraficoVentasDiaComponent } from './components/pages/reports/report-ventas/partials/grafico-ventas-dia/grafico-ventas-dia.component';
+import { GraficoVentasMesComponent } from './components/pages/reports/report-ventas/partials/grafico-ventas-mes/grafico-ventas-mes.component';
+import { TopProductosComponent } from './components/pages/reports/report-ventas/partials/top-productos/top-productos.component';
+import { TopClientesComponent } from './components/pages/reports/report-ventas/partials/top-clientes/top-clientes.component';
+import { MetodosPagoComponent } from './components/pages/reports/report-ventas/partials/metodos-pago/metodos-pago.component';
+import { TiposVoucherComponent } from './components/pages/reports/report-ventas/partials/tipos-voucher/tipos-voucher.component';
+import { TablaVentasComponent } from './components/pages/reports/report-ventas/partials/tabla-ventas/tabla-ventas.component';
 
 @NgModule({
   declarations: [
@@ -158,6 +167,15 @@ import { IndexInventarioComponent } from './components/pages/reports/report-inve
     IndexVentasComponent,
     IndexComprasComponent,
     IndexInventarioComponent,
+    FiltrosReporteComponent,
+    ResumenReporteComponent,
+    GraficoVentasDiaComponent,
+    GraficoVentasMesComponent,
+    TopProductosComponent,
+    TopClientesComponent,
+    MetodosPagoComponent,
+    TiposVoucherComponent,
+    TablaVentasComponent,
   ],
   imports: [
     ComunModule,
