@@ -1,41 +1,38 @@
+<app-adm-header [descripcion]="'Consualta los reportes de las compras'"
+    [breadcrumbs]="[{nombre:'Reporte'},{nombre:'Reporte de Compras'}]" [visible]="false" [rutaRegreso]="'/inicio'">
+</app-adm-header>
 <div class="container-fluid">
-  <!-- FILTROS -->
-  <app-filtros-compras
-    [Filtro]="Filtro"
-    [Sucursales]="ListaSucursales"
-    [Proveedores]="ListaProveedores"
-    [Usuarios]="ListaUsuarios"
-    (Buscar)="obtenerMaestros()"
-    (Limpiar)="clearFilters()"
-  >
-  </app-filtros-compras>
+    <!-- FILTROS -->
+    <app-filtros-compras [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Proveedores]="ListaProveedores"
+        [Usuarios]="ListaUsuarios" (Buscar)="obtenerMaestros()" (Limpiar)="clearFilters()">
+    </app-filtros-compras>
 
-  <!-- RESUMEN -->
-  <app-resumen-compras [Datos]="Resumen"> </app-resumen-compras>
+    <!-- RESUMEN -->
+    <app-resumen-compras [Datos]="Resumen"> </app-resumen-compras>
 
-  <div class="row mt-2">
-    <div class="col-lg-6 mb-4">
-      <app-compras-dia [Datos]="ComprasPorDia"> </app-compras-dia>
+    <div class="row mt-2">
+        <div class="col-lg-6 mb-4">
+            <app-compras-dia [Datos]="ComprasPorDia"> </app-compras-dia>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <app-compras-mes [Datos]="ComprasPorMes"> </app-compras-mes>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <app-top-productos-compras [Datos]="TopProductos"> </app-top-productos-compras>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <app-top-proveedores [Datos]="TopProveedores"> </app-top-proveedores>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <app-tipos-voucher [Datos]="TipoDeVoucher"> </app-tipos-voucher>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <app-estado-compras [Datos]="CompraEstado"> </app-estado-compras>
+        </div>
     </div>
-
-    <div class="col-lg-6 mb-4">
-      <app-compras-mes [Datos]="ComprasPorMes"> </app-compras-mes>
-    </div>
-
-    <div class="col-lg-6 mb-4">
-      <app-top-productos-compras [Datos]="TopProductos"> </app-top-productos-compras>
-    </div>
-
-    <div class="col-lg-6 mb-4">
-      <app-top-proveedores [Datos]="TopProveedores"> </app-top-proveedores>
-    </div>
-
-    <div class="col-lg-6 mb-4">
-      <app-tipos-voucher [Datos]="TipoDeVoucher"> </app-tipos-voucher>
-    </div>
-
-    <div class="col-lg-6 mb-4">
-      <app-estado-compras [Datos]="CompraEstado"> </app-estado-compras>
-    </div>
-  </div>
 </div>

@@ -1,3 +1,6 @@
+<app-adm-header [descripcion]="'Consualta los reportes de las ventas'"
+    [breadcrumbs]="[{nombre:'Reporte'},{nombre:'Reporte de Ventas'}]" [visible]="false" [rutaRegreso]="'/inicio'">
+</app-adm-header>
 <app-filtros-reporte [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Clientes]="ListaClientes"
     [Usuarios]="ListaUsuarios" (buscar)="obtenerMaestros()" (limpiar)="clearFilters()">
 </app-filtros-reporte>
