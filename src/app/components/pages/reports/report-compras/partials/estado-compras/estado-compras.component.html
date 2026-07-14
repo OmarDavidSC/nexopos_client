@@ -1,0 +1,50 @@
+<div class="card reporte-card">
+    <div class="card-header">
+        <div class="titulo">
+            <mat-icon> checklist </mat-icon>
+
+            Estado de compras
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="row" *ngIf="Datos && Datos.length">
+            <div class="col-md-6 mb-3" *ngFor="let item of Datos">
+                <div class="estado-card">
+                    <div class="estado-icon">
+                        <mat-icon>
+                            {{ item.status === "COMPLETED" ? "check_circle" : "cancel" }}
+                        </mat-icon>
+                    </div>
+
+                    <div class="estado-info">
+                        <h4>
+                            {{ getNombreEstado(item.status) }}
+                        </h4>
+
+                        <div class="detalle">
+                            <span> Compras: </span>
+
+                            <strong>
+                                {{ item.total_purchases }}
+                            </strong>
+                        </div>
+
+                        <div class="detalle">
+                            <span> Total: </span>
+
+                            <strong>
+                                S/
+                                {{ item.total_amount | number: "1.2-2" }}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="empty" *ngIf="!Datos || Datos.length === 0">
+            No hay información disponible
+        </div>
+    </div>
+</div>

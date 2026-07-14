@@ -1,0 +1,111 @@
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>filter_alt</mat-icon>
+        <span class="ms-2"> Filtros de búsqueda </span>
+      </mat-panel-title>
+      <mat-panel-description> Filtros Avanzados </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <!-- SUCURSAL -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Sucursal</mat-label>
+          <mat-select [(ngModel)]="Filtro.branch_id">
+            <mat-option [value]="null"> Todas </mat-option>
+            <mat-option *ngFor="let item of Sucursales" [value]="item.Id">
+              {{ item.Nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- PROVEEDOR -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Proveedor</mat-label>
+          <mat-select [(ngModel)]="Filtro.supplier_id">
+            <mat-option [value]="null"> Todos </mat-option>
+            <mat-option *ngFor="let item of Proveedores" [value]="item.Id">
+              {{ item.NombreEmpresa }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- USUARIO -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Usuario</mat-label>
+          <mat-select [(ngModel)]="Filtro.user_id">
+            <mat-option [value]="null"> Todos </mat-option>
+            <mat-option *ngFor="let item of Usuarios" [value]="item.Id">
+              {{ item.Nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- VOUCHER -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Tipo Voucher</mat-label>
+          <mat-select [(ngModel)]="Filtro.voucher_type">
+            <mat-option [value]="null"> Todos </mat-option>
+            <mat-option value="FACTURA"> Factura </mat-option>
+            <mat-option value="BOLETA"> Boleta </mat-option>
+            <mat-option value="NOTA"> Nota </mat-option>
+            <mat-option value="TICKET"> Ticket </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- ESTADO -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="Filtro.status">
+            <mat-option [value]="null"> Todos </mat-option>
+            <mat-option value="COMPLETED"> Completada </mat-option>
+            <mat-option value="CANCELLED"> Cancelada </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- FECHA INICIO -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha Inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerInicio"
+            [(ngModel)]="Filtro.date_start"
+          />
+          <mat-datepicker-toggle matSuffix [for]="pickerInicio">
+          </mat-datepicker-toggle>
+          <mat-datepicker #pickerInicio></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <!-- FECHA FIN -->
+      <div class="col-lg-3 col-md-6 mb-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha Fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerFin"
+            [(ngModel)]="Filtro.date_end"
+          />
+          <mat-datepicker-toggle matSuffix [for]="pickerFin">
+          </mat-datepicker-toggle>
+          <mat-datepicker #pickerFin></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end mt-2">
+      <button mat-stroked-button color="warn" (click)="limpiar()">
+        <mat-icon>restart_alt</mat-icon>
+        Limpiar
+      </button>
+      <button mat-raised-button color="primary" class="ms-2" (click)="buscar()">
+        <mat-icon>search</mat-icon>
+        Buscar
+      </button>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

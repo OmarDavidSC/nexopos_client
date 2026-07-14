@@ -10,7 +10,7 @@ import { ReportInventoryFilter } from "../models/base/ReportInventoryFilter";
     providedIn: "root"
 })
 
-export class ReportPurchaseService {
+export class ReportInventoryService {
     private urlBase = environment.uriApiBack + "/rinventory";
 
     constructor(

@@ -1,0 +1,79 @@
+<div class="row mt-3" *ngIf="Datos">
+    <!-- TOTAL COMPRAS -->
+
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card resumen-card">
+            <div class="card-body">
+                <div class="icon-container">
+                    <mat-icon> shopping_cart </mat-icon>
+                </div>
+
+                <div class="info">
+                    <span class="titulo"> Total Compras </span>
+
+                    <h3>
+                        {{ Datos.total_purchases || 0 }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MONTO TOTAL -->
+
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card resumen-card">
+            <div class="card-body">
+                <div class="icon-container">
+                    <mat-icon> payments </mat-icon>
+                </div>
+
+                <div class="info">
+                    <span class="titulo"> Monto Total </span>
+
+                    <h3>S/ {{ Datos.total_amount || 0 | number: "1.2-2" }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCTOS COMPRADOS -->
+
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card resumen-card">
+            <div class="card-body">
+                <div class="icon-container">
+                    <mat-icon> inventory_2 </mat-icon>
+                </div>
+
+                <div class="info">
+                    <span class="titulo"> Productos </span>
+
+                    <h3>
+                        {{ Datos.total_products || 0 }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROVEEDORES -->
+
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card resumen-card">
+            <div class="card-body">
+                <div class="icon-container">
+                    <mat-icon> local_shipping </mat-icon>
+                </div>
+
+                <div class="info">
+                    <span class="titulo"> Proveedores </span>
+
+                    <h3>
+                        {{ Datos.total_suppliers || 0 }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

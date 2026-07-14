@@ -1,0 +1,17 @@
+<div class="card reporte-card">
+    <div class="card-header">
+        <div class="titulo">
+            <mat-icon> calendar_today </mat-icon>
+
+            Compras por día
+        </div>
+    </div>
+
+    <div class="card-body">
+        <apx-chart *ngIf="chartOptions && Datos.length" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!" [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!">
+        </apx-chart>
+
+        <div class="empty" *ngIf="!Datos.length">No hay información disponible</div>
+    </div>
+</div>

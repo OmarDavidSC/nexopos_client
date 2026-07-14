@@ -93,6 +93,13 @@ import { TopClientesComponent } from './components/pages/reports/report-ventas/p
 import { MetodosPagoComponent } from './components/pages/reports/report-ventas/partials/metodos-pago/metodos-pago.component';
 import { TiposVoucherComponent } from './components/pages/reports/report-ventas/partials/tipos-voucher/tipos-voucher.component';
 import { TablaVentasComponent } from './components/pages/reports/report-ventas/partials/tabla-ventas/tabla-ventas.component';
+import { FiltrosComprasComponent } from './components/pages/reports/report-compras/partials/filtros-compras/filtros-compras.component';
+import { ResumenComprasComponent } from './components/pages/reports/report-compras/partials/resumen-compras/resumen-compras.component';
+import { ComprasDiaComponent } from './components/pages/reports/report-compras/partials/compras-dia/compras-dia.component';
+import { ComprasMesComponent } from './components/pages/reports/report-compras/partials/compras-mes/compras-mes.component';
+import { TopProveedoresComponent } from './components/pages/reports/report-compras/partials/top-proveedores/top-proveedores.component';
+import { EstadoComprasComponent } from './components/pages/reports/report-compras/partials/estado-compras/estado-compras.component';
+import { TopProductosComprasComponent } from './components/pages/reports/report-compras/partials/top-productos-compras/top-productos-compras.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +183,13 @@ import { TablaVentasComponent } from './components/pages/reports/report-ventas/p
     MetodosPagoComponent,
     TiposVoucherComponent,
     TablaVentasComponent,
+    FiltrosComprasComponent,
+    ResumenComprasComponent,
+    ComprasDiaComponent,
+    ComprasMesComponent,
+    TopProveedoresComponent,
+    EstadoComprasComponent,
+    TopProductosComprasComponent,
   ],
   imports: [
     ComunModule,

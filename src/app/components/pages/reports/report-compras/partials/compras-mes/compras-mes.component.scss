@@ -1,0 +1,43 @@
+.reporte-card {
+  border: none;
+
+  border-radius: 15px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  background: white;
+
+  border-bottom: 1px solid #eee;
+
+  padding: 15px 20px;
+}
+
+.titulo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-weight: 600;
+
+  font-size: 16px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.empty {
+  height: 250px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #94a3b8;
+}

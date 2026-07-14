@@ -1,0 +1,19 @@
+<div class="card reporte-card">
+    <div class="card-header">
+        <div class="titulo">
+            <mat-icon> date_range </mat-icon>
+
+            Compras por mes
+        </div>
+    </div>
+
+    <div class="card-body">
+        <apx-chart *ngIf="chartOptions.series" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+            [xaxis]="chartOptions.xaxis!" [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!">
+        </apx-chart>
+
+        <div class="empty" *ngIf="!Datos || Datos.length === 0">
+            No hay información disponible
+        </div>
+    </div>
+</div>
