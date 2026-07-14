@@ -32,6 +32,7 @@ export class PurchaseService {
             formData.append('search', filter.search ?? '');
 
             formData.append('supplier_id', filter.supplier_id !== null ? String(filter.supplier_id) : '');
+            formData.append('branch_id', filter.branch_id !== null ? String(filter.branch_id) : '');
             formData.append('status', filter.status !== null ? String(filter.status) : '');
 
             const { success, data, message } = await this.http.postForm(url, formData).toPromise();
