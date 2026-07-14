@@ -1,7 +1,7 @@
 <div class="filters-card">
     <div class="row g-3 align-items-center">
         <!-- Buscar -->
-        <div class="col-xl-4 col-lg-12">
+        <div class="col-xl-4 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Buscar Venta</mat-label>
                 <mat-icon matPrefix>search</mat-icon>
@@ -10,7 +10,7 @@
             </mat-form-field>
         </div>
         <!-- Cliente -->
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-2 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cliente</mat-label>
                 <mat-select [(ngModel)]="filter.customer_id" (selectionChange)="customerChange.emit()">
@@ -21,8 +21,19 @@
                 </mat-select>
             </mat-form-field>
         </div>
+         <div class="col-xl-2 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Sucursales</mat-label>
+                <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
+                    <mat-option [value]="null">Todos</mat-option>
+                    <mat-option *ngFor="let item of branches" [value]="item.Id">
+                        {{item.Nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <!-- Estado -->
-        <div class="col-xl-2 col-lg-6">
+        <div class="col-xl-2 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estado</mat-label>
                 <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
@@ -34,7 +45,7 @@
             </mat-form-field>
         </div>
         <!-- Método de pago -->
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-xl-3 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Método de Pago</mat-label>
                 <mat-select [(ngModel)]="filter.payment_method" (selectionChange)="payment_methodChange.emit()">
@@ -49,7 +60,7 @@
             </mat-form-field>
         </div>
         <!-- Limpiar -->
-        <div class="col-xl-1 col-lg-6 d-flex justify-content-center align-items-center">
+        <div class="col-xl-1 col-lg-2 d-flex justify-content-center align-items-center">
             <button mat-icon-button class="btn-clear" matTooltip="Limpiar filtros" (click)="clear.emit()">
                 <mat-icon>restart_alt</mat-icon>
             </button>

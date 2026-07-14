@@ -33,6 +33,7 @@ export class SaleService {
             formData.append('search', filter.search ?? '');
 
             formData.append('customer_id', filter.customer_id !== null ? String(filter.customer_id) : '');
+            formData.append('branch_id', filter.branch_id !== null ? String(filter.branch_id) : '');
             formData.append('status', filter.status !== null ? String(filter.status) : '');
             formData.append('payment_method', filter.payment_method !== null ? String(filter.payment_method) : '');
 

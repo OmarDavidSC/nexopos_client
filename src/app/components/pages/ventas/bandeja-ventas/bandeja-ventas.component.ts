@@ -15,6 +15,8 @@ import { SaleService } from 'src/app/shared/services/sale.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalAnularVentaComponent } from '../modals/modal-anular-venta/modal-anular-venta.component';
 import { ECompany } from 'src/app/shared/models/entidades/ECompany';
+import { ESucursal } from 'src/app/shared/models/entidades/ESucursal';
+import { BranchService } from 'src/app/shared/services/branch.service';
 
 @Component({
   selector: 'app-bandeja-ventas',
@@ -35,11 +37,13 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
   Loading: boolean = false;
 
   ListaClientes: ECliente[] = [];
+  ListaSucursales: ESucursal[] = [];
 
   Resumen: any;
   Filtro: SaleFiltre = {
     page: 1,
     search: '',
+    branch_id: null,
     customer_id: null,
     status: null,
     payment_method: null
@@ -54,7 +58,8 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
     public ventaService: SaleService,
     public auhtStore: AuthStoreService,
     public toastService: ToastrService,
-    public clienteService: CustomerService
+    public clienteService: CustomerService,
+    public sucursalService: BranchService
   ) {
     super('bandeja-ventas', dialog, route, router, spinner)
   }
@@ -65,12 +70,14 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
       this.auhtStore.getRole(),
       this.auhtStore.getCompany(),
       this.clienteService.adm(),
+      this.sucursalService.adm(),
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoCompania,resultadoClientes]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoCompania,resultadoClientes, resultadoScur]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.CompaniaActual = resultadoCompania;
       this.ListaClientes = resultadoClientes;
+      this.ListaSucursales = resultadoScur;
       const tienePermiso = this.validarPermisos(
         this.Role,
         ['administrator', 'seller'],
@@ -114,6 +121,12 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
 
   }
 
+  async OnBranchChange() {
+    this.PaginaActual = 1;
+    this.Filtro.page = 1;
+    await this.obtenerMaestros();
+  }
+
   async OnCustomerChange() {
     this.PaginaActual = 1;
     this.Filtro.page = 1;
@@ -136,6 +149,7 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
     this.Filtro = {
       page: 1,
       search: '',
+      branch_id: null,
       customer_id: null,
       status: null,
       payment_method: null

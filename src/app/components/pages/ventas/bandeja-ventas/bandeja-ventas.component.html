@@ -6,8 +6,8 @@
 <app-sale-summary [moneda]="CompaniaActual.SimboloMoneda" [summary]="Resumen">
 </app-sale-summary>
 
-<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" (search)="OnSearchFiltro()"
-    (customerChange)="OnCustomerChange()" (statusChange)="onStatusChange()" (payment_methodChange)="onPayMethodChange()"
+<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales" (search)="OnSearchFiltro()"
+    (customerChange)="OnCustomerChange()" (branchChange)="OnBranchChange()" (statusChange)="onStatusChange()" (payment_methodChange)="onPayMethodChange()"
     (clear)="clearFilters()">
 </app-sale-filters>
 
