@@ -81,6 +81,9 @@ import { BranchPerformanceComponent } from './components/pages/home/partials/bra
 import { SalesTodayComponent } from './components/pages/home/partials/sales-today/sales-today.component';
 import { PurchaseTodayComponent } from './components/pages/home/partials/purchase-today/purchase-today.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { IndexVentasComponent } from './components/pages/reports/report-ventas/index-ventas/index-ventas.component';
+import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
+import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +155,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     BranchPerformanceComponent,
     SalesTodayComponent,
     PurchaseTodayComponent,
+    IndexVentasComponent,
+    IndexComprasComponent,
+    IndexInventarioComponent,
   ],
   imports: [
     ComunModule,

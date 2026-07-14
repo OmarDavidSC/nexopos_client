@@ -23,6 +23,9 @@ import { AdmSucursalComponent } from './components/pages/sucursal/adm-sucursal/a
 import { AdmStocksComponent } from './components/pages/almacen/adm-stocks/adm-stocks.component';
 import { DetalleStocksComponent } from './components/pages/almacen/adm-stocks/partials/detalle-stocks/detalle-stocks.component';
 import { DashboardComponent } from './components/pages/home/dashboard/dashboard.component';
+import { IndexVentasComponent } from './components/pages/reports/report-ventas/index-ventas/index-ventas.component';
+import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
+import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -51,6 +54,11 @@ const routes: Routes = [
   { path: 'bandeja-ventas', component: BandejaVentasComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
+
+  //reportes
+  { path: 'reporte-ventas', component: IndexVentasComponent, canActivate: [AuthGuard] },
+  { path: 'reporte-compras', component: IndexComprasComponent, canActivate: [AuthGuard] },
+  { path: 'reporte-inventarios', component: IndexInventarioComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }
