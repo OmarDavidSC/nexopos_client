@@ -81,6 +81,25 @@ import { BranchPerformanceComponent } from './components/pages/home/partials/bra
 import { SalesTodayComponent } from './components/pages/home/partials/sales-today/sales-today.component';
 import { PurchaseTodayComponent } from './components/pages/home/partials/purchase-today/purchase-today.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { IndexVentasComponent } from './components/pages/reports/report-ventas/index-ventas/index-ventas.component';
+import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
+import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
+import { FiltrosReporteComponent } from './components/pages/reports/report-ventas/partials/filtros-reporte/filtros-reporte.component';
+import { ResumenReporteComponent } from './components/pages/reports/report-ventas/partials/resumen-reporte/resumen-reporte.component';
+import { GraficoVentasDiaComponent } from './components/pages/reports/report-ventas/partials/grafico-ventas-dia/grafico-ventas-dia.component';
+import { GraficoVentasMesComponent } from './components/pages/reports/report-ventas/partials/grafico-ventas-mes/grafico-ventas-mes.component';
+import { TopProductosComponent } from './components/pages/reports/report-ventas/partials/top-productos/top-productos.component';
+import { TopClientesComponent } from './components/pages/reports/report-ventas/partials/top-clientes/top-clientes.component';
+import { MetodosPagoComponent } from './components/pages/reports/report-ventas/partials/metodos-pago/metodos-pago.component';
+import { TiposVoucherComponent } from './components/pages/reports/report-ventas/partials/tipos-voucher/tipos-voucher.component';
+import { TablaVentasComponent } from './components/pages/reports/report-ventas/partials/tabla-ventas/tabla-ventas.component';
+import { FiltrosComprasComponent } from './components/pages/reports/report-compras/partials/filtros-compras/filtros-compras.component';
+import { ResumenComprasComponent } from './components/pages/reports/report-compras/partials/resumen-compras/resumen-compras.component';
+import { ComprasDiaComponent } from './components/pages/reports/report-compras/partials/compras-dia/compras-dia.component';
+import { ComprasMesComponent } from './components/pages/reports/report-compras/partials/compras-mes/compras-mes.component';
+import { TopProveedoresComponent } from './components/pages/reports/report-compras/partials/top-proveedores/top-proveedores.component';
+import { EstadoComprasComponent } from './components/pages/reports/report-compras/partials/estado-compras/estado-compras.component';
+import { TopProductosComprasComponent } from './components/pages/reports/report-compras/partials/top-productos-compras/top-productos-compras.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +171,25 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     BranchPerformanceComponent,
     SalesTodayComponent,
     PurchaseTodayComponent,
+    IndexVentasComponent,
+    IndexComprasComponent,
+    IndexInventarioComponent,
+    FiltrosReporteComponent,
+    ResumenReporteComponent,
+    GraficoVentasDiaComponent,
+    GraficoVentasMesComponent,
+    TopProductosComponent,
+    TopClientesComponent,
+    MetodosPagoComponent,
+    TiposVoucherComponent,
+    TablaVentasComponent,
+    FiltrosComprasComponent,
+    ResumenComprasComponent,
+    ComprasDiaComponent,
+    ComprasMesComponent,
+    TopProveedoresComponent,
+    EstadoComprasComponent,
+    TopProductosComprasComponent,
   ],
   imports: [
     ComunModule,

@@ -1,0 +1,166 @@
+<mat-accordion class="filter-accordion">
+  <mat-expansion-panel hideToggle expanded="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="filter-title">
+          <mat-icon>filter_alt</mat-icon>
+
+          <span>Filtros del Reporte</span>
+        </div>
+      </mat-panel-title>
+
+      <mat-panel-description> Personalizar consulta - dar click </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="filter-content">
+      <mat-card class="filter-card">
+        <!-- HEADER -->
+        <div class="filter-header">
+          <div class="header-info">
+            <p>Seleccione los criterios para consultar las ventas.</p>
+          </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filter-grid">
+          <!-- SUCURSAL -->
+          <mat-form-field appearance="outline">
+            <mat-label>Sucursal</mat-label>
+            <mat-select [(ngModel)]="Filtro.branch_id">
+              <mat-option [value]="null"> Todas las sucursales </mat-option>
+
+              <mat-option
+                *ngFor="let sucursal of Sucursales"
+                [value]="sucursal.Id"
+              >
+                {{ sucursal.Nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- CLIENTE -->
+          <mat-form-field appearance="outline">
+            <mat-label>Cliente</mat-label>
+
+            <mat-select [(ngModel)]="Filtro.customer_id">
+              <mat-option [value]="null"> Todos los clientes </mat-option>
+
+              <mat-option *ngFor="let cliente of Clientes" [value]="cliente.Id">
+                {{ cliente.NombreCliente }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- USUARIO -->
+          <mat-form-field appearance="outline">
+            <mat-label>Vendedor</mat-label>
+
+            <mat-select [(ngModel)]="Filtro.user_id">
+              <mat-option [value]="null"> Todos los vendedores </mat-option>
+
+              <mat-option *ngFor="let usuario of Usuarios" [value]="usuario.Id">
+                {{ usuario.Nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- METODO -->
+          <mat-form-field appearance="outline">
+            <mat-label>Método de Pago</mat-label>
+
+            <mat-select [(ngModel)]="Filtro.payment_method">
+              <mat-option [value]="null"> Todos </mat-option>
+
+              <mat-option value="CASH"> Efectivo </mat-option>
+
+              <mat-option value="TRANSFER"> Transferencia </mat-option>
+
+              <mat-option value="CARD"> Tarjeta </mat-option>
+
+              <mat-option value="YAPE"> Yape </mat-option>
+
+              <mat-option value="PLIN"> Plin </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- VOUCHER -->
+          <mat-form-field appearance="outline">
+            <mat-label>Comprobante</mat-label>
+
+            <mat-select [(ngModel)]="Filtro.voucher_type">
+              <mat-option [value]="null"> Todos </mat-option>
+
+              <mat-option value="BOLETA"> Boleta </mat-option>
+
+              <mat-option value="FACTURA"> Factura </mat-option>
+
+              <mat-option value="NOTA_VENTA"> Nota de Venta </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- ESTADO -->
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+
+            <mat-select [(ngModel)]="Filtro.status">
+              <mat-option [value]="null"> Todos </mat-option>
+
+              <mat-option value="COMPLETED"> Completada </mat-option>
+
+              <mat-option value="PENDING"> Pendiente </mat-option>
+
+              <mat-option value="CANCELLED"> Anulada </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- FECHA INICIO -->
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha Inicio</mat-label>
+
+            <input
+              matInput
+              [matDatepicker]="pickerInicio"
+              [(ngModel)]="Filtro.date_start"
+            />
+
+            <mat-datepicker-toggle matSuffix [for]="pickerInicio">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #pickerInicio></mat-datepicker>
+          </mat-form-field>
+
+          <!-- FECHA FIN -->
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha Fin</mat-label>
+
+            <input
+              matInput
+              [matDatepicker]="pickerFin"
+              [(ngModel)]="Filtro.date_end"
+            />
+
+            <mat-datepicker-toggle matSuffix [for]="pickerFin">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #pickerFin></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="filter-actions">
+          <button mat-stroked-button color="warn" (click)="limpiarReporte()">
+            <mat-icon>refresh</mat-icon>
+
+            Limpiar
+          </button>
+
+          <button mat-flat-button color="primary" (click)="buscarReporte()">
+            <mat-icon>search</mat-icon>
+
+            Buscar
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

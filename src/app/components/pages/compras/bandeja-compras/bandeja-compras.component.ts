@@ -15,6 +15,8 @@ import { SupplierService } from 'src/app/shared/services/supplier.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalCancelarCompraComponent } from '../modals/modal-cancelar-compra/modal-cancelar-compra.component';
 import { ECompany } from 'src/app/shared/models/entidades/ECompany';
+import { ESucursal } from 'src/app/shared/models/entidades/ESucursal';
+import { BranchService } from 'src/app/shared/services/branch.service';
 
 @Component({
   selector: 'app-bandeja-compras',
@@ -35,12 +37,14 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
   Loading: boolean = false;
 
   ListaProveedores: EProveedor[] = [];
+  ListaSucursales: ESucursal[] = [];
 
   Resumen: any;
   Filtro: PurchaseFiltre = {
     page: 1,
     search: '',
     supplier_id: null,
+    branch_id: null,
     status: null
   };
 
@@ -53,7 +57,8 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
     public compraService: PurchaseService,
     public auhtStore: AuthStoreService,
     public toastService: ToastrService,
-    public proveedorService: SupplierService
+    public proveedorService: SupplierService,
+    public sucursalService: BranchService
   ) {
     super('bandeja-compras', dialog, route, router, spinner)
   }
@@ -64,19 +69,15 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
       this.auhtStore.getRole(),
       this.proveedorService.adm(),
       this.auhtStore.getCompany(),
+      this.sucursalService.adm(),
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoProveedores, resultadoCompania]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoProveedores, resultadoCompania, resultadoSucur]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.ListaProveedores = resultadoProveedores;
       this.CompaniaActual = resultadoCompania;
-      const tienePermiso = this.validarPermisos(
-        this.Role,
-        ['administrator'],
-        this.router,
-        this.toastService
-      );
-
+      this.ListaSucursales = resultadoSucur;
+      const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
       if (tienePermiso) {
         this.initialize();
       }
@@ -119,6 +120,12 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
     await this.obtenerMaestros();
   }
 
+  async OnBranchChange() {
+    this.PaginaActual = 1;
+    this.Filtro.page = 1;
+    await this.obtenerMaestros();
+  }
+
   async onStatusChange() {
     this.PaginaActual = 1;
     this.Filtro.page = 1;
@@ -130,6 +137,7 @@ export class BandejaComprasComponent extends FormularioBase implements OnInit {
       page: 1,
       search: '',
       supplier_id: null,
+      branch_id: null,
       status: null
     };
     this.PaginaActual = 1;

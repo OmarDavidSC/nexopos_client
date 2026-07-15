@@ -1,0 +1,73 @@
+<div class="summary-grid">
+  <!-- Total Ventas -->
+  <mat-card class="summary-card">
+    <div class="icon blue">
+      <mat-icon>receipt_long</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Total Ventas</span>
+      <h2>{{ Resumen?.sales_count || 0 }}</h2>
+    </div>
+  </mat-card>
+
+  <!-- Total Vendido -->
+  <mat-card class="summary-card">
+    <div class="icon green">
+      <mat-icon>payments</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Total Vendido</span>
+      <h2>S/. {{ Resumen?.total_amount || 0 | number: "1.2-2" }}</h2>
+    </div>
+  </mat-card>
+
+  <!-- Productos -->
+  <mat-card class="summary-card">
+    <div class="icon orange">
+      <mat-icon>shopping_bag</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Productos</span>
+      <h2>{{ Resumen?.total_products || 0 }}</h2>
+    </div>
+  </mat-card>
+
+  <!-- Ticket -->
+  <!-- <mat-card class="summary-card">
+    <div class="icon purple">
+      <mat-icon>trending_up</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Ticket Promedio</span>
+      <h2>S/. {{ Resumen?.average_ticket || 0 | number: "1.2-2" }}</h2>
+    </div>
+  </mat-card> -->
+
+  <!-- Subtotal -->
+  <mat-card class="summary-card">
+    <div class="icon cyan">
+      <mat-icon>account_balance_wallet</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Subtotal</span>
+      <h2>S/. {{ Resumen?.subtotal_amount || 0 | number: "1.2-2" }}</h2>
+    </div>
+  </mat-card>
+
+  <!-- Descuento -->
+  <!-- <mat-card class="summary-card">
+    <div class="icon red">
+      <mat-icon>local_offer</mat-icon>
+    </div>
+
+    <div class="content">
+      <span class="title">Descuentos</span>
+      <h2>S/. {{ Resumen?.discount_amount || 0 | number: "1.2-2" }}</h2>
+    </div>
+  </mat-card> -->
+</div>

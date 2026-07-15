@@ -1,0 +1,27 @@
+mat-expansion-panel {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+mat-panel-title {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+mat-panel-description {
+    justify-content: flex-end;
+    color: #6b7280;
+}
+
+.mat-form-field {
+    font-size: 14px;
+}
+
+button {
+    min-width: 130px;
+}
+
+mat-icon {
+    margin-right: 4px;
+}

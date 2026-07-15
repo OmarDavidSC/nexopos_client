@@ -5,10 +5,11 @@
 <app-purchase-summary [summary]="Resumen">
 </app-purchase-summary>
 
-<app-purchase-filters [filter]="Filtro" [suppliers]="ListaProveedores" (search)="OnSearchFiltro()"
-    (supplierChange)="OnSupplierChange()" (statusChange)="onStatusChange()" (clear)="clearFilters()">
+<app-purchase-filters [filter]="Filtro" [suppliers]="ListaProveedores" [branches]="ListaSucursales"
+    (search)="OnSearchFiltro()" (supplierChange)="OnSupplierChange()" (branchChange)="OnBranchChange()"
+    (statusChange)="onStatusChange()" (clear)="clearFilters()">
 </app-purchase-filters>
 
-<app-purchase-timeline [moneda]="CompaniaActual.SimboloMoneda" [purchases]="ListaCompras" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
-    (cancel)="OnEventoCancelar($event)" (cancel)="null">
+<app-purchase-timeline [moneda]="CompaniaActual.SimboloMoneda" [purchases]="ListaCompras" [loading]="Loading"
+    (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)" (cancel)="null">
 </app-purchase-timeline>

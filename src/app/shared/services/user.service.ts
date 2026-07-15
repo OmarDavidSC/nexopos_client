@@ -7,6 +7,7 @@ import { ApiService } from "./api.service";
 import { ToastrService } from "ngx-toastr";
 import { ECategoria } from "../models/entidades/ECategoria";
 import { ERol } from "../models/entidades/ERol";
+import { Eusuario } from "../models/entidades/Eusuario";
 
 @Injectable({
     providedIn: "root"
@@ -35,6 +36,19 @@ export class UserService {
                 this.toastService.error(message);
             }
             return data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async adm(): Promise<Eusuario[]> {
+        try {
+            const url = this.urlBase + '/adm';
+            const { success, data, message } = await this.httpCient.get<ApiResponse<any>>(url).toPromise();
+            if (!success) {
+                this.toastService.error(message);
+            }
+            return Eusuario.parseJsonList(data);
         } catch (error) {
             throw error;
         }

@@ -1,0 +1,66 @@
+<div class="card reporte-card">
+    <div class="card-header">
+        <div class="titulo">
+            <mat-icon> local_shipping </mat-icon>
+
+            Top proveedores
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive" *ngIf="Datos && Datos.length">
+            <table class="table tabla-proveedores">
+                <thead>
+                    <tr>
+                        <th>#</th>
+
+                        <th>Proveedor</th>
+
+                        <th class="text-center">Total Compras</th>
+
+                        <!-- <th class="text-center">Cantidad</th> -->
+
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of Datos; let i = index">
+                        <td>
+                            <span class="posicion">
+                                {{ i + 1 }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="proveedor">
+                                <mat-icon> person </mat-icon>
+
+                                <span>
+                                    {{ item.business_name }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            {{ item.total_purchases || 0 }}
+                        </td>
+
+                        <!-- <td class="text-center">
+                            {{ item.total_quantity || 0 }}
+                        </td> -->
+
+                        <td class="text-end">
+                            S/
+                            {{ item.total_amount || 0 | number: "1.2-2" }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="empty" *ngIf="!Datos || Datos.length === 0">
+            No hay información disponible
+        </div>
+    </div>
+</div>

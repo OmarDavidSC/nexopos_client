@@ -90,7 +90,7 @@ export class MenuLateralComponent implements OnInit {
       children: [
         { label: 'Ventas', icon: 'bar_chart', route: '/reporte-ventas' },
         { label: 'Compras', icon: 'shopping_bag', route: '/reporte-compras' },
-        { label: 'Inventario', icon: 'inventory', route: '/reporte-inventario' }
+        { label: 'Inventario', icon: 'inventory', route: '/reporte-inventarios' }
       ]
     }
   ];

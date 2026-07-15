@@ -1,0 +1,94 @@
+.reporte-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+}
+
+.titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.voucher-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+.voucher-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e2e8f0;
+}
+
+.voucher-icon mat-icon {
+    font-size: 26px;
+
+    width: 26px;
+
+    height: 26px;
+}
+
+.voucher-info h4 {
+    margin: 0 0 8px;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+.detalle {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    font-size: 14px;
+}
+
+.detalle span {
+    color: #64748b;
+}
+
+.detalle strong {
+    font-weight: 600;
+}
+
+.empty {
+    height: 200px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #94a3b8;
+}

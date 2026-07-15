@@ -1,0 +1,77 @@
+<mat-card class="top-card">
+    <div class="card-header">
+        <div>
+            <h3>Top Productos</h3>
+            <span>Productos con mayor volumen de ventas</span>
+        </div>
+
+        <div class="icon">
+            <mat-icon>emoji_events</mat-icon>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Código</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-end">Ventas</th>
+                    <th class="text-center">Pedidos</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let producto of Datos; let i = index">
+                    <td>
+
+                        <div class="ranking" [ngClass]="{
+            'gold': i === 0,
+            'silver': i === 1,
+            'bronze': i === 2
+        }">
+
+                            <mat-icon *ngIf="i === 0">workspace_premium</mat-icon>
+
+                            <mat-icon *ngIf="i === 1">workspace_premium</mat-icon>
+
+                            <mat-icon *ngIf="i === 2">workspace_premium</mat-icon>
+
+                            <span *ngIf="i > 2">
+                                {{ i + 1 }}
+                            </span>
+
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <strong>{{ producto.name }}</strong>
+                    </td>
+
+                    <td>
+                        {{ producto.code }}
+                    </td>
+
+                    <td class="text-center">
+                        {{ producto.total_quantity }}
+                    </td>
+
+                    <td class="text-end">
+                        S/. {{ producto.total_sales | number: "1.2-2" }}
+                    </td>
+
+                    <td class="text-center">
+                        {{ producto.total_orders }}
+                    </td>
+                </tr>
+
+                <tr *ngIf="Datos.length == 0">
+                    <td colspan="6" class="empty">No existen registros.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</mat-card>

@@ -1,0 +1,72 @@
+<div class="card reporte-card">
+  <div class="card-header">
+    <div class="titulo">
+      <mat-icon> inventory_2 </mat-icon>
+
+      Top productos comprados
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive" *ngIf="Datos && Datos.length">
+      <table class="table tabla-productos">
+        <thead>
+          <tr>
+            <th>#</th>
+
+            <th>Producto</th>
+
+            <th>Código</th>
+
+            <th class="text-center">Cantidad</th>
+
+            <th class="text-center">Compras</th>
+
+            <th class="text-end">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of Datos; let i = index">
+            <td>
+              <span class="posicion">
+                {{ i + 1 }}
+              </span>
+            </td>
+
+            <td>
+              <div class="producto">
+                <mat-icon> inventory </mat-icon>
+
+                <span>
+                  {{ item.name }}
+                </span>
+              </div>
+            </td>
+
+            <td>
+              {{ item.code }}
+            </td>
+
+            <td class="text-center">
+              {{ item.total_quantity }}
+            </td>
+
+            <td class="text-center">
+              {{ item.total_orders }}
+            </td>
+
+            <td class="text-end">
+              S/
+              {{ item.total_amount | number: "1.2-2" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty" *ngIf="!Datos || Datos.length === 0">
+      No hay información disponible
+    </div>
+  </div>
+</div>

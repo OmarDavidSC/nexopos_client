@@ -1,0 +1,24 @@
+<mat-card class="chart-card">
+  <div class="card-header">
+    <div>
+      <h3>Métodos de Pago</h3>
+
+      <span>Distribución de ventas por método de pago</span>
+    </div>
+
+    <div class="icon">
+      <mat-icon>payments</mat-icon>
+    </div>
+  </div>
+
+  <apx-chart
+    *ngIf="chartOptions"
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [labels]="chartOptions.labels"
+    [legend]="chartOptions.legend"
+    [tooltip]="chartOptions.tooltip"
+    [dataLabels]="chartOptions.dataLabels"
+  >
+  </apx-chart>
+</mat-card>
