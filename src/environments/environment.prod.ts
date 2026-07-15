@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  uriApiBack: "https://nexopos-api-0t8r.onrender.com/api",
 };
