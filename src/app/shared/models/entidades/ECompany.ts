@@ -20,7 +20,9 @@ export class ECompany {
     constructor() {
         this.Id = "";
         this.Nombre = "";
+        this.IconId = 0;
         this.IconoUrl = "";
+        this.LogoId = 0;
         this.LogoUrl = "";
         this.Estado = "";
         this.PPolitica = "";

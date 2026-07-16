@@ -1,0 +1,439 @@
+:host {
+    display: block;
+    background: #f5f7fb;
+    min-height: 100%;
+}
+
+.company-page {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.company-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 28px;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f7f9ff 100%);
+    border: 1px solid #e5e9f2;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(24, 39, 75, 0.06);
+
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        min-width: 0;
+    }
+
+    &__info {
+        min-width: 0;
+
+        h1 {
+            margin: 4px 0 6px;
+            color: #172033;
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        p {
+            max-width: 650px;
+            margin: 0;
+            color: #687086;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    }
+
+    &__label {
+        color: #3f51b5;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+
+        button {
+            min-height: 42px;
+            border-radius: 10px;
+        }
+
+        mat-icon {
+            margin-right: 6px;
+        }
+    }
+}
+
+.company-avatar {
+    width: 82px;
+    height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3f51b5, #6574d9);
+    border: 4px solid #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 7px 20px rgba(63, 81, 181, 0.2);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #ffffff;
+    }
+
+    span {
+        font-size: 34px;
+        font-weight: 700;
+    }
+}
+
+.company-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.company-card {
+    padding: 26px;
+    background: #ffffff;
+    border: 1px solid #e5e9f2;
+    border-radius: 18px;
+    box-shadow: 0 6px 25px rgba(24, 39, 75, 0.045);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-bottom: 20px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid #edf0f6;
+
+        h2 {
+            margin: 0 0 4px;
+            color: #172033;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0;
+            color: #7b8499;
+            font-size: 13px;
+        }
+    }
+
+    &__icon {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #3f51b5;
+        background: rgba(63, 81, 181, 0.09);
+        border-radius: 12px;
+
+        mat-icon {
+            font-size: 23px;
+        }
+    }
+}
+
+.currency-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 18px;
+    color: #536078;
+    background: #f8f9fd;
+    border: 1px dashed #ccd3e4;
+    border-radius: 12px;
+
+    &__icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3f51b5;
+        background: #ffffff;
+        border-radius: 10px;
+    }
+
+    span {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    strong {
+        display: block;
+        color: #172033;
+        font-size: 18px;
+    }
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+}
+
+.image-upload-card {
+    padding: 20px;
+    background: #fafbfe;
+    border: 1px solid #e4e8f1;
+    border-radius: 15px;
+
+    &__title {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 16px;
+
+        h3 {
+            margin: 0 0 5px;
+            color: #202a3d;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        p {
+            margin: 0;
+            color: #7c8599;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        >mat-icon {
+            color: #8a94a8;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+
+        button {
+            border-radius: 9px;
+        }
+
+        mat-icon {
+            margin-right: 5px;
+        }
+
+        button[mat-icon-button] mat-icon {
+            margin-right: 0;
+        }
+    }
+
+    &__filename {
+        display: block;
+        margin-top: 10px;
+        overflow: hidden;
+        color: #667087;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(45deg, #f2f4f8 25%, transparent 25%),
+        linear-gradient(-45deg, #f2f4f8 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f2f4f8 75%),
+        linear-gradient(-45deg, transparent 75%, #f2f4f8 75%);
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    background-size: 16px 16px;
+    border: 1px solid #e3e7ef;
+    border-radius: 12px;
+
+    img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+
+    &--logo {
+        height: 190px;
+    }
+
+    &--favicon {
+        height: 190px;
+
+        img {
+            width: 90px;
+            height: 90px;
+        }
+    }
+
+    &__empty {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+        color: #8b94a7;
+
+        mat-icon {
+            width: 38px;
+            height: 38px;
+            font-size: 38px;
+        }
+
+        span {
+            font-size: 13px;
+        }
+    }
+}
+
+.company-mobile-actions {
+    display: none;
+}
+
+.company-loading {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    color: #697289;
+}
+
+::ng-deep {
+    .company-form {
+        .mat-form-field-wrapper {
+            padding-bottom: 10px;
+        }
+
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+            color: #dce1eb;
+        }
+
+        .mat-form-field-disabled {
+            .mat-form-field-outline {
+                background: #f8f9fc;
+            }
+
+            .mat-input-element {
+                color: #50596e;
+            }
+        }
+
+        textarea.mat-input-element {
+            line-height: 1.6;
+            resize: vertical;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .company-header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        &__actions {
+            width: 100%;
+            justify-content: flex-end;
+        }
+    }
+
+    .image-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .company-page {
+        padding: 12px;
+    }
+
+    .company-header,
+    .company-card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .company-header {
+        &__content {
+            align-items: flex-start;
+        }
+
+        &__info {
+            h1 {
+                font-size: 21px;
+            }
+
+            p {
+                font-size: 13px;
+            }
+        }
+
+        &__actions {
+            display: none;
+        }
+    }
+
+    .company-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+
+        span {
+            font-size: 25px;
+        }
+    }
+
+    .company-card {
+        &__header {
+            align-items: flex-start;
+        }
+    }
+
+    .image-preview {
+
+        &--logo,
+        &--favicon {
+            height: 160px;
+        }
+    }
+
+    .company-mobile-actions {
+        position: sticky;
+        bottom: 10px;
+        z-index: 10;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid #e2e6ee;
+        border-radius: 13px;
+        box-shadow: 0 8px 25px rgba(24, 39, 75, 0.15);
+        backdrop-filter: blur(10px);
+    }
+}

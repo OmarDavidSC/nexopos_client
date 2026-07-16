@@ -1,20 +1,12 @@
 <mat-sidenav-container class="layout-container">
     <!-- SIDEBAR -->
-    <mat-sidenav #drawer mode="side" [opened]="true" [autoFocus]="false" class="sidebar">
+    <mat-sidenav #drawer mode="over" [opened]="false" [autoFocus]="false" class="sidebar">
         <!-- HEADER EMPRESA -->
         <div class="sidebar-header">
             <div class="logo-container">
                 <img [src]="CompaniaActual?.LogoUrl || '../../../assets/img/logo-sf.jpeg'" alt="Logo Empresa"
                     class="company-logo">
             </div>
-            <!-- <div class="company-info">
-                <h6 class="company-name mb-0">
-                    {{ CompaniaActual?.Nombre }}
-                </h6>
-                <small class="company-role">
-                    {{ RolActual?.Nombre }}
-                </small>
-            </div> -->
         </div>
         <!-- MENU -->
         <div class="menu-content">

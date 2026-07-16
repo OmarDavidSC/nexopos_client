@@ -27,7 +27,6 @@ import { ModalEditarPerfilComponent } from './components/pages/profile/partials/
 import { ModalEditarPasswordComponent } from './components/pages/profile/partials/modal-editar-password/modal-editar-password.component';
 import { ModalEditarEmailComponent } from './components/pages/profile/partials/modal-editar-email/modal-editar-email.component';
 import { PanelCompanyComponent } from './components/pages/company/panel-company/panel-company.component';
-import { ModalHtmlViewerComponent } from './components/pages/company/partials/modal-html-viewer/modal-html-viewer.component';
 import { AdmCategoriasComponent } from './components/pages/almacen/adm-categorias/adm-categorias.component';
 import { AdmMarcasComponent } from './components/pages/almacen/adm-marcas/adm-marcas.component';
 import { AdmUnidadesComponent } from './components/pages/almacen/adm-unidades/adm-unidades.component';
@@ -118,7 +117,6 @@ import { TopProductosComprasComponent } from './components/pages/reports/report-
     ModalEditarPasswordComponent,
     ModalEditarEmailComponent,
     PanelCompanyComponent,
-    ModalHtmlViewerComponent,
     AdmCategoriasComponent,
     AdmMarcasComponent,
     AdmUnidadesComponent,

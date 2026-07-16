@@ -1,123 +1,270 @@
-<div class="container py-4" *ngIf="CompaniaActual">
+<div class="company-page" *ngIf="CompaniaActual">
+    <div class="company-header">
+        <div class="company-header__content">
+            <div class="company-avatar">
+                <img *ngIf="LogoPreview" [src]="LogoPreview" [alt]="nombreEmpresa">
+                <span *ngIf="!LogoPreview">{{inicialEmpresa}}</span>
+            </div>
 
-    <div class="card shadow border-0">
-
-        <!-- HEADER -->
-        <div class="card-body text-center border-bottom">
-
-            <img [src]="CompaniaActual.LogoUrl || 'https://via.placeholder.com/150'" class="img-fluid rounded mb-3"
-                style="max-height: 120px;">
-
-            <h4 class="fw-bold mb-1">
-                {{ CompaniaActual.Nombre || 'Nombre de la empresa' }}
-            </h4>
-
-            <span class="badge" [ngClass]="CompaniaActual.Estado ? 'bg-success' : 'bg-secondary'">
-                {{ CompaniaActual.Estado ? 'Activa' : 'Inactiva' }}
-            </span>
-
+            <div class="company-header__info">
+                <span class="company-header__label">Configuración de empresa</span>
+                <h1>{{nombreEmpresa}}</h1>
+                <p>Administra la información general, identidad visual y configuración monetaria de tu empresa.</p>
+            </div>
         </div>
 
-        <!-- BODY -->
-        <div class="card-body">
+        <div class="company-header__actions">
+            <button *ngIf="!Editando" mat-raised-button color="primary" type="button" [disabled]="Loading"
+                (click)="eventoEditar()">
+                <mat-icon>edit</mat-icon>
+                Editar información
+            </button>
 
-            <div class="row g-3">
-
-                <!-- NOMBRE -->
-                <div class="col-12 col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput [(ngModel)]="CompaniaActual.Nombre" [disabled]="!Editando">
-                    </mat-form-field>
-                </div>
-
-                <!-- ESTADO -->
-                <div class="col-12 col-md-6 d-flex align-items-center">
-                    <mat-slide-toggle [(ngModel)]="CompaniaActual.Estado" [disabled]="!Editando">
-                        Activa
-                    </mat-slide-toggle>
-                </div>
-
-                <!-- LOGO -->
-                <div class="col-12 col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Logo URL</mat-label>
-                        <input matInput [(ngModel)]="CompaniaActual.LogoUrl" [disabled]="!Editando">
-                    </mat-form-field>
-                </div>
-
-                <!-- ICONO -->
-                <div class="col-12 col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Icono URL</mat-label>
-                        <input matInput [(ngModel)]="CompaniaActual.IconoUrl" [disabled]="!Editando">
-                    </mat-form-field>
-                </div>
-
-            </div>
-
-            <!-- EDITOR TERMINOS -->
-            <div class="mt-4">
-
-                <h6 class="fw-bold">Términos y Condiciones</h6>
-
-                <!-- SOLO VISTA -->
-                <div *ngIf="!Editando" class="border rounded p-3" style="max-height: 200px; overflow:auto;"
-                    [innerHTML]="CompaniaActual.TCondiciones">
-                </div>
-
-                <!-- EDITOR -->
-                <mat-form-field *ngIf="Editando" [(ngModel)]="CompaniaActual.TCondiciones" [style]="{height: '200px'}">
-                </mat-form-field>
-
-            </div>
-
-            <!-- EDITOR POLITICAS -->
-            <div class="mt-4">
-
-                <h6 class="fw-bold">Políticas de Privacidad</h6>
-
-                <div *ngIf="!Editando" class="border rounded p-3" style="max-height: 200px; overflow:auto;"
-                    [innerHTML]="CompaniaActual.PPolitica">
-                </div>
-
-                <mat-form-field *ngIf="Editando" [(ngModel)]="CompaniaActual.PPolitica" [style]="{height: '200px'}">
-                </mat-form-field>
-
-            </div>
-
-            <!-- ACCIONES -->
-            <div class="mt-4 d-flex flex-wrap gap-2 justify-content-center">
-
-                <button *ngIf="!Editando" mat-raised-button color="primary" (click)="activarEdicion()">
-                    Editar
+            <ng-container *ngIf="Editando">
+                <button mat-stroked-button type="button" [disabled]="Loading" (click)="eventoCancelar()">
+                    <mat-icon>close</mat-icon>
+                    Cancelar
                 </button>
 
-                <ng-container *ngIf="Editando">
-
-                    <button mat-raised-button color="primary" (click)="guardarCambios()">
-                        Guardar
-                    </button>
-
-                    <button mat-stroked-button color="warn" (click)="cancelarEdicion()">
-                        Cancelar
-                    </button>
-
-                </ng-container>
-
-                <!-- POPUPS -->
-                <button mat-button color="accent" (click)="abrirTerminos()">
-                    Términos
+                <button mat-raised-button color="primary" type="button" [disabled]="Loading" (click)="eventoGuardar()">
+                    <mat-icon>save</mat-icon>
+                    Guardar cambios
                 </button>
-
-                <button mat-button color="accent" (click)="abrirPoliticas()">
-                    Políticas
-                </button>
-
-            </div>
-
+            </ng-container>
         </div>
-
     </div>
 
+    <form class="company-form" [formGroup]="Form">
+        <section class="company-card">
+            <div class="company-card__header">
+                <div class="company-card__icon">
+                    <mat-icon>business</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Información general</h2>
+                    <p>Datos principales que identifican a tu empresa.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-12 col-md-8" appearance="outline">
+                    <mat-label>Nombre de la empresa</mat-label>
+                    <input matInput formControlName="name" maxlength="255" autocomplete="off">
+                    <mat-icon matSuffix>business</mat-icon>
+                    <mat-hint align="end">{{Form.get('name')?.value?.length || 0}}/255</mat-hint>
+                    <mat-error *ngIf="Form.get('name')?.hasError('required')">
+                        El nombre de la empresa es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-4" appearance="outline">
+                    <mat-label>País</mat-label>
+                    <mat-select formControlName="country_code" (selectionChange)="eventoSeleccionarPais($event.value)">
+                        <mat-option *ngFor="let pais of Paises" [value]="pais.codigo">
+                            {{pais.nombre}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>public</mat-icon>
+                    <mat-error *ngIf="Form.get('country_code')?.hasError('required')">
+                        Seleccione un país.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </section>
+
+        <section class="company-card">
+            <div class="company-card__header">
+                <div class="company-card__icon">
+                    <mat-icon>payments</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Moneda y facturación</h2>
+                    <p>Configura la moneda que se mostrará en ventas, compras y reportes.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-12 col-md-4" appearance="outline">
+                    <mat-label>Código de moneda</mat-label>
+                    <input matInput formControlName="currency_code" maxlength="10" autocomplete="off">
+                    <mat-icon matSuffix>pin</mat-icon>
+                    <mat-error *ngIf="Form.get('currency_code')?.hasError('required')">
+                        El código de moneda es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-3" appearance="outline">
+                    <mat-label>Símbolo</mat-label>
+                    <input matInput formControlName="currency_symbol" maxlength="10" autocomplete="off">
+                    <mat-icon matSuffix>attach_money</mat-icon>
+                    <mat-error *ngIf="Form.get('currency_symbol')?.hasError('required')">
+                        El símbolo es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-5" appearance="outline">
+                    <mat-label>Nombre de moneda</mat-label>
+                    <input matInput formControlName="currency_name" maxlength="100" autocomplete="off">
+                    <mat-icon matSuffix>account_balance_wallet</mat-icon>
+                    <mat-error *ngIf="Form.get('currency_name')?.hasError('required')">
+                        El nombre de moneda es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="currency-preview">
+                <div class="currency-preview__icon">
+                    <mat-icon>receipt_long</mat-icon>
+                </div>
+
+                <div>
+                    <span>Vista previa</span>
+                    <strong>
+                        {{Form.get('currency_symbol')?.value || '$'}}
+                        1,250.00
+                    </strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="company-card">
+            <div class="company-card__header">
+                <div class="company-card__icon">
+                    <mat-icon>image</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Identidad visual</h2>
+                    <p>Personaliza el logo principal y el favicon de tu sistema.</p>
+                </div>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-upload-card">
+                    <div class="image-upload-card__title">
+                        <div>
+                            <h3>Logo de la empresa</h3>
+                            <p>Recomendado: PNG o WEBP con fondo transparente.</p>
+                        </div>
+
+                        <mat-icon>photo</mat-icon>
+                    </div>
+
+                    <div class="image-preview image-preview--logo">
+                        <img *ngIf="LogoPreview" [src]="LogoPreview" alt="Logo de la empresa">
+
+                        <div *ngIf="!LogoPreview" class="image-preview__empty">
+                            <mat-icon>add_photo_alternate</mat-icon>
+                            <span>Sin logo registrado</span>
+                        </div>
+                    </div>
+
+                    <div class="image-upload-card__actions" *ngIf="Editando">
+                        <input #logoInput type="file" hidden accept=".png,.jpg,.jpeg,.webp"
+                            (change)="eventoSeleccionarLogo($event)">
+
+                        <button mat-stroked-button color="primary" type="button" (click)="logoInput.click()">
+                            <mat-icon>upload</mat-icon>
+                            Seleccionar logo
+                        </button>
+
+                        <button *ngIf="LogoFile" mat-icon-button type="button" matTooltip="Cancelar imagen seleccionada"
+                            (click)="eventoRemoverLogo()">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </div>
+
+                    <span class="image-upload-card__filename" *ngIf="LogoFile">
+                        {{LogoFile.name}}
+                    </span>
+                </div>
+
+                <div class="image-upload-card">
+                    <div class="image-upload-card__title">
+                        <div>
+                            <h3>Favicon</h3>
+                            <p>Se mostrará en la pestaña del navegador.</p>
+                        </div>
+
+                        <mat-icon>language</mat-icon>
+                    </div>
+
+                    <div class="image-preview image-preview--favicon">
+                        <img *ngIf="FaviconPreview" [src]="FaviconPreview" alt="Favicon de la empresa">
+
+                        <div *ngIf="!FaviconPreview" class="image-preview__empty">
+                            <mat-icon>public</mat-icon>
+                            <span>Sin favicon</span>
+                        </div>
+                    </div>
+
+                    <div class="image-upload-card__actions" *ngIf="Editando">
+                        <input #faviconInput type="file" hidden accept=".ico,.png,.jpg,.jpeg,.webp"
+                            (change)="eventoSeleccionarFavicon($event)">
+
+                        <button mat-stroked-button color="primary" type="button" (click)="faviconInput.click()">
+                            <mat-icon>upload</mat-icon>
+                            Seleccionar favicon
+                        </button>
+
+                        <button *ngIf="FaviconFile" mat-icon-button type="button"
+                            matTooltip="Cancelar imagen seleccionada" (click)="eventoRemoverFavicon()">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </div>
+
+                    <span class="image-upload-card__filename" *ngIf="FaviconFile">
+                        {{FaviconFile.name}}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="company-card">
+            <div class="company-card__header">
+                <div class="company-card__icon">
+                    <mat-icon>gavel</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Documentos legales</h2>
+                    <p>Información legal que podrá mostrarse en tus documentos o plataforma.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <mat-form-field class="col-12" appearance="outline">
+                    <mat-label>Términos y condiciones</mat-label>
+                    <textarea matInput formControlName="terms_conditions" rows="7"
+                        placeholder="Escribe los términos y condiciones de la empresa..."></textarea>
+                    <mat-icon matSuffix>description</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="col-12" appearance="outline">
+                    <mat-label>Políticas de privacidad</mat-label>
+                    <textarea matInput formControlName="privacy_policies" rows="7"
+                        placeholder="Escribe las políticas de privacidad de la empresa..."></textarea>
+                    <mat-icon matSuffix>policy</mat-icon>
+                </mat-form-field>
+            </div>
+        </section>
+
+        <div class="company-mobile-actions" *ngIf="Editando">
+            <button mat-stroked-button type="button" [disabled]="Loading" (click)="eventoCancelar()">
+                Cancelar
+            </button>
+
+            <button mat-raised-button color="primary" type="button" [disabled]="Loading" (click)="eventoGuardar()">
+                <mat-icon>save</mat-icon>
+                Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="company-loading" *ngIf="!CompaniaActual">
+    <mat-spinner diameter="45"></mat-spinner>
+    <span>Cargando información de la empresa...</span>
 </div>
