@@ -1,0 +1,303 @@
+<section class="history-card">
+    <div class="history-header">
+        <div class="history-header__title">
+            <div class="history-header__icon">
+                <mat-icon>history</mat-icon>
+            </div>
+
+            <div>
+                <h2>Historial de movimientos</h2>
+                <p>Registro cronológico de entradas, salidas, compras, ventas y ajustes.</p>
+            </div>
+        </div>
+
+        <div class="history-header__counter">
+            <strong>{{ movimientosFiltrados.length }}</strong>
+            <span>movimientos</span>
+        </div>
+    </div>
+
+    <div class="history-summary">
+        <div class="history-summary__item">
+            <div class="history-summary__icon history-summary__icon--general">
+                <mat-icon>sync_alt</mat-icon>
+            </div>
+
+            <div>
+                <span>Registros encontrados</span>
+                <strong>{{ movimientosFiltrados.length | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="history-summary__item">
+            <div class="history-summary__icon history-summary__icon--entry">
+                <mat-icon>south</mat-icon>
+            </div>
+
+            <div>
+                <span>Unidades ingresadas</span>
+                <strong>+{{ totalEntradas | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+
+        <div class="history-summary__item">
+            <div class="history-summary__icon history-summary__icon--exit">
+                <mat-icon>north</mat-icon>
+            </div>
+
+            <div>
+                <span>Unidades retiradas</span>
+                <strong>-{{ totalSalidas | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="history-toolbar">
+        <mat-form-field appearance="outline" class="history-toolbar__search">
+            <mat-label>Buscar en el historial</mat-label>
+
+            <input matInput type="text" autocomplete="off" [(ngModel)]="textoBusqueda" [disabled]="loading"
+                (keyup)="filtrarMovimientos()">
+
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="textoBusqueda" mat-icon-button matSuffix type="button" aria-label="Limpiar búsqueda"
+                (click)="limpiarBusqueda()">
+                <mat-icon>close</mat-icon>
+            </button>
+
+            <mat-hint>Producto, código, usuario, observación o referencia</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="history-toolbar__type">
+            <mat-label>Tipo de movimiento</mat-label>
+
+            <mat-select [(ngModel)]="tipoSeleccionado" [disabled]="loading" (selectionChange)="filtrarMovimientos()">
+
+                <mat-option *ngFor="let tipo of tiposMovimiento" [value]="tipo.value">
+                    {{ tipo.label }}
+                </mat-option>
+            </mat-select>
+
+            <mat-icon matPrefix>filter_alt</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate">
+    </mat-progress-bar>
+
+    <div class="history-content" [class.history-content--loading]="loading">
+
+        <div *ngIf="movimientosPaginados.length; else emptyHistory" class="timeline">
+
+            <article *ngFor="let movimiento of movimientosPaginados; trackBy: trackByMovimiento" class="timeline-item"
+                [ngClass]="'timeline-item--' + obtenerClaseMovimiento(movimiento.type)">
+
+                <div class="timeline-item__axis">
+                    <div class="timeline-item__icon">
+                        <mat-icon>{{ obtenerIconoMovimiento(movimiento.type) }}</mat-icon>
+                    </div>
+
+                    <div class="timeline-item__line"></div>
+                </div>
+
+                <div class="timeline-item__content">
+                    <div class="movement-card">
+                        <div class="movement-card__header">
+                            <div class="movement-card__title">
+                                <div class="movement-card__type-row">
+                                    <span class="movement-type"
+                                        [ngClass]="'movement-type--' + obtenerClaseMovimiento(movimiento.type)">
+                                        {{ obtenerNombreMovimiento(movimiento.type) }}
+                                    </span>
+
+                                    <span class="movement-id">
+                                        Movimiento #{{ movimiento.id }}
+                                    </span>
+                                </div>
+
+                                <h3>{{ movimiento.product_name || 'Producto sin nombre' }}</h3>
+
+                                <div class="movement-product-meta">
+                                    <span class="movement-code">
+                                        {{ movimiento.code || 'S/C' }}
+                                    </span>
+
+                                    <span *ngIf="movimiento.branch_name" class="movement-branch">
+                                        <mat-icon>storefront</mat-icon>
+                                        {{ movimiento.branch_name }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="movement-quantity"
+                                [ngClass]="'movement-quantity--' + obtenerClaseMovimiento(movimiento.type)">
+
+                                <span class="movement-quantity__sign">
+                                    {{ obtenerSignoMovimiento(movimiento.type) }}
+                                </span>
+
+                                <strong>
+                                    {{ obtenerNumero(movimiento.quantity) | number:'1.0-2' }}
+                                </strong>
+
+                                <small>unidades</small>
+                            </div>
+                        </div>
+
+                        <div class="movement-card__body">
+                            <div class="stock-transition">
+                                <div class="stock-transition__item">
+                                    <span>Stock anterior</span>
+
+                                    <strong>
+                                        {{ obtenerNumero(movimiento.stock_before) | number:'1.0-2' }}
+                                    </strong>
+                                </div>
+
+                                <div class="stock-transition__arrow">
+                                    <mat-icon>arrow_forward</mat-icon>
+                                </div>
+
+                                <div class="stock-transition__item stock-transition__item--final">
+                                    <span>Stock resultante</span>
+
+                                    <strong>
+                                        {{ obtenerNumero(movimiento.stock_after) | number:'1.0-2' }}
+                                    </strong>
+                                </div>
+                            </div>
+
+                            <div class="movement-observation">
+                                <div class="movement-observation__icon">
+                                    <mat-icon>notes</mat-icon>
+                                </div>
+
+                                <div>
+                                    <span>Detalle del movimiento</span>
+
+                                    <p>
+                                        {{ movimiento.observation || 'Movimiento registrado sin observaciones.' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="movement-card__footer">
+                            <div class="movement-user">
+                                <div class="movement-user__avatar">
+                                    {{ obtenerIniciales(movimiento.user_name) }}
+                                </div>
+
+                                <div class="movement-user__info">
+                                    <span>Registrado por</span>
+                                    <strong>{{ movimiento.user_name || 'Usuario no identificado' }}</strong>
+                                </div>
+                            </div>
+
+                            <div class="movement-footer-details">
+                                <div class="movement-reference">
+                                    <mat-icon>link</mat-icon>
+
+                                    <div>
+                                        <span>Referencia</span>
+                                        <strong>{{ obtenerReferenciaTexto(movimiento) }}</strong>
+                                    </div>
+                                </div>
+
+                                <div class="movement-date">
+                                    <mat-icon>schedule</mat-icon>
+
+                                    <div>
+                                        <span>Fecha y hora</span>
+
+                                        <ng-container *ngIf="obtenerFechaValida(movimiento.created_at) as fecha">
+                                            <strong>
+                                                {{ fecha | date:'dd/MM/yyyy' }}
+                                                <small>{{ fecha | date:'hh:mm a' }}</small>
+                                            </strong>
+                                        </ng-container>
+
+                                        <strong *ngIf="!obtenerFechaValida(movimiento.created_at)">
+                                            Fecha no disponible
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <ng-template #emptyHistory>
+            <div class="empty-history">
+                <div class="empty-history__icon">
+                    <mat-icon>history_toggle_off</mat-icon>
+                </div>
+
+                <h3>No se encontraron movimientos</h3>
+
+                <p>
+                    No existen registros que coincidan con la búsqueda o el tipo de movimiento seleccionado.
+                </p>
+
+                <button *ngIf="textoBusqueda || tipoSeleccionado !== 'ALL'" mat-stroked-button type="button"
+                    (click)="textoBusqueda = ''; tipoSeleccionado = 'ALL'; filtrarMovimientos()">
+
+                    <mat-icon>filter_alt_off</mat-icon>
+                    Restablecer búsqueda
+                </button>
+            </div>
+        </ng-template>
+    </div>
+
+    <div *ngIf="movimientosFiltrados.length" class="history-pagination">
+
+        <div class="history-pagination__info">
+            Mostrando
+            <strong>{{ numeroInicial }}</strong>
+            a
+            <strong>{{ numeroFinal }}</strong>
+            de
+            <strong>{{ movimientosFiltrados.length }}</strong>
+            movimientos
+        </div>
+
+        <div class="history-pagination__controls">
+            <mat-form-field appearance="outline" class="page-size">
+                <mat-select [(ngModel)]="cantidadPorPagina" (selectionChange)="cambiarCantidadPorPagina()">
+
+                    <mat-option [value]="5">5 por página</mat-option>
+                    <mat-option [value]="8">8 por página</mat-option>
+                    <mat-option [value]="15">15 por página</mat-option>
+                    <mat-option [value]="25">25 por página</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-icon-button type="button" aria-label="Primera página" [disabled]="paginaActual === 1"
+                (click)="cambiarPagina(1)">
+                <mat-icon>first_page</mat-icon>
+            </button>
+
+            <button mat-icon-button type="button" aria-label="Página anterior" [disabled]="paginaActual === 1"
+                (click)="cambiarPagina(paginaActual - 1)">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+
+            <span class="page-indicator">
+                Página {{ paginaActual }} de {{ totalPaginas }}
+            </span>
+
+            <button mat-icon-button type="button" aria-label="Página siguiente"
+                [disabled]="paginaActual === totalPaginas" (click)="cambiarPagina(paginaActual + 1)">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <button mat-icon-button type="button" aria-label="Última página" [disabled]="paginaActual === totalPaginas"
+                (click)="cambiarPagina(totalPaginas)">
+                <mat-icon>last_page</mat-icon>
+            </button>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,252 @@
+<section class="branch-card">
+    <div class="branch-header">
+        <div class="branch-header__title">
+            <div class="branch-header__icon">
+                <mat-icon>storefront</mat-icon>
+            </div>
+
+            <div>
+                <h2>Inventario por sucursal</h2>
+                <p>Distribución de productos, existencias y valorización entre las sucursales.</p>
+            </div>
+        </div>
+
+        <div class="branch-header__total">
+            <mat-icon>store</mat-icon>
+
+            <div>
+                <strong>{{ totalSucursales }}</strong>
+                <span>sucursales</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="branch-summary">
+        <div class="branch-summary__item">
+            <div class="branch-summary__icon branch-summary__icon--branches">
+                <mat-icon>storefront</mat-icon>
+            </div>
+
+            <div>
+                <span>Total de sucursales</span>
+                <strong>{{ totalSucursales | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="branch-summary__item">
+            <div class="branch-summary__icon branch-summary__icon--products">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
+
+            <div>
+                <span>Productos distribuidos</span>
+                <strong>{{ totalProductos | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="branch-summary__item">
+            <div class="branch-summary__icon branch-summary__icon--stock">
+                <mat-icon>warehouse</mat-icon>
+            </div>
+
+            <div>
+                <span>Stock acumulado</span>
+                <strong>{{ totalStock | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+
+        <div class="branch-summary__item">
+            <div class="branch-summary__icon branch-summary__icon--value">
+                <mat-icon>account_balance_wallet</mat-icon>
+            </div>
+
+            <div>
+                <span>Valor total</span>
+                <strong>{{ currencySymbol }} {{ totalValor | number:'1.2-2' }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="branch-toolbar">
+        <mat-form-field appearance="outline" class="branch-search">
+            <mat-label>Buscar sucursal</mat-label>
+
+            <input matInput type="text" autocomplete="off" [(ngModel)]="textoBusqueda" [disabled]="loading"
+                (keyup)="filtrarSucursales()">
+
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="textoBusqueda" mat-icon-button matSuffix type="button" aria-label="Limpiar búsqueda"
+                (click)="limpiarBusqueda()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="branch-order">
+            <mat-label>Ordenar por</mat-label>
+
+            <mat-select [(ngModel)]="ordenSeleccionado" [disabled]="loading" (selectionChange)="cambiarOrden()">
+
+                <mat-option value="VALUE">Mayor valorización</mat-option>
+                <mat-option value="STOCK">Mayor stock</mat-option>
+                <mat-option value="PRODUCTS">Mayor cantidad de productos</mat-option>
+                <mat-option value="NAME">Nombre de sucursal</mat-option>
+            </mat-select>
+
+            <mat-icon matPrefix>sort</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div class="branch-content" [class.branch-content--loading]="loading">
+        <div *ngIf="sucursalesFiltradas.length; else emptyBranches" class="branch-grid">
+
+            <article *ngFor="
+          let item of sucursalesFiltradas;
+          let posicion = index;
+          trackBy: trackBySucursal
+        " class="branch-item">
+
+                <div class="branch-item__header">
+                    <div class="branch-item__identity">
+                        <div class="branch-avatar">
+                            {{ obtenerInicial(item.branch) }}
+                        </div>
+
+                        <div class="branch-name">
+                            <span>Sucursal</span>
+                            <h3>{{ item.branch || 'Sin sucursal' }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="branch-position" [ngClass]="'branch-position--' + obtenerClasePosicion(posicion)">
+
+                        <mat-icon>
+                            {{ posicion <= 2 ? 'workspace_premium' : 'storefront' }} </mat-icon>
+
+                                <span>#{{ posicion + 1 }}</span>
+                    </div>
+                </div>
+
+                <div class="branch-item__value">
+                    <span>Valor del inventario</span>
+
+                    <strong>
+                        {{ currencySymbol }}
+                        {{ obtenerValor(item) | number:'1.2-2' }}
+                    </strong>
+
+                    <div class="branch-value-progress">
+                        <div class="branch-value-progress__header">
+                            <span>Participación total</span>
+
+                            <strong>
+                                {{ obtenerParticipacionValor(item) | number:'1.0-1' }}%
+                            </strong>
+                        </div>
+
+                        <div class="branch-value-progress__track">
+                            <div class="branch-value-progress__bar"
+                                [style.width.%]="obtenerPorcentajeComparativo(item)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="branch-item__statistics">
+                    <div class="branch-statistic branch-statistic--products">
+                        <div class="branch-statistic__icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div>
+                            <span>Productos</span>
+                            <strong>{{ obtenerProductos(item) | number:'1.0-0' }}</strong>
+                            <small>registros</small>
+                        </div>
+                    </div>
+
+                    <div class="branch-statistic branch-statistic--stock">
+                        <div class="branch-statistic__icon">
+                            <mat-icon>warehouse</mat-icon>
+                        </div>
+
+                        <div>
+                            <span>Stock total</span>
+                            <strong>{{ obtenerStock(item) | number:'1.0-2' }}</strong>
+
+                            <small>
+                                {{ obtenerParticipacionStock(item) | number:'1.0-1' }}% del stock
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="branch-item__footer">
+                    <div>
+                        <mat-icon>pie_chart</mat-icon>
+
+                        <span>
+                            Representa
+                            <strong>
+                                {{ obtenerParticipacionValor(item) | number:'1.0-1' }}%
+                            </strong>
+                            del valor total
+                        </span>
+                    </div>
+
+                    <span class="branch-status">
+                        <span class="branch-status__dot"></span>
+                        Activa
+                    </span>
+                </div>
+            </article>
+        </div>
+
+        <ng-template #emptyBranches>
+            <div class="empty-branches">
+                <div class="empty-branches__icon">
+                    <mat-icon>storefront</mat-icon>
+                </div>
+
+                <h3>No se encontraron sucursales</h3>
+
+                <p>
+                    No existen registros de inventario por sucursal que coincidan con la búsqueda.
+                </p>
+
+                <button *ngIf="textoBusqueda" mat-stroked-button type="button" (click)="limpiarBusqueda()">
+
+                    <mat-icon>refresh</mat-icon>
+                    Restablecer búsqueda
+                </button>
+            </div>
+        </ng-template>
+    </div>
+
+    <div *ngIf="sucursalesFiltradas.length" class="branch-footer">
+        <div>
+            <span>Promedio por sucursal</span>
+
+            <strong>
+                {{ currencySymbol }}
+                {{ promedioValorSucursal | number:'1.2-2' }}
+            </strong>
+        </div>
+
+        <div>
+            <span>Sucursal principal</span>
+            <strong>{{ sucursalesFiltradas[0]?.branch || 'Sin información' }}</strong>
+        </div>
+
+        <div>
+            <span>Mayor valorización</span>
+
+            <strong>
+                {{ currencySymbol }}
+                {{ obtenerValor(sucursalesFiltradas[0]) | number:'1.2-2' }}
+            </strong>
+        </div>
+    </div>
+</section>

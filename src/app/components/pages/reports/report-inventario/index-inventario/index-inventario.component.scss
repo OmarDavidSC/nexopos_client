@@ -1,0 +1,125 @@
+.inventory-report-container {
+    width: 100%;
+    padding: 24px;
+    background: #f6f8fb;
+}
+
+.report-tabs-container {
+    margin-top: 22px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e8ecf2;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(16, 24, 40, 0.06);
+}
+
+.tab-content {
+    padding: 22px;
+    background: #f8fafc;
+}
+
+.tab-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 48px;
+    font-size: 13px;
+    font-weight: 600;
+
+    mat-icon {
+        width: 19px;
+        height: 19px;
+        font-size: 19px;
+    }
+}
+
+.tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 20px;
+
+    &--danger {
+        color: #ffffff;
+        background: #dc2626;
+    }
+}
+
+::ng-deep {
+    .report-tabs-container {
+        .mat-tab-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e8ecf2;
+        }
+
+        .mat-tab-label {
+            min-width: auto;
+            padding: 0 18px;
+            color: #667085;
+            opacity: 1;
+        }
+
+        .mat-tab-label:hover {
+            color: #2563eb;
+            background: #f8fafc;
+        }
+
+        .mat-tab-label.mat-tab-label-active {
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .mat-ink-bar {
+            height: 3px;
+            background: #2563eb;
+        }
+
+        .mat-tab-body-content {
+            overflow: visible;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .inventory-report-container {
+        padding: 14px;
+    }
+
+    .report-tabs-container {
+        margin-top: 16px;
+        border-radius: 13px;
+    }
+
+    .tab-content {
+        padding: 14px;
+    }
+
+    ::ng-deep {
+        .report-tabs-container {
+            .mat-tab-label {
+                min-width: 80px;
+                padding: 0 12px;
+            }
+
+            .mat-tab-header-pagination {
+                display: flex;
+            }
+        }
+    }
+
+    .tab-label {
+        gap: 5px;
+        font-size: 11px;
+
+        mat-icon {
+            width: 17px;
+            height: 17px;
+            font-size: 17px;
+        }
+    }
+}

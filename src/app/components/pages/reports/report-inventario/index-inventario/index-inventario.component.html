@@ -1,1 +1,109 @@
-<p>index-inventario works!</p>
+<app-adm-header [descripcion]="'Consualta los reportes de los productos'"
+    [breadcrumbs]="[{nombre:'Reporte'},{nombre:'Reporte de Inventario Productos'}]" [visible]="false" [rutaRegreso]="'/inicio'">
+</app-adm-header>
+<div class="inventory-report-container">
+    <app-inventory-filters [filtro]="Filtro" [sucursales]="ListaSucursales" [productos]="ListaProductos"
+        [loading]="Loading" (buscar)="aplicarFiltros($event)" (limpiar)="clearFilters()"></app-inventory-filters>
+
+    <div class="report-tabs-container">
+        <mat-tab-group animationDuration="250ms" mat-align-tabs="start" dynamicHeight>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>dashboard</mat-icon>
+                        <span>Resumen</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-summary-report [resumen]="Resumen"
+                        [loading]="Loading"></app-inventory-summary-report>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>inventory_2</mat-icon>
+                        <span>Stock</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-stock [stock]="Stock" [loading]="Loading"></app-inventory-stock>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>history</mat-icon>
+                        <span>Movimientos</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-movements [movimientos]="Movimientos" [loading]="Loading"></app-inventory-movements>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>leaderboard</mat-icon>
+                        <span>Productos</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-products [productos]="Productos" [loading]="Loading"></app-inventory-products>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>warning_amber</mat-icon>
+                        <span>Stock bajo</span>
+
+                        <span *ngIf="BajoStock.length" class="tab-badge tab-badge--danger">
+                            {{ BajoStock.length }}
+                        </span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-low-stock [bajoStock]="BajoStock" [loading]="Loading"></app-inventory-low-stock>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>category</mat-icon>
+                        <span>Categorías</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-category [porCategoria]="PorCategoria" [loading]="Loading"
+                        currencySymbol="S/"></app-inventory-category>
+                </div>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <div class="tab-label">
+                        <mat-icon>storefront</mat-icon>
+                        <span>Sucursales</span>
+                    </div>
+                </ng-template>
+
+                <div class="tab-content">
+                    <app-inventory-branch [porSucursal]="PorSucursal" [loading]="Loading"
+                        currencySymbol="S/"></app-inventory-branch>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

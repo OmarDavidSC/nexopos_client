@@ -1,0 +1,256 @@
+<section class="low-stock-card">
+    <div class="low-stock-header">
+        <div class="low-stock-header__title">
+            <div class="low-stock-header__icon">
+                <mat-icon>warning_amber</mat-icon>
+            </div>
+
+            <div>
+                <h2>Alertas de inventario</h2>
+                <p>Productos agotados o con existencias por debajo del nivel mínimo.</p>
+            </div>
+        </div>
+
+        <div class="low-stock-header__status">
+            <span class="status-indicator"></span>
+
+            <div>
+                <strong>{{ bajoStock.length }}</strong>
+                <small>alertas activas</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-summary">
+        <button type="button" class="alert-summary__item alert-summary__item--out"
+            [class.alert-summary__item--active]="estadoSeleccionado === 'OUT_OF_STOCK'"
+            (click)="estadoSeleccionado = 'OUT_OF_STOCK'; filtrarRegistros()">
+
+            <div class="alert-summary__icon">
+                <mat-icon>remove_shopping_cart</mat-icon>
+            </div>
+
+            <div>
+                <span>Productos agotados</span>
+                <strong>{{ totalAgotados }}</strong>
+            </div>
+        </button>
+
+        <button type="button" class="alert-summary__item alert-summary__item--critical"
+            [class.alert-summary__item--active]="estadoSeleccionado === 'CRITICAL'"
+            (click)="estadoSeleccionado = 'CRITICAL'; filtrarRegistros()">
+
+            <div class="alert-summary__icon">
+                <mat-icon>error_outline</mat-icon>
+            </div>
+
+            <div>
+                <span>Nivel crítico</span>
+                <strong>{{ totalCriticos }}</strong>
+            </div>
+        </button>
+
+        <button type="button" class="alert-summary__item alert-summary__item--low"
+            [class.alert-summary__item--active]="estadoSeleccionado === 'LOW'"
+            (click)="estadoSeleccionado = 'LOW'; filtrarRegistros()">
+
+            <div class="alert-summary__icon">
+                <mat-icon>warning_amber</mat-icon>
+            </div>
+
+            <div>
+                <span>Stock bajo</span>
+                <strong>{{ totalBajos }}</strong>
+            </div>
+        </button>
+
+        <div class="alert-summary__item alert-summary__item--replacement">
+            <div class="alert-summary__icon">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </div>
+
+            <div>
+                <span>Unidades por reponer</span>
+                <strong>{{ totalUnidadesReposicion | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="low-stock-toolbar">
+        <mat-form-field appearance="outline" class="low-stock-search">
+            <mat-label>Buscar producto, código o sucursal</mat-label>
+
+            <input matInput type="text" autocomplete="off" [(ngModel)]="textoBusqueda" [disabled]="loading"
+                (keyup)="filtrarRegistros()">
+
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="textoBusqueda" mat-icon-button matSuffix type="button" aria-label="Limpiar búsqueda"
+                (click)="limpiarBusqueda()">
+
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="low-stock-filter">
+            <mat-label>Nivel de alerta</mat-label>
+
+            <mat-select [(ngModel)]="estadoSeleccionado" [disabled]="loading" (selectionChange)="filtrarRegistros()">
+
+                <mat-option value="ALL">Todos los niveles</mat-option>
+                <mat-option value="OUT_OF_STOCK">Agotados</mat-option>
+                <mat-option value="CRITICAL">Críticos</mat-option>
+                <mat-option value="LOW">Stock bajo</mat-option>
+            </mat-select>
+
+            <mat-icon matPrefix>filter_alt</mat-icon>
+        </mat-form-field>
+
+        <button mat-stroked-button type="button" class="clear-filter-button" [disabled]="loading"
+            (click)="limpiarFiltros()">
+
+            <mat-icon>filter_alt_off</mat-icon>
+            Limpiar
+        </button>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate">
+    </mat-progress-bar>
+
+    <div class="low-stock-content" [class.low-stock-content--loading]="loading">
+
+        <div *ngIf="registrosFiltrados.length; else emptyLowStock" class="alerts-list">
+
+            <article *ngFor="
+          let item of registrosFiltrados;
+          trackBy: trackByLowStock
+        " class="alert-item" [ngClass]="'alert-item--' + obtenerClaseEstado(item)">
+
+                <div class="alert-item__priority">
+                    <div class="alert-item__priority-icon">
+                        <mat-icon>{{ obtenerIconoEstado(item) }}</mat-icon>
+                    </div>
+
+                    <span>
+                        {{ obtenerEstadoTexto(item) }}
+                    </span>
+                </div>
+
+                <div class="alert-item__product">
+                    <div class="product-avatar">
+                        {{ obtenerInicial(item.name) }}
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-info__name">
+                            <h3>{{ item.name || 'Producto sin nombre' }}</h3>
+
+                            <span class="product-code">
+                                {{ item.code || 'S/C' }}
+                            </span>
+                        </div>
+
+                        <div class="product-branch">
+                            <mat-icon>storefront</mat-icon>
+                            <span>{{ item.branch_name || 'Sucursal no identificada' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-item__stock">
+                    <div class="stock-data">
+                        <div class="stock-data__item">
+                            <span>Stock actual</span>
+
+                            <strong [ngClass]="
+                  'stock-value--' + obtenerClaseEstado(item)
+                ">
+                                {{ obtenerStockActual(item) | number:'1.0-2' }}
+                            </strong>
+                        </div>
+
+                        <div class="stock-data__divider"></div>
+
+                        <div class="stock-data__item">
+                            <span>Stock mínimo</span>
+                            <strong>{{ obtenerStockMinimo(item) | number:'1.0-2' }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="stock-level">
+                        <div class="stock-level__header">
+                            <span>Nivel disponible</span>
+
+                            <strong>
+                                {{ obtenerPorcentajeStock(item) | number:'1.0-0' }}%
+                            </strong>
+                        </div>
+
+                        <div class="stock-level__track">
+                            <div class="stock-level__value" [ngClass]="
+                  'stock-level__value--' + obtenerClaseEstado(item)
+                " [style.width.%]="obtenerPorcentajeStock(item)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-item__replacement">
+                    <span>Reposición recomendada</span>
+
+                    <div class="replacement-value">
+                        <mat-icon>add_circle</mat-icon>
+
+                        <strong>
+                            {{ obtenerCantidadReposicion(item) | number:'1.0-2' }}
+                        </strong>
+
+                        <small>unidades</small>
+                    </div>
+
+                    <p>
+                        Para alcanzar el mínimo de
+                        {{ obtenerStockObjetivo(item) | number:'1.0-2' }} unidades.
+                    </p>
+                </div>
+            </article>
+        </div>
+
+        <ng-template #emptyLowStock>
+            <div class="empty-low-stock">
+                <div class="empty-low-stock__icon">
+                    <mat-icon>
+                        {{
+                        textoBusqueda || estadoSeleccionado !== 'ALL'
+                        ? 'search_off'
+                        : 'verified'
+                        }}
+                    </mat-icon>
+                </div>
+
+                <h3>
+                    {{
+                    textoBusqueda || estadoSeleccionado !== 'ALL'
+                    ? 'No se encontraron alertas'
+                    : 'Inventario en buen estado'
+                    }}
+                </h3>
+
+                <p>
+                    {{
+                    textoBusqueda || estadoSeleccionado !== 'ALL'
+                    ? 'No existen productos que coincidan con los criterios seleccionados.'
+                    : 'No se encontraron productos agotados o por debajo del stock mínimo.'
+                    }}
+                </p>
+
+                <button *ngIf="textoBusqueda || estadoSeleccionado !== 'ALL'" mat-stroked-button type="button"
+                    (click)="limpiarFiltros()">
+
+                    <mat-icon>filter_alt_off</mat-icon>
+                    Restablecer filtros
+                </button>
+            </div>
+        </ng-template>
+    </div>
+</section>

@@ -1,0 +1,247 @@
+<section class="category-card">
+    <div class="category-header">
+        <div class="category-header__title">
+            <div class="category-header__icon">
+                <mat-icon>category</mat-icon>
+            </div>
+
+            <div>
+                <h2>Inventario por categoría</h2>
+                <p>Distribución de productos, existencias y valorización por categoría.</p>
+            </div>
+        </div>
+
+        <div class="category-header__total">
+            <mat-icon>folder_copy</mat-icon>
+
+            <div>
+                <strong>{{ totalCategorias }}</strong>
+                <span>categorías</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-summary">
+        <div class="category-summary__item">
+            <div class="category-summary__icon category-summary__icon--categories">
+                <mat-icon>category</mat-icon>
+            </div>
+
+            <div>
+                <span>Total de categorías</span>
+                <strong>{{ totalCategorias | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="category-summary__item">
+            <div class="category-summary__icon category-summary__icon--products">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
+
+            <div>
+                <span>Productos registrados</span>
+                <strong>{{ totalProductos | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="category-summary__item">
+            <div class="category-summary__icon category-summary__icon--stock">
+                <mat-icon>warehouse</mat-icon>
+            </div>
+
+            <div>
+                <span>Stock acumulado</span>
+                <strong>{{ totalStock | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+
+        <div class="category-summary__item">
+            <div class="category-summary__icon category-summary__icon--value">
+                <mat-icon>payments</mat-icon>
+            </div>
+
+            <div>
+                <span>Valor del inventario</span>
+
+                <strong>
+                    {{ currencySymbol }}
+                    {{ totalValor | number:'1.2-2' }}
+                </strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-toolbar">
+        <mat-form-field appearance="outline" class="category-search">
+            <mat-label>Buscar categoría</mat-label>
+
+            <input matInput type="text" autocomplete="off" [(ngModel)]="textoBusqueda" [disabled]="loading"
+                (keyup)="filtrarCategorias()">
+
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="textoBusqueda" mat-icon-button matSuffix type="button" aria-label="Limpiar búsqueda"
+                (click)="limpiarBusqueda()">
+
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="category-order">
+            <mat-label>Ordenar por</mat-label>
+
+            <mat-select [(ngModel)]="ordenSeleccionado" [disabled]="loading" (selectionChange)="cambiarOrden()">
+
+                <mat-option value="VALUE">Mayor valorización</mat-option>
+                <mat-option value="STOCK">Mayor stock</mat-option>
+                <mat-option value="PRODUCTS">Mayor cantidad de productos</mat-option>
+                <mat-option value="NAME">Nombre de categoría</mat-option>
+            </mat-select>
+
+            <mat-icon matPrefix>sort</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div class="category-content" [class.category-content--loading]="loading">
+        <div *ngIf="categoriasFiltradas.length; else emptyCategories" class="category-list">
+
+            <article *ngFor="
+          let item of categoriasFiltradas;
+          let posicion = index;
+          trackBy: trackByCategoria
+        " class="category-item">
+
+                <div class="category-position" [ngClass]="'category-position--' + obtenerClasePosicion(posicion)">
+
+                    <mat-icon>{{ posicion <= 2 ? 'workspace_premium' : 'category' }}</mat-icon>
+                            <span>{{ posicion + 1 }}</span>
+                </div>
+
+                <div class="category-information">
+                    <div class="category-avatar">
+                        {{ obtenerInicial(item.category) }}
+                    </div>
+
+                    <div class="category-name">
+                        <span>Categoría</span>
+                        <h3>{{ item.category || 'Sin categoría' }}</h3>
+
+                        <div class="category-progress">
+                            <div class="category-progress__header">
+                                <span>Participación en la valorización</span>
+
+                                <strong>
+                                    {{ obtenerParticipacionValor(item) | number:'1.0-1' }}%
+                                </strong>
+                            </div>
+
+                            <div class="category-progress__track">
+                                <div class="category-progress__value"
+                                    [style.width.%]="obtenerPorcentajeComparativo(item)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-statistics">
+                    <div class="category-statistic category-statistic--products">
+                        <div class="category-statistic__icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div>
+                            <span>Productos</span>
+                            <strong>{{ obtenerProductos(item) | number:'1.0-0' }}</strong>
+                            <small>registros</small>
+                        </div>
+                    </div>
+
+                    <div class="category-statistic category-statistic--stock">
+                        <div class="category-statistic__icon">
+                            <mat-icon>warehouse</mat-icon>
+                        </div>
+
+                        <div>
+                            <span>Stock total</span>
+                            <strong>{{ obtenerStock(item) | number:'1.0-2' }}</strong>
+
+                            <small>
+                                {{ obtenerParticipacionStock(item) | number:'1.0-1' }}% del stock
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="category-statistic category-statistic--value">
+                        <div class="category-statistic__icon">
+                            <mat-icon>account_balance_wallet</mat-icon>
+                        </div>
+
+                        <div>
+                            <span>Valorización</span>
+
+                            <strong>
+                                {{ currencySymbol }}
+                                {{ obtenerValor(item) | number:'1.2-2' }}
+                            </strong>
+
+                            <small>
+                                {{ obtenerParticipacionValor(item) | number:'1.0-1' }}% del valor
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <ng-template #emptyCategories>
+            <div class="empty-category">
+                <div class="empty-category__icon">
+                    <mat-icon>category</mat-icon>
+                </div>
+
+                <h3>No se encontraron categorías</h3>
+
+                <p>
+                    No existen registros de inventario por categoría que coincidan con la búsqueda.
+                </p>
+
+                <button *ngIf="textoBusqueda" mat-stroked-button type="button" (click)="limpiarBusqueda()">
+
+                    <mat-icon>refresh</mat-icon>
+                    Restablecer búsqueda
+                </button>
+            </div>
+        </ng-template>
+    </div>
+
+    <div *ngIf="categoriasFiltradas.length" class="category-footer">
+        <div>
+            <span>Valor promedio por categoría</span>
+
+            <strong>
+                {{ currencySymbol }}
+                {{ promedioValorCategoria | number:'1.2-2' }}
+            </strong>
+        </div>
+
+        <div>
+            <span>Categoría principal</span>
+
+            <strong>
+                {{ categoriasFiltradas[0]?.category || 'Sin información' }}
+            </strong>
+        </div>
+
+        <div>
+            <span>Mayor valorización</span>
+
+            <strong>
+                {{ currencySymbol }}
+                {{ obtenerValor(categoriasFiltradas[0]) | number:'1.2-2' }}
+            </strong>
+        </div>
+    </div>
+</section>

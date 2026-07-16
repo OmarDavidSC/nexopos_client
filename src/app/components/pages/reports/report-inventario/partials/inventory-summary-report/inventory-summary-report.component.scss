@@ -1,0 +1,244 @@
+:host {
+    display: block;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.summary-card {
+    position: relative;
+    min-height: 190px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e8ecf2;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(16, 24, 40, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(16, 24, 40, 0.1);
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        content: '';
+    }
+}
+
+.summary-card__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 20px;
+}
+
+.summary-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.summary-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    border-radius: 13px;
+
+    mat-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 25px;
+    }
+}
+
+.summary-card__badge {
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 20px;
+}
+
+.summary-card__body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.summary-card__label {
+    margin-bottom: 5px;
+    color: #667085;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.summary-card__value {
+    min-height: 44px;
+    color: #182230;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.summary-card__description {
+    margin-top: 8px;
+    color: #98a2b3;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.summary-card__decoration {
+    position: absolute;
+    right: -18px;
+    bottom: -22px;
+    z-index: 1;
+    opacity: 0.05;
+    transform: rotate(-12deg);
+
+    mat-icon {
+        width: 105px;
+        height: 105px;
+        font-size: 105px;
+    }
+}
+
+.summary-card--movements {
+    &::before {
+        background: #2563eb;
+    }
+
+    .summary-card__icon {
+        color: #2563eb;
+        background: #eaf1ff;
+    }
+
+    .summary-card__badge {
+        color: #1d4ed8;
+        background: #eff6ff;
+    }
+
+    .summary-card__decoration {
+        color: #2563eb;
+    }
+}
+
+.summary-card--entries {
+    &::before {
+        background: #16a34a;
+    }
+
+    .summary-card__icon {
+        color: #16a34a;
+        background: #eaf8ef;
+    }
+
+    .summary-card__badge {
+        color: #15803d;
+        background: #f0fdf4;
+    }
+
+    .summary-card__decoration {
+        color: #16a34a;
+    }
+}
+
+.summary-card--exits {
+    &::before {
+        background: #dc2626;
+    }
+
+    .summary-card__icon {
+        color: #dc2626;
+        background: #fef0f0;
+    }
+
+    .summary-card__badge {
+        color: #b91c1c;
+        background: #fef2f2;
+    }
+
+    .summary-card__decoration {
+        color: #dc2626;
+    }
+}
+
+.summary-card--products {
+    &::before {
+        background: #7c3aed;
+    }
+
+    .summary-card__icon {
+        color: #7c3aed;
+        background: #f3edff;
+    }
+
+    .summary-card__badge {
+        color: #6d28d9;
+        background: #f5f3ff;
+    }
+
+    .summary-card__decoration {
+        color: #7c3aed;
+    }
+}
+
+.summary-card__skeleton {
+    width: 105px;
+    height: 39px;
+    margin: 3px 0 2px;
+    overflow: hidden;
+    background: #e9edf3;
+    border-radius: 8px;
+    animation: skeleton-loading 1.3s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.55;
+    }
+}
+
+@media (max-width: 1199px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .summary-card {
+        min-height: 175px;
+    }
+
+    .summary-card__content {
+        padding: 18px;
+    }
+
+    .summary-card__value {
+        font-size: 30px;
+    }
+}

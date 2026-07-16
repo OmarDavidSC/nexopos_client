@@ -99,6 +99,14 @@ import { ComprasMesComponent } from './components/pages/reports/report-compras/p
 import { TopProveedoresComponent } from './components/pages/reports/report-compras/partials/top-proveedores/top-proveedores.component';
 import { EstadoComprasComponent } from './components/pages/reports/report-compras/partials/estado-compras/estado-compras.component';
 import { TopProductosComprasComponent } from './components/pages/reports/report-compras/partials/top-productos-compras/top-productos-compras.component';
+import { InventoryFiltersComponent } from './components/pages/reports/report-inventario/partials/inventory-filters/inventory-filters.component';
+import { InventoryStockComponent } from './components/pages/reports/report-inventario/partials/inventory-stock/inventory-stock.component';
+import { InventoryMovementsComponent } from './components/pages/reports/report-inventario/partials/inventory-movements/inventory-movements.component';
+import { InventoryProductsComponent } from './components/pages/reports/report-inventario/partials/inventory-products/inventory-products.component';
+import { InventoryLowStockComponent } from './components/pages/reports/report-inventario/partials/inventory-low-stock/inventory-low-stock.component';
+import { InventoryCategoryComponent } from './components/pages/reports/report-inventario/partials/inventory-category/inventory-category.component';
+import { InventoryBranchComponent } from './components/pages/reports/report-inventario/partials/inventory-branch/inventory-branch.component';
+import { InventorySummaryReportComponent } from './components/pages/reports/report-inventario/partials/inventory-summary-report/inventory-summary-report.component';
 
 @NgModule({
   declarations: [
@@ -188,6 +196,14 @@ import { TopProductosComprasComponent } from './components/pages/reports/report-
     TopProveedoresComponent,
     EstadoComprasComponent,
     TopProductosComprasComponent,
+    InventoryFiltersComponent,
+    InventoryStockComponent,
+    InventoryMovementsComponent,
+    InventoryProductsComponent,
+    InventoryLowStockComponent,
+    InventoryCategoryComponent,
+    InventoryBranchComponent,
+    InventorySummaryReportComponent,
   ],
   imports: [
     ComunModule,

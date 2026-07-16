@@ -1,0 +1,76 @@
+<div class="filter-card">
+    <div class="filter-header">
+        <div class="filter-title">
+            <div class="filter-icon">
+                <mat-icon>filter_alt</mat-icon>
+            </div>
+
+            <div>
+                <h2>Filtros del reporte</h2>
+                <p>Consulta el inventario por sucursal, producto y rango de fechas.</p>
+            </div>
+        </div>
+
+        <button mat-stroked-button type="button" class="clear-button" [disabled]="loading" (click)="limpiarFiltros()">
+            <mat-icon>filter_alt_off</mat-icon>
+            Limpiar filtros
+        </button>
+    </div>
+
+    <div class="filter-body">
+        <div class="filter-grid">
+            <mat-form-field appearance="outline">
+                <mat-label>Sucursal</mat-label>
+
+                <mat-select [(ngModel)]="filtro.branch_id" [disabled]="loading">
+                    <mat-option [value]="null">Todas las sucursales</mat-option>
+
+                    <mat-option *ngFor="let sucursal of sucursales" [value]="sucursal.Id">
+                        {{ sucursal.Nombre }}
+                    </mat-option>
+                </mat-select>
+
+                <mat-icon matPrefix>store</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Producto</mat-label>
+
+                <mat-select [(ngModel)]="filtro.product_id" [disabled]="loading">
+                    <mat-option [value]="null">Todos los productos</mat-option>
+
+                    <mat-option *ngFor="let producto of productos" [value]="producto.Id">
+                        {{ producto.Codigo ? producto.Codigo + ' - ' : '' }}{{ producto.Nombre }}
+                    </mat-option>
+                </mat-select>
+
+                <mat-icon matPrefix>inventory_2</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha inicial</mat-label>
+
+                <input matInput [matDatepicker]="dateStartPicker" [(ngModel)]="filtro.date_start" [disabled]="loading">
+
+                <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateStartPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha final</mat-label>
+
+                <input matInput [matDatepicker]="dateEndPicker" [(ngModel)]="filtro.date_end" [disabled]="loading">
+
+                <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateEndPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="filter-actions">
+            <button mat-flat-button type="button" class="search-button" [disabled]="loading" (click)="aplicarFiltros()">
+                <mat-icon>{{ loading ? 'hourglass_top' : 'search' }}</mat-icon>
+                {{ loading ? 'Consultando...' : 'Consultar reporte' }}
+            </button>
+        </div>
+    </div>
+</div>

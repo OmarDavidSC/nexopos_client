@@ -1,0 +1,125 @@
+<div class="summary-grid">
+    <div class="summary-card summary-card--movements">
+        <div class="summary-card__content">
+            <div class="summary-card__header">
+                <div class="summary-card__icon">
+                    <mat-icon>sync_alt</mat-icon>
+                </div>
+
+                <span class="summary-card__badge">General</span>
+            </div>
+
+            <div class="summary-card__body">
+                <span class="summary-card__label">Total de movimientos</span>
+
+                <ng-container *ngIf="!loading; else loadingValue">
+                    <strong class="summary-card__value">
+                        {{ totalMovimientos | number:'1.0-0' }}
+                    </strong>
+                </ng-container>
+
+                <span class="summary-card__description">
+                    Operaciones registradas en el inventario
+                </span>
+            </div>
+        </div>
+
+        <div class="summary-card__decoration">
+            <mat-icon>sync_alt</mat-icon>
+        </div>
+    </div>
+
+    <div class="summary-card summary-card--entries">
+        <div class="summary-card__content">
+            <div class="summary-card__header">
+                <div class="summary-card__icon">
+                    <mat-icon>south</mat-icon>
+                </div>
+
+                <span class="summary-card__badge">Ingresos</span>
+            </div>
+
+            <div class="summary-card__body">
+                <span class="summary-card__label">Unidades ingresadas</span>
+
+                <ng-container *ngIf="!loading; else loadingValue">
+                    <strong class="summary-card__value">
+                        {{ totalEntradas | number:'1.0-2' }}
+                    </strong>
+                </ng-container>
+
+                <span class="summary-card__description">
+                    Compras, devoluciones y ajustes positivos
+                </span>
+            </div>
+        </div>
+
+        <div class="summary-card__decoration">
+            <mat-icon>inventory</mat-icon>
+        </div>
+    </div>
+
+    <div class="summary-card summary-card--exits">
+        <div class="summary-card__content">
+            <div class="summary-card__header">
+                <div class="summary-card__icon">
+                    <mat-icon>north</mat-icon>
+                </div>
+
+                <span class="summary-card__badge">Salidas</span>
+            </div>
+
+            <div class="summary-card__body">
+                <span class="summary-card__label">Unidades retiradas</span>
+
+                <ng-container *ngIf="!loading; else loadingValue">
+                    <strong class="summary-card__value">
+                        {{ totalSalidas | number:'1.0-2' }}
+                    </strong>
+                </ng-container>
+
+                <span class="summary-card__description">
+                    Ventas, anulaciones y ajustes negativos
+                </span>
+            </div>
+        </div>
+
+        <div class="summary-card__decoration">
+            <mat-icon>local_shipping</mat-icon>
+        </div>
+    </div>
+
+    <div class="summary-card summary-card--products">
+        <div class="summary-card__content">
+            <div class="summary-card__header">
+                <div class="summary-card__icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <span class="summary-card__badge">Productos</span>
+            </div>
+
+            <div class="summary-card__body">
+                <span class="summary-card__label">Productos con movimientos</span>
+
+                <ng-container *ngIf="!loading; else loadingValue">
+                    <strong class="summary-card__value">
+                        {{ totalProductos | number:'1.0-0' }}
+                    </strong>
+                </ng-container>
+
+                <span class="summary-card__description">
+                    Productos incluidos en el reporte actual
+                </span>
+            </div>
+        </div>
+
+        <div class="summary-card__decoration">
+            <mat-icon>category</mat-icon>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingValue>
+    <div class="summary-card__skeleton"></div>
+</ng-template>

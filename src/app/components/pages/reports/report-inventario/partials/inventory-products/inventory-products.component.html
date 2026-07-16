@@ -1,0 +1,192 @@
+<section class="products-card">
+    <div class="products-header">
+        <div class="products-header__title">
+            <div class="products-header__icon">
+                <mat-icon>leaderboard</mat-icon>
+            </div>
+
+            <div>
+                <h2>Productos con mayor movimiento</h2>
+                <p>
+                    Ranking de productos según la cantidad total movilizada en el periodo.
+                </p>
+            </div>
+        </div>
+
+        <div class="products-header__badge">
+            <mat-icon>inventory_2</mat-icon>
+
+            <div>
+                <strong>{{ productosFiltrados.length }}</strong>
+                <span>productos</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-summary">
+        <div class="products-summary__item">
+            <div class="products-summary__icon products-summary__icon--quantity">
+                <mat-icon>swap_vert</mat-icon>
+            </div>
+
+            <div>
+                <span>Cantidad movilizada</span>
+                <strong>{{ totalCantidad | number:'1.0-2' }}</strong>
+            </div>
+        </div>
+
+        <div class="products-summary__item">
+            <div class="products-summary__icon products-summary__icon--movements">
+                <mat-icon>sync_alt</mat-icon>
+            </div>
+
+            <div>
+                <span>Total de movimientos</span>
+                <strong>{{ totalMovimientos | number:'1.0-0' }}</strong>
+            </div>
+        </div>
+
+        <div class="products-summary__item">
+            <div class="products-summary__icon products-summary__icon--average">
+                <mat-icon>analytics</mat-icon>
+            </div>
+
+            <div>
+                <span>Promedio por producto</span>
+
+                <strong>
+                    {{
+                    productosFiltrados.length
+                    ? (totalCantidad / productosFiltrados.length | number:'1.0-2')
+                    : '0.00'
+                    }}
+                </strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-toolbar">
+        <mat-form-field appearance="outline" class="products-search">
+            <mat-label>Buscar producto</mat-label>
+
+            <input matInput type="text" autocomplete="off" [(ngModel)]="textoBusqueda" [disabled]="loading"
+                (keyup)="filtrarProductos()">
+
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="textoBusqueda" mat-icon-button matSuffix type="button" aria-label="Limpiar búsqueda"
+                (click)="limpiarBusqueda()">
+
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate">
+    </mat-progress-bar>
+
+    <div class="products-content" [class.products-content--loading]="loading">
+
+        <div *ngIf="productosFiltrados.length; else emptyProducts" class="products-ranking">
+
+            <article *ngFor="
+          let producto of productosFiltrados;
+          let posicion = index;
+          trackBy: trackByProducto
+        " class="product-ranking-item">
+
+                <div class="product-position" [ngClass]="
+            'product-position--' + obtenerClasePosicion(posicion)
+          ">
+
+                    <mat-icon>
+                        {{ obtenerIconoPosicion(posicion) }}
+                    </mat-icon>
+
+                    <strong>{{ posicion + 1 }}</strong>
+                </div>
+
+                <div class="product-main">
+                    <div class="product-avatar">
+                        {{ obtenerInicial(producto.name) }}
+                    </div>
+
+                    <div class="product-information">
+                        <div class="product-information__title">
+                            <h3>{{ producto.name || 'Producto sin nombre' }}</h3>
+
+                            <span class="product-id">
+                                ID #{{ producto.id }}
+                            </span>
+                        </div>
+
+                        <div class="product-progress">
+                            <div class="product-progress__track">
+                                <div class="product-progress__value" [style.width.%]="obtenerPorcentaje(producto)">
+                                </div>
+                            </div>
+
+                            <span>
+                                {{ obtenerPorcentaje(producto) | number:'1.0-0' }}%
+                                respecto al producto principal
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-statistics">
+                    <div class="product-statistic product-statistic--quantity">
+                        <span>Cantidad movilizada</span>
+
+                        <strong>
+                            {{ obtenerCantidad(producto) | number:'1.0-2' }}
+                        </strong>
+
+                        <small>unidades</small>
+                    </div>
+
+                    <div class="product-statistic product-statistic--movements">
+                        <span>Movimientos</span>
+
+                        <strong>
+                            {{ obtenerMovimientos(producto) | number:'1.0-0' }}
+                        </strong>
+
+                        <small>registros</small>
+                    </div>
+
+                    <div class="product-statistic product-statistic--participation">
+                        <span>Participación</span>
+
+                        <strong>
+                            {{ obtenerParticipacion(producto) | number:'1.0-1' }}%
+                        </strong>
+
+                        <small>del total</small>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <ng-template #emptyProducts>
+            <div class="empty-products">
+                <div class="empty-products__icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <h3>No se encontraron productos</h3>
+
+                <p>
+                    No hay productos con movimientos que coincidan con la búsqueda
+                    ingresada.
+                </p>
+
+                <button *ngIf="textoBusqueda" mat-stroked-button type="button" (click)="limpiarBusqueda()">
+
+                    <mat-icon>refresh</mat-icon>
+                    Restablecer búsqueda
+                </button>
+            </div>
+        </ng-template>
+    </div>
+</section>
