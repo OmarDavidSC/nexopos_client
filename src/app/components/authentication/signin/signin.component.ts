@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ToastConfirmComponent } from 'src/app/shared/components/toast-confirm/toast-confirm.component';
-import { ToastLoadingComponent } from 'src/app/shared/components/toast-loading/toast-loading.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ErrorService } from 'src/app/shared/services/error.service';
 import { FormHelper } from 'src/app/utils/form-helper';
-import { sweet2 } from 'src/app/utils/sweet2';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signin',

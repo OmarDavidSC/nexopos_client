@@ -103,7 +103,7 @@
                                 class="btn-accion btn-editar" matTooltip="Editar">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
+                            <button *ngIf="tienePermiso(Role, ['administrator'])" (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
                                 matTooltip="Eliminar">
                                 <mat-icon>delete</mat-icon>
                             </button>

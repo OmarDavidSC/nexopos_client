@@ -8,12 +8,12 @@
         <app-welcome-card [moneda]="CompaniaActual.SimboloMoneda" [usuario]="UsuarioActual" [resumen]="Resumen">
         </app-welcome-card>
         <!-- Resumen general -->
-        <section class="dashboard-section">
+        <section *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-section">
             <app-summary-cards [moneda]="CompaniaActual.SimboloMoneda"  [data]="Resumen">
             </app-summary-cards>
         </section>
         <!-- Ventas y compras del día -->
-        <div class="dashboard-grid small-cards">
+        <div *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-grid small-cards">
             <div class="dashboard-item">
                 <app-sales-today [moneda]="CompaniaActual.SimboloMoneda"  [data]="VentasDeHoy">
                 </app-sales-today>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <!-- Inventario y alertas -->
-        <div class="dashboard-grid">
+        <div *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-grid">
             <div class="dashboard-item">
                 <app-inventory-summary [data]="Inventario">
                 </app-inventory-summary>
@@ -35,12 +35,12 @@
             </div>
         </div>
         <!-- Gráfico ventas -->
-        <section class="dashboard-section">
+        <section *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-section">
             <app-sales-chart [moneda]="CompaniaActual.SimboloMoneda" [data]="GraficoDeVentas">
             </app-sales-chart>
         </section>
         <!-- Productos y categorias -->
-        <div class="dashboard-grid">
+        <div *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-grid">
             <div class="dashboard-item">
                 <app-top-products [moneda]="CompaniaActual.SimboloMoneda"  [data]="ProductosDestacados">
                 </app-top-products>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <!-- Rendimiento sucursales -->
-        <section class="dashboard-section">
+        <section *ngIf="tienePermiso(Role, ['administrator'])" class="dashboard-section">
             <app-branch-performance [moneda]="CompaniaActual.SimboloMoneda"  [data]="RendiemientoPorSucursal">
             </app-branch-performance>
         </section>

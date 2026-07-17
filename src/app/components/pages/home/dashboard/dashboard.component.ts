@@ -57,10 +57,11 @@ export class DashboardComponent extends FormularioBase implements OnInit {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.CompaniaActual = resultadoComopany;
-      const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
-      if (tienePermiso) {
-        this.initialize();
-      }
+      // const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
+      // if (tienePermiso) {
+      //   this.initialize();
+      // }
+      this.initialize();
     });
   }
 

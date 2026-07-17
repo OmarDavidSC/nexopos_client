@@ -112,7 +112,11 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.CompaniaActual = resultadoCompany;
-      this.initialize();
+      const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastr);
+      if (tienePermiso) {
+        this.initialize();
+      }
+      // this.initialize();
     });
   }
 
