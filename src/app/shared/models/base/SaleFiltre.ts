@@ -4,5 +4,6 @@ export interface SaleFiltre {
     branch_id: number | null;
     customer_id: number | null;
     status: number | null;
+    sunat_status: number | null;
     payment_method: number | null;
 }

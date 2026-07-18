@@ -1,62 +1,71 @@
 <div class="sale-item mt-2">
     <div class="sale-main">
         <div class="sale-left">
-            <div class="status-dot" [ngClass]="{
-                'completed': sale.Estado == 'COMPLETED',
-                'pending': sale.Estado == 'PENDING',
-                'cancelled': sale.Estado == 'CANCELLED'
-            }">
+            <div class="status-dot"
+                [ngClass]="{completed: sale.Estado == 'COMPLETED',pending: sale.Estado == 'PENDING',cancelled: sale.Estado == 'CANCELLED'}">
             </div>
             <div class="sale-content">
                 <div class="sale-top">
                     <div class="sale-info">
                         <div class="document">
-                            {{sale.Documento}}
+                            {{ sale.Documento }}
                         </div>
                         <div class="customer">
-                            <mat-icon>person</mat-icon> Cliente: 
-                            {{sale.NombreCliente}}
+                            <mat-icon>person</mat-icon> Cliente:
+                            {{ sale.NombreCliente }}
                         </div>
                     </div>
                     <div class="sale-right">
                         <div class="amount">
-                            {{moneda}} {{sale.Total | number:'1.2-2'}}
+                            {{ moneda }} {{ sale.Total | number: "1.2-2" }}
                         </div>
-                        <span class="badge" [ngClass]="{
-                                'badge-success': sale.Estado=='COMPLETED',
-                                'badge-warning': sale.Estado=='PENDING',
-                                'badge-danger': sale.Estado=='CANCELLED'
-                            }">
-                            {{sale.EstadoLabel}}
+                        <span class="badge"
+                            [ngClass]="{'badge-success': sale.Estado == 'COMPLETED','badge-warning': sale.Estado == 'PENDING','badge-danger': sale.Estado == 'CANCELLED'}">
+                            {{ sale.EstadoLabel }}
                         </span>
                     </div>
                 </div>
                 <div class="meta">
                     <span>
                         <mat-icon>inventory_2</mat-icon>
-                        {{sale.ProductoTotales}} Productos
+                        {{ sale.ProductoTotales }} Productos
                     </span>
                     <span>
                         <mat-icon>payments</mat-icon>
-                        {{sale.MetodoPago}}
+                        {{ sale.MetodoPago }}
                     </span>
                     <span>
-                        <mat-icon>badge</mat-icon> Registrado por: 
-                        {{sale.NombreUsuarioRegistrador}}
+                        <mat-icon>badge</mat-icon> Registrado por:
+                        {{ sale.NombreUsuarioRegistrador }}
                     </span>
                     <span>
-                        <mat-icon>calendar_today</mat-icon> Fecha Venta: 
-                        {{sale.FechaVenta}}
+                        <mat-icon>calendar_today</mat-icon> Fecha Venta:
+                        {{ sale.FechaVenta }}
                     </span>
                 </div>
             </div>
         </div>
         <div class="sale-actions">
-            <button mat-stroked-button color="primary" (click)="view.emit(sale)">
+            <!-- <button mat-stroked-button color="primary" (click)="view.emit(sale)">
                 <mat-icon>visibility</mat-icon>
                 Ver detalle
+            </button> -->
+            <!-- <button mat-stroked-button color="primary" (click)="view.emit(sale)">
+                <mat-icon>visibility</mat-icon>
+                Ver detalle
+            </button> -->
+            <button mat-stroked-button class="sunat-button" matTooltip="Ver Detalle"
+                [ngClass]="(sale.EstadoSunat || 'pendiente').toLowerCase()" (click)="view.emit(sale)">
+                <mat-icon *ngIf="sale.EstadoSunat === 'ACEPTADO'">verified</mat-icon>
+                <mat-icon *ngIf="sale.EstadoSunat === 'PENDIENTE'">schedule</mat-icon>
+                <mat-icon *ngIf="sale.EstadoSunat === 'RECHAZADO'">error</mat-icon>
+                <mat-icon *ngIf="sale.EstadoSunat === 'ERROR'">warning</mat-icon>
+                <mat-icon *ngIf="!sale.EstadoSunat">receipt_long</mat-icon>
+
+                SUNAT: {{sale.EstadoSunat || 'Ver estado'}}
+                <!-- Ver estado SUNAT -->
             </button>
-            <button *ngIf="sale.Estado=='COMPLETED'" mat-flat-button color="warn" (click)="cancel.emit(sale)">
+            <button *ngIf="sale.Estado == 'COMPLETED'" mat-flat-button color="warn" (click)="cancel.emit(sale)">
                 <mat-icon>cancel</mat-icon>
                 Anular
             </button>

@@ -35,6 +35,7 @@ export class SaleService {
             formData.append('customer_id', filter.customer_id !== null ? String(filter.customer_id) : '');
             formData.append('branch_id', filter.branch_id !== null ? String(filter.branch_id) : '');
             formData.append('status', filter.status !== null ? String(filter.status) : '');
+            formData.append('sunat_status', filter.sunat_status !== null ? String(filter.sunat_status) : '');
             formData.append('payment_method', filter.payment_method !== null ? String(filter.payment_method) : '');
 
             const { success, data, message } = await this.http.postForm(url, formData).toPromise();

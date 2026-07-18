@@ -17,6 +17,7 @@ export class SaleFiltersComponent {
   @Input() branches: ESucursal[] = [];
   @Output() search = new EventEmitter();
   @Output() customerChange = new EventEmitter();
+  @Output() sunatChange = new EventEmitter();
   @Output() branchChange = new EventEmitter();
   @Output() statusChange = new EventEmitter();
   @Output() payment_methodChange = new EventEmitter();

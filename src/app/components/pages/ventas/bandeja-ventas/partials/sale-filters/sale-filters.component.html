@@ -10,7 +10,7 @@
             </mat-form-field>
         </div>
         <!-- Cliente -->
-        <div class="col-xl-2 col-lg-2">
+        <div class="col-xl-3 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cliente</mat-label>
                 <mat-select [(ngModel)]="filter.customer_id" (selectionChange)="customerChange.emit()">
@@ -21,7 +21,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-         <div class="col-xl-2 col-lg-2">
+        <div class="col-xl-2 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Sucursales</mat-label>
                 <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
@@ -33,7 +33,7 @@
             </mat-form-field>
         </div>
         <!-- Estado -->
-        <div class="col-xl-2 col-lg-2">
+        <div class="col-xl-1 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estado</mat-label>
                 <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
@@ -44,8 +44,22 @@
                 </mat-select>
             </mat-form-field>
         </div>
+        <!-- Estado Sunat-->
+        <div class="col-xl-1 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Estado Sunat</mat-label>
+                <mat-select [(ngModel)]="filter.sunat_status" (selectionChange)="sunatChange.emit()">
+                    <mat-option [value]="null">Todos</mat-option>
+                    <mat-option value="NO_ENVIADO">No Enviado</mat-option>
+                    <mat-option value="PENDIENTE">Pendiente</mat-option>
+                    <mat-option value="ACEPTADO">Aceptado</mat-option>
+                    <mat-option value="RECHAZADO">Rechazado</mat-option>
+                    <mat-option value="ERROR">Error</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <!-- Método de pago -->
-        <div class="col-xl-2 col-lg-2">
+        <div class="col-xl-1 col-lg-2">
             <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Método de Pago</mat-label>
                 <mat-select [(ngModel)]="filter.payment_method" (selectionChange)="payment_methodChange.emit()">

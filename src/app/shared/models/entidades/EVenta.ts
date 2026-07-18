@@ -18,6 +18,7 @@ export class EVenta {
     ProductoTotales: number;
     Estado: string;
     EstadoLabel: string;
+    EstadoSunat:  string;
 
     constructor() {
         this.Id = 0;
@@ -37,6 +38,7 @@ export class EVenta {
         this.Total = 0;
         this.Estado = "";
         this.EstadoLabel = "";
+        this.EstadoSunat = "";
     }
 
     public static parseJson(element: any): EVenta {
@@ -58,6 +60,7 @@ export class EVenta {
         objeto.ProductoTotales = SPParse.getNumber(element["items_count"]);
         objeto.Estado = SPParse.getString(element["status"]);
         objeto.EstadoLabel = SPParse.getString(element["status_label"]);
+        objeto.EstadoSunat = SPParse.getString(element["sunat_status"]);
         return objeto;
     }
 

@@ -1,0 +1,97 @@
+.sales-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 20px;
+    margin-top: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, .05);
+}
+
+.pagination-information {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: #64748b;
+    font-size: 13px;
+
+    strong {
+        color: #1e293b;
+        font-weight: 700;
+    }
+
+    small {
+        color: #94a3b8;
+        font-size: 11px;
+    }
+}
+
+.pagination-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    button[disabled] {
+        opacity: .45;
+    }
+}
+
+.page-button {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 9px;
+    color: #475569;
+    font-size: 12px;
+    line-height: 36px;
+
+    &:hover {
+        color: #2563eb;
+        background: #eff6ff;
+    }
+
+    &.active {
+        color: #fff;
+        background: #2563eb;
+        box-shadow: 0 5px 12px rgba(37, 99, 235, .25);
+    }
+}
+
+.pagination-dots {
+    padding: 0 4px;
+    color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+    .sales-pagination {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pagination-actions {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+
+    .page-button {
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .sales-pagination {
+        padding: 14px;
+    }
+
+    .pagination-information {
+        width: 100%;
+    }
+
+    .pagination-actions {
+        justify-content: flex-start;
+    }
+}
