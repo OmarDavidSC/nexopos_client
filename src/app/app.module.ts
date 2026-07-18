@@ -107,6 +107,7 @@ import { InventoryLowStockComponent } from './components/pages/reports/report-in
 import { InventoryCategoryComponent } from './components/pages/reports/report-inventario/partials/inventory-category/inventory-category.component';
 import { InventoryBranchComponent } from './components/pages/reports/report-inventario/partials/inventory-branch/inventory-branch.component';
 import { InventorySummaryReportComponent } from './components/pages/reports/report-inventario/partials/inventory-summary-report/inventory-summary-report.component';
+import { ModalComprobanteVentaComponent } from './components/pages/ventas/modals/modal-comprobante-venta/modal-comprobante-venta.component';
 
 @NgModule({
   declarations: [
@@ -204,6 +205,7 @@ import { InventorySummaryReportComponent } from './components/pages/reports/repo
     InventoryCategoryComponent,
     InventoryBranchComponent,
     InventorySummaryReportComponent,
+    ModalComprobanteVentaComponent,
   ],
   imports: [
     ComunModule,
