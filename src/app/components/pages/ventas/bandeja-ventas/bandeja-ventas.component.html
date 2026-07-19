@@ -1,20 +1,3 @@
-<!-- <app-adm-header [descripcion]="'Consulta y administra las ventas registradas en el sistema'"
-    [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Bandeja de Ventas'}]" [visible]="true" [textoBoton]="'Nueva Venta'"
-    (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')" [rutaRegreso]="'/inicio'">
-</app-adm-header>
-
-<app-sale-summary [moneda]="CompaniaActual.SimboloMoneda" [summary]="Resumen">
-</app-sale-summary>
-
-<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales" (search)="OnSearchFiltro()"
-    (customerChange)="OnCustomerChange()" (branchChange)="OnBranchChange()" (statusChange)="onStatusChange()"
-    (payment_methodChange)="onPayMethodChange()" (clear)="clearFilters()">
-</app-sale-filters>
-
-<app-sale-timeline [moneda]="CompaniaActual.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading"
-    (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)" (cancel)="null">
-</app-sale-timeline> -->
-
 <app-adm-header [descripcion]="'Consulta y administra las ventas registradas en el sistema'"
     [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Bandeja de Ventas'}]" [visible]="true" [textoBoton]="'Nueva Venta'"
     (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')" [rutaRegreso]="'/inicio'">
@@ -23,15 +6,16 @@
 <app-sale-summary [moneda]="CompaniaActual?.SimboloMoneda" [summary]="Resumen">
 </app-sale-summary>
 <app-sale-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales" (search)="aplicarFiltro()"
-    (customerChange)="aplicarFiltro()" (branchChange)="aplicarFiltro()"  (sunatChange)="aplicarFiltro()" (statusChange)="aplicarFiltro()"
-    (payment_methodChange)="aplicarFiltro()" (clear)="clearFilters()">
+    (customerChange)="aplicarFiltro()" (branchChange)="aplicarFiltro()" (sunatChange)="aplicarFiltro()"
+    (statusChange)="aplicarFiltro()" (payment_methodChange)="aplicarFiltro()" (clear)="clearFilters()">
 </app-sale-filters>
 <app-sale-timeline [moneda]="CompaniaActual?.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading"
     (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)">
 </app-sale-timeline>
 <div class="sales-pagination" *ngIf="!Loading && TotalRegistros > 0">
     <div class="pagination-information">
-        <span>Mostrando<strong>{{DesdeRegistro}}</strong>a<strong>{{HastaRegistro}}</strong>de<strong>{{TotalRegistros}}</strong>ventas</span>
+        <span>Mostrando<strong> {{DesdeRegistro}} </strong>a<strong> {{HastaRegistro}} </strong>de<strong>
+                {{TotalRegistros}} </strong>ventas</span>
         <small> Página {{PaginaActual}} de {{TotalPaginas}}</small>
     </div>
     <div class="pagination-actions">

@@ -1,130 +1,156 @@
 .header-admin {
     width: 100%;
-    padding: 8px 4px 20px;
+    padding: 2px 0 10px;
 }
 
 .header-top {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 34px;
 }
 
-.breadcrumb {
+.breadcrumb-admin {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 4px;
+    min-width: 0;
 }
 
 .btn-back {
-    width: 36px;
-    height: 36px;
-    background: #f8fafc;
-    color: #475569;
+    width: 32px;
+    height: 32px;
+    margin-right: 2px;
     border: 1px solid #e2e8f0;
-    transition: all .2s ease;
-}
-
-.btn-back:hover {
-    background: #eff6ff;
-    color: #2563eb;
-    border-color: #bfdbfe;
-}
-
-.breadcrumb-item {
-    position: relative;
-    font-size: 14px;
-    font-weight: 500;
+    border-radius: 8px;
+    background: #fff;
     color: #64748b;
+    transition: .2s ease;
+
+    mat-icon {
+        width: 19px;
+        height: 19px;
+        font-size: 19px;
+        line-height: 19px;
+    }
+
+    &:hover {
+        border-color: #bfdbfe;
+        background: #eff6ff;
+        color: #2563eb;
+    }
+}
+
+.breadcrumb-item-admin {
+    position: relative;
+    max-width: 220px;
+    padding: 3px 5px;
+    overflow: hidden;
+    border-radius: 6px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     cursor: pointer;
-    transition: all .2s ease;
-    padding: 4px 2px;
-}
+    transition: .2s ease;
 
-.breadcrumb-item:hover {
-    color: #2563eb;
-}
+    &:hover {
+        background: #f1f5f9;
+        color: #2563eb;
+    }
 
-.breadcrumb-item.active {
-    color: #111827;
-    font-weight: 600;
-    cursor: default;
-}
-
-.breadcrumb-item.active::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #2563eb;
-    border-radius: 10px;
+    &.active {
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-weight: 700;
+        cursor: default;
+    }
 }
 
 .separator {
-    font-size: 19px;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     color: #94a3b8;
+    font-size: 16px;
+    line-height: 16px;
 }
 
 .subtitulo-admin {
-    margin: 12px 0 0 44px;
-    font-size: 14px;
+    margin: 4px 0 0 38px;
     color: #64748b;
-    line-height: 22px;
+    font-size: 12px;
+    line-height: 18px;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .btn-nuevo {
-    height: 42px;
-    padding: 0 20px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
-    color: white;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: .2px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, .25);
-    transition: .25s ease;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, .18);
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 4px;
+        font-size: 18px;
+    }
+
+    &:hover {
+        background: #1d4ed8;
+    }
 }
 
-.btn-nuevo:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(37, 99, 235, .3);
-}
-
-.btn-nuevo mat-icon {
-    margin-right: 6px;
-}
-
-@media(max-width:768px) {
-
+@media (max-width: 768px) {
     .header-admin {
-        padding: 8px 0 15px;
+        padding: 0 0 8px;
     }
 
     .header-top {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
+        align-items: flex-start;
+        gap: 8px;
     }
 
-    .breadcrumb {
-        gap: 5px;
+    .breadcrumb-admin {
+        flex: 1;
+        flex-wrap: nowrap;
+        overflow: hidden;
     }
 
-    .breadcrumb-item {
-        font-size: 13px;
+    .breadcrumb-item-admin {
+        max-width: 130px;
+        font-size: 12px;
     }
 
-    .separator {
-        font-size: 16px;
+    .subtitulo-admin {
+        margin: 3px 0 0;
+        font-size: 12px;
+        line-height: 17px;
+    }
+
+    .btn-nuevo {
+        width: auto;
+        min-width: 34px;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-top {
+        flex-wrap: wrap;
     }
 
     .header-actions {
@@ -134,10 +160,4 @@
     .btn-nuevo {
         width: 100%;
     }
-
-    .subtitulo-admin {
-        margin: 10px 0 0;
-        font-size: 13px;
-    }
-
 }
