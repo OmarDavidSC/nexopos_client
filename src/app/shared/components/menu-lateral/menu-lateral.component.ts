@@ -88,7 +88,7 @@ export class MenuLateralComponent implements OnInit {
       label: 'Reportes',
       icon: 'assessment',
       children: [
-        { label: 'Mis Ganancias', icon: 'money', route: '/reporte-ganancias' },
+        { label: 'Mis Ganancias', icon: 'trending_up', route: '/reporte-ganancias' },
         { label: 'Ventas', icon: 'bar_chart', route: '/reporte-ventas' },
         { label: 'Compras', icon: 'shopping_bag', route: '/reporte-compras' },
         { label: 'Inventario', icon: 'inventory', route: '/reporte-inventarios' }

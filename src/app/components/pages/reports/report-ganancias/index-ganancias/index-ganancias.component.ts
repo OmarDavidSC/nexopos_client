@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { ReportProfitFilter } from 'src/app/shared/models/base/ReportProfitFilter';
+import { ReportProfitData, ReportProfitFilter } from 'src/app/shared/models/base/ReportProfitFilter';
 import { ECategoria } from 'src/app/shared/models/entidades/ECategoria';
 import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { EProducto } from 'src/app/shared/models/entidades/EProducto';
@@ -29,16 +29,13 @@ export class IndexGananciasComponent extends FormularioBase implements OnInit {
   CompaniaActual: ECompany | null = null;
   Role: ERol | null = null;
   Loading: boolean = false;
+  RangoPersonalizadoAplicado: boolean = false;
 
   ListaSucursales: ESucursal[] = [];
-  ListaProductos: EProducto[] = [];
-  ListaCategorias: ECategoria[] = [];
+  // ListaProductos: EProducto[] = [];
+  // ListaCategorias: ECategoria[] = [];
 
-    Dia: any;
-    Semana: any;
-    Quincena: any;
-    Mes: any;
-    Anio: any;
+  Data: ReportProfitData | null = null;
 
   Filtro: ReportProfitFilter = {
     branch_id: null,
@@ -70,16 +67,14 @@ export class IndexGananciasComponent extends FormularioBase implements OnInit {
       this.auhtStore.getRole(),
       this.auhtStore.getCompany(),
       this.sucursalService.adm(),
-      this.productService.adm(),
-      this.categoriaService.adm(),
     ]
-    ).then(([resultadoUsuario, resultadoRole, resultadoCompania, resultadoScur, resultadoPro, resultadoCat]) => {
+    ).then(([resultadoUsuario, resultadoRole, resultadoCompania, resultadoScur]) => {
       this.UsuarioActual = resultadoUsuario;
       this.Role = resultadoRole;
       this.CompaniaActual = resultadoCompania;
       this.ListaSucursales = resultadoScur;
-      this.ListaProductos = resultadoPro;
-      this.ListaCategorias = resultadoCat;
+      // this.ListaProductos = resultadoPro;
+      // this.ListaCategorias = resultadoCat;
       const tienePermiso = this.validarPermisos(this.Role, ['administrator'], this.router, this.toastService);
       if (tienePermiso) {
         this.initialize();
@@ -87,22 +82,30 @@ export class IndexGananciasComponent extends FormularioBase implements OnInit {
     });
   }
 
-  async initialize() {
+  async initialize(): Promise<void> {
     this.obtenerMaestros();
   }
 
-  async obtenerMaestros() {
+  async obtenerMaestros(): Promise<void> {
     this.Loading = true;
-    const data = await this.reporteService.index(this.Filtro)
-    this.Dia = data.today;
-    this.Semana = data.week;
-    this.Quincena = data.fortnight;
-    this.Mes = data.month;
-    this.Anio = data.year;
-    this.Loading = false;
+    try {
+      this.Data = await this.reporteService.index(this.Filtro);
+    } catch (error) {
+      this.Data = null;
+      this.toastService.error('No se pudo obtener el reporte de ganancias.');
+    } finally {
+      this.Loading = false;
+    }
   }
 
-  async clearFilters() {
+  async aplicarFiltros(filtro: ReportProfitFilter): Promise<void> {
+    this.Filtro = { ...filtro };
+    this.RangoPersonalizadoAplicado = !!filtro.date_start && !!filtro.date_end;
+    await this.obtenerMaestros();
+  }
+
+  async clearFilters(): Promise<void> {
+    this.RangoPersonalizadoAplicado = false;
     this.Filtro = {
       branch_id: null,
       product_id: null,
@@ -112,4 +115,5 @@ export class IndexGananciasComponent extends FormularioBase implements OnInit {
     }
     await this.obtenerMaestros();
   }
+
 }

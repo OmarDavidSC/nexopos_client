@@ -109,6 +109,9 @@ import { InventoryBranchComponent } from './components/pages/reports/report-inve
 import { InventorySummaryReportComponent } from './components/pages/reports/report-inventario/partials/inventory-summary-report/inventory-summary-report.component';
 import { ModalComprobanteVentaComponent } from './components/pages/ventas/modals/modal-comprobante-venta/modal-comprobante-venta.component';
 import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
+import { ProfitPeriodSummaryComponent } from './components/pages/reports/report-ganancias/partials/profit-period-summary/profit-period-summary.component';
+import { ProfitCustomRangeComponent } from './components/pages/reports/report-ganancias/partials/profit-custom-range/profit-custom-range.component';
+import { ProfitFiltersComponent } from './components/pages/reports/report-ganancias/partials/profit-filters/profit-filters.component';
 
 @NgModule({
   declarations: [
@@ -208,6 +211,9 @@ import { IndexGananciasComponent } from './components/pages/reports/report-ganan
     InventorySummaryReportComponent,
     ModalComprobanteVentaComponent,
     IndexGananciasComponent,
+    ProfitPeriodSummaryComponent,
+    ProfitCustomRangeComponent,
+    ProfitFiltersComponent,
   ],
   imports: [
     ComunModule,

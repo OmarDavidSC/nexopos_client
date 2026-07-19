@@ -1,0 +1,195 @@
+<section class="custom-range-container">
+
+    <div class="section-header">
+        <div class="header-information">
+            <div class="header-icon">
+                <mat-icon>date_range</mat-icon>
+            </div>
+
+            <div>
+                <h2>Ganancias por rango de fechas</h2>
+
+                <p *ngIf="hasPeriod && !customRangeApplied">
+                    Resumen automático del mes actual.
+                </p>
+
+                <p *ngIf="hasPeriod && customRangeApplied">
+                    Resumen del periodo seleccionado en los filtros.
+                </p>
+
+                <p *ngIf="!hasPeriod">
+                    Selecciona un rango para consultar las ganancias.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="range-information default-range" *ngIf="!loading && hasPeriod && !customRangeApplied">
+        <mat-icon>info</mat-icon>
+
+        <div>
+            <strong>Periodo predeterminado</strong>
+
+            <span>
+                Este reporte muestra automáticamente las ganancias desde el
+                {{ displayedDateStart | date:'dd/MM/yyyy' }}
+                hasta el
+                {{ displayedDateEnd | date:'dd/MM/yyyy' }}.
+                Este periodo corresponde al inicio del mes actual hasta la fecha de hoy.
+                Puedes cambiarlo usando el filtro de fechas.
+            </span>
+        </div>
+    </div>
+
+    <div class="range-information custom-range" *ngIf="!loading && hasPeriod && customRangeApplied">
+        <mat-icon>event_available</mat-icon>
+
+        <div>
+            <strong>Rango personalizado aplicado</strong>
+
+            <span>
+                Los resultados corresponden al rango seleccionado en los filtros:
+                desde el
+                {{ displayedDateStart | date:'dd/MM/yyyy' }}
+                hasta el
+                {{ displayedDateEnd | date:'dd/MM/yyyy' }}.
+            </span>
+        </div>
+    </div>
+
+    <div class="custom-range-content" *ngIf="!loading && summary && hasPeriod && hasData">
+
+        <div class="main-profit-card" [ngClass]="profitClass">
+            <div class="profit-title">
+                <div>
+                    <span class="label">Ganancia bruta del periodo</span>
+
+                    <h3>
+                        S/ {{ summary.gross_profit | number:'1.2-2' }}
+                    </h3>
+                </div>
+
+                <div class="profit-icon">
+                    <mat-icon>
+                        {{ summary.gross_profit >= 0 ? 'trending_up' : 'trending_down' }}
+                    </mat-icon>
+                </div>
+            </div>
+
+            <div class="margin-information">
+                <span>Margen de ganancia</span>
+
+                <strong>
+                    {{ summary.profit_margin | number:'1.2-2' }}%
+                </strong>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+
+            <article class="metric-card">
+                <div class="metric-icon revenue">
+                    <mat-icon>payments</mat-icon>
+                </div>
+
+                <div class="metric-information">
+                    <span>Ingresos por ventas</span>
+
+                    <strong>
+                        S/ {{ summary.total_revenue | number:'1.2-2' }}
+                    </strong>
+
+                    <small>Total vendido en el rango</small>
+                </div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-icon cost">
+                    <mat-icon>shopping_cart</mat-icon>
+                </div>
+
+                <div class="metric-information">
+                    <span>Costo de productos</span>
+
+                    <strong>
+                        S/ {{ summary.total_cost | number:'1.2-2' }}
+                    </strong>
+
+                    <small>Costo acumulado de lo vendido</small>
+                </div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-icon sales">
+                    <mat-icon>receipt_long</mat-icon>
+                </div>
+
+                <div class="metric-information">
+                    <span>Ventas realizadas</span>
+
+                    <strong>
+                        {{ summary.total_sales }}
+                    </strong>
+
+                    <small>Comprobantes completados</small>
+                </div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-icon products">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <div class="metric-information">
+                    <span>Productos vendidos</span>
+
+                    <strong>
+                        {{ summary.products_sold | number:'1.0-2' }}
+                    </strong>
+
+                    <small>Unidades vendidas en el rango</small>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <div class="loading-content" *ngIf="loading">
+        <div class="skeleton main-skeleton"></div>
+
+        <div class="loading-grid">
+            <div class="skeleton metric-skeleton"></div>
+            <div class="skeleton metric-skeleton"></div>
+            <div class="skeleton metric-skeleton"></div>
+            <div class="skeleton metric-skeleton"></div>
+        </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && summary && hasPeriod && !hasData">
+        <div class="empty-icon">
+            <mat-icon>query_stats</mat-icon>
+        </div>
+
+        <h3>No hay ganancias registradas</h3>
+
+        <p>
+            No se encontraron ventas completadas desde el
+            {{ displayedDateStart | date:'dd/MM/yyyy' }}
+            hasta el
+            {{ displayedDateEnd | date:'dd/MM/yyyy' }}.
+        </p>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && (!summary || !hasPeriod)">
+        <div class="empty-icon">
+            <mat-icon>date_range</mat-icon>
+        </div>
+
+        <h3>Selecciona un rango de fechas</h3>
+
+        <p>
+            Elige una fecha inicial y una fecha final para consultar las ganancias.
+        </p>
+    </div>
+
+</section>

@@ -1,0 +1,74 @@
+<div class="profit-period-section">
+    <div class="section-header">
+        <div>
+            <h2>Resumen de ganancias</h2>
+            <p>Consulta el rendimiento de las ventas por periodo.</p>
+        </div>
+    </div>
+
+    <div class="profit-grid" *ngIf="!loading && summary && periods">
+        <article class="profit-card" *ngFor="let card of cards">
+            <div class="card-header">
+                <div class="icon-container">
+                    <mat-icon>{{ card.icon }}</mat-icon>
+                </div>
+
+                <div class="period-information">
+                    <h3>{{ card.title }}</h3>
+                    <span>
+                        {{ periods[card.key].date_start | date:'dd/MM/yyyy' }}
+                        -
+                        {{ periods[card.key].date_end | date:'dd/MM/yyyy' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="main-profit">
+                <span class="label">Ganancia bruta</span>
+                <strong>S/ {{ summary[card.key].gross_profit | number:'1.2-2' }}</strong>
+            </div>
+
+            <div class="profit-details">
+                <div class="detail-item">
+                    <span>Ventas</span>
+                    <strong>{{ summary[card.key].total_sales }}</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Productos</span>
+                    <strong>{{ summary[card.key].products_sold | number:'1.0-2' }}</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Ingresos</span>
+                    <strong>S/ {{ summary[card.key].total_revenue | number:'1.2-2' }}</strong>
+                </div>
+
+                <div class="detail-item">
+                    <span>Costo</span>
+                    <strong>S/ {{ summary[card.key].total_cost | number:'1.2-2' }}</strong>
+                </div>
+            </div>
+
+            <div class="margin-container">
+                <span>Margen de ganancia</span>
+                <strong>{{ summary[card.key].profit_margin | number:'1.2-2' }}%</strong>
+            </div>
+        </article>
+    </div>
+
+    <div class="loading-grid" *ngIf="loading">
+        <div class="loading-card" *ngFor="let card of cards">
+            <div class="skeleton skeleton-title"></div>
+            <div class="skeleton skeleton-amount"></div>
+            <div class="skeleton skeleton-detail"></div>
+            <div class="skeleton skeleton-detail"></div>
+        </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && (!summary || !periods)">
+        <mat-icon>analytics</mat-icon>
+        <h3>No se encontró información</h3>
+        <p>No existen datos de ganancias disponibles.</p>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+.profit-filter-card {
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.compact-field {
+    margin-bottom: -1.25em;
+}
+
+.btn-action {
+    min-width: 115px;
+    height: 44px;
+}
+
+.alert {
+    font-size: 13px;
+    border-radius: 8px;
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .btn-action {
+        width: 100%;
+    }
+}
