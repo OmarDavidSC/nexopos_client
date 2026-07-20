@@ -112,6 +112,7 @@ import { IndexGananciasComponent } from './components/pages/reports/report-ganan
 import { ProfitPeriodSummaryComponent } from './components/pages/reports/report-ganancias/partials/profit-period-summary/profit-period-summary.component';
 import { ProfitCustomRangeComponent } from './components/pages/reports/report-ganancias/partials/profit-custom-range/profit-custom-range.component';
 import { ProfitFiltersComponent } from './components/pages/reports/report-ganancias/partials/profit-filters/profit-filters.component';
+import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 
 @NgModule({
   declarations: [
@@ -214,6 +215,7 @@ import { ProfitFiltersComponent } from './components/pages/reports/report-gananc
     ProfitPeriodSummaryComponent,
     ProfitCustomRangeComponent,
     ProfitFiltersComponent,
+    IndexStockAlertsComponent,
   ],
   imports: [
     ComunModule,

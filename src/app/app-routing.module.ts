@@ -27,6 +27,7 @@ import { IndexVentasComponent } from './components/pages/reports/report-ventas/i
 import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
 import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
 import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
+import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path: 'reporte-ventas', component: IndexVentasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-compras', component: IndexComprasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-inventarios', component: IndexInventarioComponent, canActivate: [AuthGuard] },
+  // { path: 'notificaciones-alertas', component: IndexStockAlertsComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

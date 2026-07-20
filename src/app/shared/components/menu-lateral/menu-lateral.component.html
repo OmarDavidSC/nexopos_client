@@ -136,22 +136,23 @@
             </div>
 
             <div class="topbar-actions">
-                <!-- <button mat-icon-button class="topbar-icon-button" matTooltip="Notificaciones">
-                    <mat-icon>notifications_none</mat-icon>
-                    <span class="notification-dot"></span>
-                </button> -->
+                <div class="topbar-actions">
 
-                <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
-                    <!-- <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'" alt="Usuario" class="toolbar-avatar"> -->
+                    <button mat-icon-button class="tsopbar-icon-button" type="button" matTooltip="Alertas de inventario"
+                        (click)="abrirNotificacionesStock()">
+                        <mat-icon>notifications_none</mat-icon>
+                        <span class="notification-dot"></span>
+                    </button>
 
-                    <div class="toolbar-user-info">
-                        <strong>{{UsuarioActual?.NombreCompleto}}</strong>
-                        <!-- <span>{{RolActual?.Nombre}}</span> -->
-                    </div>
+                    <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
+                        <div class="toolbar-user-info">
+                            <strong>{{UsuarioActual?.NombreCompleto}}</strong>
+                        </div>
 
-                    <mat-icon class="toolbar-expand-icon">keyboard_arrow_down</mat-icon>
-                </button>
+                        <mat-icon class="toolbar-expand-icon">keyboard_arrow_down</mat-icon>
+                    </button>
 
+                </div>
                 <mat-menu #userMenu="matMenu">
                     <button mat-menu-item (click)="irAPerfil()">
                         <mat-icon>person_outline</mat-icon>

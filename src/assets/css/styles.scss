@@ -35,3 +35,22 @@
 //     box-shadow: none;
 //     transition: 0.2s ease;
 // }
+
+.stock-alerts-dialog .mat-dialog-container {
+    padding: 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, .22) !important;
+}
+
+@media (max-width: 767px) {
+    .stock-alerts-dialog .mat-dialog-container {
+        border-radius: 10px !important;
+    }
+}
+
+.stock-alerts-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+}
