@@ -174,8 +174,7 @@ export class IndexStockAlertsComponent extends FormularioBase implements OnInit 
   }
 
   private obtenerTelefonoWhatsApp(): string | null {
-    // const numeroRegistrado = this.CompaniaActual?.WhatsApp || this.CompaniaActual?.Telefono || '';
-    const numeroRegistrado = '51927350176';
+    const numeroRegistrado = '51' + this.CompaniaActual?.Telefono || '';
 
     if (!numeroRegistrado) {
       return null;

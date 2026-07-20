@@ -5,6 +5,7 @@ import { EPermisos } from "./EPemisos";
 export class ECompany {
     Id: any;
     Nombre: string;
+    Telefono: number;
     IconId: number;
     IconoUrl: string;
     LogoId: number;
@@ -20,6 +21,7 @@ export class ECompany {
     constructor() {
         this.Id = "";
         this.Nombre = "";
+        this.Telefono = 0;
         this.IconId = 0;
         this.IconoUrl = "";
         this.LogoId = 0;
@@ -38,6 +40,7 @@ export class ECompany {
 
         objeto.Id = SPParse.getNumber(element["id"]);
         objeto.Nombre = SPParse.getString(element["name"]);
+        objeto.Telefono = SPParse.getNumber(element["phone"]);
         objeto.IconId = SPParse.getNumber(element["favicon_id"]);
         objeto.IconoUrl = SPParse.getString(element["favicon_path"]);
         objeto.LogoId = SPParse.getNumber(element["logo_id"]);
