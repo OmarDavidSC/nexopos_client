@@ -42,8 +42,8 @@ export class MenuLateralComponent implements OnInit {
   menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
     {
-      label: 'Mi Empresa',
-      icon: 'business',
+      label: 'Configuración',
+      icon: 'settings',
       children: [
         { label: 'Mi Compañía', icon: 'corporate_fare', route: '/mi-compania' },
         { label: 'Mis Sucursales', icon: 'place', route: '/mis-sucursales' },

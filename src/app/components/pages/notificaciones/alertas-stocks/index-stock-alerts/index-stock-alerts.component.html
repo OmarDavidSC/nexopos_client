@@ -160,8 +160,9 @@
             <button mat-stroked-button type="button" (click)="cerrar()">
                 Cerrar
             </button>
-            <button mat-flat-button color="primary" type="button" class="whatsapp-button"
-                (click)="enviarAlertasWhatsApp()" [disabled]="Loading || ListaAlertas.length === 0">
+            <button *ngIf="tienePermiso(Role, ['support'])" mat-flat-button color="primary" type="button"
+                class="whatsapp-button" (click)="enviarAlertasWhatsApp()"
+                [disabled]="Loading || ListaAlertas.length === 0">
                 <mat-icon>send</mat-icon>
                 Enviar por WhatsApp
             </button>

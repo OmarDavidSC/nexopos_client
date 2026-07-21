@@ -122,11 +122,15 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
 
   crearFormulario(): void {
     this.Form = this.formBuilder.group({
-      name: ['', [Validators.required,Validators.maxLength(255)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      ruc: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      business_name: ['', [Validators.required, Validators.maxLength(255)]],
+      fiscal_address: ['', [Validators.required, Validators.maxLength(500)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{9,15}$/)]],
       country_code: ['', [Validators.required]],
       currency_code: ['', [Validators.required, Validators.maxLength(10)]],
-      currency_symbol: ['', [Validators.required,Validators.maxLength(10)]],
-      currency_name: ['', [Validators.required,Validators.maxLength(100)]],
+      currency_symbol: ['', [Validators.required, Validators.maxLength(10)]],
+      currency_name: ['', [Validators.required, Validators.maxLength(100)]],
       terms_conditions: [''],
       privacy_policies: ['']
     });
@@ -143,6 +147,10 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
 
       this.Form.patchValue({
         name: this.CompaniaActual.Nombre,
+        ruc: this.CompaniaActual.Ruc,
+        business_name: this.CompaniaActual.NombreComercial,
+        fiscal_address: this.CompaniaActual.DireccionReal,
+        phone: this.CompaniaActual.Telefono,
         country_code: this.CompaniaActual.CodigoPais,
         currency_code: this.CompaniaActual.CodigoMoneda,
         currency_symbol: this.CompaniaActual.SimboloMoneda,
@@ -166,6 +174,10 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
     this.BackupCompania = ECompany.parseJson({
       id: this.CompaniaActual.Id,
       name: this.CompaniaActual.Nombre,
+      ruc: this.CompaniaActual.Ruc,
+      business_name: this.CompaniaActual.NombreComercial,
+      fiscal_address: this.CompaniaActual.DireccionReal,
+      phone: this.CompaniaActual.Telefono,
       favicon_id: this.CompaniaActual.IconId,
       favicon_path: this.CompaniaActual.IconoUrl,
       logo_id: this.CompaniaActual.LogoId,
@@ -190,6 +202,10 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
 
     this.Form.patchValue({
       name: this.BackupCompania.Nombre,
+      ruc: this.BackupCompania.Ruc,
+      business_name: this.BackupCompania.NombreComercial,
+      fiscal_address: this.BackupCompania.DireccionReal,
+      phone: this.BackupCompania.Telefono,
       country_code: this.BackupCompania.CodigoPais,
       currency_code: this.BackupCompania.CodigoMoneda,
       currency_symbol: this.BackupCompania.SimboloMoneda,
@@ -261,7 +277,7 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
   }
 
   validarImagen(file: File): boolean {
-    const tiposPermitidos: string[] = ['image/png','image/jpeg','image/jpg','image/webp','image/x-icon','image/vnd.microsoft.icon'];
+    const tiposPermitidos: string[] = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/x-icon', 'image/vnd.microsoft.icon'];
     const tamanioMaximo: number = 3 * 1024 * 1024;
 
     if (!tiposPermitidos.includes(file.type)) {
@@ -324,6 +340,10 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
 
       formData.append('id', String(this.CompaniaActual.Id));
       formData.append('name', valores.name.trim());
+      formData.append('ruc', valores.ruc.trim());
+      formData.append('business_name', valores.business_name.trim());
+      formData.append('fiscal_address', valores.fiscal_address.trim());
+      formData.append('phone', valores.phone.trim());
       formData.append('country_code', valores.country_code);
       formData.append('currency_code', valores.currency_code.trim());
       formData.append('currency_symbol', valores.currency_symbol.trim());
@@ -374,6 +394,10 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
     }
 
     this.CompaniaActual.Nombre = valores.name;
+    this.CompaniaActual.Ruc = valores.ruc;
+    this.CompaniaActual.NombreComercial = valores.business_name;
+    this.CompaniaActual.DireccionReal = valores.fiscal_address;
+    this.CompaniaActual.Telefono = valores.phone;
     this.CompaniaActual.CodigoPais = valores.country_code;
     this.CompaniaActual.CodigoMoneda = valores.currency_code;
     this.CompaniaActual.SimboloMoneda = valores.currency_symbol;
@@ -396,5 +420,13 @@ export class PanelCompanyComponent extends FormularioBase implements OnInit {
 
   get inicialEmpresa(): string {
     return this.nombreEmpresa.charAt(0).toUpperCase();
+  }
+
+  soloNumeros(event: KeyboardEvent): void {
+    const tecla = event.key;
+
+    if (!/^\d$/.test(tecla) && !['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(tecla)) {
+      event.preventDefault();
+    }
   }
 }

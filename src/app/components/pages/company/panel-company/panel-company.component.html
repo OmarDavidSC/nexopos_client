@@ -53,8 +53,59 @@
                     <input matInput formControlName="name" maxlength="255" autocomplete="off">
                     <mat-icon matSuffix>business</mat-icon>
                     <mat-hint align="end">{{Form.get('name')?.value?.length || 0}}/255</mat-hint>
+
                     <mat-error *ngIf="Form.get('name')?.hasError('required')">
                         El nombre de la empresa es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-4" appearance="outline">
+                    <mat-label>RUC</mat-label>
+                    <input (keydown)="soloNumeros($event)" matInput formControlName="ruc" maxlength="11" inputmode="numeric" autocomplete="off">
+                    <mat-icon matSuffix>badge</mat-icon>
+
+                    <mat-error *ngIf="Form.get('ruc')?.hasError('required')">
+                        El RUC es obligatorio.
+                    </mat-error>
+
+                    <mat-error *ngIf="Form.get('ruc')?.hasError('pattern')">
+                        El RUC debe contener 11 dígitos.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-6" appearance="outline">
+                    <mat-label>Nombre comercial</mat-label>
+                    <input matInput formControlName="business_name" maxlength="255" autocomplete="off">
+                    <mat-icon matSuffix>storefront</mat-icon>
+
+                    <mat-error *ngIf="Form.get('business_name')?.hasError('required')">
+                        El nombre comercial es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field (keydown)="soloNumeros($event)" class="col-12 col-md-6" appearance="outline">
+                    <mat-label>Teléfono o WhatsApp</mat-label>
+                    <input matInput formControlName="phone" maxlength="15" inputmode="numeric" autocomplete="off">
+                    <mat-icon matSuffix>phone</mat-icon>
+
+                    <mat-error *ngIf="Form.get('phone')?.hasError('required')">
+                        El teléfono es obligatorio.
+                    </mat-error>
+
+                    <mat-error *ngIf="Form.get('phone')?.hasError('pattern')">
+                        Ingrese entre 9 y 15 dígitos.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-8" appearance="outline">
+                    <mat-label>Dirección fiscal</mat-label>
+                    <textarea matInput formControlName="fiscal_address" rows="3" maxlength="500"
+                        placeholder="Ingrese la dirección fiscal de la empresa"></textarea>
+                    <mat-icon matSuffix>location_on</mat-icon>
+                    <mat-hint align="end">{{Form.get('fiscal_address')?.value?.length || 0}}/500</mat-hint>
+
+                    <mat-error *ngIf="Form.get('fiscal_address')?.hasError('required')">
+                        La dirección fiscal es obligatoria.
                     </mat-error>
                 </mat-form-field>
 
@@ -66,6 +117,7 @@
                         </mat-option>
                     </mat-select>
                     <mat-icon matSuffix>public</mat-icon>
+
                     <mat-error *ngIf="Form.get('country_code')?.hasError('required')">
                         Seleccione un país.
                     </mat-error>
