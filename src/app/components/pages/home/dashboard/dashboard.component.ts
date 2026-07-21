@@ -34,6 +34,18 @@ export class DashboardComponent extends FormularioBase implements OnInit {
   CategoriasDestacadas: any[] = [];
   RendiemientoPorSucursal: any[] = [];
 
+  AccesosRapidos = [
+    { nombre: 'Nueva Venta', icono: 'point_of_sale', ruta: '/bandeja-ventas/nueva-venta' },
+    { nombre: 'Nueva Compra', icono: 'shopping_cart', ruta: '/bandeja-compras/nueva-compra' },
+    { nombre: 'Productos', icono: 'add_box', ruta: '/administracion-productos' },
+    { nombre: 'Usuarios', icono: 'person_add', ruta: '/mis-usuarios' },
+
+    { nombre: 'Inventario', icono: 'warehouse', ruta: '/stock-sucursales' },
+    { nombre: 'Mi Empresa', icono: 'business', ruta: '/mi-compania' },
+    { nombre: 'Mi Perfil', icono: 'account_circle', ruta: '/mi-perfil' },
+    { nombre: 'Ventas', icono: 'receipt_long', ruta: '/bandeja-ventas' }
+  ];
+
   constructor(
     public dialog: MatDialog,
     public route: ActivatedRoute,
