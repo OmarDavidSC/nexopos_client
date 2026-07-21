@@ -16,7 +16,6 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { SaleService } from 'src/app/shared/services/sale.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalClienteComponent } from '../modals/modal-cliente/modal-cliente.component';
-import { ModalProductoComponent } from '../../almacen/modals/modal-producto/modal-producto.component';
 import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 import { ModalComprobanteVentaComponent } from '../modals/modal-comprobante-venta/modal-comprobante-venta.component';
 
