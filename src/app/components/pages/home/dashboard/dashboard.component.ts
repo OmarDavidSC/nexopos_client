@@ -25,14 +25,14 @@ export class DashboardComponent extends FormularioBase implements OnInit {
   Loading: boolean = false;
 
   Resumen: any;
-  Inventario: any;
-  Alertas: any[] = [];
-  VentasDeHoy: any = null;
-  ComprasDeHoy: any = null;
-  GraficoDeVentas: any[] = [];
+  // Inventario: any;
+  // Alertas: any[] = [];
+  // VentasDeHoy: any = null;
+  // ComprasDeHoy: any = null;
+  // GraficoDeVentas: any[] = [];
   ProductosDestacados: any[] = [];
   CategoriasDestacadas: any[] = [];
-  RendiemientoPorSucursal: any[] = [];
+  // RendiemientoPorSucursal: any[] = [];
 
   AccesosRapidos = [
     { nombre: 'Nueva Venta', icono: 'point_of_sale', ruta: '/bandeja-ventas/nueva-venta' },
@@ -85,14 +85,14 @@ export class DashboardComponent extends FormularioBase implements OnInit {
     this.Loading = true;
     const data = await this.dashboardService.index()
     this.Resumen = data.summary;
-    this.Inventario = data.inventory;
-    this.Alertas = data.alerts;
-    this.VentasDeHoy = data.sales_today;
-    this.ComprasDeHoy = data.purchases_today;
-    this.GraficoDeVentas = data.sales_chart;
+    // this.Inventario = data.inventory;
+    // this.Alertas = data.alerts;
+    // this.VentasDeHoy = data.sales_today;
+    // this.ComprasDeHoy = data.purchases_today;
+    // this.GraficoDeVentas = data.sales_chart;
     this.ProductosDestacados = data.top_products;
     this.CategoriasDestacadas = data.top_categories;
-    this.RendiemientoPorSucursal = data.branch_performance;
+    // this.RendiemientoPorSucursal = data.branch_performance;
     this.Loading = false;
   }
 }
