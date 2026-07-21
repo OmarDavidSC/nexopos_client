@@ -134,6 +134,24 @@ export class VerDetalleVentaComponent extends FormularioBase implements OnInit {
       return;
     }
 
+    const telefonoOriginal = String(this.Venta?.customer_phone ?? '').trim();
+
+    if (!telefonoOriginal) {
+      this.toastService.warning('El cliente no tiene un número de teléfono registrado');
+      return;
+    }
+
+    let telefono = telefonoOriginal.replace(/\D/g, '');
+
+    if (telefono.length === 9) {
+      telefono = `51${telefono}`;
+    }
+
+    if (telefono.length !== 11 || !telefono.startsWith('51')) {
+      this.toastService.warning('El número de teléfono del cliente no es válido');
+      return;
+    }
+
     const comprobante = `${this.Venta?.voucher_series ?? ''}-${this.Venta?.voucher_number ?? ''}`;
     const total = Number(this.Venta?.total ?? 0).toFixed(2);
 
@@ -148,7 +166,8 @@ export class VerDetalleVentaComponent extends FormularioBase implements OnInit {
       url
     ].join('\n');
 
-    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
+    const whatsappUrl = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   }
 
   tieneComprobantesPdf(): boolean {
