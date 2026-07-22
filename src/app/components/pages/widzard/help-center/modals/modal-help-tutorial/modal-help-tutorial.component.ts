@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { HelpTutorial, HelpTutorialStep } from 'src/app/shared/models/base/HelpTutorial';
 
 @Component({
@@ -9,10 +10,12 @@ import { HelpTutorial, HelpTutorialStep } from 'src/app/shared/models/base/HelpT
 })
 export class ModalHelpTutorialComponent {
   PasoActual: number = 0;
+  ImagenAmpliada: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<ModalHelpTutorialComponent>,
-    @Inject(MAT_DIALOG_DATA) public Tutorial: HelpTutorial
+    @Inject(MAT_DIALOG_DATA) public Tutorial: HelpTutorial,
+    private router: Router
   ) { }
 
   get PasoSeleccionado(): HelpTutorialStep {
@@ -80,5 +83,14 @@ export class ModalHelpTutorialComponent {
       completado: false,
       tutorialId: this.Tutorial.id
     });
+  }
+
+  alternarImagenAmpliada(): void {
+    this.ImagenAmpliada = !this.ImagenAmpliada;
+  }
+
+  irARegistrarVenta(): void {
+    this.dialogRef.close();
+    this.router.navigate(['/bandeja-ventas/nueva-venta']);
   }
 }

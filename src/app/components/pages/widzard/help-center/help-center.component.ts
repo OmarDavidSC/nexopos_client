@@ -184,7 +184,7 @@ export class HelpCenterComponent implements OnInit {
         id: 1,
         titulo: 'Ingresar al módulo de ventas',
         descripcion: 'Desde el menú principal, ingresa a Ventas y selecciona la opción Nueva venta.',
-        imagen: 'assets/img/tutoriales/ventas/paso-1.png',
+        imagen: 'assets/img/ventas/paso-1.png',
         icono: 'point_of_sale',
         recomendacion: 'También puedes ingresar desde el acceso rápido Nueva venta del panel principal.'
       },
@@ -192,39 +192,39 @@ export class HelpCenterComponent implements OnInit {
         id: 2,
         titulo: 'Seleccionar al cliente',
         descripcion: 'Busca al cliente por nombre, DNI o RUC. Si no existe, puedes registrarlo desde la misma pantalla.',
-        imagen: 'assets/img/tutoriales/ventas/paso-2.png',
+        imagen: 'assets/img/ventas/paso-2.png',
         icono: 'person_search',
         recomendacion: 'Para ventas rápidas puedes utilizar el cliente general cuando el comprobante lo permita.'
       },
       {
         id: 3,
+        titulo: 'Seleccionar comprobante y metodo de pago',
+        descripcion: 'Elige el tipo de comprobante y el método de pago utilizado por el cliente.',
+        imagen: 'assets/img/ventas/paso-3.png',
+        icono: 'receipt_long',
+        recomendacion: 'Para emitir una factura, el cliente debe tener un RUC válido.'
+      },
+      {
+        id: 4,
         titulo: 'Agregar los productos',
         descripcion: 'Busca el producto por nombre o código, selecciona la cantidad y agrégalo al detalle.',
-        imagen: 'assets/img/tutoriales/ventas/paso-3.png',
+        imagen: 'assets/img/ventas/paso-4.png',
         icono: 'add_shopping_cart',
         recomendacion: 'Verifica el stock disponible antes de agregar el producto.'
       },
       {
-        id: 4,
+        id: 5,
         titulo: 'Revisar cantidades y precios',
         descripcion: 'Comprueba los productos, cantidades, precios, descuentos y subtotales.',
-        imagen: 'assets/img/tutoriales/ventas/paso-4.png',
+        imagen: 'assets/img/ventas/paso-5.png',
         icono: 'fact_check',
         recomendacion: 'Puedes modificar la cantidad o eliminar un producto antes de registrar la venta.'
-      },
-      {
-        id: 5,
-        titulo: 'Seleccionar comprobante y pago',
-        descripcion: 'Elige el tipo de comprobante y el método de pago utilizado por el cliente.',
-        imagen: 'assets/img/tutoriales/ventas/paso-5.png',
-        icono: 'receipt_long',
-        recomendacion: 'Para emitir una factura, el cliente debe tener un RUC válido.'
       },
       {
         id: 6,
         titulo: 'Confirmar la venta',
         descripcion: 'Revisa el total y presiona Registrar venta. Luego podrás imprimir o compartir el comprobante.',
-        imagen: 'assets/img/tutoriales/ventas/paso-6.png',
+        imagen: 'assets/img/ventas/paso-6.png',
         icono: 'check_circle',
         recomendacion: 'Espera a que el sistema termine de procesar el comprobante antes de cerrar la ventana.'
       }
@@ -243,9 +243,9 @@ export class HelpCenterComponent implements OnInit {
 
   abrirTutorialVenta(): void {
     this.dialog.open(ModalHelpTutorialComponent, {
-      width: '1050px',
-      maxWidth: '96vw',
-      maxHeight: '94vh',
+      // width: '1350px',
+      // maxWidth: '96vw',
+      // maxHeight: '94vh',
       panelClass: 'help-tutorial-dialog',
       autoFocus: false,
       data: this.TutorialVenta
