@@ -1,0 +1,373 @@
+:host {
+    display: block;
+}
+
+.tutorial-modal {
+    width: 100%;
+    max-height: 92vh;
+    overflow: hidden;
+    color: #172033;
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+/* CABECERA */
+
+.tutorial-header {
+    background: linear-gradient(135deg, #ffffff, #f8fbff);
+}
+
+.tutorial-main-icon,
+.current-step-icon {
+    width: 46px;
+    height: 46px;
+    color: #2563eb;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #eff6ff;
+}
+
+.tutorial-main-icon mat-icon,
+.current-step-icon mat-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+}
+
+.tutorial-category,
+.current-step-label,
+.text-guide-label {
+    color: #2563eb;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+.tutorial-duration {
+    padding: 4px 8px;
+    color: #64748b;
+    font-size: 10px;
+    border-radius: 20px;
+    background: #eef2f7;
+}
+
+.tutorial-duration mat-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+}
+
+.tutorial-title {
+    color: #172033;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.tutorial-description,
+.step-description {
+    color: #69758a;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.close-button {
+    color: #64748b;
+}
+
+/* PROGRESO */
+
+.tutorial-progress {
+    background: #fbfcfe;
+}
+
+.progress-label {
+    color: #64748b;
+    font-size: 10px;
+}
+
+.progress-value {
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+:host ::ng-deep .tutorial-progress .mat-progress-bar,
+:host ::ng-deep .tutorial-progress .mat-mdc-progress-bar {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+/* LATERAL */
+
+.tutorial-sidebar {
+    background: #f8fafc;
+}
+
+.sidebar-title {
+    color: #334155;
+    font-size: 12px;
+}
+
+.sidebar-count {
+    color: #94a3b8;
+    font-size: 10px;
+}
+
+.step-item {
+    width: 100%;
+    padding: 10px;
+    color: #526075;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    transition: .2s ease;
+}
+
+.step-item:hover {
+    border-color: #dfe6ef;
+    background: #ffffff;
+}
+
+.step-item.active {
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    background: #ffffff;
+    box-shadow: 0 5px 14px rgba(15, 23, 42, .05);
+}
+
+.step-number {
+    width: 31px;
+    height: 31px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: #ffffff;
+}
+
+.step-item.active .step-number {
+    color: #ffffff;
+    border-color: #2563eb;
+    background: #2563eb;
+}
+
+.step-item.completed .step-number {
+    color: #15803d;
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+.step-number mat-icon {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+}
+
+.step-information small {
+    color: #94a3b8;
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+.step-information strong {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.step-arrow {
+    width: 18px;
+    height: 18px;
+    color: #94a3b8;
+    font-size: 18px;
+}
+
+.step-item.active .step-arrow {
+    color: #2563eb;
+}
+
+/* CONTENIDO */
+
+.tutorial-content {
+    background: #ffffff;
+}
+
+.current-step-title {
+    color: #172033;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.tutorial-image-container {
+    min-height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+}
+
+.tutorial-image {
+    max-height: 390px;
+    object-fit: contain;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, .13);
+}
+
+.image-step-indicator {
+    right: 24px;
+    bottom: 24px;
+    max-width: calc(100% - 48px);
+    padding: 7px 10px;
+    color: #172033;
+    font-size: 10px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .96);
+    box-shadow: 0 7px 18px rgba(15, 23, 42, .12);
+}
+
+.image-step-indicator>span:first-child {
+    width: 22px;
+    height: 22px;
+    color: #ffffff;
+    border-radius: 7px;
+    background: #2563eb;
+}
+
+/* GUÍA DE TEXTO */
+
+.text-guide {
+    min-height: 180px;
+    background: #f8fafc;
+}
+
+.text-guide-number {
+    width: 44px;
+    height: 44px;
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 12px;
+    background: #2563eb;
+}
+
+.text-guide p {
+    color: #526075;
+    font-size: 13px;
+    line-height: 1.75;
+}
+
+/* CONSEJO */
+
+.recommendation-card {
+    border-color: #fde68a !important;
+    border-radius: 13px !important;
+    background: #fffbeb;
+    box-shadow: none !important;
+}
+
+.recommendation-icon {
+    width: 36px;
+    height: 36px;
+    color: #d97706;
+    border-radius: 10px;
+    background: #fef3c7;
+}
+
+.recommendation-icon mat-icon {
+    width: 19px;
+    height: 19px;
+    font-size: 19px;
+}
+
+.recommendation-card strong {
+    color: #854d0e;
+    font-size: 11px;
+}
+
+.recommendation-card p {
+    color: #a16207;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+/* PIE */
+
+.tutorial-footer {
+    background: #ffffff;
+}
+
+.previous-button,
+.next-button {
+    min-width: 120px;
+    height: 41px;
+    border-radius: 10px !important;
+}
+
+.mobile-step {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 20px;
+    background: #cbd5e1;
+    transition: .2s ease;
+}
+
+.mobile-step.active {
+    width: 22px;
+    background: #2563eb;
+}
+
+.mobile-step.completed {
+    background: #60a5fa;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 991px) {
+    .tutorial-body {
+        overflow-y: auto !important;
+    }
+
+    .tutorial-content {
+        overflow: visible !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .tutorial-modal {
+        max-height: 100vh;
+    }
+
+    .tutorial-title {
+        font-size: 18px;
+    }
+
+    .tutorial-description {
+        display: none;
+    }
+
+    .tutorial-content {
+        padding: 17px !important;
+    }
+
+    .tutorial-image-container {
+        min-height: 190px;
+    }
+
+    .image-step-indicator {
+        right: 15px;
+        bottom: 15px;
+        left: 15px;
+        max-width: none;
+    }
+
+    .previous-button,
+    .next-button {
+        min-width: auto;
+    }
+}

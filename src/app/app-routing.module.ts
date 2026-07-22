@@ -28,6 +28,7 @@ import { IndexComprasComponent } from './components/pages/reports/report-compras
 import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
 import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
 import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
+import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'mi-compania', component: PanelCompanyComponent, canActivate: [AuthGuard] },
   { path: 'mis-sucursales', component: AdmSucursalComponent, canActivate: [AuthGuard] },
   { path: 'mis-usuarios', component: AdmUsuarioComponent, canActivate: [AuthGuard] },
+  { path: 'ayuda', component: HelpCenterComponent, canActivate: [AuthGuard] },
 
   //almacen
   { path: 'administracion-productos', component: AdmProductosComponent, canActivate: [AuthGuard] },

@@ -1,0 +1,188 @@
+<div class="version-page">
+    <div class="container-fluid py-3 py-md-4">
+
+        <!-- ENCABEZADO -->
+        <section class="version-header mb-4 p-3 p-md-4">
+            <div class="row align-items-center g-3">
+
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="version-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                            <mat-icon>rocket_launch</mat-icon>
+                        </div>
+
+                        <div>
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                                <span class="product-name">NexoPOS</span>
+                                <span class="version-badge">{{VersionActual}}</span>
+                            </div>
+
+                            <h1 class="mb-1">Todo lo que puedes hacer con NexoPOS</h1>
+
+                            <p class="mb-0">
+                                Sigue el recorrido desde la configuración inicial
+                                hasta el control de ventas, inventario y ganancias.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <button mat-flat-button color="primary" type="button" class="w-100 tutorial-button"
+                        (click)="abrirTutorialVenta()">
+
+                        <mat-icon>play_circle</mat-icon>
+                        Tutorial: registrar una venta
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RESUMEN -->
+        <div class="row g-2 mb-4">
+            <div class="col-6 col-lg-3">
+                <div class="summary-item d-flex align-items-center gap-2 p-3">
+                    <mat-icon>store</mat-icon>
+
+                    <div>
+                        <strong>Multisucursal</strong>
+                        <small>Control por local</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="summary-item d-flex align-items-center gap-2 p-3">
+                    <mat-icon>inventory</mat-icon>
+
+                    <div>
+                        <strong>Stock en tiempo real</strong>
+                        <small>Entradas y salidas</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="summary-item d-flex align-items-center gap-2 p-3">
+                    <mat-icon>receipt_long</mat-icon>
+
+                    <div>
+                        <strong>Comprobantes</strong>
+                        <small>Boletas y facturas</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="summary-item d-flex align-items-center gap-2 p-3">
+                    <mat-icon>trending_up</mat-icon>
+
+                    <div>
+                        <strong>Ganancias</strong>
+                        <small>Control de utilidad</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TÍTULO -->
+        <div class="mb-4">
+            <span class="section-label">Recorrido de la versión</span>
+            <h2 class="section-title mb-1">Conoce NexoPOS {{VersionActual}}</h2>
+
+            <p class="section-description mb-0">
+                Cada etapa representa una herramienta disponible en esta versión.
+            </p>
+        </div>
+
+        <!-- TIMELINE -->
+        <section class="version-timeline">
+
+            <div class="timeline-item" *ngFor="let funcion of FuncionesVersion; let i = index"
+                [class.timeline-clickable]="funcion.tutorial" [attr.role]="funcion.tutorial ? 'button' : null"
+                [attr.tabindex]="funcion.tutorial ? 0 : null" (click)="seleccionarFuncion(funcion)"
+                (keydown.enter)="seleccionarFuncion(funcion)">
+
+                <div class="timeline-marker">
+                    <span class="timeline-number">
+                        {{i + 1}}
+                    </span>
+                </div>
+
+                <div class="timeline-content pb-4">
+
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="feature-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                            <mat-icon>{{funcion.icono}}</mat-icon>
+                        </div>
+
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                                <h3 class="mb-0">{{funcion.titulo}}</h3>
+
+                                <span class="available-badge">
+                                    Disponible
+                                </span>
+
+                                <span class="tutorial-badge" *ngIf="funcion.tutorial">
+                                    Tutorial interactivo
+                                </span>
+                            </div>
+
+                            <p class="feature-description mb-3">
+                                {{funcion.descripcion}}
+                            </p>
+
+                            <div class="row g-2">
+                                <div class="col-sm-6" *ngFor="let item of funcion.funciones">
+
+                                    <div class="feature-detail d-flex align-items-center gap-2">
+                                        <mat-icon>check_circle</mat-icon>
+                                        <span>{{item}}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button mat-flat-button color="primary" type="button" class="mt-3" *ngIf="funcion.tutorial"
+                                (click)="$event.stopPropagation(); abrirTutorialVenta()">
+
+                                <mat-icon>play_arrow</mat-icon>
+                                Iniciar tutorial de venta
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- FINAL -->
+        <section class="version-footer mt-2 p-3 p-md-4">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+
+                <div class="d-flex align-items-center gap-3">
+                    <mat-icon>verified</mat-icon>
+
+                    <div>
+                        <h2 class="mb-1">NexoPOS {{VersionActual}}</h2>
+
+                        <p class="mb-0">
+                            Gestión comercial, inventario, comprobantes,
+                            ganancias y reportes en una sola plataforma.
+                        </p>
+                    </div>
+                </div>
+
+                <button mat-stroked-button color="primary" type="button" (click)="abrirTutorialVenta()">
+
+                    Ver tutorial de venta
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+
+            </div>
+        </section>
+
+    </div>
+</div>

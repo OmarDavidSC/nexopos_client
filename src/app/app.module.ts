@@ -113,6 +113,8 @@ import { ProfitPeriodSummaryComponent } from './components/pages/reports/report-
 import { ProfitCustomRangeComponent } from './components/pages/reports/report-ganancias/partials/profit-custom-range/profit-custom-range.component';
 import { ProfitFiltersComponent } from './components/pages/reports/report-ganancias/partials/profit-filters/profit-filters.component';
 import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
+import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
+import { ModalHelpTutorialComponent } from './components/pages/widzard/help-center/modals/modal-help-tutorial/modal-help-tutorial.component';
 
 @NgModule({
   declarations: [
@@ -216,6 +218,8 @@ import { IndexStockAlertsComponent } from './components/pages/notificaciones/ale
     ProfitCustomRangeComponent,
     ProfitFiltersComponent,
     IndexStockAlertsComponent,
+    HelpCenterComponent,
+    ModalHelpTutorialComponent,
   ],
   imports: [
     ComunModule,

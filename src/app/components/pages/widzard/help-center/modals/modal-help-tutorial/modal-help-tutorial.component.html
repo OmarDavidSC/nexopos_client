@@ -1,0 +1,229 @@
+<div class="tutorial-modal d-flex flex-column bg-white">
+
+    <!-- CABECERA -->
+    <header class="tutorial-header d-flex align-items-start justify-content-between gap-3 p-3 p-md-4 border-bottom">
+
+        <div class="d-flex align-items-start gap-3 min-w-0">
+
+            <div class="tutorial-main-icon d-none d-sm-flex align-items-center justify-content-center flex-shrink-0">
+                <mat-icon>{{Tutorial.icono}}</mat-icon>
+            </div>
+
+            <div class="min-w-0">
+                <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                    <span class="tutorial-category">
+                        {{Tutorial.categoria}}
+                    </span>
+
+                    <span class="tutorial-duration d-inline-flex align-items-center gap-1">
+                        <mat-icon>schedule</mat-icon>
+                        {{Tutorial.duracion}}
+                    </span>
+                </div>
+
+                <h2 class="tutorial-title mb-1">
+                    {{Tutorial.titulo}}
+                </h2>
+
+                <p class="tutorial-description mb-0">
+                    {{Tutorial.descripcion}}
+                </p>
+            </div>
+        </div>
+
+        <button mat-icon-button type="button" matTooltip="Cerrar tutorial" aria-label="Cerrar tutorial"
+            class="close-button flex-shrink-0" (click)="cerrar()">
+            <mat-icon>close</mat-icon>
+        </button>
+
+    </header>
+
+    <!-- PROGRESO -->
+    <section class="tutorial-progress px-3 px-md-4 py-3 border-bottom">
+
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <span class="progress-label">
+                Progreso del tutorial
+            </span>
+
+            <span class="progress-value">
+                {{TextoProgreso}}
+            </span>
+        </div>
+
+        <mat-progress-bar mode="determinate" [value]="PorcentajeProgreso"></mat-progress-bar>
+
+    </section>
+
+    <!-- CONTENIDO -->
+    <div class="tutorial-body row g-0 flex-grow-1 overflow-hidden">
+
+        <!-- MENÚ DE PASOS -->
+        <aside class="tutorial-sidebar col-lg-3 d-none d-lg-block border-end overflow-auto">
+
+            <div class="d-flex align-items-center justify-content-between px-3 pt-3 pb-2">
+                <strong class="sidebar-title">Contenido</strong>
+                <span class="sidebar-count">{{TotalPasos}} pasos</span>
+            </div>
+
+            <div class="d-grid gap-2 p-2 p-xl-3">
+
+                <button type="button" class="step-item d-flex align-items-center gap-2 text-start"
+                    *ngFor="let paso of Tutorial.pasos; let i = index" [class.active]="i === PasoActual"
+                    [class.completed]="i < PasoActual" (click)="seleccionarPaso(i)">
+
+                    <span class="step-number d-inline-flex align-items-center justify-content-center flex-shrink-0">
+                        <mat-icon *ngIf="i < PasoActual">check</mat-icon>
+                        <span *ngIf="i >= PasoActual">{{i + 1}}</span>
+                    </span>
+
+                    <span class="step-information flex-grow-1 min-w-0">
+                        <small class="d-block">
+                            Paso {{i + 1}}
+                        </small>
+
+                        <strong class="d-block text-truncate">
+                            {{paso.titulo}}
+                        </strong>
+                    </span>
+
+                    <mat-icon class="step-arrow flex-shrink-0">
+                        chevron_right
+                    </mat-icon>
+
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- PASO ACTUAL -->
+        <main class="tutorial-content col-12 col-lg-9 overflow-auto p-3 p-md-4">
+
+            <div class="d-flex align-items-center gap-3 mb-3">
+
+                <div class="current-step-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                    <mat-icon>{{PasoSeleccionado.icono}}</mat-icon>
+                </div>
+
+                <div>
+                    <span class="current-step-label">
+                        Paso {{PasoActual + 1}} de {{TotalPasos}}
+                    </span>
+
+                    <h3 class="current-step-title mb-0">
+                        {{PasoSeleccionado.titulo}}
+                    </h3>
+                </div>
+
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <p class="step-description mb-3" *ngIf="PasoSeleccionado.imagen">
+                {{PasoSeleccionado.descripcion}}
+            </p>
+
+            <!-- IMAGEN DEL TUTORIAL -->
+            <div class="tutorial-image-container position-relative rounded-3 border p-2 p-md-3 mb-3"
+                *ngIf="PasoSeleccionado.imagen">
+
+                <img [src]="PasoSeleccionado.imagen" [alt]="PasoSeleccionado.titulo"
+                    class="tutorial-image img-fluid d-block mx-auto rounded-2">
+
+                <div class="image-step-indicator position-absolute d-flex align-items-center gap-2">
+                    <span class="d-inline-flex align-items-center justify-content-center">
+                        {{PasoActual + 1}}
+                    </span>
+
+                    <span class="text-truncate">
+                        {{PasoSeleccionado.titulo}}
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- GUÍA DE TEXTO -->
+            <div class="text-guide d-flex align-items-start gap-3 rounded-3 border p-3 p-md-4 mb-3"
+                *ngIf="!PasoSeleccionado.imagen">
+
+                <div class="text-guide-number d-flex align-items-center justify-content-center flex-shrink-0">
+                    {{PasoActual + 1}}
+                </div>
+
+                <div>
+                    <span class="text-guide-label d-block mb-2">
+                        Instrucción
+                    </span>
+
+                    <p class="mb-0">
+                        {{PasoSeleccionado.descripcion}}
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- RECOMENDACIÓN -->
+            <mat-card appearance="outlined" class="recommendation-card" *ngIf="PasoSeleccionado.recomendacion">
+                <mat-card-content class="d-flex align-items-start gap-3 p-3">
+
+                    <div class="recommendation-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                        <mat-icon>lightbulb</mat-icon>
+                    </div>
+
+                    <div>
+                        <strong class="d-block mb-1">
+                            Consejo importante
+                        </strong>
+
+                        <p class="mb-0">
+                            {{PasoSeleccionado.recomendacion}}
+                        </p>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+
+        </main>
+
+    </div>
+
+    <!-- PIE -->
+    <footer class="tutorial-footer d-flex align-items-center justify-content-between gap-2 p-3 p-md-4 border-top">
+
+        <button mat-stroked-button type="button" class="previous-button" [disabled]="EsPrimerPaso" (click)="anterior()">
+
+            <mat-icon>arrow_back</mat-icon>
+
+            <span class="d-none d-sm-inline">
+                Anterior
+            </span>
+
+        </button>
+
+        <!-- INDICADORES MÓVILES -->
+        <div class="mobile-progress d-flex d-lg-none align-items-center justify-content-center gap-1">
+
+            <button type="button" class="mobile-step" *ngFor="let paso of Tutorial.pasos; let i = index"
+                [class.active]="i === PasoActual" [class.completed]="i < PasoActual"
+                [attr.aria-label]="'Ir al paso ' + (i + 1)" (click)="seleccionarPaso(i)">
+            </button>
+
+        </div>
+
+        <button mat-raised-button color="primary" type="button" class="next-button" (click)="siguiente()">
+
+            <ng-container *ngIf="!EsUltimoPaso">
+                <span>Siguiente</span>
+                <mat-icon>arrow_forward</mat-icon>
+            </ng-container>
+
+            <ng-container *ngIf="EsUltimoPaso">
+                <span>Finalizar</span>
+                <mat-icon>check_circle</mat-icon>
+            </ng-container>
+
+        </button>
+
+    </footer>
+
+</div>

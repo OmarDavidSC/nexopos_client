@@ -1,104 +1,114 @@
 <mat-sidenav-container class="layout-container">
+
     <mat-sidenav #drawer mode="over" [opened]="false" [autoFocus]="false" class="sidebar">
+
+        <!-- EMPRESA -->
         <div class="sidebar-header">
-            <div class="company-brand">
+            <div class="d-flex align-items-center gap-3 min-w-0">
                 <div class="company-logo-container">
-                    <img [src]="CompaniaActual?.LogoUrl || 'assets/img/logo-sf.jpeg'" alt="Logo empresa"
-                        class="company-logo">
+                    <img [src]="CompaniaActual?.LogoUrl || 'assets/img/logo-sf.jpeg'"
+                        [alt]="CompaniaActual?.Nombre || 'Logo empresa'" class="company-logo">
                 </div>
 
-                <div class="company-brand-info">
+                <div class="company-brand-info flex-grow-1">
                     <strong>{{CompaniaActual?.Nombre || 'Mi Empresa'}}</strong>
-                    <span>Panel administrativo</span>
+                    <span>{{SucursalActual?.Nombre || 'Panel administrativo'}}</span>
                 </div>
             </div>
 
-            <button mat-icon-button class="sidebar-close" type="button" (click)="drawer.close()">
+            <button mat-icon-button type="button" class="sidebar-close" (click)="drawer.close()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
 
+        <!-- CONTENIDO DEL MENÚ -->
         <div class="menu-content">
-            <div class="menu-section-title">
-                <span>MENÚ PRINCIPAL</span>
-            </div>
 
-            <mat-nav-list class="main-menu">
+            <span class="menu-section-title">GENERAL</span>
+
+            <!-- DASHBOARD -->
+            <mat-nav-list class="p-0 mb-2">
                 <a mat-list-item class="menu-item" routerLinkActive="active-item"
-                    [routerLinkActiveOptions]="{exact: true}" (click)="navigateTo(menuItems[0].route)">
-                    <div class="menu-item-content">
-                        <div class="menu-icon-container">
-                            <mat-icon>{{menuItems[0].icon}}</mat-icon>
-                        </div>
+                    [routerLinkActiveOptions]="{exact: true}" (click)="navigateTo(menuItems[0].route!)">
 
-                        <span class="menu-label">{{menuItems[0].label}}</span>
+                    <div class="menu-item-content">
+                        <mat-icon>{{menuItems[0].icon}}</mat-icon>
+                        <span>{{menuItems[0].label}}</span>
                     </div>
                 </a>
             </mat-nav-list>
 
+            <!-- MÓDULOS -->
+            <span class="menu-section-title mt-3">GESTIÓN</span>
+
             <mat-accordion displayMode="flat" multi class="menu-accordion">
+
                 <mat-expansion-panel *ngFor="let item of menuItems.slice(1)" class="menu-panel" hideToggle>
+
                     <mat-expansion-panel-header class="menu-header">
+
                         <mat-panel-title>
                             <div class="menu-item-content">
-                                <div class="menu-icon-container">
-                                    <mat-icon>{{item.icon}}</mat-icon>
-                                </div>
-
-                                <span class="menu-label">{{item.label}}</span>
+                                <mat-icon>{{item.icon}}</mat-icon>
+                                <span>{{item.label}}</span>
                             </div>
                         </mat-panel-title>
 
-                        <mat-icon class="expand-icon">keyboard_arrow_down</mat-icon>
+                        <mat-icon class="expand-icon">expand_more</mat-icon>
                     </mat-expansion-panel-header>
 
-                    <ng-container *ngIf="item.children?.length; else itemSinHijos">
-                        <mat-nav-list class="submenu-list">
-                            <a mat-list-item *ngFor="let child of item.children" class="submenu-item"
-                                routerLinkActive="submenu-active" (click)="navigateTo(child.route)">
-                                <div class="submenu-content">
-                                    <span class="submenu-line"></span>
+                    <mat-nav-list class="submenu-list" *ngIf="item.children?.length">
 
-                                    <div class="submenu-icon-container">
-                                        <mat-icon>{{child.icon}}</mat-icon>
-                                    </div>
+                        <a mat-list-item *ngFor="let child of item.children" class="submenu-item"
+                            routerLinkActive="submenu-active" (click)="navigateTo(child.route!)">
 
-                                    <span class="submenu-label">{{child.label}}</span>
-                                </div>
-                            </a>
-                        </mat-nav-list>
-                    </ng-container>
+                            <div class="submenu-content">
+                                <mat-icon>{{child.icon}}</mat-icon>
+                                <span>{{child.label}}</span>
+                            </div>
+                        </a>
 
-                    <ng-template #itemSinHijos>
-                        <mat-nav-list class="submenu-list">
-                            <a mat-list-item class="submenu-item" routerLinkActive="submenu-active"
-                                (click)="navigateTo(item.route)">
-                                <div class="submenu-content">
-                                    <span class="submenu-line"></span>
+                    </mat-nav-list>
 
-                                    <div class="submenu-icon-container">
-                                        <mat-icon>{{item.icon}}</mat-icon>
-                                    </div>
-
-                                    <span class="submenu-label">{{item.label}}</span>
-                                </div>
-                            </a>
-                        </mat-nav-list>
-                    </ng-template>
                 </mat-expansion-panel>
+
             </mat-accordion>
+
+            <!-- SISTEMA -->
+            <span class="menu-section-title mt-3">SISTEMA</span>
+
+            <mat-nav-list class="p-0">
+                <a mat-list-item class="menu-item version-menu-item" routerLinkActive="active-item"
+                    (click)="navigateTo('/ayuda')">
+
+                    <div class="menu-item-content">
+                        <mat-icon>rocket_launch</mat-icon>
+
+                        <div class="version-menu-info">
+                            <span>Novedades</span>
+                            <small>NexoPOS v1.1.0</small>
+                        </div>
+
+                        <span class="new-badge">Nuevo</span>
+                    </div>
+                </a>
+            </mat-nav-list>
+
         </div>
 
+        <!-- USUARIO -->
         <div class="sidebar-footer">
             <button mat-button [matMenuTriggerFor]="sidebarUserMenu" class="sidebar-user-button">
-                <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'" alt="Usuario" class="user-avatar">
+
+                <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'"
+                    [alt]="UsuarioActual?.NombreCompleto || 'Usuario'" class="user-avatar">
 
                 <div class="user-info">
                     <strong>{{UsuarioActual?.NombreCompleto}}</strong>
                     <span>{{RolActual?.Nombre}}</span>
                 </div>
 
-                <mat-icon class="user-options">more_vert</mat-icon>
+                <mat-icon>more_vert</mat-icon>
             </button>
 
             <mat-menu #sidebarUserMenu="matMenu">
@@ -113,62 +123,70 @@
                 </button>
             </mat-menu>
         </div>
+
     </mat-sidenav>
 
     <mat-sidenav-content class="main-content">
+
+        <!-- TOPBAR -->
         <mat-toolbar class="topbar">
-            <div class="topbar-left">
-                <button mat-icon-button class="menu-button" type="button" (click)="drawer.toggle()">
+
+            <div class="d-flex align-items-center gap-3 min-w-0">
+                <button mat-icon-button type="button" class="menu-button" (click)="drawer.toggle()">
                     <mat-icon>menu</mat-icon>
                 </button>
 
-                <div class="topbar-company">
-                    <!-- <span class="topbar-page-label">Administración</span> -->
+                <div class="topbar-title">
+                    <strong>{{CompaniaActual?.Nombre}}</strong>
 
-                    <div class="topbar-title">
-                        <strong>{{CompaniaActual?.Nombre}}</strong>
+                    <span class="topbar-divider"></span>
 
-                        <span class="topbar-divider"></span>
+                    <span>{{SucursalActual?.Nombre}}</span>
+                </div>
+            </div>
 
-                        <span>{{SucursalActual?.Nombre}}</span>
+            <div class="d-flex align-items-center gap-1">
+
+                <button mat-icon-button type="button" class="topbar-icon-button" matTooltip="Alertas de inventario"
+                    (click)="abrirNotificacionesStock()">
+
+                    <mat-icon>notifications_none</mat-icon>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
+
+                    <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'"
+                        [alt]="UsuarioActual?.NombreCompleto || 'Usuario'" class="toolbar-avatar">
+
+                    <div class="toolbar-user-info">
+                        <strong>{{UsuarioActual?.NombreCompleto}}</strong>
+                        <span>{{RolActual?.Nombre}}</span>
                     </div>
-                </div>
+
+                    <mat-icon class="toolbar-expand-icon">expand_more</mat-icon>
+                </button>
+
             </div>
 
-            <div class="topbar-actions">
-                <div class="topbar-actions">
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="irAPerfil()">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>Mi perfil</span>
+                </button>
 
-                    <button mat-icon-button class="tsopbar-icon-button" type="button" matTooltip="Alertas de inventario"
-                        (click)="abrirNotificacionesStock()">
-                        <mat-icon>notifications_none</mat-icon>
-                        <span class="notification-dot"></span>
-                    </button>
+                <button mat-menu-item (click)="OnClickLogout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
 
-                    <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
-                        <div class="toolbar-user-info">
-                            <strong>{{UsuarioActual?.NombreCompleto}}</strong>
-                        </div>
-
-                        <mat-icon class="toolbar-expand-icon">keyboard_arrow_down</mat-icon>
-                    </button>
-
-                </div>
-                <mat-menu #userMenu="matMenu">
-                    <button mat-menu-item (click)="irAPerfil()">
-                        <mat-icon>person_outline</mat-icon>
-                        <span>Mi perfil</span>
-                    </button>
-
-                    <button mat-menu-item (click)="OnClickLogout()">
-                        <mat-icon>logout</mat-icon>
-                        <span>Cerrar sesión</span>
-                    </button>
-                </mat-menu>
-            </div>
         </mat-toolbar>
 
         <main class="content-wrapper">
             <ng-content select="[Body]"></ng-content>
         </main>
+
     </mat-sidenav-content>
+
 </mat-sidenav-container>
