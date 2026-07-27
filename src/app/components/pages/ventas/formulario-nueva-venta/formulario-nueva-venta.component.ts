@@ -233,11 +233,8 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
       this.toastService.clear();
       this.Loading = true;
       this.LoadingToast = this.toastService.show(
-        `<div>
-              <strong>Registrando venta...</strong><br>
-              Actualizando inventario...
-           </div>`,
-        '',
+        `Registrando venta...`,
+        'Actualizando inventario...',
         { toastComponent: ToastLoadingComponent, positionClass: 'toast-center-center', disableTimeOut: true, tapToDismiss: false, closeButton: false, enableHtml: true }
       );
 
