@@ -1,0 +1,169 @@
+<section class="sale-section mb-3">
+    <div class="section-title">
+        <div class="d-flex align-items-center gap-2">
+            <span class="section-icon">
+                <mat-icon>receipt_long</mat-icon>
+            </span>
+            <div>
+                <h6 class="mb-0 fw-bold"> Datos de la venta</h6>
+                <small class="text-muted">Selecciona el cliente y configura el comprobante.</small>
+            </div>
+        </div>
+        <button mat-icon-button matTooltip="Completa estos datos antes de agregar los productos."
+            matTooltipPosition="left">
+            <mat-icon class="help-icon">help_outline</mat-icon>
+        </button>
+    </div>
+    <div class="row g-2">
+        <!-- BUSCAR CLIENTE -->
+        <div class="col-12 col-lg-7">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Buscar cliente</mat-label>
+                <mat-icon matPrefix>person_search</mat-icon>
+                <input matInput placeholder="Nombre o número de documento" [ngModel]="textoCliente"
+                    (ngModelChange)="onTextoClienteChange($event)" [matAutocomplete]="autoCliente"
+                    matTooltip="Escribe el nombre, DNI o RUC del cliente.">
+                <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="mostrarCliente"
+                    (optionSelected)="onSeleccionarCliente($event.option.value)">
+                    <mat-option *ngFor="let item of clientesFiltrados" [value]="item">
+                        <div class="customer-option">
+                            <span class="customer-name">{{ item.NombreCliente }}</span>
+                            <small class="customer-document">{{ item.NumeroDocumento }}</small>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <!-- NUEVO CLIENTE -->
+        <div class="col-12 col-sm-6 col-lg-auto">
+            <button mat-stroked-button color="primary" class="w-100 compact-button"
+                matTooltip="Registra rápidamente un cliente que todavía no existe." (click)="onNuevoCliente()">
+                <mat-icon>person_add</mat-icon>
+                Nuevo cliente
+            </button>
+        </div>
+        <!-- CLIENTE SELECCIONADO -->
+        <div class="col-12 col-lg">
+            <div class="selected-customer h-100">
+                <mat-icon> verified</mat-icon>
+                <div class="min-width-0">
+                    <small>Cliente seleccionado</small>
+                    <strong class="text-truncate">{{ venta?.customer_name || 'Ningún cliente seleccionado' }}</strong>
+                    <span>{{ venta?.customer_document || 'Sin documento' }} </span>
+                </div>
+            </div>
+        </div>
+        <!-- FECHA DE VENTA -->
+        <div class="col-6 col-lg-3">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Fecha</mat-label>
+                <input matInput [matDatepicker]="saleDatePicker" [(ngModel)]="venta.sale_date"
+                    matTooltip="Fecha que aparecerá en el comprobante.">
+                <mat-datepicker-toggle matSuffix [for]="saleDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #saleDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <!-- TIPO DE COMPROBANTE -->
+        <div class="col-6 col-lg-3">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label>Comprobante</mat-label>
+                <mat-select [(ngModel)]="venta.voucher_type" (selectionChange)="onCambiarSerie()"
+                    matTooltip="Selecciona boleta o factura.">
+                    <mat-option value="FACTURA">Factura</mat-option>
+                    <mat-option value="BOLETA">Boleta</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- CONDICIÓN DE PAGO -->
+        <div class="col-6 col-lg-3">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label>Condición de pago</mat-label>
+                <mat-select [(ngModel)]="venta.payment_condition" (selectionChange)="onCambiarCondicionPago()"
+                    matTooltip="Selecciona si la venta será al contado o al crédito.">
+                    <mat-option value="CASH">Contado</mat-option>
+                    <mat-option value="CREDIT">Crédito</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- MÉTODO DE PAGO -->
+        <div class="col-6 col-lg-3">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> {{venta?.payment_condition === 'CREDIT'? 'Método del pago inicial': 'Método de pago'}}
+                </mat-label>
+                <mat-select [(ngModel)]="venta.payment_method" matTooltip="Indica cómo realizará el pago el cliente.">
+                    <mat-option [value]="null">Seleccionar</mat-option>
+                    <mat-option value="CASH">Efectivo</mat-option>
+                    <mat-option value="CARD">Tarjeta</mat-option>
+                    <mat-option value="TRANSFER">Transferencia</mat-option>
+                    <mat-option value="YAPE">Yape</mat-option>
+                    <mat-option value="PLIN">Plin</mat-option>
+                    <mat-option value="OTHER">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12" *ngIf="venta?.payment_condition === 'CREDIT'">
+            <div class="credit-information" [class.credit-information-ready]="venta?.total > 0">
+                <div class="credit-information-icon">
+                    <mat-icon>{{venta?.total > 0 ? 'credit_score' : 'info_outline' }}</mat-icon>
+                </div>
+                <div class="credit-information-content">
+                    <strong> {{ venta?.total > 0 ? 'Completa los datos del crédito' : 'Primero agrega los productos'}}
+                    </strong>
+                    <span *ngIf="!venta?.total">
+                        Cuando se calcule el total podrás indicar el pago inicial y la fecha de vencimiento.
+                    </span>
+                    <span *ngIf="venta?.total > 0">
+                        Ingresa cuánto pagará inicialmente el cliente y hasta qué fecha deberá cancelar el saldo.
+                    </span>
+                </div>
+                <div class="credit-total" *ngIf="venta?.total > 0">
+                    <small>Total</small>
+                    <strong>
+                        {{ compania?.SimboloMoneda || 'S/' }}
+                        {{ venta.total | number:'1.2-2' }}
+                    </strong>
+                </div>
+            </div>
+        </div>
+        <!-- PAGO INICIAL -->
+        <div class="col-6 col-lg-3" *ngIf="venta?.payment_condition === 'CREDIT'">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Pago inicial</mat-label>
+                <span matPrefix class="currency-prefix">
+                    {{ compania?.SimboloMoneda || 'S/' }}
+                </span>
+                <input matInput type="number" min="0" [max]="venta.total" [(ngModel)]="venta.amount_paid"
+                    [disabled]="!venta?.total || venta.total <= 0" placeholder="0.00"
+                    matTooltip="Monto que el cliente pagará al registrar la venta.">
+            </mat-form-field>
+        </div>
+        <!-- FECHA DE VENCIMIENTO -->
+        <div class="col-6 col-lg-3" *ngIf="venta?.payment_condition === 'CREDIT'">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Fecha de vencimiento </mat-label>
+                <input matInput [matDatepicker]="dueDatePicker" [(ngModel)]="venta.due_date" [min]="venta.sale_date"
+                    [disabled]="!venta?.total || venta.total <= 0"
+                    matTooltip="Fecha límite para cancelar el saldo pendiente.">
+                <mat-datepicker-toggle matSuffix [for]="dueDatePicker" [disabled]="!venta?.total || venta.total <= 0">
+                </mat-datepicker-toggle>
+                <mat-datepicker #dueDatePicker>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <!-- SERIE -->
+        <div class="col-3 col-lg-1">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label>Serie</mat-label>
+                <input matInput [(ngModel)]="venta.voucher_series"
+                    matTooltip="Serie del comprobante. Normalmente se completa automáticamente.">
+            </mat-form-field>
+        </div>
+        <!-- NÚMERO -->
+        <!-- <div class="col-9 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label>Número</mat-label>
+                <input matInput [(ngModel)]="venta.voucher_number" matTooltip="Número correlativo del comprobante.">
+            </mat-form-field>
+        </div> -->
+    </div>
+</section>

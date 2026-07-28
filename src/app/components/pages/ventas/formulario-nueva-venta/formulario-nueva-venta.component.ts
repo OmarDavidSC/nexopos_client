@@ -54,6 +54,9 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
     voucher_series: '',
     voucher_number: '',
     payment_method: '',
+    payment_condition: 'CASH',
+    amount_paid: 0,
+    due_date: null,
     subtotal: 0,
     tax: 0,
     discount: 0,
@@ -192,10 +195,25 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
     this.OnEventoCalcularTotales();
   }
 
+  OnEventoCambiarCondicionPago(): void {
+    if (this.venta.payment_condition === 'CASH') {
+      this.venta.amount_paid = this.venta.total;
+      this.venta.due_date = null;
+      return;
+    }
+
+    this.venta.amount_paid = 0;
+    this.venta.due_date = null;
+  }
+
   OnEventoCalcularTotales() {
     this.venta.subtotal = this.DetallesVenta.reduce((total, item) => total + item.subtotal, 0);
     this.venta.tax = 0;
     this.venta.total = this.venta.subtotal + this.venta.tax - this.venta.discount;
+
+    if (this.venta.payment_condition === 'CASH') {
+      this.venta.amount_paid = this.venta.total;
+    }
   }
 
   async OnEventoGuardarVenta(): Promise<void> {
@@ -222,6 +240,9 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
     formData.append('discount', String(this.venta.discount));
     formData.append('total', String(this.venta.total));
     formData.append('payment_method', this.venta.payment_method);
+    formData.append('payment_condition', this.venta.payment_condition);
+    formData.append('amount_paid', String(this.venta.amount_paid ?? 0));
+    formData.append('due_date', this.venta.due_date ? this.onEventoFormatearFecha(this.venta.due_date) : '');
     formData.append('details', JSON.stringify(this.DetallesVenta));
 
     const confirmToast = this.toastService.show(

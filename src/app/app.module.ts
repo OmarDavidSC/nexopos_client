@@ -115,6 +115,10 @@ import { ProfitFiltersComponent } from './components/pages/reports/report-gananc
 import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
 import { ModalHelpTutorialComponent } from './components/pages/widzard/help-center/modals/modal-help-tutorial/modal-help-tutorial.component';
+import { SaleInformationComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-information/sale-information.component';
+import { SaleProductSelectorComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-product-selector/sale-product-selector.component';
+import { SaleDetailComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-detail/sale-detail.component';
+import { SaleSummaryNvComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-summary-nv/sale-summary-nv.component';
 
 @NgModule({
   declarations: [
@@ -220,6 +224,10 @@ import { ModalHelpTutorialComponent } from './components/pages/widzard/help-cent
     IndexStockAlertsComponent,
     HelpCenterComponent,
     ModalHelpTutorialComponent,
+    SaleInformationComponent,
+    SaleProductSelectorComponent,
+    SaleDetailComponent,
+    SaleSummaryNvComponent,
   ],
   imports: [
     ComunModule,

@@ -1,0 +1,105 @@
+<section class="sale-section mb-3">
+    <div class="section-title">
+        <div class="d-flex align-items-center gap-2">
+            <span class="section-icon product-icon">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </span>
+            <div>
+                <h6 class="mb-0 fw-bold">Agregar producto</h6>
+                <small class="text-muted"> Busca el producto, verifica el stock y define la cantidad. </small>
+            </div>
+        </div>
+        <span class="product-shortcut d-none d-md-flex">
+            <mat-icon>info</mat-icon>
+            Presiona Enter para agregar más rápido
+        </span>
+    </div>
+    <div class="row g-2 align-items-center">
+        <!-- BUSCAR PRODUCTO -->
+        <div class="col-12 col-lg-5">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Buscar producto </mat-label>
+                <mat-icon matPrefix> search </mat-icon>
+                <input matInput [ngModel]="textoProducto" (ngModelChange)="onTextoProductoChange($event)"
+                    [matAutocomplete]="autoProducto" placeholder="Nombre o código"
+                    matTooltip="Busca el producto por nombre o código." />
+                <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="mostrarProducto"
+                    (optionSelected)="onSeleccionarProducto($event.option.value)">
+                    <mat-option *ngFor="let producto of productosFiltrados" [value]="producto">
+                        <div class="product-option">
+                            <div class="product-option-information">
+                                <strong>
+                                    {{ producto.Nombre }}
+                                </strong>
+                                <!-- <small>
+                  Código:
+                  {{ producto.Codigo || "Sin código" }}
+                </small> -->
+                            </div>
+                            <span class="stock-badge" [class.low-stock]="producto.StockActual <= 5"> Stock:
+                                {{ producto.StockActual }}
+                            </span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <!-- CÓDIGO -->
+        <div class="col-4 col-lg-1">
+            <div class="product-info-box" matTooltip="Código interno del producto seleccionado.">
+                <small> Código </small>
+                <strong>{{ productoTemporal?.code || "—" }}</strong>
+            </div>
+        </div>
+        <!-- STOCK -->
+        <div class="col-4 col-lg-1">
+            <div class="product-info-box" [class.product-info-warning]="
+          productoTemporal?.stock <= 5 && productoTemporal?.stock > 0
+        " matTooltip="Stock disponible en la sucursal actual.">
+                <small> Stock </small>
+                <strong> {{ productoTemporal?.stock || 0 }}</strong>
+            </div>
+        </div>
+        <!-- PRECIO -->
+        <div class="col-4 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Precio </mat-label>
+                <span matPrefix class="currency-prefix"> {{ compania?.SimboloMoneda || "S/" }}</span>
+                <input matInput type="number" min="0" [(ngModel)]="productoTemporal.sale_price"
+                    [disabled]="!productoSeleccionado" matTooltip="Precio unitario que se cobrará por el producto." />
+            </mat-form-field>
+        </div>
+        <!-- CANTIDAD -->
+        <div class="col-6 col-lg-1">
+            <mat-form-field appearance="outline" class="w-100 compact-field">
+                <mat-label> Cant. </mat-label>
+                <input matInput type="number" min="1" [max]="productoTemporal?.stock || 1"
+                    [(ngModel)]="productoTemporal.quantity" [disabled]="!productoSeleccionado"
+                    (keyup.enter)="onAgregarProducto()" matTooltip="Cantidad que deseas vender." />
+            </mat-form-field>
+        </div>
+        <!-- BOTÓN AGREGAR -->
+        <div class="col-6 col-lg-2">
+            <button mat-flat-button class="w-100 add-product-button" [disabled]="!productoSeleccionado"
+                matTooltip="Añade el producto al detalle de la venta." (click)="onAgregarProducto()">
+                <mat-icon> add </mat-icon>
+                Agregar
+            </button>
+        </div>
+    </div>
+    <!-- MENSAJE DE AYUDA -->
+    <div class="product-help mt-2" *ngIf="!productoSeleccionado">
+        <mat-icon> lightbulb </mat-icon>
+        <span>
+            Primero selecciona un producto para habilitar su precio y cantidad.
+        </span>
+    </div>
+    <!-- PRODUCTO SELECCIONADO -->
+    <div class="selected-product-message mt-2" *ngIf="productoSeleccionado">
+        <mat-icon> check_circle </mat-icon>
+        <span>
+            Producto seleccionado:
+            <strong> {{ productoTemporal?.name }} </strong>
+        </span>
+    </div>
+</section>

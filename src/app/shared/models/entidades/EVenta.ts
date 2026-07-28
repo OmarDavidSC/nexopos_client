@@ -18,7 +18,11 @@ export class EVenta {
     ProductoTotales: number;
     Estado: string;
     EstadoLabel: string;
-    EstadoSunat:  string;
+    EstadoSunat: string;
+
+    MetodoCondicion: string;
+    ImportePagado: number;
+    FechaVencimiento: string;
 
     constructor() {
         this.Id = 0;
@@ -39,6 +43,9 @@ export class EVenta {
         this.Estado = "";
         this.EstadoLabel = "";
         this.EstadoSunat = "";
+        this.MetodoCondicion = "";
+        this.ImportePagado = 0;
+        this.FechaVencimiento = "";
     }
 
     public static parseJson(element: any): EVenta {
@@ -61,6 +68,9 @@ export class EVenta {
         objeto.Estado = SPParse.getString(element["status"]);
         objeto.EstadoLabel = SPParse.getString(element["status_label"]);
         objeto.EstadoSunat = SPParse.getString(element["sunat_status"]);
+        objeto.MetodoCondicion = SPParse.getString(element["payment_condition"]);
+        objeto.ImportePagado = SPParse.getNumber(element["amount_paid"]);
+        objeto.FechaVencimiento = SPParse.getString(element["due_date"]);
         return objeto;
     }
 

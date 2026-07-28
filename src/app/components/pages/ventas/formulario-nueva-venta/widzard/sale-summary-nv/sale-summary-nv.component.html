@@ -1,0 +1,109 @@
+<aside class="sale-summary">
+    <!-- CABECERA -->
+    <div class="summary-header">
+        <div>
+            <h6 class="mb-0 fw-bold">Resumen de venta</h6>
+            <small> Verifica los importes finales </small>
+        </div>
+        <button mat-icon-button matTooltip="Los importes se actualizan al agregar o eliminar productos.">
+            <mat-icon class="help-icon"> info_outline </mat-icon>
+        </button>
+    </div>
+    <!-- CANTIDAD DE PRODUCTOS -->
+    <div class="summary-products">
+        <mat-icon> shopping_bag </mat-icon>
+        <div>
+            <small> Productos agregados </small>
+            <strong> {{ cantidadProductos }}</strong>
+        </div>
+    </div>
+    <!-- SUBTOTAL -->
+    <div class="summary-row">
+        <span> Subtotal </span>
+        <strong>
+            {{ compania?.SimboloMoneda || "S/" }}
+            {{ venta?.subtotal || 0 | number: "1.2-2" }}
+        </strong>
+    </div>
+    <!-- IGV -->
+    <div class="summary-row">
+        <span class="summary-label">
+            IGV
+            <mat-icon class="mini-help" matTooltip="Impuesto General a las Ventas aplicado al comprobante.">
+                help_outline </mat-icon>
+        </span>
+        <strong>
+            {{ compania?.SimboloMoneda || "S/" }}
+            {{ venta?.tax || 0 | number: "1.2-2" }}
+        </strong>
+    </div>
+    <!-- DESCUENTO -->
+    <div class="summary-row">
+        <span> Descuento </span>
+        <strong>
+            {{ compania?.SimboloMoneda || "S/" }}
+            {{ venta?.discount || 0 | number: "1.2-2" }}
+        </strong>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="summary-total">
+        <span> Total de venta </span>
+        <strong>
+            {{ compania?.SimboloMoneda || "S/" }}
+            {{ venta?.total || 0 | number: "1.2-2" }}
+        </strong>
+    </div>
+    <!-- INFORMACIÓN DE PAGO -->
+    <div class="payment-summary">
+        <div class="payment-condition">
+            <div class="payment-condition-label">
+                <mat-icon>
+                    {{ esVentaCredito ? "credit_score" : "payments" }}
+                </mat-icon>
+                <span> Condición de pago </span>
+            </div>
+            <strong class="condition-badge" [class.credit-badge]="esVentaCredito">
+                {{ esVentaCredito ? "Crédito" : "Contado" }}
+            </strong>
+        </div>
+        <!-- PAGO INICIAL -->
+        <div class="payment-row" *ngIf="esVentaCredito">
+            <span> Pago inicial </span>
+            <strong class="paid-amount">
+                {{ compania?.SimboloMoneda || "S/" }}
+                {{ venta?.amount_paid || 0 | number: "1.2-2" }}
+            </strong>
+        </div>
+        <!-- SALDO PENDIENTE -->
+        <div class="payment-row pending-row" *ngIf="esVentaCredito">
+            <span> Saldo pendiente </span>
+            <strong>
+                {{ compania?.SimboloMoneda || "S/" }}
+                {{ saldoPendiente | number: "1.2-2" }}
+            </strong>
+        </div>
+        <!-- VENCIMIENTO -->
+        <div class="due-date" *ngIf="esVentaCredito && venta?.due_date">
+            <mat-icon> event </mat-icon>
+            <span> Vence el <strong> {{ venta.due_date | date: "dd/MM/yyyy" }} </strong>
+            </span>
+        </div>
+    </div>
+    <!-- MENSAJE -->
+    <div class="summary-message">
+        <mat-icon> verified </mat-icon>
+        <span> Al registrar la venta se descontará automáticamente el stock. </span>
+    </div>
+    <!-- BOTÓN REGISTRAR -->
+    <button mat-flat-button color="primary" class="register-button" [disabled]="cantidadProductos === 0 || loading"
+        matTooltip="Guarda la venta y actualiza el inventario." (click)="onRegistrarVenta()">
+        <mat-icon *ngIf="!loading"> point_of_sale </mat-icon>
+        <mat-icon class="loading-icon" *ngIf="loading"> sync </mat-icon>
+        {{ loading ? "Registrando..." : "Registrar venta" }}
+    </button>
+    <!-- AYUDA SIN PRODUCTOS -->
+    <small class="empty-help" *ngIf="cantidadProductos === 0">
+        Agrega al menos un producto para continuar.
+    </small>
+</aside>
