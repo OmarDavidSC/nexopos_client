@@ -119,6 +119,7 @@ import { SaleInformationComponent } from './components/pages/ventas/formulario-n
 import { SaleProductSelectorComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-product-selector/sale-product-selector.component';
 import { SaleDetailComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-detail/sale-detail.component';
 import { SaleSummaryNvComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-summary-nv/sale-summary-nv.component';
+import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-credito/index-ventas-credito/index-ventas-credito.component';
 
 @NgModule({
   declarations: [
@@ -228,6 +229,7 @@ import { SaleSummaryNvComponent } from './components/pages/ventas/formulario-nue
     SaleProductSelectorComponent,
     SaleDetailComponent,
     SaleSummaryNvComponent,
+    IndexVentasCreditoComponent,
   ],
   imports: [
     ComunModule,

@@ -29,6 +29,7 @@ import { IndexInventarioComponent } from './components/pages/reports/report-inve
 import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
 import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
+import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-credito/index-ventas-credito/index-ventas-credito.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -58,6 +59,7 @@ const routes: Routes = [
   { path: 'bandeja-ventas', component: BandejaVentasComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-ventas/:id/pagos-ventas', component: IndexVentasCreditoComponent, canActivate: [AuthGuard] },
 
   //reportes
   { path: 'reporte-ganancias', component: IndexGananciasComponent, canActivate: [AuthGuard] },
