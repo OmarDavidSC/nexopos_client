@@ -23,6 +23,14 @@ export class IndexVentasCreditoComponent extends FormularioBase implements OnIni
 
   ListaPagos: any[] = [];
   ListaSucursales: ESucursal[] = [];
+  VentaCredito: any = null;
+  ResumenCredito = {
+    total_sale: 0,
+    total_paid: 0,
+    balance_due: 0,
+    payment_count: 0,
+    payment_status: 'PENDING',
+  };
   IdVenta: number = 0;
 
   UsuarioActual: Eusuario | null = null;
@@ -78,11 +86,25 @@ export class IndexVentasCreditoComponent extends FormularioBase implements OnIni
   async obtenerMaestros() {
     this.Loading = true;
     const data = await this.pagosService.payments(this.IdVenta);
-    this.ListaPagos = data.data;
+    console.log(data.data);
+    this.ListaPagos = data.data.payments;
+    this.VentaCredito = data.data.sale;
+    this.ResumenCredito = data.data.summary;
     this.Loading = false;
   }
 
   async eventoMostrarPopupRegistrar(): Promise<void> {
+    if (!this.VentaCredito) {
+      this.toastService.warning('No se encontró la información de la venta');
+      return;
+    }
+
+    const saldoPendiente = Number(this.ResumenCredito?.balance_due ?? this.VentaCredito?.balance_due ?? 0);
+    if(saldoPendiente <= 0) {
+      this.toastService.info('La venta ya se encuentra pagada correctamente!');
+      return;
+    }
+
     const dialogRef = this.dialog.open(RegisterSalePaymentDialogComponent, {
       width: '800px',
       maxWidth: '95vw',
@@ -90,8 +112,8 @@ export class IndexVentasCreditoComponent extends FormularioBase implements OnIni
       autoFocus: false,
       data: {
         saleId: this.IdVenta,
-        simboloMoneda:
-          this.CompaniaActual?.SimboloMoneda || 'S/'
+        simboloMoneda: this.CompaniaActual?.SimboloMoneda || 'S/',
+        saldoPendiente: saldoPendiente,
       }
     });
     const respuesta = await dialogRef.afterClosed().toPromise();

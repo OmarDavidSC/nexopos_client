@@ -1,115 +1,66 @@
-<section class="payment-summary">
-    <div class="summary-header">
-        <div class="summary-title">
-            <span class="summary-icon">
-                <mat-icon>account_balance_wallet</mat-icon>
-            </span>
-
-            <div>
-                <h6>Resumen de pagos</h6>
-
-                <small> Información acumulada de los abonos registrados. </small>
-            </div>
+<div class="payment-summary">
+    <!-- TOTAL DE LA VENTA -->
+    <div class="summary-card">
+        <div class="summary-icon total-icon">
+            <mat-icon>receipt_long</mat-icon>
         </div>
 
-        <span class="history-status" [class.history-status-empty]="cantidadPagos === 0">
-            <mat-icon>
-                {{ cantidadPagos > 0 ? "check_circle" : "info" }}
-            </mat-icon>
+        <div class="summary-information">
+            <span> Total de la venta </span>
 
-            {{ cantidadPagos > 0 ? "Con movimientos" : "Sin movimientos" }}
-        </span>
+            <strong>
+                {{ compania?.SimboloMoneda || "S/" }}
+                {{ totalVenta | number: "1.2-2" }}
+            </strong>
+        </div>
     </div>
 
-    <div class="summary-grid" *ngIf="cantidadPagos > 0">
-        <!-- TOTAL PAGADO -->
-        <article class="summary-card summary-card-primary">
-            <div class="card-icon">
-                <mat-icon>payments</mat-icon>
-            </div>
+    <!-- TOTAL PAGADO -->
+    <div class="summary-card">
+        <div class="summary-icon paid-icon">
+            <mat-icon>payments</mat-icon>
+        </div>
 
-            <div class="card-content">
-                <small> Total pagado </small>
+        <div class="summary-information">
+            <span> Total pagado </span>
 
-                <strong>
-                    {{ compania?.SimboloMoneda || "S/" }}
-                    {{ totalPagado | number: "1.2-2" }}
-                </strong>
-
-                <span> Suma de pagos activos </span>
-            </div>
-        </article>
-
-        <!-- CANTIDAD DE PAGOS -->
-        <article class="summary-card">
-            <div class="card-icon">
-                <mat-icon>receipt_long</mat-icon>
-            </div>
-
-            <div class="card-content">
-                <small> Pagos registrados </small>
-
-                <strong>
-                    {{ cantidadPagos }}
-                </strong>
-
-                <span>
-                    {{
-                    cantidadPagos === 1
-                    ? "Movimiento registrado"
-                    : "Movimientos registrados"
-                    }}
-                </span>
-            </div>
-        </article>
-
-        <!-- ÚLTIMO PAGO -->
-        <article class="summary-card">
-            <div class="card-icon">
-                <mat-icon>event_available</mat-icon>
-            </div>
-
-            <div class="card-content">
-                <small> Último pago </small>
-
-                <strong class="date-value">
-                    {{ ultimoPago?.payment_date | date: "dd/MM/yyyy" }}
-                </strong>
-
-                <span>
-                    {{ metodoUltimoPago }}
-                </span>
-            </div>
-        </article>
-
-        <!-- SUCURSAL -->
-        <article class="summary-card">
-            <div class="card-icon">
-                <mat-icon>storefront</mat-icon>
-            </div>
-
-            <div class="card-content">
-                <small> Sucursal </small>
-
-                <strong class="branch-value">
-                    {{ sucursal }}
-                </strong>
-
-                <span> Origen del último pago </span>
-            </div>
-        </article>
+            <strong class="paid-amount">
+                {{ compania?.SimboloMoneda || "S/" }}
+                {{ totalPagado | number: "1.2-2" }}
+            </strong>
+        </div>
     </div>
 
-    <!-- SIN PAGOS -->
-    <div class="empty-summary" *ngIf="cantidadPagos === 0">
-        <span class="empty-icon">
+    <!-- SALDO PENDIENTE -->
+    <div class="summary-card pending-card">
+        <div class="summary-icon pending-icon">
             <mat-icon>account_balance_wallet</mat-icon>
-        </span>
+        </div>
 
-        <div>
-            <strong> Aún no existen pagos </strong>
+        <div class="summary-information">
+            <span> Saldo pendiente </span>
 
-            <p>Registra el primer abono para visualizar el resumen del historial.</p>
+            <strong class="pending-amount">
+                {{ compania?.SimboloMoneda || "S/" }}
+                {{ saldoPendiente | number: "1.2-2" }}
+            </strong>
         </div>
     </div>
-</section>
+
+    <!-- CANTIDAD DE PAGOS -->
+    <div class="summary-card">
+        <div class="summary-icon count-icon">
+            <mat-icon>format_list_numbered</mat-icon>
+        </div>
+
+        <div class="summary-information">
+            <span> Pagos registrados </span>
+
+            <strong>
+                {{ cantidadPagos }}
+            </strong>
+
+            <small> Estado: {{ estadoPago }} </small>
+        </div>
+    </div>
+</div>

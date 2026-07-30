@@ -17,7 +17,8 @@
     </div>
     <ng-container *ngIf="!Loading">
         <!-- RESUMEN -->
-        <app-sale-payment-summary [pagos]="ListaPagos" [compania]="CompaniaActual">
+        <app-sale-payment-summary [pagos]="ListaPagos" [venta]="VentaCredito" [resumen]="ResumenCredito"
+            [compania]="CompaniaActual">
         </app-sale-payment-summary>
         <!-- HISTORIAL -->
         <app-sale-payment-history [pagos]="ListaPagos" [compania]="CompaniaActual">

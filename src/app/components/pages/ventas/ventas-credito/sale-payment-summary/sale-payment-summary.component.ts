@@ -9,22 +9,48 @@ import { ECompany } from 'src/app/shared/models/entidades/ECompany';
 export class SalePaymentSummaryComponent {
 
   @Input() pagos: any[] = [];
+
+  @Input() venta: any = null;
+
+  @Input() resumen: any = {
+    total_sale: 0,
+    total_paid: 0,
+    balance_due: 0,
+    payment_count: 0,
+    payment_status: 'PENDING'
+  };
+
   @Input() compania: ECompany | null = null;
 
   get pagosActivos(): any[] {
     return (this.pagos || []).filter(pago => pago?.status === 'ACTIVE');
   }
 
+  get totalVenta(): number {
+    return Number(this.resumen?.total_sale ?? this.venta?.total ?? 0);
+  }
+
   get totalPagado(): number {
-    return this.pagosActivos.reduce(
-      (total: number, pago: any) =>
-        total + Number(pago?.amount || 0),
-      0
-    );
+    return Number(this.resumen?.total_paid ?? this.venta?.amount_paid ?? 0);
+  }
+
+  get saldoPendiente(): number {
+    return Number(this.resumen?.balance_due ?? this.venta?.balance_due ?? 0);
   }
 
   get cantidadPagos(): number {
-    return this.pagosActivos.length;
+    return Number(this.resumen?.payment_count ?? this.pagosActivos.length);
+  }
+
+  get estadoPago(): string {
+    const estado = this.resumen?.payment_status ?? this.venta?.payment_status;
+    const estados: Record<string, string> = {
+      PENDING: 'Pendiente',
+      PARTIAL: 'Pago parcial',
+      PAID: 'Pagado'
+    };
+
+    return estados[estado] || 'Pendiente';
   }
 
   get ultimoPago(): any | null {
@@ -34,8 +60,11 @@ export class SalePaymentSummaryComponent {
 
     return [...this.pagosActivos].sort(
       (a: any, b: any) => {
-        const fechaA = new Date(a?.payment_date || a.created_at).getTime();
+        const fechaA = new Date(a?.payment_date || a?.created_at).getTime();
         const fechaB = new Date(b?.payment_date || b?.created_at).getTime();
+        if (fechaA === fechaB) {
+          return Number(b?.id || 0) - Number(a?.id || 0);
+        }
         return fechaB - fechaA;
       }
     )[0];
@@ -45,7 +74,7 @@ export class SalePaymentSummaryComponent {
     return (this.ultimoPago?.branch?.name || this.pagosActivos[0]?.branch?.name || 'Sin sucursal');
   }
 
-  get metodoUlitmoPago(): string {
+  get metodoUltimoPago(): string {
     return this.obtenerMetodoPago(this.ultimoPago?.payment_method);
   }
 
@@ -53,12 +82,12 @@ export class SalePaymentSummaryComponent {
     const metodos: Record<string, string> = {
       CASH: 'Efectivo',
       CARD: 'Tarjeta',
-      TRANSFER: 'Trasnferencia',
+      TRANSFER: 'Transferencia',
       YAPE: 'Yape',
       PLIN: 'Plin',
       OTHER: 'Otro'
     };
+
     return metodos[metodo] || 'No especificado';
   }
-
 }
