@@ -1,0 +1,168 @@
+<section class="payment-history">
+    <div class="history-header">
+        <div class="history-title">
+            <span class="history-icon">
+                <mat-icon>history</mat-icon>
+            </span>
+
+            <div>
+                <h6>Historial de pagos</h6>
+
+                <small> Movimientos registrados en la venta a crédito. </small>
+            </div>
+        </div>
+
+        <span class="payment-counter">
+            {{ ListaPagosOrdenados.length }}
+
+            {{ ListaPagosOrdenados.length === 1 ? "pago" : "pagos" }}
+        </span>
+    </div>
+
+    <!-- HISTORIAL -->
+    <div class="timeline-container" *ngIf="ListaPagosOrdenados.length > 0">
+        <article class="timeline-item" *ngFor="let pago of ListaPagosOrdenados; let ultimo = last"
+            [class.timeline-item-last]="ultimo" [class.payment-cancelled]="pago.status === 'CANCELLED'">
+            <!-- LÍNEA E ÍCONO -->
+            <div class="timeline-marker">
+                <span class="marker-icon" [ngClass]="obtenerClaseTipo(pago.payment_type)">
+                    <mat-icon>
+                        {{ obtenerIconoMetodo(pago.payment_method) }}
+                    </mat-icon>
+                </span>
+
+                <span class="timeline-line" *ngIf="!ultimo"> </span>
+            </div>
+
+            <!-- CONTENIDO -->
+            <div class="payment-card">
+                <div class="payment-card-header">
+                    <div class="payment-type">
+                        <span class="payment-badge" [ngClass]="obtenerClaseTipo(pago.payment_type)">
+                            {{ obtenerTipoPago(pago.payment_type) }}
+                        </span>
+
+                        <span class="status-badge" [class.status-active]="pago.status === 'ACTIVE'"
+                            [class.status-cancelled]="pago.status === 'CANCELLED'">
+                            {{ obtenerEstado(pago.status) }}
+                        </span>
+                    </div>
+
+                    <div class="payment-amount">
+                        <small> Monto pagado </small>
+
+                        <strong>
+                            {{ compania?.SimboloMoneda || "S/" }}
+                            {{ pago.amount | number: "1.2-2" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="payment-information">
+                    <!-- FECHA -->
+                    <div class="information-item">
+                        <span class="information-icon">
+                            <mat-icon>calendar_today</mat-icon>
+                        </span>
+
+                        <div>
+                            <small> Fecha de pago </small>
+
+                            <strong>
+                                {{ pago.payment_date | date: "dd/MM/yyyy" }}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- MÉTODO -->
+                    <div class="information-item">
+                        <span class="information-icon">
+                            <mat-icon>
+                                {{ obtenerIconoMetodo(pago.payment_method) }}
+                            </mat-icon>
+                        </span>
+
+                        <div>
+                            <small> Método de pago </small>
+
+                            <strong>
+                                {{ obtenerMetodoPago(pago.payment_method) }}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- SUCURSAL -->
+                    <div class="information-item">
+                        <span class="information-icon">
+                            <mat-icon>storefront</mat-icon>
+                        </span>
+
+                        <div>
+                            <small> Sucursal </small>
+
+                            <strong>
+                                {{ pago.branch?.name || "Sin sucursal" }}
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- USUARIO -->
+                    <div class="information-item">
+                        <span class="information-icon">
+                            <mat-icon>person</mat-icon>
+                        </span>
+
+                        <div>
+                            <small> Registrado por </small>
+
+                            <strong>
+                                {{ obtenerNombreUsuario(pago.user) }}
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DETALLES ADICIONALES -->
+                <div class="payment-additional" *ngIf="pago.reference || pago.observation">
+                    <div class="additional-item" *ngIf="pago.reference">
+                        <mat-icon>tag</mat-icon>
+
+                        <span>
+                            <strong>Referencia:</strong>
+                            {{ pago.reference }}
+                        </span>
+                    </div>
+
+                    <div class="additional-item" *ngIf="pago.observation">
+                        <mat-icon>notes</mat-icon>
+
+                        <span>
+                            <strong>Observación:</strong>
+                            {{ pago.observation }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="payment-footer">
+                    <span> Registro #{{ pago.id }} </span>
+
+                    <span>
+                        Registrado el
+                        {{ pago.created_at | date: "dd/MM/yyyy, h:mm a" }}
+                    </span>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- SIN PAGOS -->
+    <div class="empty-history" *ngIf="ListaPagosOrdenados.length === 0">
+        <span class="empty-icon">
+            <mat-icon>history_toggle_off</mat-icon>
+        </span>
+
+        <h6>No existen pagos registrados</h6>
+
+        <p>Cuando se registre un abono, aparecerá en este historial.</p>
+    </div>
+</section>

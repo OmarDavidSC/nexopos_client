@@ -1,0 +1,347 @@
+<div class="payment-dialog">
+
+    <!-- ENCABEZADO -->
+    <div class="dialog-header">
+
+        <div class="header-information">
+
+            <div class="header-icon">
+                <mat-icon>add_card</mat-icon>
+            </div>
+
+            <div>
+                <h2>Registrar nuevo pago</h2>
+
+                <p>
+                    Ingresa la información del pago realizado por el cliente.
+                </p>
+            </div>
+
+        </div>
+
+        <button mat-icon-button type="button" matTooltip="Cerrar" [disabled]="Loading" (click)="cerrar()">
+
+            <mat-icon>close</mat-icon>
+
+        </button>
+
+    </div>
+
+    <!-- FORMULARIO -->
+    <form [formGroup]="FormularioPago" (ngSubmit)="registrarPago()">
+
+        <mat-dialog-content class="dialog-content">
+
+            <!-- SALDO PENDIENTE -->
+            <div class="pending-balance" *ngIf="data.saldoPendiente !== undefined">
+
+                <div class="balance-information">
+
+                    <div class="balance-icon">
+                        <mat-icon>
+                            account_balance_wallet
+                        </mat-icon>
+                    </div>
+
+                    <div>
+                        <span>Saldo pendiente</span>
+
+                        <strong>
+                            {{ data.simboloMoneda || 'S/' }}
+                            {{ data.saldoPendiente | number:'1.2-2' }}
+                        </strong>
+                    </div>
+
+                </div>
+
+                <button mat-stroked-button color="primary" type="button" [disabled]="Loading"
+                    (click)="establecerMontoCompleto()">
+
+                    <mat-icon>done_all</mat-icon>
+
+                    Pagar todo
+
+                </button>
+
+            </div>
+
+            <!-- MONTO Y FECHA -->
+            <div class="form-grid">
+
+                <!-- MONTO -->
+                <mat-form-field appearance="outline" class="full-width">
+
+                    <mat-label>
+                        Monto del pago
+                    </mat-label>
+
+                    <span matPrefix>
+                        {{ data.simboloMoneda || 'S/' }}&nbsp;
+                    </span>
+
+                    <input matInput type="number" min="0.01" step="0.01" formControlName="amount" placeholder="0.00"
+                        autocomplete="off">
+
+                    <mat-icon matSuffix>
+                        payments
+                    </mat-icon>
+
+                    <mat-hint *ngIf="data.saldoPendiente !== undefined">
+
+                        Máximo:
+                        {{ data.simboloMoneda || 'S/' }}
+                        {{ data.saldoPendiente | number:'1.2-2' }}
+
+                    </mat-hint>
+
+                    <mat-error *ngIf="
+                            FormularioPago
+                                .get('amount')
+                                ?.hasError('required')
+                        ">
+
+                        El monto del pago es obligatorio.
+
+                    </mat-error>
+
+                    <mat-error *ngIf="
+                            FormularioPago
+                                .get('amount')
+                                ?.hasError('min')
+                        ">
+
+                        El monto debe ser mayor a cero.
+
+                    </mat-error>
+
+                </mat-form-field>
+
+                <!-- FECHA -->
+                <mat-form-field appearance="outline" class="full-width">
+
+                    <mat-label>
+                        Fecha del pago
+                    </mat-label>
+
+                    <input matInput [matDatepicker]="paymentDatePicker" formControlName="payment_date"
+                        placeholder="Selecciona una fecha" readonly>
+
+                    <mat-datepicker-toggle matSuffix [for]="paymentDatePicker">
+                    </mat-datepicker-toggle>
+
+                    <mat-datepicker #paymentDatePicker>
+                    </mat-datepicker>
+
+                    <mat-error *ngIf="
+                            FormularioPago
+                                .get('payment_date')
+                                ?.hasError('required')
+                        ">
+
+                        La fecha del pago es obligatoria.
+
+                    </mat-error>
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- MÉTODO DE PAGO -->
+            <div class="payment-method-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Método de pago</h3>
+
+                        <p>
+                            Selecciona cómo se realizó el pago.
+                        </p>
+                    </div>
+
+                    <mat-icon>
+                        account_balance_wallet
+                    </mat-icon>
+
+                </div>
+
+                <div class="payment-method-grid">
+
+                    <button type="button" class="payment-method-card" *ngFor="let metodo of MetodosPago"
+                        [class.payment-method-selected]="
+                            FormularioPago
+                                .get('payment_method')
+                                ?.value === metodo.value
+                        " [disabled]="Loading" (click)="seleccionarMetodoPago(metodo.value)">
+
+                        <span class="method-icon">
+
+                            <mat-icon>
+                                {{ metodo.icon }}
+                            </mat-icon>
+
+                        </span>
+
+                        <span class="method-information">
+
+                            <strong>
+                                {{ metodo.label }}
+                            </strong>
+
+                            <small>
+                                {{ metodo.description }}
+                            </small>
+
+                        </span>
+
+                        <span class="selected-indicator" *ngIf="
+                                FormularioPago
+                                    .get('payment_method')
+                                    ?.value === metodo.value
+                            ">
+
+                            <mat-icon>
+                                check
+                            </mat-icon>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+                <mat-error class="payment-method-error" *ngIf="
+                        FormularioPago
+                            .get('payment_method')
+                            ?.invalid
+                        &&
+                        FormularioPago
+                            .get('payment_method')
+                            ?.touched
+                    ">
+
+                    Selecciona un método de pago.
+
+                </mat-error>
+
+            </div>
+
+            <!-- REFERENCIA -->
+            <mat-form-field appearance="outline" class="full-width">
+
+                <mat-label>
+                    Número de operación o referencia
+                </mat-label>
+
+                <input matInput type="text" maxlength="100" formControlName="reference" placeholder="Ejemplo: 45879621"
+                    autocomplete="off">
+
+                <mat-icon matSuffix>
+                    tag
+                </mat-icon>
+
+                <mat-hint>
+                    Obligatorio para pagos electrónicos.
+                </mat-hint>
+
+                <mat-error *ngIf="
+                        FormularioPago
+                            .get('reference')
+                            ?.hasError('required')
+                    ">
+
+                    Ingresa el número de operación.
+
+                </mat-error>
+
+                <mat-error *ngIf="
+                        FormularioPago
+                            .get('reference')
+                            ?.hasError('maxlength')
+                    ">
+
+                    La referencia admite como máximo 100 caracteres.
+
+                </mat-error>
+
+            </mat-form-field>
+
+            <!-- OBSERVACIÓN -->
+            <mat-form-field appearance="outline" class="full-width observation-field">
+
+                <mat-label>
+                    Observación
+                </mat-label>
+
+                <textarea matInput rows="3" maxlength="250" formControlName="observation"
+                    placeholder="Escribe una observación opcional">
+                </textarea>
+
+                <mat-icon matSuffix>
+                    notes
+                </mat-icon>
+
+                <mat-hint align="end">
+
+                    {{
+                    FormularioPago
+                    .get('observation')
+                    ?.value?.length || 0
+                    }}/250
+
+                </mat-hint>
+
+                <mat-error *ngIf="
+                        FormularioPago
+                            .get('observation')
+                            ?.hasError('maxlength')
+                    ">
+
+                    La observación admite como máximo 250 caracteres.
+
+                </mat-error>
+
+            </mat-form-field>
+
+        </mat-dialog-content>
+
+        <!-- ACCIONES -->
+        <mat-dialog-actions align="end" class="dialog-actions">
+
+            <button mat-stroked-button type="button" [disabled]="Loading" (click)="cerrar()">
+
+                <mat-icon>
+                    close
+                </mat-icon>
+
+                Cancelar
+
+            </button>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="
+                    Loading ||
+                    FormularioPago.invalid
+                ">
+
+                <mat-spinner *ngIf="Loading" diameter="18">
+                </mat-spinner>
+
+                <mat-icon *ngIf="!Loading">
+                    save
+                </mat-icon>
+
+                <span>
+                    {{
+                    Loading
+                    ? 'Registrando...'
+                    : 'Registrar pago'
+                    }}
+                </span>
+
+            </button>
+
+        </mat-dialog-actions>
+
+    </form>
+
+</div>

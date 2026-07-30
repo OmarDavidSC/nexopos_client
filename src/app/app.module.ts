@@ -120,6 +120,9 @@ import { SaleProductSelectorComponent } from './components/pages/ventas/formular
 import { SaleDetailComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-detail/sale-detail.component';
 import { SaleSummaryNvComponent } from './components/pages/ventas/formulario-nueva-venta/widzard/sale-summary-nv/sale-summary-nv.component';
 import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-credito/index-ventas-credito/index-ventas-credito.component';
+import { SalePaymentSummaryComponent } from './components/pages/ventas/ventas-credito/sale-payment-summary/sale-payment-summary.component';
+import { SalePaymentHistoryComponent } from './components/pages/ventas/ventas-credito/sale-payment-history/sale-payment-history.component';
+import { RegisterSalePaymentDialogComponent } from './components/pages/ventas/ventas-credito/register-sale-payment-dialog/register-sale-payment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -230,6 +233,9 @@ import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-cr
     SaleDetailComponent,
     SaleSummaryNvComponent,
     IndexVentasCreditoComponent,
+    SalePaymentSummaryComponent,
+    SalePaymentHistoryComponent,
+    RegisterSalePaymentDialogComponent,
   ],
   imports: [
     ComunModule,

@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { BranchService } from 'src/app/shared/services/branch.service';
 import { SalePaymenteService } from 'src/app/shared/services/salepayement.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
+import { RegisterSalePaymentDialogComponent } from '../register-sale-payment-dialog/register-sale-payment-dialog.component';
 
 @Component({
   selector: 'app-index-ventas-credito',
@@ -20,7 +21,7 @@ import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 })
 export class IndexVentasCreditoComponent extends FormularioBase implements OnInit {
 
-  ListPagos: any[] = [];
+  ListaPagos: any[] = [];
   ListaSucursales: ESucursal[] = [];
   IdVenta: number = 0;
 
@@ -29,7 +30,6 @@ export class IndexVentasCreditoComponent extends FormularioBase implements OnIni
   Role: ERol | null = null;
 
   Loading: boolean = false;
-
 
   constructor(
     public dialog: MatDialog,
@@ -78,8 +78,26 @@ export class IndexVentasCreditoComponent extends FormularioBase implements OnIni
   async obtenerMaestros() {
     this.Loading = true;
     const data = await this.pagosService.payments(this.IdVenta);
-    this.ListPagos = data.data;
+    this.ListaPagos = data.data;
     this.Loading = false;
+  }
+
+  async eventoMostrarPopupRegistrar(): Promise<void> {
+    const dialogRef = this.dialog.open(RegisterSalePaymentDialogComponent, {
+      width: '800px',
+      maxWidth: '95vw',
+      disableClose: true,
+      autoFocus: false,
+      data: {
+        saleId: this.IdVenta,
+        simboloMoneda:
+          this.CompaniaActual?.SimboloMoneda || 'S/'
+      }
+    });
+    const respuesta = await dialogRef.afterClosed().toPromise();
+    if (respuesta) {
+      await this.initialize();
+    }
   }
 
 } 

@@ -31,9 +31,9 @@ export class SalePaymenteService {
         }
     }
 
-    async sotre(formData: any): Promise<ApiResponse<any>> {
+    async store(formData: any): Promise<ApiResponse<any>> {
         try {
-            const url = this.urlBase + `/${formData.get('id')}/sotre`;
+            const url = this.urlBase + `/${formData.get('id')}/store`;
             const response = await this.http.postForm(url, formData).toPromise();
             return response as ApiResponse<any>;
         } catch (error) {

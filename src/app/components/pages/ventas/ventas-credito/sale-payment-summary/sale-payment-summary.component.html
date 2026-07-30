@@ -1,0 +1,115 @@
+<section class="payment-summary">
+    <div class="summary-header">
+        <div class="summary-title">
+            <span class="summary-icon">
+                <mat-icon>account_balance_wallet</mat-icon>
+            </span>
+
+            <div>
+                <h6>Resumen de pagos</h6>
+
+                <small> Información acumulada de los abonos registrados. </small>
+            </div>
+        </div>
+
+        <span class="history-status" [class.history-status-empty]="cantidadPagos === 0">
+            <mat-icon>
+                {{ cantidadPagos > 0 ? "check_circle" : "info" }}
+            </mat-icon>
+
+            {{ cantidadPagos > 0 ? "Con movimientos" : "Sin movimientos" }}
+        </span>
+    </div>
+
+    <div class="summary-grid" *ngIf="cantidadPagos > 0">
+        <!-- TOTAL PAGADO -->
+        <article class="summary-card summary-card-primary">
+            <div class="card-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
+
+            <div class="card-content">
+                <small> Total pagado </small>
+
+                <strong>
+                    {{ compania?.SimboloMoneda || "S/" }}
+                    {{ totalPagado | number: "1.2-2" }}
+                </strong>
+
+                <span> Suma de pagos activos </span>
+            </div>
+        </article>
+
+        <!-- CANTIDAD DE PAGOS -->
+        <article class="summary-card">
+            <div class="card-icon">
+                <mat-icon>receipt_long</mat-icon>
+            </div>
+
+            <div class="card-content">
+                <small> Pagos registrados </small>
+
+                <strong>
+                    {{ cantidadPagos }}
+                </strong>
+
+                <span>
+                    {{
+                    cantidadPagos === 1
+                    ? "Movimiento registrado"
+                    : "Movimientos registrados"
+                    }}
+                </span>
+            </div>
+        </article>
+
+        <!-- ÚLTIMO PAGO -->
+        <article class="summary-card">
+            <div class="card-icon">
+                <mat-icon>event_available</mat-icon>
+            </div>
+
+            <div class="card-content">
+                <small> Último pago </small>
+
+                <strong class="date-value">
+                    {{ ultimoPago?.payment_date | date: "dd/MM/yyyy" }}
+                </strong>
+
+                <span>
+                    {{ metodoUltimoPago }}
+                </span>
+            </div>
+        </article>
+
+        <!-- SUCURSAL -->
+        <article class="summary-card">
+            <div class="card-icon">
+                <mat-icon>storefront</mat-icon>
+            </div>
+
+            <div class="card-content">
+                <small> Sucursal </small>
+
+                <strong class="branch-value">
+                    {{ sucursal }}
+                </strong>
+
+                <span> Origen del último pago </span>
+            </div>
+        </article>
+    </div>
+
+    <!-- SIN PAGOS -->
+    <div class="empty-summary" *ngIf="cantidadPagos === 0">
+        <span class="empty-icon">
+            <mat-icon>account_balance_wallet</mat-icon>
+        </span>
+
+        <div>
+            <strong> Aún no existen pagos </strong>
+
+            <p>Registra el primer abono para visualizar el resumen del historial.</p>
+        </div>
+    </div>
+</section>

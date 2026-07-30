@@ -1,1 +1,26 @@
-<p>index-ventas-credito works!</p>
+<app-adm-header
+    [descripcion]="'Consulta el historial completo de pagos realizados para esta venta a crédito. Visualiza los abonos registrados, fechas, métodos de pago, usuarios responsables y el estado actual de la deuda.'"
+    [breadcrumbs]="[
+        { nombre: 'Ventas' },
+        { nombre: 'Bandeja de Ventas', ruta: '/bandeja-ventas' },
+        { nombre: 'Historial de Pagos' }
+    ]" [visible]="true" [textoBoton]="'Registrar Pago'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+    [rutaRegreso]="'/bandeja-ventas'">
+</app-adm-header>
+<div class="container-fluid">
+    <!-- CARGANDO -->
+    <div class="loading-container" *ngIf="Loading">
+        <mat-spinner diameter="36"></mat-spinner>
+        <span>
+            Cargando historial de pagos...
+        </span>
+    </div>
+    <ng-container *ngIf="!Loading">
+        <!-- RESUMEN -->
+        <app-sale-payment-summary [pagos]="ListaPagos" [compania]="CompaniaActual">
+        </app-sale-payment-summary>
+        <!-- HISTORIAL -->
+        <app-sale-payment-history [pagos]="ListaPagos" [compania]="CompaniaActual">
+        </app-sale-payment-history>
+    </ng-container>
+</div>

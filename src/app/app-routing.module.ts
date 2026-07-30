@@ -59,7 +59,7 @@ const routes: Routes = [
   { path: 'bandeja-ventas', component: BandejaVentasComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
-  { path: 'bandeja-ventas/:id/pagos-ventas', component: IndexVentasCreditoComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-ventas/:id/pagos-venta', component: IndexVentasCreditoComponent, canActivate: [AuthGuard] },
 
   //reportes
   { path: 'reporte-ganancias', component: IndexGananciasComponent, canActivate: [AuthGuard] },
