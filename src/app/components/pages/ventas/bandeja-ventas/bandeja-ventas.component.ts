@@ -196,4 +196,8 @@ export class BandejaVentasComponent extends FormularioBase implements OnInit {
       await this.initialize();
     }
   }
+
+  OnEventoHistorialPagos(venta: EVenta): void {
+    this.router.navigate(['/bandeja-ventas', venta.Id, 'pagos-venta']);
+  }
 }

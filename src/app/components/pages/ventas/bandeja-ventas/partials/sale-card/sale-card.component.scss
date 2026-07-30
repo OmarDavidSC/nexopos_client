@@ -1,12 +1,21 @@
 .sale-card {
-    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e5e7eb !important;
     border-left: 4px solid transparent !important;
-    transition: transform .2s ease, box-shadow .2s ease;
-}
+    border-radius: 12px;
+    background: #ffffff;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 
-.sale-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(15, 23, 42, .08) !important;
+    &:hover {
+        border-color: #cbd5e1 !important;
+        box-shadow:
+            0 8px 20px rgba(15, 23, 42, 0.08) !important;
+        transform: translateY(-1px);
+    }
 }
 
 .sale-completed {
@@ -21,10 +30,36 @@
     border-left-color: #ef4444 !important;
 }
 
+.credit-sale-card {
+    padding-top: 2px;
+}
+
+/* ETIQUETA CRÉDITO */
+
+.credit-ribbon {
+    position: absolute;
+    z-index: 5;
+    top: 13px;
+    right: -35px;
+    width: 125px;
+    padding: 5px 0;
+    background: #7c3aed;
+    box-shadow: 0 3px 8px rgba(76, 29, 149, 0.25);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-align: center;
+    transform: rotate(42deg);
+}
+
+/* ICONO PRINCIPAL */
+
 .sale-status-icon {
+    display: flex;
     width: 42px;
     height: 42px;
-    display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
@@ -51,18 +86,32 @@
     color: #b91c1c;
 }
 
+/* CABECERA */
+
+.sale-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.sale-header-left {
+    min-width: 0;
+}
+
 .document-number {
+    color: #111827;
     font-size: 17px;
     font-weight: 700;
-    color: #111827;
 }
 
 .customer-name {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 13px;
+    margin-top: 4px;
     color: #64748b;
+    font-size: 13px;
 
     mat-icon {
         width: 17px;
@@ -71,23 +120,89 @@
     }
 }
 
-.sale-amount {
-    font-size: 21px;
-    color: #2563eb;
+.sale-total-container {
+    min-width: 145px;
+    padding-right: 24px;
+    text-align: right;
+
+    small {
+        display: block;
+        color: #94a3b8;
+        font-size: 11px;
+    }
 }
 
-.metadata-item {
-    display: flex;
+.sale-amount {
+    display: block;
+    margin-top: 2px;
+    color: #2563eb;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+/* ESTADO DEL CRÉDITO */
+
+.credit-status-badge {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    min-width: 0;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
 
     mat-icon {
+        width: 13px;
+        height: 13px;
+        font-size: 13px;
+    }
+}
+
+.credit-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.credit-partial {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.credit-paid {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.credit-overdue {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* INFORMACIÓN DEL CRÉDITO */
+
+.credit-information {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border: 1px solid #ede9fe;
+    border-radius: 10px;
+    background: #faf9ff;
+}
+
+.credit-information-item {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+
+    >mat-icon {
         width: 18px;
         height: 18px;
         flex-shrink: 0;
+        color: #8b5cf6;
         font-size: 18px;
-        color: #94a3b8;
     }
 
     div {
@@ -97,25 +212,95 @@
     }
 
     small {
-        font-size: 11px;
-        color: #94a3b8;
+        color: #8b8fa3;
+        font-size: 10px;
     }
 
     strong {
         overflow: hidden;
+        color: #374151;
         font-size: 12px;
-        font-weight: 600;
-        color: #475569;
+        font-weight: 700;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 }
 
+.paid-value {
+    color: #15803d !important;
+}
+
+.balance-value {
+    color: #dc2626 !important;
+}
+
+.overdue-value {
+    color: #dc2626 !important;
+}
+
+/* METADATOS */
+
+.sale-metadata {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.metadata-item {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+
+    >mat-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: #94a3b8;
+        font-size: 18px;
+    }
+
+    div {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+    }
+
+    small {
+        color: #94a3b8;
+        font-size: 10px;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* ACCIONES */
+
 .sale-actions {
-    min-width: 190px;
+    display: flex;
+    min-width: 195px;
+    flex-direction: column;
+    gap: 8px;
 
     button {
         width: 100%;
+    }
+}
+
+.payment-history-button {
+    background: #7c3aed !important;
+    color: #ffffff !important;
+
+    &:hover {
+        background: #6d28d9 !important;
     }
 }
 
@@ -144,14 +329,51 @@
     min-width: 0;
 }
 
+/* TABLET */
+
 @media (max-width: 991.98px) {
+
     .sale-actions {
         width: 100%;
         min-width: 0;
+        flex-direction: row;
+
+        button {
+            flex: 1;
+        }
+    }
+
+    .sale-total-container {
+        padding-right: 35px;
+    }
+}
+
+/* MÓVIL */
+
+@media (max-width: 767.98px) {
+
+    .sale-card-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .sale-total-container {
+        min-width: 0;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .credit-information {
+        grid-template-columns: 1fr;
+    }
+
+    .sale-metadata {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (max-width: 575.98px) {
+
     .sale-card .card-body {
         padding: 14px !important;
     }
@@ -167,5 +389,15 @@
 
     .document-number {
         font-size: 15px;
+    }
+
+    .sale-actions {
+        flex-direction: column;
+    }
+
+    .credit-ribbon {
+        top: 11px;
+        right: -38px;
+        font-size: 9px;
     }
 }

@@ -22,7 +22,10 @@ export class EVenta {
 
     MetodoCondicion: string;
     ImportePagado: number;
+    SaldoPendiente: number;
     FechaVencimiento: string;
+    FechaVencimientoSinFormato: string;
+    EstadoPago: string;
 
     constructor() {
         this.Id = 0;
@@ -45,7 +48,10 @@ export class EVenta {
         this.EstadoSunat = "";
         this.MetodoCondicion = "";
         this.ImportePagado = 0;
+        this.SaldoPendiente = 0;
         this.FechaVencimiento = "";
+        this.FechaVencimientoSinFormato = "";
+        this.EstadoPago = "";
     }
 
     public static parseJson(element: any): EVenta {
@@ -70,7 +76,10 @@ export class EVenta {
         objeto.EstadoSunat = SPParse.getString(element["sunat_status"]);
         objeto.MetodoCondicion = SPParse.getString(element["payment_condition"]);
         objeto.ImportePagado = SPParse.getNumber(element["amount_paid"]);
+        objeto.SaldoPendiente = SPParse.getNumber(element["balance_due"]);
         objeto.FechaVencimiento = SPParse.getString(element["due_date"]);
+        objeto.FechaVencimientoSinFormato = SPParse.getString(element["due_date_raw"]);
+        objeto.EstadoPago = SPParse.getString(element["payment_status"]);
         return objeto;
     }
 

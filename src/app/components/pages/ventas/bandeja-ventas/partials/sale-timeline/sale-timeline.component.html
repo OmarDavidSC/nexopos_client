@@ -8,8 +8,7 @@
     <ng-container *ngIf="!loading">
         <ng-container *ngIf="sales.length > 0; else empty">
             <app-sale-card *ngFor="let item of sales" [sale]="item" [moneda]="moneda" (view)="view.emit($event)"
-                (cancel)="cancel.emit($event)">
-            </app-sale-card>
+                (cancel)="cancel.emit($event)" (paymentHistory)="paymentHistory.emit($event)"></app-sale-card>
         </ng-container>
     </ng-container>
     <ng-template #empty>

@@ -13,5 +13,6 @@ export class SaleTimelineComponent {
   @Input() loading: boolean = false;
   @Output() view = new EventEmitter<EVenta>();
   @Output() cancel = new EventEmitter<EVenta>();
+  @Output() paymentHistory = new EventEmitter<EVenta>();
 
 }

@@ -10,7 +10,7 @@
     (statusChange)="aplicarFiltro()" (payment_methodChange)="aplicarFiltro()" (clear)="clearFilters()">
 </app-sale-filters>
 <app-sale-timeline [moneda]="CompaniaActual?.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading"
-    (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)">
+    (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)" (paymentHistory)="OnEventoHistorialPagos($event)">
 </app-sale-timeline>
 <div class="sales-pagination" *ngIf="!Loading && TotalRegistros > 0">
     <div class="pagination-information">
