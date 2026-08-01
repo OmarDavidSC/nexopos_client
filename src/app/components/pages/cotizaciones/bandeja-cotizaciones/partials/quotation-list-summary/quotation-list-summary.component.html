@@ -1,0 +1,125 @@
+<section class="quotation-summary-list">
+    <!-- TOTAL DE COTIZACIONES -->
+    <article class="summary-main-card">
+        <div class="main-card-information">
+            <div class="main-icon">
+                <mat-icon>request_quote</mat-icon>
+            </div>
+
+            <div>
+                <span>Total de cotizaciones</span>
+
+                <strong>
+                    {{ total }}
+                </strong>
+
+                <small> Cotizaciones registradas </small>
+            </div>
+        </div>
+
+        <div class="main-card-amount">
+            <span>Monto cotizado</span>
+
+            <strong>
+                {{ moneda || "S/" }}
+                {{ montoTotal | number: "1.2-2" }}
+            </strong>
+        </div>
+    </article>
+
+    <!-- ESTADOS -->
+    <div class="summary-status-grid">
+        <!-- BORRADORES -->
+        <article class="status-card">
+            <div class="status-icon draft-icon">
+                <mat-icon>edit_note</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Borradores</span>
+                <strong>{{ borradores }}</strong>
+            </div>
+
+            <span class="status-indicator draft-indicator"> </span>
+        </article>
+
+        <!-- ENVIADAS -->
+        <article class="status-card">
+            <div class="status-icon sent-icon">
+                <mat-icon>send</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Enviadas</span>
+                <strong>{{ enviadas }}</strong>
+            </div>
+
+            <span class="status-indicator sent-indicator"> </span>
+        </article>
+
+        <!-- ACEPTADAS -->
+        <article class="status-card">
+            <div class="status-icon accepted-icon">
+                <mat-icon>task_alt</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Aceptadas</span>
+                <strong>{{ aceptadas }}</strong>
+            </div>
+
+            <span class="status-indicator accepted-indicator"> </span>
+        </article>
+
+        <!-- CONVERTIDAS -->
+        <article class="status-card converted-card">
+            <div class="status-icon converted-icon">
+                <mat-icon>sync_alt</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Convertidas</span>
+                <strong>{{ convertidas }}</strong>
+
+                <small> {{ porcentajeConvertidas }}% del total </small>
+            </div>
+
+            <span class="status-indicator converted-indicator"> </span>
+        </article>
+
+        <!-- VENCIDAS -->
+        <article class="status-card">
+            <div class="status-icon expired-icon">
+                <mat-icon>event_busy</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Vencidas</span>
+                <strong>{{ vencidas }}</strong>
+            </div>
+
+            <span class="status-indicator expired-indicator"> </span>
+        </article>
+
+        <!-- RECHAZADAS / CANCELADAS -->
+        <article class="status-card">
+            <div class="status-icon rejected-icon">
+                <mat-icon>block</mat-icon>
+            </div>
+
+            <div class="status-information">
+                <span>Sin continuidad</span>
+
+                <strong>
+                    {{ rechazadas + canceladas }}
+                </strong>
+
+                <small>
+                    {{ rechazadas }} rechazadas · {{ canceladas }} canceladas
+                </small>
+            </div>
+
+            <span class="status-indicator rejected-indicator"> </span>
+        </article>
+    </div>
+</section>

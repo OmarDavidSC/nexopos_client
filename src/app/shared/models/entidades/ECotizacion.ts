@@ -4,6 +4,7 @@ export class ECotizacion {
     Id: any;
     IdCliente: number;
     NombreCliente: string;
+    TelefonoCliente: string;
     NombreSucursal: string;
     RegistradoPor: string;
     Cotizacion: string;
@@ -25,6 +26,7 @@ export class ECotizacion {
         this.Id = 0;
         this.IdCliente = 0;
         this.NombreCliente = "";
+        this.TelefonoCliente = "";
         this.NombreSucursal = "";
         this.RegistradoPor = "";
         this.Cotizacion = "";
@@ -47,6 +49,7 @@ export class ECotizacion {
         objeto.Id = SPParse.getNumber(element["id"]);
         objeto.IdCliente = SPParse.getNumber(element["customer_id"]);
         objeto.NombreCliente = SPParse.getString(element["customer_name"]);
+        objeto.TelefonoCliente = SPParse.getString(element["customer_phone"]);
         objeto.NombreSucursal = SPParse.getString(element["branch_name"]);
         objeto.RegistradoPor = SPParse.getString(element["created_by"]);
         objeto.Cotizacion = SPParse.getString(element["quotation"]);

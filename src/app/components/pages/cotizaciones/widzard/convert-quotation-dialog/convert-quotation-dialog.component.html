@@ -1,0 +1,205 @@
+<div class="conversion-dialog">
+    <!-- CABECERA -->
+    <header class="dialog-header">
+        <div class="header-information">
+            <div class="header-icon">
+                <mat-icon>point_of_sale</mat-icon>
+            </div>
+            <div>
+                <h2>Convertir cotización en venta</h2>
+                <p>Configura el comprobante y la forma de pago de la nueva venta.</p>
+            </div>
+        </div>
+        <button mat-icon-button type="button" matTooltip="Cerrar" [disabled]="Loading" (click)="cerrar()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </header>
+    <form [formGroup]="FormularioConversion" (ngSubmit)="confirmar()">
+        <mat-dialog-content class="dialog-content">
+            <!-- INFORMACIÓN DE LA COTIZACIÓN -->
+            <section class="quotation-information">
+                <div class="quotation-main">
+                    <div class="quotation-icon">
+                        <mat-icon>request_quote</mat-icon>
+                    </div>
+                    <div>
+                        <span>Cotización</span>
+                        <strong> {{ data.cotizacion?.Cotizacion || "Sin número" }} </strong>
+                        <small> {{ data.cotizacion?.NombreCliente || "Cliente no disponible" }}</small>
+                    </div>
+                </div>
+                <div class="quotation-total">
+                    <span>Total a convertir</span>
+                    <strong>{{ data.simboloMoneda || "S/" }}{{ totalCotizacion | number: "1.2-2" }}</strong>
+                </div>
+            </section>
+            <!-- DATOS DE LA VENTA -->
+            <section class="form-section">
+                <div class="section-title">
+                    <div>
+                        <h3>Datos de la venta</h3>
+                        <p>Define la fecha y el comprobante que se generará.</p>
+                    </div>
+                    <mat-icon>receipt_long</mat-icon>
+                </div>
+                <div class="form-grid">
+                    <!-- FECHA -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Fecha de venta</mat-label>
+                        <input matInput readonly [matDatepicker]="saleDatePicker" formControlName="sale_date" />
+                        <mat-datepicker-toggle matSuffix [for]="saleDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #saleDatePicker> </mat-datepicker>
+                        <mat-error> Selecciona la fecha de venta. </mat-error>
+                    </mat-form-field>
+                    <!-- COMPROBANTE -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Comprobante</mat-label>
+                        <mat-select formControlName="voucher_type" (selectionChange)="OnEventoCambiarComprobante()">
+                            <mat-option value="BOLETA"> Boleta </mat-option>
+                            <mat-option value="FACTURA"> Factura </mat-option>
+                            <!-- <mat-option value="TICKET"> Ticket </mat-option>
+                            <mat-option value="NOTA"> Nota </mat-option> -->
+                        </mat-select>
+                        <mat-error> Selecciona el comprobante. </mat-error>
+                    </mat-form-field>
+                    <!-- SERIE -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Serie</mat-label>
+                        <input matInput maxlength="10" formControlName="voucher_series" autocomplete="off" />
+                        <mat-icon matSuffix>tag</mat-icon>
+                        <mat-error> Ingresa la serie. </mat-error>
+                    </mat-form-field>
+                </div>
+            </section>
+            <!-- CONDICIÓN DE PAGO -->
+            <section class="form-section">
+                <div class="section-title">
+                    <div>
+                        <h3>Condición de pago</h3>
+                        <p>Selecciona si la venta será al contado o a crédito.</p>
+                    </div>
+                    <mat-icon>account_balance_wallet</mat-icon>
+                </div>
+                <div class="payment-condition-grid">
+                    <button type="button" class="condition-card"
+                        [class.selected]="FormularioConversion.get('payment_condition')?.value === 'CASH'"
+                        (click)="FormularioConversion.get('payment_condition')?.setValue('CASH'); OnEventoCambiarCondicionPago()">
+                        <span class="condition-icon cash-icon">
+                            <mat-icon>payments</mat-icon>
+                        </span>
+                        <span class="condition-information">
+                            <strong>Contado</strong>
+                            <small> La venta se registra completamente pagada. </small>
+                        </span>
+                        <mat-icon class="check-icon"
+                            *ngIf="FormularioConversion.get('payment_condition')?.value === 'CASH'">
+                            check_circle
+                        </mat-icon>
+                    </button>
+                    <button type="button" class="condition-card"
+                        [class.selected]="FormularioConversion.get('payment_condition')?.value === 'CREDIT'"
+                        (click)="FormularioConversion.get('payment_condition')?.setValue('CREDIT');OnEventoCambiarCondicionPago()">
+                        <span class="condition-icon credit-icon">
+                            <mat-icon>schedule</mat-icon>
+                        </span>
+                        <span class="condition-information">
+                            <strong>Crédito</strong>
+                            <small>
+                                Permite registrar un pago inicial y saldo pendiente.
+                            </small>
+                        </span>
+                        <mat-icon class="check-icon"
+                            *ngIf="FormularioConversion.get('payment_condition')?.value ==='CREDIT'">
+                            check_circle
+                        </mat-icon>
+                    </button>
+                </div>
+            </section>
+            <!-- MÉTODO DE PAGO -->
+            <section class="form-section">
+                <div class="section-title">
+                    <div>
+                        <h3>
+                            {{ esCredito ? "Método del pago inicial" : "Método de pago" }}
+                        </h3>
+                        <p>Indica cómo realizará el pago el cliente.</p>
+                    </div>
+                    <mat-icon>credit_card</mat-icon>
+                </div>
+                <div class="payment-method-grid">
+                    <button type="button" class="payment-method-card" *ngFor="let metodo of MetodosPago"
+                        [class.selected]="FormularioConversion.get('payment_method')?.value === metodo.value"
+                        (click)="seleccionarMetodoPago(metodo.value)">
+                        <mat-icon>{{ metodo.icon }}</mat-icon>
+                        <span>{{ metodo.label }}</span>
+                        <mat-icon class="method-check"
+                            *ngIf="FormularioConversion.get('payment_method')?.value ===metodo.value">
+                            check
+                        </mat-icon>
+                    </button>
+                </div>
+            </section>
+            <!-- DATOS DE CRÉDITO -->
+            <section class="credit-section" *ngIf="esCredito">
+                <div class="credit-header">
+                    <div>
+                        <mat-icon>info</mat-icon>
+                        <div>
+                            <strong>Venta a crédito</strong>
+                            <span>
+                                Registra el pago inicial y la fecha límite para cancelar el
+                                saldo.
+                            </span>
+                        </div>
+                    </div>
+                    <span class="pending-badge">
+                        Pendiente:
+                        {{ data.simboloMoneda || "S/" }}
+                        {{ saldoPendiente | number: "1.2-2" }}
+                    </span>
+                </div>
+                <div class="form-grid credit-grid">
+                    <!-- PAGO INICIAL -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Pago inicial</mat-label>
+                        <span matPrefix>
+                            {{ data.simboloMoneda || "S/" }}
+                            &nbsp;
+                        </span>
+                        <input matInput type="number" min="0" step="0.01" formControlName="amount_paid" />
+                        <button mat-icon-button matSuffix type="button" matTooltip="Completar el monto total"
+                            (click)="establecerPagoCompleto()">
+                            <mat-icon>done_all</mat-icon>
+                        </button>
+                        <mat-error *ngIf="FormularioConversion.get('amount_paid')?.hasError('exceedsTotal')">
+                            El pago supera el total.
+                        </mat-error>
+                        <mat-error *ngIf="FormularioConversion.get('amount_paid')?.hasError('invalidCreditAmount')">
+                            Para crédito debe quedar saldo pendiente.
+                        </mat-error>
+                    </mat-form-field>
+                    <!-- VENCIMIENTO -->
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Fecha de vencimiento</mat-label>
+                        <input matInput readonly [matDatepicker]="dueDatePicker"
+                            [min]="FormularioConversion.get('sale_date')?.value" formControlName="due_date" />
+                        <mat-datepicker-toggle matSuffix [for]="dueDatePicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dueDatePicker> </mat-datepicker>
+                        <mat-error> Selecciona la fecha de vencimiento. </mat-error>
+                    </mat-form-field>
+                </div>
+            </section>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end" class="dialog-actions">
+            <button mat-stroked-button type="button" [disabled]="Loading" (click)="cerrar()">
+                <mat-icon>close</mat-icon>
+                Cancelar
+            </button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="Loading || FormularioConversion.invalid">
+                <mat-icon> point_of_sale </mat-icon>
+                Convertir en venta
+            </button>
+        </mat-dialog-actions>
+    </form>
+</div>

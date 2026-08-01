@@ -1,0 +1,221 @@
+.quotation-filters {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #ffffff;
+}
+
+.filters-main {
+    display: grid;
+    grid-template-columns:
+        minmax(230px, 1.6fr) minmax(160px, 1fr) minmax(150px, 0.9fr) minmax(145px, 0.85fr) auto auto auto;
+    align-items: start;
+    gap: 8px;
+}
+
+.filter-field {
+    width: 100%;
+}
+
+.search-button,
+.advanced-button {
+    height: 56px;
+    border-radius: 9px !important;
+    white-space: nowrap;
+}
+
+.search-button {
+    min-width: 100px;
+
+    mat-spinner {
+        display: inline-block;
+        margin-right: 6px;
+    }
+}
+
+.advanced-button {
+    position: relative;
+    min-width: 105px;
+
+    &.active {
+        border-color: #93c5fd;
+        background: #eff6ff;
+        color: #2563eb;
+    }
+}
+
+.filter-counter {
+    display: inline-flex;
+    min-width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    padding: 0 5px;
+    border-radius: 20px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.clear-button {
+    width: 44px;
+    height: 44px;
+    margin-top: 6px;
+    color: #64748b;
+
+    &:not(:disabled):hover {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+}
+
+::ng-deep .quotation-filters {
+    .mat-mdc-text-field-wrapper {
+        border-radius: 9px !important;
+    }
+
+    .mat-mdc-form-field-infix {
+        min-height: 56px;
+        padding-top: 14px !important;
+        padding-bottom: 12px !important;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+        padding-right: 6px;
+        color: #94a3b8;
+    }
+}
+
+.advanced-filters {
+    margin-top: 11px;
+    padding: 11px;
+    border: 1px solid #dbeafe;
+    border-radius: 9px;
+    background: #f8fbff;
+    animation: filtersEnter 0.2s ease;
+}
+
+@keyframes filtersEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.advanced-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 9px;
+
+    >div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #2563eb;
+
+        mat-icon {
+            width: 18px;
+            height: 18px;
+            font-size: 18px;
+        }
+
+        span {
+            font-size: 10px;
+            font-weight: 700;
+        }
+    }
+
+    small {
+        color: #64748b;
+        font-size: 9px;
+    }
+}
+
+.date-filters-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    gap: 9px;
+}
+
+@media (max-width: 1399.98px) {
+    .filters-main {
+        grid-template-columns:
+            minmax(220px, 2fr) repeat(3, minmax(145px, 1fr)) auto auto;
+
+        .clear-button {
+            grid-column: auto;
+        }
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .filters-main {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .search-field {
+        grid-column: 1 / -1;
+    }
+
+    .search-button,
+    .advanced-button {
+        width: 100%;
+        height: 43px;
+    }
+
+    .clear-button {
+        position: absolute;
+        top: 7px;
+        right: 8px;
+    }
+
+    .quotation-filters {
+        position: relative;
+    }
+
+    .date-filters-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .advanced-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .quotation-filters {
+        padding: 10px;
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+
+    .filters-main,
+    .date-filters-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-field {
+        grid-column: auto;
+    }
+}

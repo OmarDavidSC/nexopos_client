@@ -1,1 +1,87 @@
-<p>bandeja-cotizaciones works!</p>
+<app-adm-header [descripcion]="
+    'Consulta, administra y da seguimiento a las cotizaciones registradas.'
+  " [breadcrumbs]="[
+    { nombre: 'Cotizaciones' },
+    { nombre: 'Bandeja de Cotizaciones' },
+  ]" [visible]="true" [textoBoton]="'Nueva Cotización'"
+    (accionNuevo)="Navegar('bandeja-cotizaciones/nueva-cotizacion')" [rutaRegreso]="'/inicio'">
+</app-adm-header>
+
+<div class="container-fluid quotation-page">
+    <!-- RESUMEN -->
+    <app-quotation-list-summary [summary]="Resumen" [moneda]="CompaniaActual?.SimboloMoneda">
+    </app-quotation-list-summary>
+
+    <!-- FILTROS -->
+    <app-quotation-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales"
+        [loading]="Loading" (search)="aplicarFiltro()" (customerChange)="aplicarFiltro()"
+        (branchChange)="aplicarFiltro()" (statusChange)="aplicarFiltro()" (dateChange)="aplicarFiltro()"
+        (clear)="clearFilters()">
+    </app-quotation-filters>
+
+    <!-- LISTADO -->
+    <app-uotation-list [quotations]="ListaCotizaciones" [loading]="Loading" [moneda]="CompaniaActual?.SimboloMoneda"
+        (view)="OnEventoVerDetalle($event)" (send)="OnEventoEnviar($event)" (accept)="OnEventoAceptar($event)"
+        (reject)="OnEventoRechazar($event)" (convert)="OnEventoConvertirVenta($event)"
+        (cancel)="OnEventoCancelar($event)">
+    </app-uotation-list>
+
+    <!-- PAGINACIÓN -->
+    <div class="quotation-pagination" *ngIf="!Loading && TotalRegistros > 0">
+        <div class="pagination-information">
+            <span>
+                Mostrando
+                <strong>{{ DesdeRegistro }}</strong>
+                a
+                <strong>{{ HastaRegistro }}</strong>
+                de
+                <strong>{{ TotalRegistros }}</strong>
+                cotizaciones
+            </span>
+
+            <small> Página {{ PaginaActual }} de {{ TotalPaginas }} </small>
+        </div>
+
+        <div class="pagination-actions">
+            <button mat-icon-button matTooltip="Primera página" [disabled]="PaginaActual === 1"
+                (click)="OnchangedPage(1)">
+                <mat-icon>first_page</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="Página anterior" [disabled]="PaginaActual === 1"
+                (click)="OnchangedPage(PaginaActual - 1)">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+
+            <button *ngIf="PaginasVisibles[0] > 1" mat-button class="page-button" (click)="OnchangedPage(1)">
+                1
+            </button>
+
+            <span class="pagination-dots" *ngIf="PaginasVisibles[0] > 2"> ... </span>
+
+            <button *ngFor="let pagina of PaginasVisibles" mat-button class="page-button"
+                [class.active]="pagina === PaginaActual" (click)="OnchangedPage(pagina)">
+                {{ pagina }}
+            </button>
+
+            <span class="pagination-dots" *ngIf="PaginasVisibles[PaginasVisibles.length - 1] < TotalPaginas - 1">
+                ...
+            </span>
+
+            <button *ngIf="PaginasVisibles[PaginasVisibles.length - 1] < TotalPaginas" mat-button class="page-button"
+                (click)="OnchangedPage(TotalPaginas)">
+                {{ TotalPaginas }}
+            </button>
+
+            <button mat-icon-button matTooltip="Página siguiente" [disabled]="PaginaActual === TotalPaginas"
+                (click)="OnchangedPage(PaginaActual + 1)">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <button mat-icon-button matTooltip="Última página" [disabled]="PaginaActual === TotalPaginas"
+                (click)="OnchangedPage(TotalPaginas)">
+                <mat-icon>last_page</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

@@ -63,19 +63,27 @@ export class MenuLateralComponent implements OnInit {
       ]
     },
     {
-      label: 'Compras',
-      icon: 'shopping_cart',
-      children: [
-        { label: 'Proveedores', icon: 'local_shipping', route: '/administracion-proveedores' },
-        { label: 'Compras', icon: 'receipt_long', route: '/bandeja-compras' }
-      ]
-    },
-    {
       label: 'Ventas',
       icon: 'point_of_sale',
       children: [
         { label: 'Clientes', icon: 'groups', route: '/administracion-clientes' },
         { label: 'Punto de Venta', icon: 'point_of_sale', route: '/bandeja-ventas' }
+      ]
+    },
+    {
+      label: 'Cotizaciones',
+      icon: 'request_quote',
+      children: [
+        { label: 'Bandeja', icon: 'list_alt', route: '/bandeja-cotizaciones' },
+        { label: 'Nueva Cotización', icon: 'add_circle', route: '/bandeja-cotizaciones/nueva-cotizacion' }
+      ]
+    },
+    {
+      label: 'Compras',
+      icon: 'shopping_cart',
+      children: [
+        { label: 'Proveedores', icon: 'local_shipping', route: '/administracion-proveedores' },
+        { label: 'Compras', icon: 'receipt_long', route: '/bandeja-compras' }
       ]
     },
     // {

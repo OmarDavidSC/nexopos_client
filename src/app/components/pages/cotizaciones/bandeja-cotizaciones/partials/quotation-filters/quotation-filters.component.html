@@ -1,0 +1,121 @@
+<section class="quotation-filters">
+    <!-- FILTROS PRINCIPALES -->
+    <div class="filters-main">
+        <!-- BUSCADOR -->
+        <mat-form-field appearance="outline" class="filter-field search-field">
+            <mat-label> Buscar cotización </mat-label>
+            <mat-icon matPrefix> search </mat-icon>
+            <input matInput type="text" autocomplete="off" placeholder="Número o nombre del cliente"
+                [(ngModel)]="filter.search" [disabled]="loading" (keydown)="OnEventoEnter($event)" />
+            <button *ngIf="filter.search" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                [disabled]="loading" (click)="filter.search = ''; OnEventoBuscar()">
+                <mat-icon> close </mat-icon>
+            </button>
+        </mat-form-field>
+        <!-- CLIENTE -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label> Cliente </mat-label>
+            <mat-icon matPrefix> person </mat-icon>
+            <mat-select [(ngModel)]="filter.customer_id" [disabled]="loading"
+                (selectionChange)="OnEventoCambiarCliente()">
+                <mat-option [value]="null"> Todos los clientes </mat-option>
+                <mat-option *ngFor="let customer of customers" [value]="customer.Id">
+                    {{ customer.NombreCliente }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- SUCURSAL -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label> Sucursal </mat-label>
+            <mat-icon matPrefix> store </mat-icon>
+            <mat-select [(ngModel)]="filter.branch_id" [disabled]="loading"
+                (selectionChange)="OnEventoCambiarSucursal()">
+                <mat-option [value]="null"> Todas las sucursales </mat-option>
+                <mat-option *ngFor="let branch of branches" [value]="branch.Id">
+                    {{ branch.Nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- ESTADO -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label> Estado </mat-label>
+            <mat-icon matPrefix> flag </mat-icon>
+            <mat-select [(ngModel)]="filter.status" [disabled]="loading" (selectionChange)="OnEventoCambiarEstado()">
+                <mat-option [value]="null"> Todos los estados </mat-option>
+                <mat-option *ngFor="let estado of EstadosCotizacion" [value]="estado.value">
+                    {{ estado.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- BUSCAR -->
+        <button mat-flat-button color="primary" type="button" class="search-button" [disabled]="loading"
+            (click)="OnEventoBuscar()">
+            <mat-spinner *ngIf="loading" diameter="17"> </mat-spinner>
+            <mat-icon *ngIf="!loading"> search </mat-icon>
+            Buscar
+        </button>
+        <!-- MÁS FILTROS -->
+        <button mat-stroked-button type="button" class="advanced-button" [class.active]="MostrarFiltrosAvanzados"
+            [disabled]="loading" (click)="OnEventoMostrarFiltros()">
+            <mat-icon> tune </mat-icon>
+            Fechas
+            <span class="filter-counter" *ngIf="CantidadFiltrosActivos > 0">
+                {{ CantidadFiltrosActivos }}
+            </span>
+        </button>
+        <!-- LIMPIAR -->
+        <button mat-icon-button type="button" class="clear-button" matTooltip="Limpiar todos los filtros"
+            [disabled]="loading || CantidadFiltrosActivos === 0" (click)="OnEventoLimpiar()">
+            <mat-icon> filter_alt_off </mat-icon>
+        </button>
+    </div>
+    <!-- FILTROS DE FECHA -->
+    <div class="advanced-filters" *ngIf="MostrarFiltrosAvanzados">
+        <div class="advanced-header">
+            <div>
+                <mat-icon>date_range</mat-icon>
+                <span> Filtrar por fechas </span>
+            </div>
+            <small> Puedes combinar los rangos de emisión y vencimiento. </small>
+        </div>
+        <div class="date-filters-grid">
+            <!-- EMISIÓN DESDE -->
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label> Emisión desde </mat-label>
+                <input matInput readonly [matDatepicker]="issueStartPicker" [(ngModel)]="filter.issue_date_start"
+                    [disabled]="loading" (dateChange)="OnEventoCambiarFecha()" />
+                <mat-datepicker-toggle matSuffix [for]="issueStartPicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #issueStartPicker> </mat-datepicker>
+            </mat-form-field>
+            <!-- EMISIÓN HASTA -->
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label> Emisión hasta </mat-label>
+                <input matInput readonly [matDatepicker]="issueEndPicker" [(ngModel)]="filter.issue_date_end"
+                    [min]="filter.issue_date_start" [disabled]="loading" (dateChange)="OnEventoCambiarFecha()" />
+                <mat-datepicker-toggle matSuffix [for]="issueEndPicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #issueEndPicker> </mat-datepicker>
+            </mat-form-field>
+            <!-- VENCIMIENTO DESDE -->
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label> Vencimiento desde </mat-label>
+                <input matInput readonly [matDatepicker]="expirationStartPicker"
+                    [(ngModel)]="filter.expiration_date_start" [disabled]="loading"
+                    (dateChange)="OnEventoCambiarFecha()" />
+                <mat-datepicker-toggle matSuffix [for]="expirationStartPicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #expirationStartPicker> </mat-datepicker>
+            </mat-form-field>
+            <!-- VENCIMIENTO HASTA -->
+            <mat-form-field appearance="outline" class="filter-field">
+                <mat-label> Vencimiento hasta </mat-label>
+                <input matInput readonly [matDatepicker]="expirationEndPicker" [(ngModel)]="filter.expiration_date_end"
+                    [min]="filter.expiration_date_start" [disabled]="loading" (dateChange)="OnEventoCambiarFecha()" />
+                <mat-datepicker-toggle matSuffix [for]="expirationEndPicker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #expirationEndPicker> </mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</section>

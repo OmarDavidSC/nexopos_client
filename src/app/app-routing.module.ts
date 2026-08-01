@@ -32,6 +32,7 @@ import { HelpCenterComponent } from './components/pages/widzard/help-center/help
 import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-credito/index-ventas-credito/index-ventas-credito.component';
 import { BandejaCotizacionesComponent } from './components/pages/cotizaciones/bandeja-cotizaciones/bandeja-cotizaciones.component';
 import { FormularioCotizacionComponent } from './components/pages/cotizaciones/formulario-cotizacion/formulario-cotizacion.component';
+import { DetalleCotizacionComponent } from './components/pages/cotizaciones/detalle-cotizacion/detalle-cotizacion.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -65,6 +66,7 @@ const routes: Routes = [
   //cotizaciones
   { path: 'bandeja-cotizaciones', component: BandejaCotizacionesComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-cotizaciones/nueva-cotizacion', component: FormularioCotizacionComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-cotizaciones/:id/detalle-cotizacion', component: DetalleCotizacionComponent, canActivate: [AuthGuard] },
   //reportes
   { path: 'reporte-ganancias', component: IndexGananciasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-ventas', component: IndexVentasComponent, canActivate: [AuthGuard] },

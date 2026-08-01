@@ -1,0 +1,169 @@
+<section class="quotation-list">
+    <!-- CABECERA -->
+    <div class="list-header">
+        <div class="list-title">
+            <div class="list-icon">
+                <mat-icon>request_quote</mat-icon>
+            </div>
+            <div>
+                <h3>Listado de cotizaciones</h3>
+                <p>Consulta el estado y administra cada cotización.</p>
+            </div>
+        </div>
+        <span class="records-counter" *ngIf="!loading">
+            {{ quotations.length }}
+            registro{{ quotations.length === 1 ? "" : "s" }}
+        </span>
+    </div>
+    <!-- CARGANDO -->
+    <div class="loading-container" *ngIf="loading">
+        <mat-spinner diameter="34"> </mat-spinner>
+        <div>
+            <strong>Cargando cotizaciones</strong>
+            <span> Obteniendo la información registrada... </span>
+        </div>
+    </div>
+    <!-- TABLA -->
+    <div class="table-responsive" *ngIf="!loading && quotations.length > 0">
+        <table class="quotation-table">
+            <thead>
+                <tr>
+                    <th>Cotización</th>
+                    <th>Cliente</th>
+                    <th>Sucursal</th>
+                    <th>Emisión</th>
+                    <th>Vencimiento</th>
+                    <th>Productos</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th class="actions-column">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cotizacion of quotations" [class.expired-row]="estaVencida(cotizacion)"
+                    [class.converted-row]="estaConvertida(cotizacion)">
+                    <!-- COTIZACIÓN -->
+                    <td>
+                        <div class="quotation-number">
+                            <div class="quotation-document-icon">
+                                <mat-icon>description</mat-icon>
+                            </div>
+                            <div>
+                                <strong> {{ cotizacion.Cotizacion }} </strong>
+                                <span> Registrado por {{ cotizacion.RegistradoPor }} </span>
+                            </div>
+                        </div>
+                    </td>
+                    <!-- CLIENTE -->
+                    <td>
+                        <div class="customer-information">
+                            <mat-icon>person</mat-icon>
+                            <span> {{ cotizacion.NombreCliente || "Cliente no disponible" }} </span>
+                        </div>
+                    </td>
+                    <!-- SUCURSAL -->
+                    <td>
+                        <div class="branch-information">
+                            <mat-icon>store</mat-icon>
+                            <span> {{ cotizacion.NombreSucursal || "Sin sucursal" }} </span>
+                        </div>
+                    </td>
+                    <!-- EMISIÓN -->
+                    <td>
+                        <div class="date-information">
+                            <mat-icon>event</mat-icon>
+                            <span> {{ cotizacion.FechaAsunto }} </span>
+                        </div>
+                    </td>
+                    <!-- VENCIMIENTO -->
+                    <td>
+                        <div class="date-information" [class.expired-date]="estaVencida(cotizacion)">
+                            <mat-icon> {{ estaVencida(cotizacion) ? "event_busy" : "event_available" }} </mat-icon>
+                            <span> {{ cotizacion.FechaExpiracion }} </span>
+                        </div>
+                    </td>
+                    <!-- PRODUCTOS -->
+                    <td>
+                        <span class="items-badge">
+                            <mat-icon>inventory_2</mat-icon>
+                            {{ cotizacion.CantidadItems }}
+                        </span>
+                    </td>
+                    <!-- TOTAL -->
+                    <td>
+                        <strong class="quotation-total"> {{ moneda || "S/" }} {{ cotizacion.Total | number: "1.2-2" }} </strong>
+                    </td>
+                    <!-- ESTADO -->
+                    <td>
+                        <span class="status-badge" [ngClass]="obtenerClaseEstado(cotizacion.Estado)">
+                            <mat-icon> {{ obtenerIconoEstado(cotizacion.Estado) }} </mat-icon>
+                            {{ obtenerEstadoTexto(cotizacion.Estado) }}
+                        </span>
+                    </td>
+                    <!-- ACCIONES -->
+                    <td class="actions-cell">
+                        <button mat-icon-button type="button" class="actions-button" [matMenuTriggerFor]="quotationMenu"
+                            matTooltip="Opciones">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #quotationMenu="matMenu" xPosition="before">
+                            <!-- VER -->
+                            <button mat-menu-item type="button" (click)="OnEventoVer(cotizacion)">
+                                <mat-icon>visibility</mat-icon>
+                                <span>Ver detalle</span>
+                            </button>
+                            <!-- ENVIAR -->
+                            <button mat-menu-item type="button" *ngIf="puedeEnviar(cotizacion)"
+                                (click)="OnEventoEnviar(cotizacion)">
+                                <mat-icon>send</mat-icon>
+                                <span>Enviar Cotización</span>
+                            </button>
+                            <!-- ACEPTAR -->
+                            <button mat-menu-item type="button" *ngIf="puedeAceptar(cotizacion)"
+                                (click)="OnEventoAceptar(cotizacion)">
+                                <mat-icon class="accept-icon"> task_alt </mat-icon>
+                                <span>Aceptar cotización</span>
+                            </button>
+                            <!-- RECHAZAR -->
+                            <button mat-menu-item type="button" *ngIf="puedeRechazar(cotizacion)"
+                                (click)="OnEventoRechazar(cotizacion)">
+                                <mat-icon class="reject-icon"> block </mat-icon>
+                                <span>Rechazar cotización</span>
+                            </button>
+                            <mat-divider *ngIf="puedeConvertir(cotizacion)"> </mat-divider>
+                            <!-- CONVERTIR -->
+                            <button mat-menu-item type="button" class="convert-menu-item"
+                                *ngIf="puedeConvertir(cotizacion)" (click)="OnEventoConvertir(cotizacion)">
+                                <mat-icon>point_of_sale</mat-icon>
+                                <span>Convertir en venta</span>
+                            </button>
+                            <mat-divider *ngIf="puedeCancelar(cotizacion)"> </mat-divider>
+                            <!-- CANCELAR -->
+                            <button mat-menu-item type="button" *ngIf="puedeCancelar(cotizacion)"
+                                (click)="OnEventoCancelar(cotizacion)">
+                                <mat-icon class="cancel-icon"> cancel </mat-icon>
+                                <span>Cancelar cotización</span>
+                            </button>
+                            <!-- VENTA GENERADA -->
+                            <button mat-menu-item type="button" *ngIf="estaConvertida(cotizacion)"
+                                (click)="OnEventoVer(cotizacion)">
+                                <mat-icon class="converted-icon"> receipt_long </mat-icon>
+                                <span>Ver venta generada</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- SIN RESULTADOS -->
+    <div class="empty-container" *ngIf="!loading && quotations.length === 0">
+        <div class="empty-icon">
+            <mat-icon>request_quote</mat-icon>
+        </div>
+        <div>
+            <strong> No se encontraron cotizaciones </strong>
+            <span> Cambia los filtros o registra una nueva cotización. </span>
+        </div>
+    </div>
+</section>

@@ -33,10 +33,14 @@ export class QuotationService {
             formData.append('customer_id', filter.customer_id !== null ? String(filter.customer_id) : '');
             formData.append('branch_id', filter.branch_id !== null ? String(filter.branch_id) : '');
             formData.append('status', filter.status !== null ? String(filter.status) : '');
-            formData.append('issue_date_start', filter.issue_date_start !== null ? String(filter.issue_date_start) : '');
-            formData.append('issue_date_end', filter.issue_date_end !== null ? String(filter.issue_date_end) : '');
-            formData.append('expiration_date_start', filter.expiration_date_start !== null ? String(filter.expiration_date_start) : '');
-            formData.append('expiration_date_end', filter.expiration_date_end !== null ? String(filter.expiration_date_end) : '');
+            // formData.append('issue_date_start', filter.issue_date_start !== null ? String(filter.issue_date_start) : '');
+            // formData.append('issue_date_end', filter.issue_date_end !== null ? String(filter.issue_date_end) : '');
+            // formData.append('expiration_date_start', filter.expiration_date_start !== null ? String(filter.expiration_date_start) : '');
+            // formData.append('expiration_date_end', filter.expiration_date_end !== null ? String(filter.expiration_date_end) : '');
+            formData.append('issue_date_start', this.formatDate(filter.issue_date_start));
+            formData.append('issue_date_end', this.formatDate(filter.issue_date_end));
+            formData.append('expiration_date_start', this.formatDate(filter.expiration_date_start));
+            formData.append('expiration_date_end', this.formatDate(filter.expiration_date_end));
 
             const { success, data, message } = await this.http.postForm(url, formData).toPromise();
             if (!success) {
@@ -116,5 +120,19 @@ export class QuotationService {
         } catch (error) {
             throw error;
         }
+    }
+
+    private formatDate(value: Date | string | null): string {
+        if (!value) {
+            return '';
+        }
+        const date = new Date(value);
+        if (isNaN(date.getTime())) {
+            return '';
+        }
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 }
