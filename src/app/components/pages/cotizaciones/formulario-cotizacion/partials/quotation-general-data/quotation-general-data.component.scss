@@ -1,0 +1,215 @@
+.general-data-container {
+    width: 100%;
+}
+
+.general-data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.text-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| CAMPOS MATERIAL
+|--------------------------------------------------------------------------
+*/
+
+::ng-deep .compact-field {
+    .mat-mdc-text-field-wrapper {
+        border-radius: 9px !important;
+    }
+
+    .mat-mdc-form-field-infix {
+        min-height: 48px;
+        padding-top: 12px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+        padding-right: 7px;
+        color: #64748b;
+    }
+
+    .mat-mdc-form-field-hint {
+        font-size: 9px;
+    }
+}
+
+::ng-deep .textarea-field {
+    .mat-mdc-text-field-wrapper {
+        border-radius: 10px !important;
+    }
+
+    textarea {
+        min-height: 82px;
+        resize: vertical;
+        color: #334155;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .mat-mdc-form-field-hint {
+        font-size: 9px;
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+        align-self: flex-start;
+        padding-top: 13px;
+        color: #94a3b8;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| VIGENCIA
+|--------------------------------------------------------------------------
+*/
+
+.validity-information {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    padding: 10px 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    background: #eff6ff;
+}
+
+.validity-icon {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #dbeafe;
+    color: #2563eb;
+
+    mat-icon {
+        width: 19px;
+        height: 19px;
+        font-size: 19px;
+    }
+}
+
+.validity-content {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+
+    span {
+        color: #64748b;
+        font-size: 10px;
+    }
+
+    strong {
+        margin-top: 1px;
+        color: #1e3a8a;
+        font-size: 13px;
+        font-weight: 700;
+    }
+}
+
+.validity-status {
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #2563eb;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| MENSAJE DE AYUDA
+|--------------------------------------------------------------------------
+*/
+
+.general-help {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 4px;
+    padding: 10px 12px;
+    border: 1px solid #fde68a;
+    border-radius: 9px;
+    background: #fffbeb;
+    color: #92400e;
+
+    >mat-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: #d97706;
+        font-size: 18px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    strong {
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    span {
+        margin-top: 2px;
+        font-size: 10px;
+        line-height: 15px;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESPONSIVE
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1199.98px) {
+    .general-data-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .text-fields-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .general-data-grid {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+
+    .text-fields-grid {
+        gap: 7px;
+        margin-top: 8px;
+    }
+
+    .validity-information {
+        align-items: flex-start;
+    }
+
+    .validity-status {
+        display: none;
+    }
+}

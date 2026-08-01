@@ -1,0 +1,480 @@
+.quotation-page {
+    min-height: calc(100vh - 80px);
+    padding-bottom: 24px;
+    background: #f8fafc;
+}
+
+/*
+|--------------------------------------------------------------------------
+| PROGRESO
+|--------------------------------------------------------------------------
+*/
+
+.quotation-progress {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.progress-step {
+    display: flex;
+    min-width: 145px;
+    align-items: center;
+    gap: 9px;
+    padding: 6px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: #94a3b8;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+
+    &:hover:not(:disabled) {
+        background: #f8fafc;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+
+    &.active {
+        color: #2563eb;
+
+        .step-circle {
+            border-color: #2563eb;
+            background: #2563eb;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .progress-information strong {
+            color: #1d4ed8;
+        }
+    }
+
+    &.completed {
+        color: #16a34a;
+
+        .step-circle {
+            border-color: #16a34a;
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .progress-information strong {
+            color: #15803d;
+        }
+    }
+}
+
+.step-circle {
+    display: flex;
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
+
+    mat-icon {
+        width: 17px;
+        height: 17px;
+        font-size: 17px;
+    }
+}
+
+.progress-information {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+
+    small {
+        color: inherit;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.progress-line {
+    min-width: 25px;
+    height: 2px;
+    flex: 1;
+    margin: 0 5px;
+    background: #e2e8f0;
+    transition: background 0.2s ease;
+
+    &.completed {
+        background: #86efac;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| ÁREA DE TRABAJO
+|--------------------------------------------------------------------------
+*/
+
+.quotation-workspace {
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.04);
+}
+
+.quotation-step-content {
+    padding: 20px;
+    animation: stepEnter 0.22s ease;
+}
+
+@keyframes stepEnter {
+    from {
+        opacity: 0;
+        transform: translateX(7px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| CABECERA DEL PASO
+|--------------------------------------------------------------------------
+*/
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 18px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+
+    >div:last-child {
+        min-width: 0;
+    }
+
+    span {
+        color: #2563eb;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        margin: 2px 0 0;
+        color: #0f172a;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 3px 0 0;
+        color: #64748b;
+        font-size: 11px;
+    }
+}
+
+.step-header-icon {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+
+    mat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 22px;
+    }
+}
+
+.general-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.customer-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.product-icon {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.summary-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESUMEN RÁPIDO DE PRODUCTOS
+|--------------------------------------------------------------------------
+*/
+
+.products-quick-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 16px;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.quick-summary-item {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    background: #ffffff;
+
+    span {
+        color: #94a3b8;
+        font-size: 9px;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.discount-value {
+    color: #dc2626 !important;
+}
+
+.total-item {
+    border: 1px solid #bfdbfe;
+    background: #eff6ff;
+
+    span {
+        color: #2563eb;
+    }
+
+    strong {
+        color: #1d4ed8;
+        font-size: 16px;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| MENSAJE INFORMATIVO
+|--------------------------------------------------------------------------
+*/
+
+.quotation-information {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 16px;
+    padding: 11px 12px;
+    border: 1px solid #bae6fd;
+    border-radius: 9px;
+    background: #f0f9ff;
+    color: #0369a1;
+
+    >mat-icon {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+        font-size: 19px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    strong {
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    span {
+        margin-top: 2px;
+        font-size: 10px;
+        line-height: 15px;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| ACCIONES
+|--------------------------------------------------------------------------
+*/
+
+.step-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+
+    button {
+        min-width: 125px;
+        height: 41px;
+        border-radius: 8px !important;
+    }
+}
+
+.step-actions-end {
+    justify-content: flex-end;
+}
+
+.register-quotation-button {
+    min-width: 185px !important;
+
+    mat-spinner {
+        display: inline-block;
+        margin-right: 6px;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESPONSIVE
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 991.98px) {
+    .quotation-progress {
+        justify-content: flex-start;
+    }
+
+    .progress-step {
+        min-width: 135px;
+    }
+
+    .progress-line {
+        min-width: 20px;
+        flex: 0 0 20px;
+    }
+
+    .products-quick-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .quotation-page {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .quotation-progress,
+    .quotation-workspace {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+
+    .quotation-step-content {
+        padding: 15px;
+    }
+
+    .step-header {
+        align-items: flex-start;
+
+        h2 {
+            font-size: 17px;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .quotation-progress {
+        padding: 10px 12px;
+    }
+
+    .progress-step {
+        min-width: auto;
+        padding: 4px;
+
+        .progress-information {
+            display: none;
+        }
+    }
+
+    .step-circle {
+        width: 29px;
+        height: 29px;
+    }
+
+    .progress-line {
+        min-width: 18px;
+        flex: 1;
+    }
+
+    .step-header-icon {
+        width: 39px;
+        height: 39px;
+
+        mat-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+        }
+    }
+
+    .products-quick-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .step-actions {
+        flex-direction: column-reverse;
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .register-quotation-button {
+        min-width: 0 !important;
+    }
+}

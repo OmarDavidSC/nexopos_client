@@ -30,6 +30,8 @@ import { IndexGananciasComponent } from './components/pages/reports/report-ganan
 import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
 import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-credito/index-ventas-credito/index-ventas-credito.component';
+import { BandejaCotizacionesComponent } from './components/pages/cotizaciones/bandeja-cotizaciones/bandeja-cotizaciones.component';
+import { FormularioCotizacionComponent } from './components/pages/cotizaciones/formulario-cotizacion/formulario-cotizacion.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -60,7 +62,9 @@ const routes: Routes = [
   { path: 'bandeja-ventas/nueva-venta', component: FormularioNuevaVentaComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
   { path: 'bandeja-ventas/:id/pagos-venta', component: IndexVentasCreditoComponent, canActivate: [AuthGuard] },
-
+  //cotizaciones
+  { path: 'bandeja-cotizaciones', component: BandejaCotizacionesComponent, canActivate: [AuthGuard] },
+  { path: 'bandeja-cotizaciones/nueva-cotizacion', component: FormularioCotizacionComponent, canActivate: [AuthGuard] },
   //reportes
   { path: 'reporte-ganancias', component: IndexGananciasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-ventas', component: IndexVentasComponent, canActivate: [AuthGuard] },

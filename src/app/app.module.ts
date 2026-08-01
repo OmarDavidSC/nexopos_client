@@ -123,6 +123,12 @@ import { IndexVentasCreditoComponent } from './components/pages/ventas/ventas-cr
 import { SalePaymentSummaryComponent } from './components/pages/ventas/ventas-credito/sale-payment-summary/sale-payment-summary.component';
 import { SalePaymentHistoryComponent } from './components/pages/ventas/ventas-credito/sale-payment-history/sale-payment-history.component';
 import { RegisterSalePaymentDialogComponent } from './components/pages/ventas/ventas-credito/register-sale-payment-dialog/register-sale-payment-dialog.component';
+import { BandejaCotizacionesComponent } from './components/pages/cotizaciones/bandeja-cotizaciones/bandeja-cotizaciones.component';
+import { FormularioCotizacionComponent } from './components/pages/cotizaciones/formulario-cotizacion/formulario-cotizacion.component';
+import { QuotationGeneralDataComponent } from './components/pages/cotizaciones/formulario-cotizacion/partials/quotation-general-data/quotation-general-data.component';
+import { QuotationCustomerComponent } from './components/pages/cotizaciones/formulario-cotizacion/partials/quotation-customer/quotation-customer.component';
+import { QuotationProductsComponent } from './components/pages/cotizaciones/formulario-cotizacion/partials/quotation-products/quotation-products.component';
+import { QuotationSummaryComponent } from './components/pages/cotizaciones/formulario-cotizacion/partials/quotation-summary/quotation-summary.component';
 
 @NgModule({
   declarations: [
@@ -236,6 +242,12 @@ import { RegisterSalePaymentDialogComponent } from './components/pages/ventas/ve
     SalePaymentSummaryComponent,
     SalePaymentHistoryComponent,
     RegisterSalePaymentDialogComponent,
+    BandejaCotizacionesComponent,
+    FormularioCotizacionComponent,
+    QuotationGeneralDataComponent,
+    QuotationCustomerComponent,
+    QuotationProductsComponent,
+    QuotationSummaryComponent,
   ],
   imports: [
     ComunModule,

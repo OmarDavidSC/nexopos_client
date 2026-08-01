@@ -1,0 +1,171 @@
+<section class="quotation-customer">
+    <!-- BUSCADOR -->
+    <div class="customer-search-section">
+        <div class="search-information">
+            <div class="search-icon">
+                <mat-icon> person_search </mat-icon>
+            </div>
+            <div>
+                <h3>Buscar cliente</h3>
+                <p>Busca por nombre, DNI o RUC.</p>
+            </div>
+        </div>
+        <div class="search-actions">
+            <mat-form-field appearance="outline" class="customer-search-field">
+                <mat-label> Nombre o número de documento </mat-label>
+                <mat-icon matPrefix> search </mat-icon>
+                <input matInput type="text" autocomplete="off" placeholder="Ejemplo: Juan Pérez o 12345678"
+                    [ngModel]="textoCliente" (ngModelChange)="OnEventoCambiarTexto($event)"
+                    [matAutocomplete]="autoCliente" />
+                <button *ngIf="textoCliente" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                    (click)="OnEventoCambiarTexto('')">
+                    <mat-icon> close </mat-icon>
+                </button>
+
+                <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="mostrarCliente"
+                    (optionSelected)="OnEventoSeleccionarCliente($event.option.value)">
+                    <mat-option *ngFor="let clienteItem of clientesFiltrados" [value]="clienteItem">
+                        <div class="customer-option">
+                            <div class="option-avatar">
+                                <mat-icon> person </mat-icon>
+                            </div>
+
+                            <div class="option-information">
+                                <strong>
+                                    {{ clienteItem.NombreCliente || "Cliente sin nombre" }}
+                                </strong>
+
+                                <span>
+                                    {{ clienteItem.NumeroDocumento || "Sin documento" }}
+                                </span>
+                            </div>
+
+                            <mat-icon class="option-arrow"> arrow_forward </mat-icon>
+                        </div>
+                    </mat-option>
+
+                    <mat-option disabled *ngIf="textoCliente && clientesFiltrados.length === 0">
+                        <div class="empty-option">
+                            <mat-icon> person_off </mat-icon>
+
+                            <span> No se encontraron clientes </span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <mat-hint> Selecciona un cliente de los resultados. </mat-hint>
+            </mat-form-field>
+
+            <button mat-stroked-button color="primary" type="button" class="new-customer-button"
+                matTooltip="Registrar un cliente nuevo" (click)="OnEventoNuevoCliente()">
+                <mat-icon> person_add </mat-icon>
+
+                Nuevo cliente
+            </button>
+        </div>
+    </div>
+
+    <!-- CLIENTE SELECCIONADO -->
+    <div class="selected-customer-card" *ngIf="tieneClienteSeleccionado">
+        <div class="customer-card-header">
+            <div class="selected-status">
+                <mat-icon> verified </mat-icon>
+
+                <span> Cliente seleccionado </span>
+            </div>
+
+            <button mat-icon-button type="button" matTooltip="Cambiar cliente" (click)="OnEventoLimpiarCliente()">
+                <mat-icon> close </mat-icon>
+            </button>
+        </div>
+
+        <div class="customer-card-content">
+            <div class="customer-avatar">
+                <mat-icon> person </mat-icon>
+            </div>
+
+            <div class="customer-main-information">
+                <span> Cliente </span>
+
+                <strong>
+                    {{
+                    cliente?.NombreCliente ||
+                    cotizacion?.customer_name ||
+                    "Cliente sin nombre"
+                    }}
+                </strong>
+
+                <small>
+                    {{
+                    cliente?.NumeroDocumento ||
+                    cotizacion?.customer_document ||
+                    "Sin documento registrado"
+                    }}
+                </small>
+            </div>
+
+            <div class="customer-extra-information">
+                <div class="information-item">
+                    <mat-icon> badge </mat-icon>
+
+                    <div>
+                        <span>Documento</span>
+
+                        <strong>
+                            {{
+                            cliente?.NumeroDocumento ||
+                            cotizacion?.customer_document ||
+                            "No registrado"
+                            }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="information-item">
+                    <mat-icon> phone </mat-icon>
+
+                    <div>
+                        <span>Teléfono</span>
+
+                        <strong>
+                            {{ cliente?.Telefono || cliente?.phone || "No registrado" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="information-item">
+                    <mat-icon> email </mat-icon>
+
+                    <div>
+                        <span>Correo</span>
+
+                        <strong>
+                            {{ cliente?.Correo || cliente?.email || "No registrado" }}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-card-footer">
+            <mat-icon> info </mat-icon>
+
+            <span>
+                Esta cotización será registrada a nombre del cliente seleccionado.
+            </span>
+        </div>
+    </div>
+
+    <!-- ESTADO SIN CLIENTE -->
+    <div class="empty-customer" *ngIf="!tieneClienteSeleccionado">
+        <div class="empty-customer-icon">
+            <mat-icon> person_search </mat-icon>
+        </div>
+
+        <div>
+            <strong> Aún no seleccionaste un cliente </strong>
+
+            <span> Utiliza el buscador superior o registra un cliente nuevo. </span>
+        </div>
+    </div>
+</section>

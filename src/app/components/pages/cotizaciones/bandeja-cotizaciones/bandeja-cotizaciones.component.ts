@@ -1,0 +1,178 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
+import { QuotationFilter } from 'src/app/shared/models/base/QuotationFilter';
+import { ECliente } from 'src/app/shared/models/entidades/ECliente';
+import { ECompany } from 'src/app/shared/models/entidades/ECompany';
+import { ECotizacion } from 'src/app/shared/models/entidades/ECotizacion';
+import { ERol } from 'src/app/shared/models/entidades/ERol';
+import { ESucursal } from 'src/app/shared/models/entidades/ESucursal';
+import { Eusuario } from 'src/app/shared/models/entidades/Eusuario';
+import { FormularioBase } from 'src/app/shared/pages/FormularioBase';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { BranchService } from 'src/app/shared/services/branch.service';
+import { CustomerService } from 'src/app/shared/services/customer.service';
+import { QuotationService } from 'src/app/shared/services/quotation.service';
+import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
+
+@Component({
+  selector: 'app-bandeja-cotizaciones',
+  templateUrl: './bandeja-cotizaciones.component.html',
+  styleUrls: ['./bandeja-cotizaciones.component.scss']
+})
+export class BandejaCotizacionesComponent extends FormularioBase implements OnInit {
+
+  ListaCotizaciones: ECotizacion[] = [];
+  UsuarioActual: Eusuario | null = null;
+  CompaniaActual: ECompany | null = null;
+  Role: ERol | null = null;
+
+  PaginaActual: number = 1;
+  TotalPaginas: number = 1;
+  TotalRegistros: number = 0;
+  RegistrosPorPagina: number = 10;
+
+  Loading: boolean = false;
+
+  ListaClientes: ECliente[] = [];
+  ListaSucursales: ESucursal[] = [];
+
+  Resumen: any;
+
+  Filtro: QuotationFilter = {
+    page: 1,
+    search: '',
+    customer_id: null,
+    branch_id: null,
+    status: null,
+    issue_date_start: null,
+    issue_date_end: null,
+    expiration_date_start: null,
+    expiration_date_end: null
+  }
+
+  constructor(
+    public dialog: MatDialog,
+    public route: ActivatedRoute,
+    public router: Router,
+    public spinner: NgxSpinnerService,
+    public authService: AuthService,
+    public cotizacionService: QuotationService,
+    public auhtStore: AuthStoreService,
+    public toastService: ToastrService,
+    public clienteService: CustomerService,
+    public sucursalService: BranchService
+  ) {
+    super('bandeja-cotizaciones', dialog, route, router, spinner)
+  }
+
+  ngOnInit(): void {
+    Promise.all([
+      this.auhtStore.getUser(),
+      this.auhtStore.getRole(),
+      this.auhtStore.getCompany(),
+      this.clienteService.adm(),
+      this.sucursalService.adm(),
+    ]
+    ).then(([resultadoUsuario, resultadoRole, resultadoCompania, resultadoClientes, resultadoScur]) => {
+      this.UsuarioActual = resultadoUsuario;
+      this.Role = resultadoRole;
+      this.CompaniaActual = resultadoCompania;
+      this.ListaClientes = resultadoClientes;
+      this.ListaSucursales = resultadoScur;
+      const tienePermiso = this.validarPermisos(this.Role, ['administrator', 'seller'], this.router, this.toastService);
+      if (tienePermiso) {
+        this.initialize();
+      }
+    });
+  }
+
+  async initialize() {
+    this.obtenerMaestros();
+  }
+
+  async obtenerMaestros() {
+    this.Loading = true;
+    const data = await this.cotizacionService.index(this.Filtro)
+    this.ListaCotizaciones = ECotizacion.parseJsonList(data.data);
+    this.PaginaActual = data.page;
+    this.TotalPaginas = data.total_pages;
+    this.TotalRegistros = data.total;
+    this.Resumen = data.summary;
+    this.Loading = false;
+  }
+
+  async OnchangedPage(page: number): Promise<void> {
+    if (page < 1 || page > this.TotalPaginas || page === this.PaginaActual) {
+      return;
+    }
+
+    this.PaginaActual = page;
+    this.Filtro.page = page;
+
+    await this.obtenerMaestros();
+  }
+
+  async aplicarFiltro(): Promise<void> {
+    this.PaginaActual = 1;
+    this.Filtro.page = 1;
+    await this.obtenerMaestros();
+  }
+
+  get PaginasVisibles(): number[] {
+    const paginas: number[] = [];
+    const maximoVisible = 5;
+
+    if (this.TotalPaginas <= maximoVisible) {
+      for (let pagina = 1; pagina <= this.TotalPaginas; pagina++) {
+        paginas.push(pagina);
+      }
+      return paginas;
+    }
+
+    let inicio = Math.max(1, this.PaginaActual - 2);
+    let fin = Math.min(this.TotalPaginas, inicio + maximoVisible - 1);
+
+    if (fin - inicio < maximoVisible - 1) {
+      inicio = Math.max(1, fin - maximoVisible + 1);
+    }
+
+    for (let pagina = inicio; pagina <= fin; pagina++) {
+      paginas.push(pagina);
+    }
+    return paginas;
+  }
+
+  get DesdeRegistro(): number {
+    if (this.TotalRegistros === 0) {
+      return 0;
+    }
+
+    return ((this.PaginaActual - 1) * this.RegistrosPorPagina) + 1;
+  }
+
+  get HastaRegistro(): number {
+    return Math.min(
+      this.PaginaActual * this.RegistrosPorPagina,
+      this.TotalRegistros
+    );
+  }
+
+  async clearFilters(): Promise<void> {
+    this.Filtro = {
+      page: 1,
+      search: '',
+      customer_id: null,
+      branch_id: null,
+      status: null,
+      issue_date_start: null,
+      issue_date_end: null,
+      expiration_date_start: null,
+      expiration_date_end: null
+    }
+    this.PaginaActual = 1;
+    await this.obtenerMaestros();
+  }
+}

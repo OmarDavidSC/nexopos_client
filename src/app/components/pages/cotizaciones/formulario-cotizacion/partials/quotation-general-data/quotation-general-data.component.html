@@ -1,0 +1,87 @@
+<section class="general-data-container">
+    <!-- INFORMACIÓN PRINCIPAL -->
+    <div class="general-data-grid">
+        <!-- SERIE -->
+        <mat-form-field appearance="outline" class="compact-field">
+            <mat-label> Serie de cotización </mat-label>
+            <mat-icon matPrefix> tag </mat-icon>
+            <input matInput type="text" maxlength="10" autocomplete="off" [(ngModel)]="cotizacion.quotation_series"
+                (ngModelChange)="OnEventoCambiarCampo()" placeholder="COT" />
+            <mat-hint> Ejemplo: COT </mat-hint>
+        </mat-form-field>
+        <!-- FECHA DE EMISIÓN -->
+        <mat-form-field appearance="outline" class="compact-field">
+            <mat-label> Fecha de emisión </mat-label>
+            <input matInput readonly [matDatepicker]="issueDatePicker" [(ngModel)]="cotizacion.issue_date"
+                (dateChange)="OnEventoCambiarFechaEmision()" />
+            <mat-datepicker-toggle matSuffix [for]="issueDatePicker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #issueDatePicker> </mat-datepicker>
+            <mat-hint> Fecha de creación </mat-hint>
+        </mat-form-field>
+        <!-- FECHA DE VENCIMIENTO -->
+        <mat-form-field appearance="outline" class="compact-field">
+            <mat-label> Fecha de vencimiento </mat-label>
+            <input matInput readonly [matDatepicker]="expirationDatePicker" [min]="FechaMinimaVencimiento"
+                [(ngModel)]="cotizacion.expiration_date" (dateChange)="OnEventoCambiarFechaVencimiento()" />
+            <mat-datepicker-toggle matSuffix [for]="expirationDatePicker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #expirationDatePicker> </mat-datepicker>
+            <mat-hint> Fecha límite de validez </mat-hint>
+        </mat-form-field>
+        <!-- ESTADO INICIAL -->
+        <mat-form-field appearance="outline" class="compact-field">
+            <mat-label> Estado inicial </mat-label>
+            <mat-icon matPrefix> flag </mat-icon>
+            <mat-select [(ngModel)]="cotizacion.status" (selectionChange)="OnEventoCambiarCampo()">
+                <mat-option value="DRAFT"> Borrador </mat-option>
+                <!-- <mat-option value="SENT"> Enviada </mat-option> -->
+            </mat-select>
+            <mat-hint> Estado con el que será registrada </mat-hint>
+        </mat-form-field>
+    </div>
+    <!-- INFORMACIÓN DE VIGENCIA -->
+    <div class="validity-information" *ngIf="cotizacion.issue_date && cotizacion.expiration_date">
+        <div class="validity-icon">
+            <mat-icon> event_available </mat-icon>
+        </div>
+        <div class="validity-content">
+            <span> Vigencia de la cotización </span>
+            <strong>{{ DiasVigencia }} {{ DiasVigencia === 1 ? "día" : "días" }}
+            </strong>
+        </div>
+        <div class="validity-status">Documento temporal</div>
+    </div>
+    <!-- OBSERVACIONES Y CONDICIONES -->
+    <div class="text-fields-grid">
+        <!-- OBSERVACIONES -->
+        <mat-form-field appearance="outline" class="full-width textarea-field">
+            <mat-label> Observaciones </mat-label>
+            <textarea matInput rows="4" maxlength="500" [(ngModel)]="cotizacion.observations"
+                (ngModelChange)="OnEventoCambiarCampo()"
+                placeholder="Agrega información adicional para el cliente"></textarea>
+            <mat-icon matSuffix>notes</mat-icon>
+            <mat-hint align="end"> {{ cotizacion.observations?.length || 0 }}/500 </mat-hint>
+        </mat-form-field>
+        <!-- TÉRMINOS -->
+        <mat-form-field appearance="outline" class="full-width textarea-field">
+            <mat-label> Términos y condiciones </mat-label>
+            <textarea matInput rows="4" maxlength="1000" [(ngModel)]="cotizacion.terms"
+                (ngModelChange)="OnEventoCambiarCampo()"
+                placeholder="Ejemplo: Precios sujetos a disponibilidad"></textarea>
+            <mat-icon matSuffix> gavel </mat-icon>
+            <mat-hint align="end">{{ cotizacion.terms?.length || 0 }}/1000</mat-hint>
+        </mat-form-field>
+    </div>
+    <!-- AYUDA -->
+    <div class="general-help">
+        <mat-icon>lightbulb</mat-icon>
+        <div>
+            <strong> Información importante </strong>
+            <span>
+                La cotización no genera una venta ni descuenta productos del inventario
+                hasta que sea convertida.
+            </span>
+        </div>
+    </div>
+</section>

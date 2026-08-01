@@ -1,0 +1,220 @@
+<app-adm-header [descripcion]="'Registra una nueva cotización mediante un proceso guiado paso a paso.'"
+    [breadcrumbs]="[{ nombre: 'Cotizaciones' },  {nombre: 'Bandeja de Cotizaciones', ruta: '/bandeja-cotizaciones'}, { nombre: 'Nueva Cotización' }]"
+    [visible]="false" [rutaRegreso]="'/bandeja-cotizaciones'">
+</app-adm-header>
+
+<div class="container-fluid quotation-page">
+    <!-- INDICADOR DE PASOS -->
+    <section class="quotation-progress">
+        <button type="button" class="progress-step" [class.active]="PasoActual === 1"
+            [class.completed]="PasoGeneralCompleto && PasoActual > 1" (click)="OnEventoIrPaso(1)">
+            <span class="step-circle">
+                <mat-icon *ngIf="PasoGeneralCompleto && PasoActual > 1">check</mat-icon>
+                <span *ngIf="!(PasoGeneralCompleto && PasoActual > 1)"> 1 </span>
+            </span>
+            <span class="progress-information">
+                <small>Paso 1</small>
+                <strong>Datos generales</strong>
+            </span>
+        </button>
+        <span class="progress-line" [class.completed]="PasoGeneralCompleto && PasoActual > 1"></span>
+        <button type="button" class="progress-step" [class.active]="PasoActual === 2"
+            [class.completed]="PasoClienteCompleto && PasoActual > 2" [disabled]="PasoActual < 2"
+            (click)="OnEventoIrPaso(2)">
+            <span class="step-circle">
+                <mat-icon *ngIf="PasoClienteCompleto && PasoActual > 2"> check</mat-icon>
+                <span *ngIf="!(PasoClienteCompleto && PasoActual > 2)"> 2 </span>
+            </span>
+            <span class="progress-information">
+                <small>Paso 2</small>
+                <strong>Cliente</strong>
+            </span>
+        </button>
+        <span class="progress-line" [class.completed]="PasoClienteCompleto && PasoActual > 2"></span>
+        <button type="button" class="progress-step" [class.active]="PasoActual === 3"
+            [class.completed]="PasoProductosCompleto && PasoActual > 3" [disabled]="PasoActual < 3"
+            (click)="OnEventoIrPaso(3)">
+            <span class="step-circle">
+                <mat-icon *ngIf="PasoProductosCompleto && PasoActual > 3"> check</mat-icon>
+                <span *ngIf="!(PasoProductosCompleto && PasoActual > 3)"> 3 </span>
+            </span>
+            <span class="progress-information">
+                <small>Paso 3</small>
+                <strong>Productos</strong>
+            </span>
+        </button>
+        <span class="progress-line" [class.completed]="PasoProductosCompleto && PasoActual > 3"></span>
+        <button type="button" class="progress-step" [class.active]="PasoActual === 4" [disabled]="PasoActual < 4"
+            (click)="OnEventoIrPaso(4)">
+            <span class="step-circle"> 4 </span>
+            <span class="progress-information">
+                <small>Paso 4</small>
+                <strong>Resumen</strong>
+            </span>
+        </button>
+    </section>
+    <!-- CONTENIDO DE LOS PASOS -->
+    <section class="quotation-workspace">
+        <!-- PASO 1: DATOS GENERALES -->
+        <div class="quotation-step-content" *ngIf="PasoActual === 1">
+            <header class="step-header">
+                <div class="step-header-icon general-icon">
+                    <mat-icon>description</mat-icon>
+                </div>
+                <div>
+                    <span>Paso 1 de 4</span>
+                    <h2>Datos generales</h2>
+                    <p>
+                        Configura la emisión, vigencia y condiciones generales de la
+                        cotización.
+                    </p>
+                </div>
+            </header>
+            <app-quotation-general-data [cotizacion]="cotizacion" [compania]="CompaniaActual"
+                (cotizacionChange)="OnEventoActualizarDatosGenerales($event)"
+                (fechaEmisionChange)="OnEventoCambiarFechaEmision()">
+            </app-quotation-general-data>
+            <footer class="step-actions step-actions-end">
+                <button mat-flat-button color="primary" type="button" [disabled]="Loading"
+                    (click)="OnEventoSiguientePaso()">
+                    Continuar
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+            </footer>
+        </div>
+        <!-- PASO 2: CLIENTE -->
+        <div class="quotation-step-content" *ngIf="PasoActual === 2">
+            <header class="step-header">
+                <div class="step-header-icon customer-icon">
+                    <mat-icon>person_search</mat-icon>
+                </div>
+                <div>
+                    <span>Paso 2 de 4</span>
+                    <h2>Seleccionar cliente</h2>
+                    <p>Busca un cliente registrado o crea uno nuevo.</p>
+                </div>
+            </header>
+            <app-quotation-customer [cotizacion]="cotizacion" [clientesFiltrados]="clientesFiltrados"
+                [clienteSeleccionado]="ClienteSeleccionado" [textoCliente]="textoCliente"
+                (textoClienteChange)="textoCliente = $event" (filtrarCliente)="filtrarCliente()"
+                (seleccionarCliente)="seleccionarCliente($event)" (limpiarCliente)="limpiarCliente()"
+                (nuevoCliente)="eventoMostrarPopupRegistrarCliente()">
+            </app-quotation-customer>
+            <footer class="step-actions">
+                <button mat-stroked-button type="button" [disabled]="Loading" (click)="OnEventoPasoAnterior()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Anterior
+                </button>
+                <button mat-flat-button color="primary" type="button" [disabled]="Loading"
+                    (click)="OnEventoSiguientePaso()">
+                    Continuar
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+            </footer>
+        </div>
+        <!-- PASO 3: PRODUCTOS -->
+        <div class="quotation-step-content" *ngIf="PasoActual === 3">
+            <header class="step-header">
+                <div class="step-header-icon product-icon">
+                    <mat-icon>add_shopping_cart</mat-icon>
+                </div>
+                <div>
+                    <span>Paso 3 de 4</span>
+                    <h2>Agregar productos</h2>
+                    <p>
+                        Selecciona los productos, cantidades, precios, descuentos y
+                        descripciones.
+                    </p>
+                </div>
+            </header>
+            <app-quotation-products [productosFiltrados]="productosFiltrados"
+                [productoSeleccionado]="ProductoSeleccionado" [productoTemporal]="productoTemporal"
+                [detallesCotizacion]="DetallesCotizacion" [compania]="CompaniaActual" [textoProducto]="textoProducto"
+                (textoProductoChange)="textoProducto = $event" (filtrarProducto)="filtrarProducto()"
+                (seleccionarProducto)="seleccionarProducto($event)"
+                (calcularProducto)="OnEventoCalcularProductoTemporal()" (agregarProducto)="OnEventoAgregarProducto()"
+                (eliminarProducto)="OnEventoEliminarProducto($event)"
+                (actualizarDetalle)="OnEventoActualizarDetalle($event)">
+            </app-quotation-products>
+            <!-- RESUMEN RÁPIDO -->
+            <div class="products-quick-summary" *ngIf="DetallesCotizacion.length > 0">
+                <div class="quick-summary-item">
+                    <span>Productos</span>
+                    <strong>{{ DetallesCotizacion.length }}</strong>
+                </div>
+                <div class="quick-summary-item">
+                    <span>Subtotal</span>
+                    <strong>
+                        {{ CompaniaActual?.SimboloMoneda || "S/" }}
+                        {{ cotizacion.subtotal | number: "1.2-2" }}
+                    </strong>
+                </div>
+                <div class="quick-summary-item">
+                    <span>Descuento</span>
+                    <strong class="discount-value">
+                        - {{ CompaniaActual?.SimboloMoneda || "S/" }}
+                        {{ cotizacion.discount | number: "1.2-2" }}
+                    </strong>
+                </div>
+                <div class="quick-summary-item total-item">
+                    <span>Total</span>
+                    <strong>
+                        {{ CompaniaActual?.SimboloMoneda || "S/" }}
+                        {{ cotizacion.total | number: "1.2-2" }}
+                    </strong>
+                </div>
+            </div>
+            <footer class="step-actions">
+                <button mat-stroked-button type="button" [disabled]="Loading" (click)="OnEventoPasoAnterior()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Anterior
+                </button>
+                <button mat-flat-button color="primary" type="button" [disabled]="Loading"
+                    (click)="OnEventoSiguientePaso()">
+                    Revisar cotización
+                    <mat-icon>preview</mat-icon>
+                </button>
+            </footer>
+        </div>
+        <!-- PASO 4: RESUMEN -->
+        <div class="quotation-step-content" *ngIf="PasoActual === 4">
+            <header class="step-header">
+                <div class="step-header-icon summary-icon">
+                    <mat-icon>fact_check</mat-icon>
+                </div>
+                <div>
+                    <span>Paso 4 de 4</span>
+                    <h2>Resumen de la cotización</h2>
+                    <p>Revisa toda la información antes de registrar.</p>
+                </div>
+            </header>
+            <app-quotation-summary [cotizacion]="cotizacion" [detallesCotizacion]="DetallesCotizacion"
+                [cliente]="ClienteSeleccionado" [compania]="CompaniaActual" [loading]="Loading">
+            </app-quotation-summary>
+            <div class="quotation-information">
+                <mat-icon>info</mat-icon>
+                <div>
+                    <strong>La cotización no afecta el inventario</strong>
+                    <span>
+                        El stock se descontará únicamente cuando la cotización sea
+                        convertida en una venta.
+                    </span>
+                </div>
+            </div>
+            <footer class="step-actions">
+                <button mat-stroked-button type="button" [disabled]="Loading" (click)="OnEventoPasoAnterior()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Anterior
+                </button>
+                <button mat-flat-button color="primary" type="button" class="register-quotation-button"
+                    [disabled]="Loading || !FormularioCompleto" (click)="OnEventoGuardarCotizacion()">
+                    <mat-spinner *ngIf="Loading" diameter="18"> </mat-spinner>
+                    <mat-icon *ngIf="!Loading"> save </mat-icon>
+                    <span>
+                        {{ Loading ? "Registrando..." : "Registrar cotización" }}
+                    </span>
+                </button>
+            </footer>
+        </div>
+    </section>
+</div>
