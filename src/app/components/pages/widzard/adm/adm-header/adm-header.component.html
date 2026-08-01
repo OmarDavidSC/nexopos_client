@@ -1,32 +1,42 @@
-<div class="header-admin">
-    <div class="header-top">
-        <div class="breadcrumb-admin">
-            <button mat-icon-button class="btn-back" (click)="regresar()" matTooltip="Regresar">
+<div class="admin-header">
+    <div class="admin-header__content">
+
+        <div class="admin-header__navigation">
+            <button mat-icon-button type="button" class="admin-header__back" (click)="regresar()" matTooltip="Regresar"
+                matTooltipPosition="below">
+
                 <mat-icon>arrow_back</mat-icon>
             </button>
 
-            <ng-container *ngFor="let item of breadcrumbs; let last = last">
-                <span class="breadcrumb-item-admin" [class.active]="last"
-                    [matTooltip]="!last ? 'Ir a ' + item.nombre : 'Página actual'" matTooltipPosition="below"
-                    (click)="!last && navegar(item.ruta)">
-                    {{ item.nombre }}
-                </span>
+            <nav class="admin-breadcrumb" aria-label="Breadcrumb">
+                <ng-container *ngFor="let item of breadcrumbs; let last = last">
 
-                <mat-icon class="separator" *ngIf="!last">
-                    chevron_right
-                </mat-icon>
-            </ng-container>
+                    <button type="button" class="admin-breadcrumb__item" [class.admin-breadcrumb__item--active]="last"
+                        [disabled]="last" [matTooltip]="!last ? 'Ir a ' + item.nombre : 'Página actual'"
+                        matTooltipPosition="below" (click)="!last && navegar(item.ruta)">
+
+                        {{ item.nombre }}
+                    </button>
+
+                    <mat-icon *ngIf="!last" class="admin-breadcrumb__separator">
+                        chevron_right
+                    </mat-icon>
+
+                </ng-container>
+            </nav>
         </div>
 
-        <div class="header-actions" *ngIf="visible">
-            <button mat-flat-button class="btn-nuevo" (click)="accionNuevo.emit()">
+        <div class="admin-header__actions" *ngIf="visible">
+            <button mat-flat-button type="button" class="admin-header__primary" (click)="accionNuevo.emit()">
+
                 <mat-icon>add</mat-icon>
-                {{ textoBoton }}
+                <span>{{ textoBoton }}</span>
             </button>
         </div>
+
     </div>
 
-    <p class="subtitulo-admin" *ngIf="descripcion">
+    <p class="admin-header__description" *ngIf="descripcion">
         {{ descripcion }}
     </p>
 </div>
