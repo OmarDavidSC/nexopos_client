@@ -1,1 +1,217 @@
-<p>quotation-products works!</p>
+<section class="quotation-products">
+    <!-- SELECCIÓN DEL PRODUCTO -->
+    <div class="product-selector">
+        <div class="selector-header">
+            <div class="selector-title">
+                <div class="selector-icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+                <div>
+                    <h3>Seleccionar producto</h3>
+                    <p>
+                        Busca el producto y configura los datos que aparecerán en la
+                        cotización.
+                    </p>
+                </div>
+            </div>
+            <span class="products-counter">
+                {{ detallesCotizacion.length }}
+                producto{{ detallesCotizacion.length === 1 ? "" : "s" }}
+            </span>
+        </div>
+        <div class="product-form-grid">
+            <!-- BUSCADOR -->
+            <mat-form-field appearance="outline" class="compact-field product-search-field">
+                <mat-label>Buscar producto</mat-label>
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput type="text" autocomplete="off" placeholder="Código o nombre del producto"
+                    [ngModel]="textoProducto" (ngModelChange)="OnEventoCambiarTexto($event)"
+                    [matAutocomplete]="autoProducto" />
+                <button *ngIf="textoProducto" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                    (click)="OnEventoCambiarTexto('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="mostrarProducto"
+                    (optionSelected)="OnEventoSeleccionarProducto($event.option.value)">
+                    <mat-option *ngFor="let item of productosFiltrados" [value]="item">
+                        <div class="product-option">
+                            <div class="product-option-main">
+                                <strong>
+                                    {{ item.Codigo || "Sin código" }} - {{ item.Nombre }}
+                                </strong>
+                            </div>
+                            <div class="product-option-side">
+                                <strong>
+                                    Stock:
+                                    <!-- {{ item.PrecioVenta | number: "1.2-2" }} -->
+                                     {{ item.StockActual }}
+                                </strong>
+                                <!-- <span class="stock-badge" [class.low-stock]="item.StockActual <= 5">
+                                    
+                                
+                                </span> -->
+                            </div>
+                        </div>
+                    </mat-option>
+                    <mat-option disabled *ngIf="textoProducto && productosFiltrados.length === 0">
+                        No se encontraron productos.
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <!-- CANTIDAD -->
+            <mat-form-field appearance="outline" class="compact-field">
+                <mat-label>Cantidad</mat-label>
+                <input matInput type="number" min="0.001" step="1" [(ngModel)]="productoTemporal.quantity"
+                    (ngModelChange)="OnEventoCalcularProducto()" />
+                <mat-icon matSuffix>numbers</mat-icon>
+            </mat-form-field>
+            <!-- PRECIO -->
+            <mat-form-field appearance="outline" class="compact-field">
+                <mat-label>Precio unitario</mat-label>
+                <span matPrefix> {{ simboloMoneda }}&nbsp; </span>
+                <input matInput type="number" min="0.01" step="0.01" [(ngModel)]="productoTemporal.unit_price"
+                    (ngModelChange)="OnEventoCalcularProducto()" />
+            </mat-form-field>
+            <!-- DESCUENTO -->
+            <mat-form-field appearance="outline" class="compact-field">
+                <mat-label>Descuento</mat-label>
+                <input matInput type="number" min="0" max="100" step="0.01"
+                    [(ngModel)]="productoTemporal.discount_percentage" (ngModelChange)="OnEventoCalcularProducto()" />
+                <span matSuffix>%</span>
+            </mat-form-field>
+            <!-- DESCRIPCIÓN -->
+            <mat-form-field appearance="outline" class="compact-field description-field">
+                <mat-label>Descripción adicional</mat-label>
+                <input matInput type="text" maxlength="500" [(ngModel)]="productoTemporal.description"
+                    placeholder="Opcional" />
+                <mat-icon matSuffix>notes</mat-icon>
+            </mat-form-field>
+            <!-- BOTÓN AGREGAR -->
+            <button mat-flat-button type="button" class="add-product-button" [disabled]="!tieneProductoSeleccionado"
+                (click)="OnEventoAgregarProducto()">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Agregar
+            </button>
+        </div>
+        <!-- PRODUCTO SELECCIONADO -->
+        <div class="selected-product" *ngIf="tieneProductoSeleccionado">
+            <div class="selected-product-main">
+                <div class="selected-product-icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+                <div>
+                    <small>Producto seleccionado</small>
+                    <strong>{{ productoTemporal.name }}</strong>
+                    <span>
+                        {{ productoTemporal.code || "Sin código" }}
+                        · Stock disponible:
+                        {{ productoTemporal.stock }}
+                    </span>
+                </div>
+            </div>
+            <div class="selected-product-values">
+                <div>
+                    <small>Descuento</small>
+                    <strong class="discount-value">
+                        - {{ simboloMoneda }}
+                        {{ productoTemporal.discount | number: "1.2-2" }}
+                    </strong>
+                </div>
+                <div>
+                    <small>Total del producto</small>
+                    <strong class="product-total">
+                        {{ simboloMoneda }}
+                        {{ productoTemporal.total | number: "1.2-2" }}
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DETALLE DE PRODUCTOS -->
+    <div class="quotation-detail">
+        <div class="detail-header">
+            <div>
+                <h3>Detalle de la cotización</h3>
+                <p>Puedes modificar cantidades, precios y descuentos.</p>
+            </div>
+            <span>
+                {{ detallesCotizacion.length }}
+                registro{{ detallesCotizacion.length === 1 ? "" : "s" }}
+            </span>
+        </div>
+        <div class="table-responsive" *ngIf="detallesCotizacion.length > 0">
+            <table class="quotation-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th class="quantity-column">Cantidad</th>
+                        <th class="amount-column">Precio</th>
+                        <th class="discount-column">Desc. %</th>
+                        <th class="amount-column">Descuento</th>
+                        <th class="amount-column">Total</th>
+                        <th class="action-column"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let detalle of detallesCotizacion; let index = index">
+                        <td>
+                            <div class="table-product">
+                                <div class="table-product-icon">
+                                    <mat-icon>inventory_2</mat-icon>
+                                </div>
+                                <div>
+                                    <strong> {{ detalle.name }}</strong>
+                                    <span> {{ detalle.code || "Sin código" }}</span>
+                                    <small *ngIf="detalle.description"> {{ detalle.description }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input class="table-input quantity-input" type="number" min="0.001" step="1"
+                                [ngModel]="detalle.quantity"
+                                (ngModelChange)="OnEventoActualizarDetalle(index, 'quantity', $event)" />
+                        </td>
+                        <td>
+                            <div class="currency-input">
+                                <span>{{ simboloMoneda }}</span>
+                                <input class="table-input" type="number" min="0.01" step="0.01"
+                                    [ngModel]="detalle.unit_price"
+                                    (ngModelChange)="OnEventoActualizarDetalle(index, 'unit_price', $event)" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="percentage-input">
+                                <input class="table-input" type="number" min="0" max="100" step="0.01"
+                                    [ngModel]="detalle.discount_percentage"
+                                    (ngModelChange)="OnEventoActualizarDetalle(index,'discount_percentage',$event )" />
+                                <span>%</span>
+                            </div>
+                        </td>
+                        <td class="amount-cell discount-amount">
+                            - {{ simboloMoneda }} {{ detalle.discount | number: "1.2-2" }}
+                        </td>
+                        <td class="amount-cell total-amount">
+                            {{ simboloMoneda }}{{ detalle.total | number: "1.2-2" }}
+                        </td>
+                        <td class="action-cell">
+                            <button mat-icon-button type="button" color="warn" matTooltip="Eliminar producto"
+                                (click)="OnEventoEliminarProducto(index)">
+                                <mat-icon>delete_outline</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- SIN PRODUCTOS -->
+        <div class="empty-products" *ngIf="detallesCotizacion.length === 0">
+            <div class="empty-products-icon">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
+            <div>
+                <strong> No agregaste productos </strong>
+                <span> Busca un producto y agrégalo a la cotización. </span>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,424 @@
+.quotation-summary {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| TARJETAS PRINCIPALES
+|--------------------------------------------------------------------------
+*/
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.summary-card {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.summary-card-header {
+    display: flex;
+    min-height: 70px;
+    align-items: center;
+    gap: 9px;
+    padding: 11px;
+
+    >div:last-child {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+    }
+
+    span {
+        color: #94a3b8;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    strong {
+        overflow: hidden;
+        margin-top: 2px;
+        color: #0f172a;
+        font-size: 13px;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.summary-icon {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+
+    mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+    }
+}
+
+.customer-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.quotation-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.date-icon {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.product-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+.summary-card-content {
+    padding: 7px 11px;
+    border-top: 1px solid #f1f5f9;
+    background: #f8fafc;
+}
+
+.summary-information-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    span {
+        color: #94a3b8;
+        font-size: 8px;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #475569;
+        font-size: 9px;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| PRODUCTOS
+|--------------------------------------------------------------------------
+*/
+
+.products-summary {
+    padding: 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 11px;
+
+    h3 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 2px 0 0;
+        color: #64748b;
+        font-size: 9px;
+    }
+
+    >span {
+        padding: 4px 8px;
+        border-radius: 20px;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 8px;
+        font-weight: 700;
+    }
+}
+
+.summary-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+
+    th {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e2e8f0;
+        background: #f8fafc;
+        color: #64748b;
+        font-size: 8px;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 9px 10px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #475569;
+        font-size: 10px;
+        vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: 0;
+    }
+}
+
+.summary-product {
+    display: flex;
+    min-width: 190px;
+    align-items: center;
+    gap: 8px;
+
+    >div:last-child {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+    }
+
+    strong {
+        overflow: hidden;
+        color: #334155;
+        font-size: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    span {
+        color: #94a3b8;
+        font-size: 8px;
+    }
+
+    small {
+        overflow: hidden;
+        max-width: 260px;
+        margin-top: 2px;
+        color: #64748b;
+        font-size: 8px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.summary-product-icon {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: #f1f5f9;
+    color: #64748b;
+
+    mat-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+    }
+}
+
+.discount-value {
+    color: #dc2626 !important;
+
+    small {
+        display: block;
+        margin-top: 1px;
+        font-size: 8px;
+    }
+}
+
+.total-value {
+    color: #2563eb !important;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| CONDICIONES
+|--------------------------------------------------------------------------
+*/
+
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.condition-card {
+    padding: 11px;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    background: #f8fafc;
+
+    p {
+        margin: 7px 0 0;
+        color: #64748b;
+        font-size: 9px;
+        line-height: 15px;
+        white-space: pre-wrap;
+    }
+}
+
+.condition-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #475569;
+
+    mat-icon {
+        width: 17px;
+        height: 17px;
+        color: #94a3b8;
+        font-size: 17px;
+    }
+
+    strong {
+        font-size: 10px;
+        font-weight: 700;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| TOTALES
+|--------------------------------------------------------------------------
+*/
+
+.totals-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.totals-information {
+    width: 100%;
+    max-width: 360px;
+    padding: 12px;
+    border: 1px solid #dbeafe;
+    border-radius: 11px;
+    background: #f8fbff;
+}
+
+.total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 2px;
+    border-bottom: 1px dashed #dbe3ed;
+
+    span {
+        color: #64748b;
+        font-size: 10px;
+    }
+
+    strong {
+        color: #334155;
+        font-size: 11px;
+    }
+}
+
+.discount-amount {
+    color: #dc2626 !important;
+}
+
+.grand-total {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 9px;
+    background: #eff6ff;
+
+    span {
+        color: #2563eb;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    strong {
+        color: #1d4ed8;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 24px;
+        white-space: nowrap;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| RESPONSIVE
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 1199.98px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .conditions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .totals-information {
+        max-width: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .products-summary {
+        padding: 10px;
+    }
+
+    .section-header {
+        align-items: flex-start;
+
+        >span {
+            display: none;
+        }
+    }
+
+    .grand-total {
+        align-items: flex-start;
+        flex-direction: column;
+
+        strong {
+            font-size: 20px;
+        }
+    }
+}

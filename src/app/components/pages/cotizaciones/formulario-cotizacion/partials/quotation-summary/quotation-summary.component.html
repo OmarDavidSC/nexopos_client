@@ -1,1 +1,180 @@
-<p>quotation-summary works!</p>
+<section class="quotation-summary">
+    <!-- INFORMACIÓN PRINCIPAL -->
+    <div class="summary-grid">
+        <!-- CLIENTE -->
+        <article class="summary-card customer-card">
+            <div class="summary-card-header">
+                <div class="summary-icon customer-icon">
+                    <mat-icon>person</mat-icon>
+                </div>
+                <div>
+                    <span>Cliente</span>
+                    <strong>{{ nombreCliente }}</strong>
+                </div>
+            </div>
+            <div class="summary-card-content">
+                <div class="summary-information-row">
+                    <span>Documento</span>
+                    <strong>{{ documentoCliente }}</strong>
+                </div>
+            </div>
+        </article>
+        <!-- COTIZACIÓN -->
+        <article class="summary-card">
+            <div class="summary-card-header">
+                <div class="summary-icon quotation-icon">
+                    <mat-icon>description</mat-icon>
+                </div>
+                <div>
+                    <span>Cotización</span>
+                    <strong> {{ cotizacion?.quotation_series || "COT" }} </strong>
+                </div>
+            </div>
+            <div class="summary-card-content">
+                <div class="summary-information-row">
+                    <span>Estado inicial</span>
+                    <strong> {{ obtenerEstado(cotizacion?.status) }}</strong>
+                </div>
+            </div>
+        </article>
+        <!-- EMISIÓN -->
+        <article class="summary-card">
+            <div class="summary-card-header">
+                <div class="summary-icon date-icon">
+                    <mat-icon>event</mat-icon>
+                </div>
+                <div>
+                    <span>Fecha de emisión</span>
+                    <strong>{{ cotizacion?.issue_date | date: "dd/MM/yyyy" }}</strong>
+                </div>
+            </div>
+            <div class="summary-card-content">
+                <div class="summary-information-row">
+                    <span>Vencimiento</span>
+                    <strong> {{ cotizacion?.expiration_date | date: "dd/MM/yyyy" }}</strong>
+                </div>
+            </div>
+        </article>
+        <!-- PRODUCTOS -->
+        <article class="summary-card">
+            <div class="summary-card-header">
+                <div class="summary-icon product-icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+                <div>
+                    <span>Productos</span>
+                    <strong> {{ cantidadProductos }}</strong>
+                </div>
+            </div>
+            <div class="summary-card-content">
+                <div class="summary-information-row">
+                    <span>Total de unidades</span>
+                    <strong> {{ cantidadUnidades }} </strong>
+                </div>
+            </div>
+        </article>
+    </div>
+    <!-- DETALLE DE PRODUCTOS -->
+    <div class="products-summary">
+        <div class="section-header">
+            <div>
+                <h3>Productos de la cotización</h3>
+                <p>Revisa los precios, descuentos y cantidades.</p>
+            </div>
+            <span>{{ cantidadProductos }} producto{{ cantidadProductos === 1 ? "" : "s" }}</span>
+        </div>
+        <div class="table-responsive">
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Desc.</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let detalle of detallesCotizacion">
+                        <td>
+                            <div class="summary-product">
+                                <div class="summary-product-icon">
+                                    <mat-icon> inventory_2 </mat-icon>
+                                </div>
+                                <div>
+                                    <strong>{{ detalle.name }}</strong>
+                                    <span>{{ detalle.code || "Sin código" }}</span>
+                                    <small *ngIf="detalle.description">{{ detalle.description }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td> {{ detalle.quantity }} </td>
+                        <td>{{ simboloMoneda }}{{ detalle.unit_price | number: "1.2-2" }}</td>
+                        <td class="discount-value">
+                            {{ detalle.discount_percentage || 0 }}%
+                            <small> - {{ simboloMoneda }} {{ detalle.discount | number: "1.2-2" }}</small>
+                        </td>
+                        <td class="total-value">
+                            {{ simboloMoneda }}
+                            {{ detalle.total | number: "1.2-2" }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- OBSERVACIONES Y TÉRMINOS -->
+    <div class="conditions-grid" *ngIf="cotizacion?.observations || cotizacion?.terms">
+        <div class="condition-card" *ngIf="cotizacion?.observations">
+            <div class="condition-header">
+                <mat-icon> notes </mat-icon>
+                <strong> Observaciones </strong>
+            </div>
+            <p>
+                {{ cotizacion.observations }}
+            </p>
+        </div>
+        <div class="condition-card" *ngIf="cotizacion?.terms">
+            <div class="condition-header">
+                <mat-icon> gavel </mat-icon>
+                <strong> Términos y condiciones </strong>
+            </div>
+            <p>
+                {{ cotizacion.terms }}
+            </p>
+        </div>
+    </div>
+    <!-- TOTALES -->
+    <div class="totals-container">
+        <div class="totals-information">
+            <div class="total-row">
+                <span> Subtotal </span>
+                <strong>
+                    {{ simboloMoneda }}
+                    {{ cotizacion?.subtotal | number: "1.2-2" }}
+                </strong>
+            </div>
+            <div class="total-row">
+                <span> Descuento </span>
+                <strong class="discount-amount">
+                    - {{ simboloMoneda }}
+                    {{ cotizacion?.discount | number: "1.2-2" }}
+                </strong>
+            </div>
+            <div class="total-row">
+                <span> Impuesto </span>
+                <strong>
+                    {{ simboloMoneda }}
+                    {{ cotizacion?.tax | number: "1.2-2" }}
+                </strong>
+            </div>
+            <div class="grand-total">
+                <span> Total de la cotización </span>
+                <strong>
+                    {{ simboloMoneda }}
+                    {{ cotizacion?.total | number: "1.2-2" }}
+                </strong>
+            </div>
+        </div>
+    </div>
+</section>
