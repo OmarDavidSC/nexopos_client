@@ -1,293 +1,407 @@
 :host {
     display: block;
-    background: #f5f7fb;
     min-height: 100%;
+    background: #f6f8fc;
 }
 
 .company-page {
-    max-width: 1250px;
+    width: 100%;
+    max-width: 1320px;
     margin: 0 auto;
-    padding: 24px;
+    padding: 12px 16px 20px;
 }
+
+/* =========================================
+   ENCABEZADO
+========================================= */
 
 .company-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 28px;
-    margin-bottom: 24px;
-    background: linear-gradient(135deg, #ffffff 0%, #f7f9ff 100%);
-    border: 1px solid #e5e9f2;
-    border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(24, 39, 75, 0.06);
+    gap: 18px;
+    min-height: 94px;
+    margin-bottom: 12px;
+    padding: 15px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background:
+        radial-gradient(circle at 92% 20%,
+            rgba(96, 165, 250, .12),
+            transparent 25%),
+        linear-gradient(135deg,
+            #ffffff 0%,
+            #f8fbff 100%);
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .03),
+        0 5px 16px rgba(15, 23, 42, .04);
 
     &__content {
         display: flex;
         align-items: center;
-        gap: 20px;
         min-width: 0;
+        gap: 13px;
     }
 
     &__info {
         min-width: 0;
 
         h1 {
-            margin: 4px 0 6px;
-            color: #172033;
-            font-size: 27px;
-            font-weight: 700;
-            line-height: 1.2;
+            margin: 1px 0 3px;
+            overflow: hidden;
+            color: #0f172a;
+            font-size: 20px;
+            font-weight: 750;
+            line-height: 26px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         p {
-            max-width: 650px;
+            max-width: 680px;
             margin: 0;
-            color: #687086;
-            font-size: 14px;
-            line-height: 1.6;
+            color: #64748b;
+            font-size: 11px;
+            line-height: 16px;
         }
     }
 
     &__label {
-        color: #3f51b5;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.7px;
+        display: inline-flex;
+        align-items: center;
+        height: 21px;
+        padding: 0 7px;
+        border-radius: 5px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 8.5px;
+        font-weight: 750;
+        letter-spacing: .06em;
         text-transform: uppercase;
     }
 
     &__actions {
         display: flex;
         align-items: center;
-        gap: 10px;
         flex-shrink: 0;
+        gap: 7px;
 
         button {
-            min-height: 42px;
-            border-radius: 10px;
+            min-width: auto;
+            height: 34px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
         mat-icon {
-            margin-right: 6px;
+            width: 17px;
+            height: 17px;
+            margin-right: 4px;
+            font-size: 17px;
+            line-height: 17px;
         }
     }
 }
 
 .company-avatar {
-    width: 82px;
-    height: 82px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 62px;
     overflow: hidden;
+    border: 3px solid #ffffff;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
     color: #ffffff;
-    background: linear-gradient(135deg, #3f51b5, #6574d9);
-    border: 4px solid #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 7px 20px rgba(63, 81, 181, 0.2);
+    box-shadow:
+        0 5px 14px rgba(37, 99, 235, .18),
+        0 0 0 1px #dbeafe;
 
     img {
         width: 100%;
         height: 100%;
+        padding: 5px;
         object-fit: contain;
         background: #ffffff;
     }
 
     span {
-        font-size: 34px;
-        font-weight: 700;
+        font-size: 25px;
+        font-weight: 750;
     }
 }
+
+/* =========================================
+   FORMULARIO
+========================================= */
 
 .company-form {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 12px;
 }
 
 .company-card {
-    padding: 26px;
+    padding: 15px 17px 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
     background: #ffffff;
-    border: 1px solid #e5e9f2;
-    border-radius: 18px;
-    box-shadow: 0 6px 25px rgba(24, 39, 75, 0.045);
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, .025),
+        0 4px 13px rgba(15, 23, 42, .035);
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+
+    &:hover {
+        border-color: #d7e0eb;
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, .03),
+            0 7px 18px rgba(15, 23, 42, .045);
+    }
 
     &__header {
         display: flex;
         align-items: center;
-        gap: 14px;
-        padding-bottom: 20px;
-        margin-bottom: 24px;
-        border-bottom: 1px solid #edf0f6;
+        gap: 9px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eef2f7;
 
         h2 {
-            margin: 0 0 4px;
-            color: #172033;
-            font-size: 18px;
+            margin: 0;
+            color: #0f172a;
+            font-size: 13.5px;
             font-weight: 700;
+            line-height: 18px;
         }
 
         p {
-            margin: 0;
-            color: #7b8499;
-            font-size: 13px;
+            margin: 1px 0 0;
+            color: #94a3b8;
+            font-size: 9.5px;
+            line-height: 14px;
         }
     }
 
     &__icon {
-        width: 46px;
-        height: 46px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
-        color: #3f51b5;
-        background: rgba(63, 81, 181, 0.09);
-        border-radius: 12px;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #2563eb;
 
         mat-icon {
-            font-size: 23px;
+            width: 18px;
+            height: 18px;
+            font-size: 18px;
+            line-height: 18px;
+        }
+    }
+
+    .row {
+        margin-right: -5px;
+        margin-left: -5px;
+
+        >[class*="col-"] {
+            padding-right: 5px;
+            padding-left: 5px;
         }
     }
 }
 
+/* =========================================
+   MONEDA
+========================================= */
+
 .currency-preview {
     display: inline-flex;
     align-items: center;
-    gap: 13px;
-    padding: 14px 18px;
-    color: #536078;
-    background: #f8f9fd;
-    border: 1px dashed #ccd3e4;
-    border-radius: 12px;
+    min-width: 180px;
+    margin-bottom: 8px;
+    padding: 8px 11px;
+    gap: 9px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #64748b;
 
     &__icon {
-        width: 40px;
-        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #3f51b5;
+        flex: 0 0 31px;
+        width: 31px;
+        height: 31px;
+        border-radius: 8px;
         background: #ffffff;
-        border-radius: 10px;
+        color: #2563eb;
+        box-shadow: 0 1px 3px rgba(15, 23, 42, .06);
+
+        mat-icon {
+            width: 17px;
+            height: 17px;
+            font-size: 17px;
+            line-height: 17px;
+        }
     }
 
     span {
         display: block;
-        margin-bottom: 2px;
-        font-size: 11px;
+        margin-bottom: 1px;
+        color: #94a3b8;
+        font-size: 8px;
+        font-weight: 700;
+        letter-spacing: .04em;
         text-transform: uppercase;
     }
 
     strong {
         display: block;
-        color: #172033;
-        font-size: 18px;
+        color: #0f172a;
+        font-size: 14px;
+        font-weight: 750;
     }
 }
 
+/* =========================================
+   IDENTIDAD VISUAL
+========================================= */
+
 .image-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+    gap: 11px;
+    padding-bottom: 8px;
 }
 
 .image-upload-card {
-    padding: 20px;
-    background: #fafbfe;
-    border: 1px solid #e4e8f1;
-    border-radius: 15px;
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #f8fafc;
 
     &__title {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 15px;
-        margin-bottom: 16px;
+        gap: 10px;
+        margin-bottom: 9px;
 
         h3 {
-            margin: 0 0 5px;
-            color: #202a3d;
-            font-size: 15px;
+            margin: 0;
+            color: #1e293b;
+            font-size: 11.5px;
             font-weight: 700;
         }
 
         p {
-            margin: 0;
-            color: #7c8599;
-            font-size: 12px;
-            line-height: 1.5;
+            margin: 2px 0 0;
+            color: #94a3b8;
+            font-size: 9px;
+            line-height: 13px;
         }
 
         >mat-icon {
-            color: #8a94a8;
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            color: #94a3b8;
+            font-size: 18px;
+            line-height: 18px;
         }
     }
 
     &__actions {
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 15px;
+        gap: 6px;
+        margin-top: 8px;
 
         button {
-            border-radius: 9px;
+            min-width: auto;
+            height: 31px;
+            padding: 0 10px;
+            border-radius: 7px;
+            font-size: 10px;
         }
 
         mat-icon {
-            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            margin-right: 3px;
+            font-size: 16px;
+            line-height: 16px;
         }
 
-        button[mat-icon-button] mat-icon {
-            margin-right: 0;
+        button[mat-icon-button] {
+            width: 31px;
+            height: 31px;
+            padding: 0;
+
+            mat-icon {
+                margin: 0;
+            }
         }
     }
 
     &__filename {
         display: block;
-        margin-top: 10px;
+        margin-top: 6px;
         overflow: hidden;
-        color: #667087;
-        font-size: 12px;
+        color: #64748b;
+        font-size: 9px;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 }
 
 .image-preview {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
     background-color: #ffffff;
     background-image:
-        linear-gradient(45deg, #f2f4f8 25%, transparent 25%),
-        linear-gradient(-45deg, #f2f4f8 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #f2f4f8 75%),
-        linear-gradient(-45deg, transparent 75%, #f2f4f8 75%);
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
-    background-size: 16px 16px;
-    border: 1px solid #e3e7ef;
-    border-radius: 12px;
+        linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+    background-position:
+        0 0,
+        0 7px,
+        7px -7px,
+        -7px 0;
+    background-size: 14px 14px;
 
     img {
-        max-width: 90%;
-        max-height: 90%;
+        max-width: 86%;
+        max-height: 86%;
         object-fit: contain;
     }
 
     &--logo {
-        height: 190px;
+        height: 126px;
     }
 
     &--favicon {
-        height: 190px;
+        height: 126px;
 
         img {
-            width: 90px;
-            height: 90px;
+            width: 66px;
+            height: 66px;
         }
     }
 
@@ -295,63 +409,123 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap: 8px;
-        color: #8b94a7;
+        gap: 5px;
+        color: #94a3b8;
 
         mat-icon {
-            width: 38px;
-            height: 38px;
-            font-size: 38px;
+            width: 28px;
+            height: 28px;
+            font-size: 28px;
+            line-height: 28px;
         }
 
         span {
-            font-size: 13px;
+            font-size: 9.5px;
         }
     }
 }
+
+/* =========================================
+   MATERIAL FORM FIELDS
+========================================= */
+
+::ng-deep {
+    .company-form {
+        .mat-form-field {
+            font-size: 12px;
+        }
+
+        .mat-form-field-wrapper {
+            padding-bottom: 6px;
+        }
+
+        .mat-form-field-infix {
+            padding: .7em 0 .62em;
+            border-top-width: .7em;
+        }
+
+        .mat-form-field-label {
+            font-size: 12px;
+        }
+
+        .mat-input-element {
+            color: #334155;
+            font-size: 12px;
+        }
+
+        .mat-form-field-appearance-outline {
+            .mat-form-field-outline {
+                color: #dce3ec;
+            }
+
+            &.mat-focused {
+                .mat-form-field-outline-thick {
+                    color: #2563eb;
+                }
+            }
+        }
+
+        .mat-form-field-disabled {
+            .mat-form-field-outline {
+                background: #f8fafc;
+            }
+
+            .mat-input-element {
+                color: #64748b;
+            }
+        }
+
+        .mat-form-field-suffix {
+            mat-icon {
+                width: 18px;
+                height: 18px;
+                color: #94a3b8;
+                font-size: 18px;
+                line-height: 18px;
+            }
+        }
+
+        .mat-hint,
+        .mat-error {
+            font-size: 9px;
+        }
+
+        textarea.mat-input-element {
+            min-height: 55px;
+            line-height: 1.4;
+            resize: vertical;
+        }
+    }
+}
+
+/* =========================================
+   ACCIONES MÓVILES Y CARGA
+========================================= */
 
 .company-mobile-actions {
     display: none;
 }
 
 .company-loading {
-    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 16px;
-    color: #697289;
+    min-height: 360px;
+    gap: 11px;
+    color: #64748b;
+    font-size: 11px;
 }
 
-::ng-deep {
-    .company-form {
-        .mat-form-field-wrapper {
-            padding-bottom: 10px;
-        }
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-        .mat-form-field-appearance-outline .mat-form-field-outline {
-            color: #dce1eb;
-        }
-
-        .mat-form-field-disabled {
-            .mat-form-field-outline {
-                background: #f8f9fc;
-            }
-
-            .mat-input-element {
-                color: #50596e;
-            }
-        }
-
-        textarea.mat-input-element {
-            line-height: 1.6;
-            resize: vertical;
-        }
+@media (max-width: 992px) {
+    .company-page {
+        padding: 10px 12px 18px;
     }
-}
 
-@media (max-width: 900px) {
     .company-header {
         align-items: flex-start;
         flex-direction: column;
@@ -367,29 +541,51 @@
     }
 }
 
-@media (max-width: 600px) {
-    .company-page {
-        padding: 12px;
+@media (max-width: 768px) {
+    .company-header {
+        padding: 13px;
+
+        &__info {
+            h1 {
+                font-size: 18px;
+            }
+        }
     }
 
-    .company-header,
     .company-card {
-        padding: 18px;
-        border-radius: 14px;
+        padding: 13px 13px 7px;
+    }
+}
+
+@media (max-width: 600px) {
+    .company-page {
+        padding: 7px;
     }
 
     .company-header {
+        min-height: auto;
+        margin-bottom: 8px;
+        padding: 11px;
+        border-radius: 11px;
+
         &__content {
-            align-items: flex-start;
+            align-items: center;
+            gap: 9px;
         }
 
         &__info {
             h1 {
-                font-size: 21px;
+                font-size: 16px;
+                line-height: 21px;
             }
 
             p {
-                font-size: 13px;
+                display: -webkit-box;
+                overflow: hidden;
+                font-size: 9.5px;
+                line-height: 14px;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
             }
         }
 
@@ -399,18 +595,32 @@
     }
 
     .company-avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 14px;
+        flex-basis: 49px;
+        width: 49px;
+        height: 49px;
+        border-radius: 11px;
 
         span {
-            font-size: 25px;
+            font-size: 20px;
         }
     }
 
+    .company-form {
+        gap: 8px;
+    }
+
     .company-card {
+        padding: 11px 10px 5px;
+        border-radius: 11px;
+
         &__header {
-            align-items: flex-start;
+            align-items: center;
+            margin-bottom: 9px;
+            padding-bottom: 8px;
+
+            p {
+                display: none;
+            }
         }
     }
 
@@ -418,22 +628,39 @@
 
         &--logo,
         &--favicon {
-            height: 160px;
+            height: 112px;
         }
     }
 
     .company-mobile-actions {
         position: sticky;
-        bottom: 10px;
-        z-index: 10;
+        right: 6px;
+        bottom: 7px;
+        left: 6px;
+        z-index: 20;
         display: flex;
         justify-content: flex-end;
-        gap: 8px;
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.96);
-        border: 1px solid #e2e6ee;
-        border-radius: 13px;
-        box-shadow: 0 8px 25px rgba(24, 39, 75, 0.15);
+        gap: 6px;
+        padding: 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, .95);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, .14);
         backdrop-filter: blur(10px);
+
+        button {
+            min-width: auto;
+            height: 33px;
+            padding: 0 10px;
+            border-radius: 7px;
+            font-size: 10px;
+        }
+
+        mat-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            line-height: 16px;
+        }
     }
 }

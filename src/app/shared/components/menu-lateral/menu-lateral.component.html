@@ -2,127 +2,222 @@
 
     <mat-sidenav #drawer mode="over" [opened]="false" [autoFocus]="false" class="sidebar">
 
-        <!-- EMPRESA -->
-        <div class="sidebar-header">
-            <div class="d-flex align-items-center gap-3 min-w-0">
+        <!-- HEADER EMPRESA -->
+        <header class="sidebar-header">
+
+            <div class="company-block">
+
                 <div class="company-logo-container">
                     <img [src]="CompaniaActual?.LogoUrl || 'assets/img/logo-sf.jpeg'"
                         [alt]="CompaniaActual?.Nombre || 'Logo empresa'" class="company-logo">
                 </div>
 
-                <div class="company-brand-info flex-grow-1">
-                    <strong>{{CompaniaActual?.Nombre || 'Mi Empresa'}}</strong>
-                    <span>{{SucursalActual?.Nombre || 'Panel administrativo'}}</span>
+                <div class="company-brand-info">
+                    <span class="company-caption">
+                        Empresa actual
+                    </span>
+
+                    <strong>
+                        {{ CompaniaActual?.Nombre || 'Mi Empresa' }}
+                    </strong>
+
+                    <span class="branch-name">
+                        <mat-icon>storefront</mat-icon>
+                        {{ SucursalActual?.Nombre || 'Panel administrativo' }}
+                    </span>
                 </div>
+
             </div>
 
-            <button mat-icon-button type="button" class="sidebar-close" (click)="drawer.close()">
+            <button mat-icon-button type="button" class="sidebar-close" matTooltip="Cerrar menú"
+                (click)="drawer.close()">
+
                 <mat-icon>close</mat-icon>
+
             </button>
-        </div>
 
-        <!-- CONTENIDO DEL MENÚ -->
-        <div class="menu-content">
+        </header>
 
-            <span class="menu-section-title">GENERAL</span>
+        <!-- MENÚ -->
+        <nav class="menu-content">
 
-            <!-- DASHBOARD -->
-            <mat-nav-list class="p-0 mb-2">
-                <a mat-list-item class="menu-item" routerLinkActive="active-item"
-                    [routerLinkActiveOptions]="{exact: true}" (click)="navigateTo(menuItems[0].route!)">
+            <div class="menu-section">
+                <span class="menu-section-title">
+                    Principal
+                </span>
 
-                    <div class="menu-item-content">
-                        <mat-icon>{{menuItems[0].icon}}</mat-icon>
-                        <span>{{menuItems[0].label}}</span>
-                    </div>
-                </a>
-            </mat-nav-list>
+                <mat-nav-list class="menu-list">
 
-            <!-- MÓDULOS -->
-            <span class="menu-section-title mt-3">GESTIÓN</span>
+                    <a mat-list-item class="menu-item" routerLinkActive="active-item"
+                        [routerLinkActiveOptions]="{ exact: true }" (click)="navigateTo(menuItems[0].route!)">
 
-            <mat-accordion displayMode="flat" multi class="menu-accordion">
+                        <div class="menu-item-content">
 
-                <mat-expansion-panel *ngFor="let item of menuItems.slice(1)" class="menu-panel" hideToggle>
-
-                    <mat-expansion-panel-header class="menu-header">
-
-                        <mat-panel-title>
-                            <div class="menu-item-content">
-                                <mat-icon>{{item.icon}}</mat-icon>
-                                <span>{{item.label}}</span>
+                            <div class="menu-icon">
+                                <mat-icon>
+                                    {{ menuItems[0].icon }}
+                                </mat-icon>
                             </div>
-                        </mat-panel-title>
 
-                        <mat-icon class="expand-icon">expand_more</mat-icon>
-                    </mat-expansion-panel-header>
+                            <span>
+                                {{ menuItems[0].label }}
+                            </span>
 
-                    <mat-nav-list class="submenu-list" *ngIf="item.children?.length">
-
-                        <a mat-list-item *ngFor="let child of item.children" class="submenu-item"
-                            routerLinkActive="submenu-active" (click)="navigateTo(child.route!)">
-
-                            <div class="submenu-content">
-                                <mat-icon>{{child.icon}}</mat-icon>
-                                <span>{{child.label}}</span>
-                            </div>
-                        </a>
-
-                    </mat-nav-list>
-
-                </mat-expansion-panel>
-
-            </mat-accordion>
-
-            <!-- SISTEMA -->
-            <span class="menu-section-title mt-3">SISTEMA</span>
-
-            <mat-nav-list class="p-0">
-                <a mat-list-item class="menu-item version-menu-item" routerLinkActive="active-item"
-                    (click)="navigateTo('/ayuda')">
-
-                    <div class="menu-item-content">
-                        <mat-icon>rocket_launch</mat-icon>
-
-                        <div class="version-menu-info">
-                            <span>Novedades</span>
-                            <small>NexoPOS v1.1.0</small>
                         </div>
 
-                        <span class="new-badge">Nuevo</span>
-                    </div>
-                </a>
-            </mat-nav-list>
+                    </a>
 
-        </div>
+                </mat-nav-list>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-section-title">
+                    Gestión
+                </span>
+
+                <mat-accordion displayMode="flat" multi class="menu-accordion">
+
+                    <mat-expansion-panel *ngFor="let item of menuItems.slice(1)" class="menu-panel" hideToggle>
+
+                        <mat-expansion-panel-header class="menu-header">
+
+                            <mat-panel-title>
+
+                                <div class="menu-item-content">
+
+                                    <div class="menu-icon">
+                                        <mat-icon>
+                                            {{ item.icon }}
+                                        </mat-icon>
+                                    </div>
+
+                                    <span>
+                                        {{ item.label }}
+                                    </span>
+
+                                </div>
+
+                            </mat-panel-title>
+
+                            <mat-icon class="expand-icon">
+                                keyboard_arrow_down
+                            </mat-icon>
+
+                        </mat-expansion-panel-header>
+
+                        <mat-nav-list class="submenu-list" *ngIf="item.children?.length">
+
+                            <a mat-list-item *ngFor="let child of item.children" class="submenu-item"
+                                routerLinkActive="submenu-active" (click)="navigateTo(child.route!)">
+
+                                <div class="submenu-content">
+
+                                    <span class="submenu-indicator"></span>
+
+                                    <mat-icon>
+                                        {{ child.icon }}
+                                    </mat-icon>
+
+                                    <span>
+                                        {{ child.label }}
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+                        </mat-nav-list>
+
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+            </div>
+
+            <div class="menu-section">
+                <span class="menu-section-title">
+                    Sistema
+                </span>
+
+                <mat-nav-list class="menu-list">
+
+                    <a mat-list-item class="menu-item version-menu-item" routerLinkActive="active-item"
+                        (click)="navigateTo('/ayuda')">
+
+                        <div class="menu-item-content">
+
+                            <div class="menu-icon menu-icon-version">
+                                <mat-icon>rocket_launch</mat-icon>
+                            </div>
+
+                            <div class="version-menu-info">
+                                <span>Novedades</span>
+                                <small>NexoPOS v1.1.0</small>
+                            </div>
+
+                            <span class="new-badge">
+                                Nuevo
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </mat-nav-list>
+            </div>
+
+        </nav>
 
         <!-- USUARIO -->
-        <div class="sidebar-footer">
+        <footer class="sidebar-footer">
+
             <button mat-button [matMenuTriggerFor]="sidebarUserMenu" class="sidebar-user-button">
 
-                <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'"
-                    [alt]="UsuarioActual?.NombreCompleto || 'Usuario'" class="user-avatar">
+                <div class="user-avatar-wrapper">
 
-                <div class="user-info">
-                    <strong>{{UsuarioActual?.NombreCompleto}}</strong>
-                    <span>{{RolActual?.Nombre}}</span>
+                    <img [src]="UsuarioActual?.Foto || 'assets/icons/user.svg'"
+                        [alt]="UsuarioActual?.NombreCompleto || 'Usuario'" class="user-avatar">
+
+                    <span class="online-indicator"></span>
+
                 </div>
 
-                <mat-icon>more_vert</mat-icon>
+                <div class="user-info">
+
+                    <strong>
+                        {{ UsuarioActual?.NombreCompleto }}
+                    </strong>
+
+                    <span>
+                        {{ RolActual?.Nombre }}
+                    </span>
+
+                </div>
+
+                <mat-icon class="user-menu-icon">
+                    more_horiz
+                </mat-icon>
+
             </button>
 
             <mat-menu #sidebarUserMenu="matMenu">
+
                 <button mat-menu-item (click)="irAPerfil()">
+
                     <mat-icon>person_outline</mat-icon>
                     <span>Mi perfil</span>
+
                 </button>
 
                 <button mat-menu-item (click)="OnClickLogout()">
+
                     <mat-icon>logout</mat-icon>
                     <span>Cerrar sesión</span>
+
                 </button>
+
             </mat-menu>
-        </div>
+
+        </footer>
 
     </mat-sidenav>
 
@@ -131,28 +226,52 @@
         <!-- TOPBAR -->
         <mat-toolbar class="topbar">
 
-            <div class="d-flex align-items-center gap-3 min-w-0">
-                <button mat-icon-button type="button" class="menu-button" (click)="drawer.toggle()">
+            <div class="topbar-left">
+
+                <button mat-icon-button type="button" class="menu-button" matTooltip="Abrir menú"
+                    (click)="drawer.toggle()">
+
                     <mat-icon>menu</mat-icon>
+
                 </button>
 
-                <div class="topbar-title">
-                    <strong>{{CompaniaActual?.Nombre}}</strong>
+                <div class="topbar-context">
 
-                    <span class="topbar-divider"></span>
+                    <span class="topbar-caption">
+                        Panel administrativo
+                    </span>
 
-                    <span>{{SucursalActual?.Nombre}}</span>
+                    <div class="topbar-title">
+
+                        <strong>
+                            {{ CompaniaActual?.Nombre }}
+                        </strong>
+
+                        <span class="topbar-separator">
+                            /
+                        </span>
+
+                        <span>
+                            {{ SucursalActual?.Nombre }}
+                        </span>
+
+                    </div>
+
                 </div>
+
             </div>
 
-            <div class="d-flex align-items-center gap-1">
+            <div class="topbar-actions">
 
                 <button mat-icon-button type="button" class="topbar-icon-button" matTooltip="Alertas de inventario"
                     (click)="abrirNotificacionesStock()">
 
                     <mat-icon>notifications_none</mat-icon>
                     <span class="notification-dot"></span>
+
                 </button>
+
+                <span class="topbar-action-divider"></span>
 
                 <button mat-button [matMenuTriggerFor]="userMenu" class="user-toolbar-btn">
 
@@ -160,25 +279,41 @@
                         [alt]="UsuarioActual?.NombreCompleto || 'Usuario'" class="toolbar-avatar">
 
                     <div class="toolbar-user-info">
-                        <strong>{{UsuarioActual?.NombreCompleto}}</strong>
-                        <span>{{RolActual?.Nombre}}</span>
+
+                        <strong>
+                            {{ UsuarioActual?.NombreCompleto }}
+                        </strong>
+
+                        <span>
+                            {{ RolActual?.Nombre }}
+                        </span>
+
                     </div>
 
-                    <mat-icon class="toolbar-expand-icon">expand_more</mat-icon>
+                    <mat-icon class="toolbar-expand-icon">
+                        keyboard_arrow_down
+                    </mat-icon>
+
                 </button>
 
             </div>
 
             <mat-menu #userMenu="matMenu">
+
                 <button mat-menu-item (click)="irAPerfil()">
+
                     <mat-icon>person_outline</mat-icon>
                     <span>Mi perfil</span>
+
                 </button>
 
                 <button mat-menu-item (click)="OnClickLogout()">
+
                     <mat-icon>logout</mat-icon>
                     <span>Cerrar sesión</span>
+
                 </button>
+
             </mat-menu>
 
         </mat-toolbar>
