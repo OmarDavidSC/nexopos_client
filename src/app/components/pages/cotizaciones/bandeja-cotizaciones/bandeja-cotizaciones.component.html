@@ -21,7 +21,7 @@
 
     <!-- LISTADO -->
     <app-uotation-list [quotations]="ListaCotizaciones" [loading]="Loading" [moneda]="CompaniaActual?.SimboloMoneda"
-        (view)="OnEventoVerDetalle($event)" (send)="OnEventoEnviar($event)" (accept)="OnEventoAceptar($event)"
+        (view)="OnEventoVerDetalle($event)" (verVenta)="OnEventoVerDetalleVenta($event)" (send)="OnEventoEnviar($event)" (accept)="OnEventoAceptar($event)"
         (reject)="OnEventoRechazar($event)" (convert)="OnEventoConvertirVenta($event)"
         (cancel)="OnEventoCancelar($event)">
     </app-uotation-list>

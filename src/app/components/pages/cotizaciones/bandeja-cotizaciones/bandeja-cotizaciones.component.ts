@@ -183,6 +183,10 @@ export class BandejaCotizacionesComponent extends FormularioBase implements OnIn
     this.router.navigate([`bandeja-cotizaciones/${cotizacion.Id}/detalle-cotizacion`]);
   }
 
+  OnEventoVerDetalleVenta(cotizacion: ECotizacion): void {
+    this.router.navigate([`bandeja-ventas/${cotizacion.IdVenta}/detalle-venta`]);
+  }
+
   async OnEventoEnviar(cotizacion: ECotizacion): Promise<void> {
     if (this.Loading) {
       return;

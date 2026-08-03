@@ -1,0 +1,60 @@
+<header class="detail-header">
+
+    <div class="header-left">
+
+        <div class="header-icon">
+            <mat-icon>request_quote</mat-icon>
+        </div>
+
+        <div class="header-information">
+
+            <div class="title-row">
+
+                <h1>
+                    Cotización {{ quotation?.quotation }}
+                </h1>
+
+                <span class="status-chip" [attr.data-status]="quotation?.status">
+
+                    {{ statusLabel }}
+
+                </span>
+
+            </div>
+
+            <div class="header-meta">
+
+                <span>
+                    <mat-icon>calendar_today</mat-icon>
+                    {{ quotation?.issue_date }}
+                </span>
+
+                <span *ngIf="quotation?.expiration_date">
+                    <mat-icon>event_busy</mat-icon>
+                    Vence: {{ quotation?.expiration_date }}
+                </span>
+
+                <span>
+                    <mat-icon>store</mat-icon>
+                    {{ quotation?.branch || 'Sin sucursal' }}
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="sale-reference" *ngIf="sale">
+
+        <span class="reference-label">
+            Venta generada
+        </span>
+
+        <strong>
+            {{ sale.voucher }}
+        </strong>
+
+    </div>
+
+</header>

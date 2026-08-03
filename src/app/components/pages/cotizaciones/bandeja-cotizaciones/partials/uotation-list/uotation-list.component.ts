@@ -18,6 +18,7 @@ export class UotationListComponent {
   @Output() reject = new EventEmitter<ECotizacion>();
   @Output() convert = new EventEmitter<ECotizacion>();
   @Output() cancel = new EventEmitter<ECotizacion>();
+  @Output() verVenta = new EventEmitter<ECotizacion>();
 
   obtenerEstadoTexto(estado: string): string {
     const estados: Record<string, string> = {
@@ -88,6 +89,10 @@ export class UotationListComponent {
 
   OnEventoVer(cotizacion: ECotizacion): void {
     this.view.emit(cotizacion);
+  }
+
+  OnEventoVerDetalleVenta(cotizacion: ECotizacion): void {
+    this.verVenta.emit(cotizacion);
   }
 
   OnEventoEnviar(cotizacion: ECotizacion): void {

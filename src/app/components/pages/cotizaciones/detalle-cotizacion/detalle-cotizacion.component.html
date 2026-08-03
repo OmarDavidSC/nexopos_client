@@ -1,1 +1,32 @@
-<p>detalle-cotizacion works!</p>
+<app-adm-header [descripcion]="'Ve el detalle de la cotización y el flujo de su estado.'"
+    [breadcrumbs]="[{ nombre: 'Cotizaciones' },  {nombre: 'Bandeja de Cotizaciones', ruta: '/bandeja-cotizaciones'}, { nombre: 'Detalle de Cotización' }]"
+    [visible]="false" [rutaRegreso]="'/bandeja-cotizaciones'">
+</app-adm-header>
+<div class="container-fluid">
+
+    <ng-container *ngIf="!Loading && Cotizacion; else loadingTemplate">
+        <app-quotation-detail-header [quotation]="Cotizacion" [sale]="Venta" (back)="regresar()">
+        </app-quotation-detail-header>
+        <app-quotation-status-flow [status]="Cotizacion.status">
+        </app-quotation-status-flow>
+        <div class="quotation-content">
+            <section class="quotation-main">
+                <app-quotation-customer-info [quotation]="Cotizacion">
+                </app-quotation-customer-info>
+                <app-quotation-items class="items-section" [details]="DetallesCotizacion"
+                    [currency]="CompaniaActual?.SimboloMoneda">
+                </app-quotation-items>
+            </section>
+            <aside class="quotation-sidebar">
+                <app-quotation-totals [quotation]="Cotizacion" [currency]="CompaniaActual?.SimboloMoneda">
+                </app-quotation-totals>
+            </aside>
+        </div>
+    </ng-container>
+    <ng-template #loadingTemplate>
+        <div class="loading-state">
+            <mat-spinner diameter="38"></mat-spinner>
+            <span>Cargando cotización...</span>
+        </div>
+    </ng-template>
+</div>

@@ -1,0 +1,70 @@
+<section class="information-card">
+
+    <div class="section-header">
+
+        <div>
+            <mat-icon>person</mat-icon>
+            <span>Cliente</span>
+        </div>
+
+        <span class="customer-document">
+            {{ quotation?.customer_document || 'Sin documento' }}
+        </span>
+
+    </div>
+
+    <div class="information-grid">
+
+        <div class="information-item main-item">
+            <span class="item-label">
+                Razón social / Nombre
+            </span>
+
+            <strong>
+                {{ quotation?.customer || 'Cliente no registrado' }}
+            </strong>
+        </div>
+
+        <div class="information-item">
+            <span class="item-label">
+                Teléfono
+            </span>
+
+            <span>
+                {{ quotation?.customer_phone || '-' }}
+            </span>
+        </div>
+
+        <div class="information-item">
+            <span class="item-label">
+                Correo
+            </span>
+
+            <span>
+                {{ quotation?.customer_email || '-' }}
+            </span>
+        </div>
+
+        <div class="information-item address-item">
+            <span class="item-label">
+                Dirección
+            </span>
+
+            <span>
+                {{ quotation?.customer_address || '-' }}
+            </span>
+        </div>
+
+        <div class="information-item">
+            <span class="item-label">
+                Registrado por
+            </span>
+
+            <span>
+                {{ quotation?.created_by_name || '-' }}
+            </span>
+        </div>
+
+    </div>
+
+</section>

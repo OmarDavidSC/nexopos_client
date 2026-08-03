@@ -134,6 +134,11 @@ import { UotationListComponent } from './components/pages/cotizaciones/bandeja-c
 import { QuotationListSummaryComponent } from './components/pages/cotizaciones/bandeja-cotizaciones/partials/quotation-list-summary/quotation-list-summary.component';
 import { DetalleCotizacionComponent } from './components/pages/cotizaciones/detalle-cotizacion/detalle-cotizacion.component';
 import { ConvertQuotationDialogComponent } from './components/pages/cotizaciones/widzard/convert-quotation-dialog/convert-quotation-dialog.component';
+import { QuotationDetailHeaderComponent } from './components/pages/cotizaciones/detalle-cotizacion/quotation-detail-header/quotation-detail-header.component';
+import { QuotationStatusFlowComponent } from './components/pages/cotizaciones/detalle-cotizacion/quotation-status-flow/quotation-status-flow.component';
+import { QuotationCustomerInfoComponent } from './components/pages/cotizaciones/detalle-cotizacion/quotation-customer-info/quotation-customer-info.component';
+import { QuotationItemsComponent } from './components/pages/cotizaciones/detalle-cotizacion/quotation-items/quotation-items.component';
+import { QuotationTotalsComponent } from './components/pages/cotizaciones/detalle-cotizacion/quotation-totals/quotation-totals.component';
 
 @NgModule({
   declarations: [
@@ -258,6 +263,11 @@ import { ConvertQuotationDialogComponent } from './components/pages/cotizaciones
     QuotationListSummaryComponent,
     DetalleCotizacionComponent,
     ConvertQuotationDialogComponent,
+    QuotationDetailHeaderComponent,
+    QuotationStatusFlowComponent,
+    QuotationCustomerInfoComponent,
+    QuotationItemsComponent,
+    QuotationTotalsComponent,
   ],
   imports: [
     ComunModule,

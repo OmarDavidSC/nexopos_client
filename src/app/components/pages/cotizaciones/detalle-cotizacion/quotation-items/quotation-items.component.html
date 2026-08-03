@@ -1,0 +1,105 @@
+<section class="items-card">
+
+    <div class="items-header">
+
+        <div>
+            <mat-icon>inventory_2</mat-icon>
+
+            <span>
+                Productos
+            </span>
+
+            <small>
+                {{ details.length }} ítem(s)
+            </small>
+        </div>
+
+    </div>
+
+    <div class="table-container">
+
+        <table class="table quotation-table">
+
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th class="text-center">Cant.</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-end">Descuento</th>
+                    <th class="text-end">Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let item of details">
+
+                    <td>
+                        <div class="product-cell">
+
+                            <div class="product-icon">
+                                <mat-icon>inventory_2</mat-icon>
+                            </div>
+
+                            <div class="product-data">
+                                <strong>
+                                    {{ item.product_name }}
+                                </strong>
+
+                                <span>
+                                    {{ item.product_code || 'Sin código' }}
+
+                                    <ng-container *ngIf="item.description">
+                                        · {{ item.description }}
+                                    </ng-container>
+                                </span>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td class="text-center">
+                        {{ item.quantity | number:'1.0-2' }}
+                    </td>
+
+                    <td class="text-end">
+                        {{ currency }}
+                        {{ item.unit_price | number:'1.2-2' }}
+                    </td>
+
+                    <td class="text-end">
+                        <span class="discount-value" [class.has-discount]="item.discount > 0">
+
+                            {{ currency }}
+                            {{ item.discount | number:'1.2-2' }}
+
+                        </span>
+                    </td>
+
+                    <td class="text-end total-cell">
+                        {{ currency }}
+                        {{ item.total | number:'1.2-2' }}
+                    </td>
+
+                </tr>
+
+                <tr *ngIf="details.length === 0">
+
+                    <td colspan="5">
+
+                        <div class="empty-items">
+                            <mat-icon>inventory_2</mat-icon>
+                            No existen productos.
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>

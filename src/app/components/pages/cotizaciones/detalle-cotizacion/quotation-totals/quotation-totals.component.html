@@ -1,0 +1,76 @@
+<div class="totals-panel">
+
+    <section class="total-card">
+
+        <div class="card-title">
+            <mat-icon>payments</mat-icon>
+            <span>Resumen</span>
+        </div>
+
+        <div class="total-row">
+            <span>Subtotal</span>
+
+            <strong>
+                {{ currency }}
+                {{ quotation?.subtotal | number:'1.2-2' }}
+            </strong>
+        </div>
+
+        <div class="total-row">
+            <span>Impuesto</span>
+
+            <strong>
+                {{ currency }}
+                {{ quotation?.tax | number:'1.2-2' }}
+            </strong>
+        </div>
+
+        <div class="total-row discount">
+            <span>Descuento</span>
+
+            <strong>
+                - {{ currency }}
+                {{ quotation?.discount | number:'1.2-2' }}
+            </strong>
+        </div>
+
+        <div class="grand-total">
+
+            <span>Total</span>
+
+            <strong>
+                {{ currency }}
+                {{ quotation?.total | number:'1.2-2' }}
+            </strong>
+
+        </div>
+
+    </section>
+
+    <section class="note-card" *ngIf="quotation?.observations">
+
+        <div class="note-title">
+            <mat-icon>notes</mat-icon>
+            Observaciones
+        </div>
+
+        <p>
+            {{ quotation.observations }}
+        </p>
+
+    </section>
+
+    <section class="note-card" *ngIf="quotation?.terms">
+
+        <div class="note-title">
+            <mat-icon>gavel</mat-icon>
+            Términos
+        </div>
+
+        <p>
+            {{ quotation.terms }}
+        </p>
+
+    </section>
+
+</div>

@@ -1,0 +1,77 @@
+.information-card {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #ffffff;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    >div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #0f172a;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    mat-icon {
+        width: 17px;
+        height: 17px;
+        color: #2563eb;
+        font-size: 17px;
+        line-height: 17px;
+    }
+}
+
+.customer-document {
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.information-grid {
+    display: grid;
+    grid-template-columns: 1.3fr .7fr 1fr;
+    gap: 8px 14px;
+}
+
+.information-item {
+    min-width: 0;
+
+    .item-label {
+        display: block;
+        margin-bottom: 1px;
+        color: #94a3b8;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    span,
+    strong {
+        display: block;
+        overflow: hidden;
+        color: #475569;
+        font-size: 11px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    strong {
+        color: #0f172a;
+        font-size: 12px;
+    }
+}
+
+.address-item {
+    grid-column: span 2;
+}

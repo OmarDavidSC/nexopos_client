@@ -1,0 +1,138 @@
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 58px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 11px;
+    background: #ffffff;
+    box-shadow: 0 2px 7px rgba(15, 23, 42, .04);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 10px;
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #eff6ff;
+    color: #2563eb;
+
+    mat-icon {
+        font-size: 20px;
+    }
+}
+
+.header-information {
+    min-width: 0;
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h1 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+    }
+}
+
+.header-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 2px;
+    color: #64748b;
+    font-size: 11px;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    mat-icon {
+        width: 13px;
+        height: 13px;
+        font-size: 13px;
+        line-height: 13px;
+    }
+}
+
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 21px;
+    padding: 0 8px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &[data-status="DRAFT"] {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    &[data-status="SENT"] {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    &[data-status="ACCEPTED"] {
+        background: #ecfdf5;
+        color: #059669;
+    }
+
+    &[data-status="CONVERTED"] {
+        background: #eef2ff;
+        color: #4f46e5;
+    }
+
+    &[data-status="REJECTED"],
+    &[data-status="CANCELLED"] {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    &[data-status="EXPIRED"] {
+        background: #fff7ed;
+        color: #ea580c;
+    }
+}
+
+.sale-reference {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding-left: 12px;
+
+    .reference-label {
+        color: #94a3b8;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+    strong {
+        color: #2563eb;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,86 @@
+<section class="quotation-flow" [class.has-special-status]="isSpecialStatus()">
+
+    <div class="flow-header">
+        <div class="flow-title">
+            <mat-icon>timeline</mat-icon>
+
+            <div>
+                <span>Flujo de cotización</span>
+                <small>Seguimiento del documento</small>
+            </div>
+        </div>
+
+        <div class="current-status" [attr.data-status]="status">
+
+            <mat-icon>
+                {{ currentStatusIcon }}
+            </mat-icon>
+
+            <span>
+                {{ currentStatusLabel }}
+            </span>
+        </div>
+    </div>
+
+    <div class="flow-container">
+
+        <div class="flow-line-background"></div>
+
+        <div class="flow-line-progress" [style.width.%]="progressPercentage">
+        </div>
+
+        <div class="flow-step" *ngFor="let step of steps; let index = index" [class.completed]="isCompleted(index)"
+            [class.active]="isActive(index)" [class.pending]="isPending(index)"
+            [class.disabled]="isStepDisabled(index)">
+
+            <div class="step-content">
+
+                <div class="step-marker">
+
+                    <mat-icon *ngIf="isCompleted(index)">
+                        check
+                    </mat-icon>
+
+                    <mat-icon *ngIf="!isCompleted(index)">
+                        {{ step.icon }}
+                    </mat-icon>
+
+                </div>
+
+                <div class="step-information">
+                    <span class="step-number">
+                        Paso {{ index + 1 }}
+                    </span>
+
+                    <strong class="step-label">
+                        {{ step.label }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="special-alert" *ngIf="isSpecialStatus()" [attr.data-status]="status">
+
+        <div class="special-alert-icon">
+            <mat-icon>
+                {{ specialIcon }}
+            </mat-icon>
+        </div>
+
+        <div class="special-alert-content">
+            <strong>
+                {{ specialLabel }}
+            </strong>
+
+            <span>
+                {{ specialDescription }}
+            </span>
+        </div>
+
+    </div>
+
+</section>
