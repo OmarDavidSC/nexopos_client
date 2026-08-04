@@ -3,110 +3,189 @@
 <div class="contenedor-admin">
     <!-- HEADER -->
     <app-adm-header [descripcion]="'Gestión y mantenimiento de sucursales registradas en tu compañia'"
-        [breadcrumbs]="[{nombre:'Configuración'},{nombre:'Administración de Sucursales'}]" [visible]="true"
+        [breadcrumbs]="[{nombre:'Mi Empresa'},{nombre:'Administración de Sucursales'}]" [visible]="true"
         [textoBoton]="'Nueva Sucursal'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
     </app-adm-header>
     <!-- TABLA -->
     <div class="table-container">
         <!-- LOADING -->
         <div *ngIf="Loading" class="loading-overlay">
+
             <div class="loading-box">
-                <mat-spinner diameter="42"></mat-spinner>
+                <mat-spinner diameter="40"></mat-spinner>
+
                 <span>
                     Cargando sucursales...
                 </span>
             </div>
-        </div>
-        <!-- TABLA -->
-        <div class="table-responsive">
-            <table mat-table [dataSource]="ListaSucursales" class="tabla-admin">
-                <!-- NOMBRE -->
-                <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Nombre}}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Codigo">
-                    <th mat-header-cell *matHeaderCellDef> Codigo </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Codigo}}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Telefono">
-                    <th mat-header-cell *matHeaderCellDef> Telefono </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Telefono}}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Correo">
-                    <th mat-header-cell *matHeaderCellDef> Correo </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Correo}}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Direccion">
-                    <th mat-header-cell *matHeaderCellDef> Direccion </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Direccion}}
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
 
-                <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Acciones
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="acciones-box">
-                            <button (click)="eventoMostrarPopupEditar(element)" mat-icon-button
-                                class="btn-accion btn-editar" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
-                                matTooltip="Eliminar">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="fila-tabla">
-                </tr>
-            </table>
         </div>
+
+        <!-- TARJETAS -->
+        <div class="branches-grid" *ngIf="!Loading && ListaSucursales.length > 0">
+
+            <article class="branch-card" *ngFor="let sucursal of ListaSucursales">
+
+                <div class="branch-card__header">
+
+                    <div class="branch-identity">
+
+                        <div class="branch-icon">
+                            <mat-icon>storefront</mat-icon>
+                        </div>
+
+                        <div class="branch-title">
+
+                            <span class="branch-code">
+                                {{ sucursal.Codigo || 'SIN CÓDIGO' }}
+                            </span>
+
+                            <h3>
+                                {{ sucursal.Nombre }}
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <button mat-icon-button type="button" class="branch-menu-button" [matMenuTriggerFor]="branchMenu"
+                        matTooltip="Opciones">
+
+                        <mat-icon>more_vert</mat-icon>
+
+                    </button>
+
+                    <mat-menu #branchMenu="matMenu">
+
+                        <button mat-menu-item (click)="eventoMostrarPopupEditar(sucursal)">
+
+                            <mat-icon>edit</mat-icon>
+                            <span>Editar sucursal</span>
+
+                        </button>
+
+                        <button mat-menu-item class="delete-menu-item" (click)="eventoEliminar(sucursal)">
+
+                            <mat-icon>delete_outline</mat-icon>
+                            <span>Eliminar sucursal</span>
+
+                        </button>
+
+                    </mat-menu>
+
+                </div>
+
+                <div class="branch-card__body">
+
+                    <div class="branch-info-row">
+
+                        <div class="info-icon">
+                            <mat-icon>phone</mat-icon>
+                        </div>
+
+                        <div class="info-content">
+                            <span>Teléfono</span>
+
+                            <strong>
+                                {{ sucursal.Telefono || 'No registrado' }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="branch-info-row">
+
+                        <div class="info-icon">
+                            <mat-icon>mail_outline</mat-icon>
+                        </div>
+
+                        <div class="info-content min-width-0">
+                            <span>Correo electrónico</span>
+
+                            <strong class="text-truncate" [matTooltip]="sucursal.Correo">
+
+                                {{ sucursal.Correo || 'No registrado' }}
+
+                            </strong>
+                        </div>
+
+                    </div>
+
+                    <div class="branch-info-row branch-address">
+
+                        <div class="info-icon">
+                            <mat-icon>location_on</mat-icon>
+                        </div>
+
+                        <div class="info-content">
+                            <span>Dirección</span>
+
+                            <strong>
+                                {{ sucursal.Direccion || 'No registrada' }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="branch-card__footer">
+
+                    <button mat-stroked-button type="button" class="branch-action-button edit-button"
+                        (click)="eventoMostrarPopupEditar(sucursal)">
+
+                        <mat-icon>edit</mat-icon>
+                        Editar
+
+                    </button>
+
+                    <button mat-icon-button type="button" class="delete-button" matTooltip="Eliminar sucursal"
+                        (click)="eventoEliminar(sucursal)">
+
+                        <mat-icon>delete_outline</mat-icon>
+
+                    </button>
+
+                </div>
+
+            </article>
+
+        </div>
+
+        <!-- ESTADO VACÍO -->
+        <div class="empty-branches" *ngIf="!Loading && ListaSucursales.length === 0">
+
+            <div class="empty-icon">
+                <mat-icon>storefront</mat-icon>
+            </div>
+
+            <h3>
+                No tienes sucursales registradas
+            </h3>
+
+            <p>
+                Registra una nueva sucursal para administrar ventas,
+                inventario y operaciones por ubicación.
+            </p>
+
+            <button mat-flat-button color="primary" type="button" (click)="eventoMostrarPopupRegistrar()">
+
+                <mat-icon>add</mat-icon>
+                Nueva sucursal
+
+            </button>
+
+        </div>
+
         <!-- PAGINADOR -->
-        <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
-            (cambiarPaginaEvent)="OnchangedPage($event)">
-        </app-adm-paginator>
-    </div>
+        <div class="branches-paginator" *ngIf="!Loading && ListaSucursales.length > 0">
+
+            <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
+                (cambiarPaginaEvent)="OnchangedPage($event)">
+            </app-adm-paginator>
+
+        </div>
+
+    </section>
+
 </div>
