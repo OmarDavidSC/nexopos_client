@@ -1,13 +1,42 @@
-<!-- administracion-tipo-incidencias.component.html -->
+<app-adm-header [descripcion]="'Gestión y mantenimiento de sucursales registradas en tu compañía'" [breadcrumbs]="[
+            { nombre: 'Configuración' },
+            { nombre: 'Administración de Sucursales' }
+        ]" [visible]="true" [textoBoton]="'Nueva Sucursal'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+    [rutaRegreso]="'/inicio'">
+</app-adm-header>
 
-<div class="contenedor-admin">
-    <!-- HEADER -->
-    <app-adm-header [descripcion]="'Gestión y mantenimiento de sucursales registradas en tu compañia'"
-        [breadcrumbs]="[{nombre:'Mi Empresa'},{nombre:'Administración de Sucursales'}]" [visible]="true"
-        [textoBoton]="'Nueva Sucursal'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
-    </app-adm-header>
-    <!-- TABLA -->
-    <div class="table-container">
+<div class="container-fuild">
+    <section class="branches-section">
+
+        <!-- ENCABEZADO DE RESULTADOS -->
+        <div class="branches-toolbar">
+
+            <div class="branches-summary">
+
+                <div class="summary-icon">
+                    <mat-icon>storefront</mat-icon>
+                </div>
+
+                <div>
+                    <strong>
+                        Sucursales registradas
+                    </strong>
+
+                    <span>
+                        {{ ListaSucursales.length }}
+                        {{ ListaSucursales.length === 1 ? 'sucursal' : 'sucursales' }}
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="view-label">
+                <mat-icon>grid_view</mat-icon>
+                Vista de tarjetas
+            </div>
+
+        </div>
+
         <!-- LOADING -->
         <div *ngIf="Loading" class="loading-overlay">
 
