@@ -1,24 +1,157 @@
-<mat-card class="chart-card">
-  <div class="card-header">
-    <div>
-      <h3>Tipos de Comprobante</h3>
+<section class="voucher-types-panel">
+  <!-- CABECERA -->
+  <header class="panel-header">
+    <div class="panel-title">
+      <div class="panel-title__icon">
+        <mat-icon>description</mat-icon>
+      </div>
 
-      <span>Distribución de ventas por comprobante</span>
+      <div>
+        <span class="panel-label"> Comprobantes emitidos </span>
+
+        <h3>Tipos de comprobante</h3>
+
+        <p>Analiza la distribución de ventas según el comprobante utilizado.</p>
+      </div>
     </div>
 
-    <div class="icon">
-      <mat-icon>description</mat-icon>
+    <span class="voucher-count">
+      <mat-icon>receipt_long</mat-icon>
+
+      {{ totalTipos }}
+      {{ totalTipos === 1 ? "tipo" : "tipos" }}
+    </span>
+  </header>
+
+  <!-- INDICADORES -->
+  <div class="voucher-summary" *ngIf="vouchersProcesados.length > 0">
+    <!-- TOTAL FACTURADO -->
+    <article class="summary-item">
+      <div class="summary-icon total-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Total facturado</span>
+
+        <strong> S/ {{ totalFacturado | number: "1.2-2" }} </strong>
+      </div>
+    </article>
+
+    <!-- PRINCIPAL -->
+    <article class="summary-item">
+      <div class="summary-icon main-icon">
+        <mat-icon>emoji_events</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Comprobante principal</span>
+
+        <strong>
+          {{ comprobantePrincipal }}
+        </strong>
+
+        <small> S/ {{ montoComprobantePrincipal | number: "1.2-2" }} </small>
+      </div>
+    </article>
+
+    <!-- PARTICIPACIÓN -->
+    <article class="summary-item">
+      <div class="summary-icon percentage-icon">
+        <mat-icon>percent</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Mayor participación</span>
+
+        <strong> {{ porcentajePrincipal | number: "1.1-1" }}% </strong>
+
+        <small> Del importe total </small>
+      </div>
+    </article>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="voucher-content" *ngIf="vouchersProcesados.length > 0">
+    <!-- GRÁFICO -->
+    <div class="chart-container" *ngIf="chartOptions">
+      <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions"
+        [labels]="chartOptions.labels" [legend]="chartOptions.legend" [tooltip]="chartOptions.tooltip"
+        [dataLabels]="chartOptions.dataLabels" [colors]="chartOptions.colors" [stroke]="chartOptions.stroke">
+      </apx-chart>
+
+      <div class="chart-center-information">
+        <span>Total</span>
+
+        <strong> S/ {{ totalFacturado | number: "1.2-2" }} </strong>
+
+        <small> Facturación acumulada </small>
+      </div>
+    </div>
+
+    <!-- LISTA DE COMPROBANTES -->
+    <div class="voucher-list">
+      <div class="voucher-list__header">
+        <div>
+          <mat-icon>receipt_long</mat-icon>
+          <strong>Detalle por comprobante</strong>
+        </div>
+
+        <span>Participación</span>
+      </div>
+
+      <article class="voucher-item" *ngFor="let voucher of vouchersProcesados">
+        <div class="voucher-icon" [ngClass]="getVoucherClass(voucher.voucher_type)">
+          <mat-icon>
+            {{ getVoucherIcon(voucher.voucher_type) }}
+          </mat-icon>
+        </div>
+
+        <div class="voucher-information">
+          <div class="voucher-name">
+            <strong>
+              {{ voucher.nombre }}
+            </strong>
+
+            <span> {{ voucher.porcentaje | number: "1.1-1" }}% </span>
+          </div>
+
+          <div class="voucher-progress">
+            <div class="voucher-progress__value" [style.width.%]="voucher.porcentaje"
+              [ngClass]="getVoucherClass(voucher.voucher_type)"></div>
+          </div>
+
+          <div class="voucher-metrics">
+            <div>
+              <span>Ventas</span>
+
+              <strong>
+                {{ voucher.total_sales }}
+              </strong>
+            </div>
+
+            <div>
+              <span>Importe</span>
+
+              <strong> S/ {{ voucher.total_amount | number: "1.2-2" }} </strong>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 
-  <apx-chart
-    *ngIf="chartOptions"
-    [series]="chartOptions.series"
-    [chart]="chartOptions.chart"
-    [labels]="chartOptions.labels"
-    [legend]="chartOptions.legend"
-    [tooltip]="chartOptions.tooltip"
-    [dataLabels]="chartOptions.dataLabels"
-  >
-  </apx-chart>
-</mat-card>
+  <!-- ESTADO VACÍO -->
+  <div class="empty-state" *ngIf="vouchersProcesados.length === 0">
+    <div class="empty-icon">
+      <mat-icon>description</mat-icon>
+    </div>
+
+    <h4>No hay comprobantes registrados</h4>
+
+    <p>
+      Modifica los filtros o el periodo para visualizar la distribución de
+      comprobantes.
+    </p>
+  </div>
+</section>

@@ -1,79 +1,127 @@
-<!-- administracion-tipo-incidencias.component.html -->
-
-<div class="contenedor-admin">
-    <!-- HEADER -->
-    <app-adm-header [descripcion]="'Gestión y mantenimiento de categorías registradas'"
-        [breadcrumbs]="[{nombre:'Almacen'},{nombre:'Administración de Categorías'}]" [visible]="true"
-        [textoBoton]="'Nueva Categoria'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
+<div class="container-fluid">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de categorías registradas'" [breadcrumbs]="[
+      { nombre: 'Almacén' },
+      { nombre: 'Administración de Categorías' },
+    ]" [visible]="true" [textoBoton]="'Nueva Categoría'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+        [rutaRegreso]="'/inicio'">
     </app-adm-header>
-    <!-- TABLA -->
-    <div class="table-container">
-        <!-- LOADING -->
-        <div *ngIf="Loading" class="loading-overlay">
-            <div class="loading-box">
-                <mat-spinner diameter="42"></mat-spinner>
-                <span>
-                    Cargando categorías...
-                </span>
+
+    <section class="categories-panel">
+        <div class="categories-toolbar">
+            <div class="categories-summary">
+                <div class="summary-icon">
+                    <mat-icon>category</mat-icon>
+                </div>
+
+                <div>
+                    <strong>Categorías registradas</strong>
+
+                    <span>
+                        {{ ListaCategorias.length }}
+                        {{ ListaCategorias.length === 1 ? "categoría" : "categorías" }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="toolbar-label">
+                <mat-icon>table_rows</mat-icon>
+                Vista de tabla
             </div>
         </div>
-        <!-- TABLA -->
-        <div class="table-responsive">
-            <table mat-table [dataSource]="ListaCategorias" class="tabla-admin">
-                <!-- NOMBRE -->
-                <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Nombre}}
+
+        <div class="table-container">
+            <div *ngIf="Loading" class="loading-overlay">
+                <div class="loading-box">
+                    <mat-spinner diameter="38"></mat-spinner>
+
+                    <span> Cargando categorías... </span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table mat-table [dataSource]="ListaCategorias" class="tabla-admin">
+                    <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef>Categoría</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="category-cell">
+                                <div class="category-icon">
+                                    <mat-icon>category</mat-icon>
                                 </div>
-                                <!-- <div class="codigo-secundario">
-                                    Tipo de incidencia
-                                </div> -->
+
+                                <div class="category-info">
+                                    <strong>
+                                        {{ element.Nombre }}
+                                    </strong>
+
+                                    <span> Clasificación de productos </span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <!-- ESTADO -->
-                <ng-container matColumnDef="Estado">
-                    <th mat-header-cell *matHeaderCellDef>Estado</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span class="badge-estado" [ngClass]="{
-                                'estado-activo': element.Estado === 'Activo',
-                                'estado-inactivo': element.Estado !== 'Activo'
-                            }">
-                            {{element.Estado}}
-                        </span>
-                    </td>
-                </ng-container>
-                <!-- ACCIONES -->
-                <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Acciones
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="acciones-box">
-                            <button (click)="eventoMostrarPopupEditar(element)" mat-icon-button
-                                class="btn-accion btn-editar" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
-                                matTooltip="Eliminar">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="fila-tabla">
-                </tr>
-            </table>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <span class="status-badge" [class.status-active]="element.Estado === 'Activo'"
+                                [class.status-inactive]="element.Estado !== 'Activo'">
+                                <span class="status-dot"></span>
+
+                                {{ element.Estado }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Acciones">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header">
+                            Acciones
+                        </th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="actions-box">
+                                <button type="button" mat-icon-button class="action-button edit-action"
+                                    matTooltip="Editar categoría" (click)="eventoMostrarPopupEditar(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button type="button" mat-icon-button class="action-button delete-action"
+                                    matTooltip="Eliminar categoría" (click)="eventoEliminar(element)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+                </table>
+            </div>
+
+            <div class="empty-state" *ngIf="!Loading && ListaCategorias.length === 0">
+                <div class="empty-icon">
+                    <mat-icon>category</mat-icon>
+                </div>
+
+                <h3>No hay categorías registradas</h3>
+
+                <p>
+                    Registra una categoría para organizar y clasificar mejor los
+                    productos.
+                </p>
+
+                <button mat-flat-button color="primary" type="button" (click)="eventoMostrarPopupRegistrar()">
+                    <mat-icon>add</mat-icon>
+                    Nueva categoría
+                </button>
+            </div>
+
+            <div class="paginator-container" *ngIf="ListaCategorias.length > 0">
+                <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
+                    (cambiarPaginaEvent)="OnchangedPage($event)">
+                </app-adm-paginator>
+            </div>
         </div>
-        <!-- PAGINADOR -->
-        <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
-            (cambiarPaginaEvent)="OnchangedPage($event)">
-        </app-adm-paginator>
-    </div>
+    </section>
 </div>

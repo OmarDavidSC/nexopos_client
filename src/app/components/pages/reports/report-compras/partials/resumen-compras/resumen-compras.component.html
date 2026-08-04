@@ -1,79 +1,123 @@
-<div class="row mt-3" *ngIf="Datos">
-    <!-- TOTAL COMPRAS -->
+<section class="purchase-summary" *ngIf="Datos">
+    <!-- TOTAL DE COMPRAS -->
+    <article class="summary-item summary-purchases">
+        <div class="summary-decoration"></div>
 
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card resumen-card">
-            <div class="card-body">
-                <div class="icon-container">
-                    <mat-icon> shopping_cart </mat-icon>
-                </div>
+        <div class="summary-item__header">
+            <div class="summary-icon">
+                <mat-icon>shopping_cart</mat-icon>
+            </div>
 
-                <div class="info">
-                    <span class="titulo"> Total Compras </span>
+            <span class="summary-category"> Operaciones </span>
+        </div>
 
-                    <h3>
-                        {{ Datos.total_purchases || 0 }}
-                    </h3>
-                </div>
+        <div class="summary-content">
+            <span class="summary-title"> Total de compras </span>
+
+            <strong class="summary-value">
+                {{ Datos.total_purchases || 0 }}
+            </strong>
+
+            <div class="summary-footer">
+                <mat-icon>receipt_long</mat-icon>
+
+                <span> Compras registradas </span>
             </div>
         </div>
-    </div>
+    </article>
 
     <!-- MONTO TOTAL -->
+    <article class="summary-item summary-amount">
+        <div class="summary-decoration"></div>
 
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card resumen-card">
-            <div class="card-body">
-                <div class="icon-container">
-                    <mat-icon> payments </mat-icon>
-                </div>
+        <div class="summary-item__header">
+            <div class="summary-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
 
-                <div class="info">
-                    <span class="titulo"> Monto Total </span>
+            <span class="summary-category"> Inversión </span>
+        </div>
 
-                    <h3>S/ {{ Datos.total_amount || 0 | number: "1.2-2" }}</h3>
-                </div>
+        <div class="summary-content">
+            <span class="summary-title"> Monto total comprado </span>
+
+            <strong class="summary-value monetary-value">
+                S/
+                {{ Datos.total_amount || 0 | number: "1.2-2" }}
+            </strong>
+
+            <div class="summary-footer">
+                <mat-icon>account_balance_wallet</mat-icon>
+
+                <span> Importe acumulado </span>
             </div>
         </div>
-    </div>
+    </article>
 
-    <!-- PRODUCTOS COMPRADOS -->
+    <!-- PRODUCTOS -->
+    <article class="summary-item summary-products">
+        <div class="summary-decoration"></div>
 
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card resumen-card">
-            <div class="card-body">
-                <div class="icon-container">
-                    <mat-icon> inventory_2 </mat-icon>
-                </div>
+        <div class="summary-item__header">
+            <div class="summary-icon">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
 
-                <div class="info">
-                    <span class="titulo"> Productos </span>
+            <span class="summary-category"> Inventario </span>
+        </div>
 
-                    <h3>
-                        {{ Datos.total_products || 0 }}
-                    </h3>
-                </div>
+        <div class="summary-content">
+            <span class="summary-title"> Productos comprados </span>
+
+            <strong class="summary-value">
+                {{ Datos.total_products || 0 }}
+            </strong>
+
+            <div class="summary-footer">
+                <mat-icon>add_box</mat-icon>
+
+                <span> Unidades incorporadas </span>
             </div>
         </div>
-    </div>
+    </article>
 
     <!-- PROVEEDORES -->
+    <article class="summary-item summary-suppliers">
+        <div class="summary-decoration"></div>
 
-    <div class="col-lg-3 col-md-6 mb-3">
-        <div class="card resumen-card">
-            <div class="card-body">
-                <div class="icon-container">
-                    <mat-icon> local_shipping </mat-icon>
-                </div>
+        <div class="summary-item__header">
+            <div class="summary-icon">
+                <mat-icon>local_shipping</mat-icon>
+            </div>
 
-                <div class="info">
-                    <span class="titulo"> Proveedores </span>
+            <span class="summary-category"> Proveedores </span>
+        </div>
 
-                    <h3>
-                        {{ Datos.total_suppliers || 0 }}
-                    </h3>
-                </div>
+        <div class="summary-content">
+            <span class="summary-title"> Proveedores activos </span>
+
+            <strong class="summary-value">
+                {{ Datos.total_suppliers || 0 }}
+            </strong>
+
+            <div class="summary-footer">
+                <mat-icon>business</mat-icon>
+
+                <span> Proveedores participantes </span>
             </div>
         </div>
+    </article>
+</section>
+
+<!-- ESTADO SIN INFORMACIÓN -->
+<section class="summary-empty" *ngIf="!Datos">
+    <div class="summary-empty__icon">
+        <mat-icon>analytics</mat-icon>
     </div>
-</div>
+
+    <div>
+        <strong> No hay información disponible </strong>
+
+        <span> Genera el reporte para visualizar los indicadores de compras. </span>
+    </div>
+</section>

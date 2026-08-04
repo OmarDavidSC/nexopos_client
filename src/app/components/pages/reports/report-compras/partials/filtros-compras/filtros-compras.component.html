@@ -1,111 +1,253 @@
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon>filter_alt</mat-icon>
-        <span class="ms-2"> Filtros de búsqueda </span>
-      </mat-panel-title>
-      <mat-panel-description> Filtros Avanzados </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row">
-      <!-- SUCURSAL -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Sucursal</mat-label>
-          <mat-select [(ngModel)]="Filtro.branch_id">
-            <mat-option [value]="null"> Todas </mat-option>
-            <mat-option *ngFor="let item of Sucursales" [value]="item.Id">
-              {{ item.Nombre }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+<section class="container-fluid">
+  <mat-accordion class="filters-accordion">
+    <mat-expansion-panel class="filters-panel" [expanded]="false" hideToggle>
+      <!-- CABECERA -->
+      <mat-expansion-panel-header class="filters-panel-header">
+        <mat-panel-title>
+          <div class="filters-title">
+            <div class="filters-title__icon">
+              <mat-icon>tune</mat-icon>
+            </div>
+
+            <div class="filters-title__information">
+              <span class="filters-eyebrow"> Configuración </span>
+
+              <strong> Filtros del reporte de compras </strong>
+
+              <small>
+                Selecciona sucursal, proveedor, comprobante, estado o periodo.
+              </small>
+            </div>
+          </div>
+        </mat-panel-title>
+
+        <mat-panel-description class="filters-description">
+          <span class="advanced-filter-label">
+            <mat-icon>filter_alt</mat-icon>
+            Filtros avanzados
+          </span>
+
+          <mat-icon class="expand-icon"> expand_more </mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- CONTENIDO -->
+      <div class="filters-content">
+        <!-- INFORMACIÓN -->
+        <div class="filters-introduction">
+          <div class="introduction-content">
+            <div class="introduction-icon">
+              <mat-icon>manage_search</mat-icon>
+            </div>
+
+            <div>
+              <strong> Personaliza tu consulta </strong>
+
+              <span>
+                Puedes combinar varios criterios para obtener un reporte más
+                específico.
+              </span>
+            </div>
+          </div>
+
+          <span class="optional-label"> Todos opcionales </span>
+        </div>
+
+        <!-- PRIMER BLOQUE -->
+        <div class="filter-group">
+          <div class="filter-group__header">
+            <div class="group-icon commercial-icon">
+              <mat-icon>business_center</mat-icon>
+            </div>
+
+            <div>
+              <strong> Información de la compra </strong>
+
+              <span>
+                Filtra por sucursal, proveedor y usuario responsable.
+              </span>
+            </div>
+          </div>
+
+          <div class="filters-grid business-grid">
+            <!-- SUCURSAL -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Sucursal</mat-label>
+
+              <mat-icon matPrefix> storefront </mat-icon>
+
+              <mat-select [(ngModel)]="Filtro.branch_id">
+                <mat-option [value]="null"> Todas las sucursales </mat-option>
+
+                <mat-option *ngFor="let item of Sucursales" [value]="item.Id">
+                  {{ item.Nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- PROVEEDOR -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Proveedor</mat-label>
+
+              <mat-icon matPrefix> local_shipping </mat-icon>
+
+              <mat-select [(ngModel)]="Filtro.supplier_id">
+                <mat-option [value]="null"> Todos los proveedores </mat-option>
+
+                <mat-option *ngFor="let item of Proveedores" [value]="item.Id">
+                  {{ item.NombreEmpresa }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- USUARIO -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Usuario responsable</mat-label>
+
+              <mat-icon matPrefix> person_outline </mat-icon>
+
+              <mat-select [(ngModel)]="Filtro.user_id">
+                <mat-option [value]="null"> Todos los usuarios </mat-option>
+
+                <mat-option *ngFor="let item of Usuarios" [value]="item.Id">
+                  {{ item.Nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- SEGUNDO BLOQUE -->
+        <div class="filter-group">
+          <div class="filter-group__header">
+            <div class="group-icon document-icon">
+              <mat-icon>receipt_long</mat-icon>
+            </div>
+
+            <div>
+              <strong> Comprobante y estado </strong>
+
+              <span>
+                Consulta las compras según el documento y estado del registro.
+              </span>
+            </div>
+          </div>
+
+          <div class="filters-grid document-grid">
+            <!-- VOUCHER -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Tipo de comprobante</mat-label>
+
+              <mat-icon matPrefix> description </mat-icon>
+
+              <mat-select [(ngModel)]="Filtro.voucher_type">
+                <mat-option [value]="null"> Todos los comprobantes </mat-option>
+
+                <mat-option value="FACTURA"> Factura </mat-option>
+
+                <mat-option value="BOLETA"> Boleta </mat-option>
+
+                <mat-option value="NOTA"> Nota </mat-option>
+
+                <mat-option value="TICKET"> Ticket </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- ESTADO -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Estado de compra</mat-label>
+
+              <mat-icon matPrefix> task_alt </mat-icon>
+
+              <mat-select [(ngModel)]="Filtro.status">
+                <mat-option [value]="null"> Todos los estados </mat-option>
+
+                <mat-option value="COMPLETED"> Completada </mat-option>
+
+                <mat-option value="CANCELLED"> Cancelada </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- PERIODO -->
+        <div class="filter-group period-group">
+          <div class="filter-group__header">
+            <div class="group-icon period-icon">
+              <mat-icon>date_range</mat-icon>
+            </div>
+
+            <div>
+              <strong> Periodo de consulta </strong>
+
+              <span> Selecciona el rango de fechas que deseas analizar. </span>
+            </div>
+          </div>
+
+          <div class="date-range">
+            <!-- FECHA INICIO -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Fecha de inicio</mat-label>
+
+              <mat-icon matPrefix> event_available </mat-icon>
+
+              <input matInput readonly [matDatepicker]="pickerInicio" [(ngModel)]="Filtro.date_start" />
+
+              <mat-datepicker-toggle matSuffix [for]="pickerInicio">
+              </mat-datepicker-toggle>
+
+              <mat-datepicker #pickerInicio></mat-datepicker>
+            </mat-form-field>
+
+            <div class="date-range__separator">
+              <span class="separator-line"></span>
+
+              <div class="separator-icon">
+                <mat-icon>east</mat-icon>
+              </div>
+
+              <span class="separator-line"></span>
+            </div>
+
+            <!-- FECHA FIN -->
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>Fecha de fin</mat-label>
+
+              <mat-icon matPrefix> event </mat-icon>
+
+              <input matInput readonly [matDatepicker]="pickerFin" [(ngModel)]="Filtro.date_end" />
+
+              <mat-datepicker-toggle matSuffix [for]="pickerFin">
+              </mat-datepicker-toggle>
+
+              <mat-datepicker #pickerFin></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- ACCIONES -->
+        <footer class="filters-footer">
+          <div class="filters-help">
+            <mat-icon>info</mat-icon>
+
+            <span>
+              Los criterios vacíos incluirán todos los registros disponibles.
+            </span>
+          </div>
+
+          <div class="filters-actions">
+            <button mat-stroked-button type="button" class="clear-button" (click)="limpiar()">
+              <mat-icon>restart_alt</mat-icon>
+              Limpiar filtros
+            </button>
+
+            <button mat-flat-button color="primary" type="button" class="search-button" (click)="buscar()">
+              <mat-icon>query_stats</mat-icon>
+              Generar reporte
+            </button>
+          </div>
+        </footer>
       </div>
-      <!-- PROVEEDOR -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Proveedor</mat-label>
-          <mat-select [(ngModel)]="Filtro.supplier_id">
-            <mat-option [value]="null"> Todos </mat-option>
-            <mat-option *ngFor="let item of Proveedores" [value]="item.Id">
-              {{ item.NombreEmpresa }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <!-- USUARIO -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Usuario</mat-label>
-          <mat-select [(ngModel)]="Filtro.user_id">
-            <mat-option [value]="null"> Todos </mat-option>
-            <mat-option *ngFor="let item of Usuarios" [value]="item.Id">
-              {{ item.Nombre }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <!-- VOUCHER -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Tipo Voucher</mat-label>
-          <mat-select [(ngModel)]="Filtro.voucher_type">
-            <mat-option [value]="null"> Todos </mat-option>
-            <mat-option value="FACTURA"> Factura </mat-option>
-            <mat-option value="BOLETA"> Boleta </mat-option>
-            <mat-option value="NOTA"> Nota </mat-option>
-            <mat-option value="TICKET"> Ticket </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <!-- ESTADO -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Estado</mat-label>
-          <mat-select [(ngModel)]="Filtro.status">
-            <mat-option [value]="null"> Todos </mat-option>
-            <mat-option value="COMPLETED"> Completada </mat-option>
-            <mat-option value="CANCELLED"> Cancelada </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <!-- FECHA INICIO -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline">
-          <mat-label>Fecha Inicio</mat-label>
-          <input
-            matInput
-            [matDatepicker]="pickerInicio"
-            [(ngModel)]="Filtro.date_start"
-          />
-          <mat-datepicker-toggle matSuffix [for]="pickerInicio">
-          </mat-datepicker-toggle>
-          <mat-datepicker #pickerInicio></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <!-- FECHA FIN -->
-      <div class="col-lg-3 col-md-6 mb-3">
-        <mat-form-field appearance="outline">
-          <mat-label>Fecha Fin</mat-label>
-          <input
-            matInput
-            [matDatepicker]="pickerFin"
-            [(ngModel)]="Filtro.date_end"
-          />
-          <mat-datepicker-toggle matSuffix [for]="pickerFin">
-          </mat-datepicker-toggle>
-          <mat-datepicker #pickerFin></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="d-flex justify-content-end mt-2">
-      <button mat-stroked-button color="warn" (click)="limpiar()">
-        <mat-icon>restart_alt</mat-icon>
-        Limpiar
-      </button>
-      <button mat-raised-button color="primary" class="ms-2" (click)="buscar()">
-        <mat-icon>search</mat-icon>
-        Buscar
-      </button>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>

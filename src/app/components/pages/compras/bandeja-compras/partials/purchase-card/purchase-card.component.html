@@ -1,48 +1,125 @@
-<div class="purchase-item mt-2">
-    <div class="purchase-main">
-        <div class="purchase-left">
-            <span class="status-dot" [ngClass]="{
-                    'completed': purchase.Estado == 'COMPLETED',
-                    'pending': purchase.Estado == 'PENDING',
-                    'cancelled': purchase.Estado == 'CANCELLED'
-                }">
-            </span>
-            <div class="purchase-content">
-                <div class="purchase-top">
-                    <div class="document">
-                        {{purchase.Documento}}
-                    </div>
-                    <div class="amount">
-                        {{moneda}} {{purchase.Total | number:'1.2-2'}}
-                    </div>
-                </div>
-                <div class="supplier">
-                    {{purchase.NombreProveedor}}
-                </div>
-                <div class="meta">
-                    <span>
-                        {{purchase.ProductoTotales}} productos
+<article class="purchase-card" [class.purchase-completed]="purchase.Estado === 'COMPLETED'"
+    [class.purchase-pending]="purchase.Estado === 'PENDING'"
+    [class.purchase-cancelled]="purchase.Estado === 'CANCELLED'">
+    <div class="purchase-status-line"></div>
+
+    <div class="purchase-card__main">
+        <!-- INFORMACIÓN PRINCIPAL -->
+        <div class="purchase-primary">
+            <div class="purchase-icon">
+                <mat-icon *ngIf="purchase.Estado === 'COMPLETED'">
+                    shopping_cart_checkout
+                </mat-icon>
+
+                <mat-icon *ngIf="purchase.Estado === 'PENDING'"> schedule </mat-icon>
+
+                <mat-icon *ngIf="purchase.Estado === 'CANCELLED'">
+                    remove_shopping_cart
+                </mat-icon>
+            </div>
+
+            <div class="purchase-document">
+                <div class="document-header">
+                    <strong class="document-number" [matTooltip]="purchase.Documento">
+                        {{ purchase.Documento }}
+                    </strong>
+
+                    <span class="status-badge" [class.status-completed]="purchase.Estado === 'COMPLETED'"
+                        [class.status-pending]="purchase.Estado === 'PENDING'"
+                        [class.status-cancelled]="purchase.Estado === 'CANCELLED'">
+                        <span class="status-dot"></span>
+
+                        <ng-container [ngSwitch]="purchase.Estado">
+                            <span *ngSwitchCase="'COMPLETED'"> Completada </span>
+
+                            <span *ngSwitchCase="'PENDING'"> Pendiente </span>
+
+                            <span *ngSwitchCase="'CANCELLED'"> Cancelada </span>
+
+                            <span *ngSwitchDefault>
+                                {{ purchase.Estado }}
+                            </span>
+                        </ng-container>
                     </span>
-                    <span>•</span>
+                </div>
+
+                <div class="supplier-name" [matTooltip]="purchase.NombreProveedor">
+                    <mat-icon>local_shipping</mat-icon>
+
                     <span>
-                        {{purchase.NombreUsuarioRegistrador}}
-                    </span>
-                    <span>•</span>
-                    <span>
-                        {{purchase.FechaCompra}}
+                        {{ purchase.NombreProveedor || "Proveedor no registrado" }}
                     </span>
                 </div>
             </div>
         </div>
+
+        <!-- INFORMACIÓN SECUNDARIA -->
+        <div class="purchase-details">
+            <div class="purchase-detail">
+                <div class="detail-icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <div class="detail-content">
+                    <span>Productos</span>
+
+                    <strong>
+                        {{ purchase.ProductoTotales || 0 }}
+                    </strong>
+                </div>
+            </div>
+
+            <div class="purchase-detail">
+                <div class="detail-icon">
+                    <mat-icon>person_outline</mat-icon>
+                </div>
+
+                <div class="detail-content">
+                    <span>Registrado por</span>
+
+                    <strong [matTooltip]="purchase.NombreUsuarioRegistrador">
+                        {{ purchase.NombreUsuarioRegistrador || "No registrado" }}
+                    </strong>
+                </div>
+            </div>
+
+            <div class="purchase-detail">
+                <div class="detail-icon">
+                    <mat-icon>calendar_today</mat-icon>
+                </div>
+
+                <div class="detail-content">
+                    <span>Fecha de compra</span>
+
+                    <strong>
+                        {{ purchase.FechaCompra || "-" }}
+                    </strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTO -->
+        <div class="purchase-total">
+            <span>Total de compra</span>
+
+            <strong>
+                {{ moneda }}
+                {{ purchase.Total | number: "1.2-2" }}
+            </strong>
+        </div>
+
+        <!-- ACCIONES -->
         <div class="purchase-actions">
-            <button mat-stroked-button color="primary" (click)="view.emit(purchase)">
+            <button mat-stroked-button type="button" class="view-button" matTooltip="Consultar detalle de compra"
+                (click)="view.emit(purchase)">
                 <mat-icon>visibility</mat-icon>
                 Ver detalle
             </button>
-            <button *ngIf="purchase.Estado=='COMPLETED'" mat-flat-button color="warn" (click)="cancel.emit(purchase)">
+
+            <button *ngIf="purchase.Estado === 'COMPLETED'" mat-icon-button type="button" class="cancel-button"
+                matTooltip="Cancelar compra" (click)="cancel.emit(purchase)">
                 <mat-icon>cancel</mat-icon>
-                Cancelar
             </button>
         </div>
     </div>
-</div>
+</article>

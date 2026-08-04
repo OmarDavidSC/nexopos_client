@@ -1,43 +1,336 @@
-.reporte-card {
-  border: none;
-
-  border-radius: 15px;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-.card-header {
-  background: white;
-
-  border-bottom: 1px solid #eee;
-
-  padding: 15px 20px;
-}
-
-.titulo {
+.monthly-purchases-panel {
   display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  font-weight: 600;
-
-  font-size: 16px;
+  width: 100%;
+  min-width: 0;
+  min-height: 430px;
+  height: 100%;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  background: #ffffff;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.025),
+    0 5px 14px rgba(15, 23, 42, 0.035);
 }
 
-.card-body {
-  padding: 20px;
-}
+/* HEADER */
 
-.empty {
-  height: 250px;
-
+.panel-header {
   display: flex;
-
   align-items: center;
+  justify-content: space-between;
+  min-height: 70px;
+  padding: 13px 14px;
+  gap: 12px;
+  border-bottom: 1px solid #eef2f7;
+  background: linear-gradient(135deg, #ffffff 0%, #fffdf8 100%);
+}
 
+.panel-title {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 10px;
+
+  >div:last-child {
+    min-width: 0;
+  }
+
+  h3 {
+    margin: 1px 0 0;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 19px;
+  }
+
+  p {
+    margin: 1px 0 0;
+    color: #94a3b8;
+    font-size: 10px;
+    line-height: 14px;
+  }
+}
+
+.panel-icon {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  flex: 0 0 37px;
+  width: 37px;
+  height: 37px;
+  border-radius: 10px;
+  background: #fffbeb;
+  color: #d97706;
 
-  color: #94a3b8;
+  mat-icon {
+    width: 21px;
+    height: 21px;
+    font-size: 21px;
+    line-height: 21px;
+  }
+}
+
+.panel-label {
+  display: block;
+  color: #d97706;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.months-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 29px;
+  padding: 0 9px;
+  gap: 5px;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 9px;
+  font-weight: 650;
+
+  mat-icon {
+    width: 15px;
+    height: 15px;
+    font-size: 15px;
+    line-height: 15px;
+  }
+}
+
+/* RESUMEN */
+
+.purchase-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 11px 13px 5px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 58px;
+  padding: 8px 9px;
+  gap: 8px;
+  border: 1px solid #e5eaf0;
+  border-radius: 9px;
+  background: #f8fafc;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 31px;
+  width: 31px;
+  height: 31px;
+  border-radius: 8px;
+
+  mat-icon {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+    line-height: 17px;
+  }
+}
+
+.summary-content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+
+  span {
+    color: #94a3b8;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    margin-top: 1px;
+    overflow: hidden;
+    color: #0f172a;
+    font-size: 11.5px;
+    font-weight: 700;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  small {
+    color: #d97706;
+    font-size: 8.5px;
+    font-weight: 650;
+  }
+}
+
+.total-icon {
+  background: #fffbeb;
+  color: #d97706;
+}
+
+.average-icon {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.best-icon {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* GRÁFICO */
+
+.chart-container {
+  min-width: 0;
+  flex: 1;
+  padding: 2px 8px 5px;
+}
+
+::ng-deep {
+  .monthly-purchases-panel {
+    .apexcharts-canvas {
+      margin: 0 auto;
+    }
+
+    .apexcharts-tooltip {
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 9px !important;
+      background: #ffffff !important;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.1) !important;
+    }
+
+    .apexcharts-tooltip-title {
+      border-bottom: 1px solid #eef2f7 !important;
+      background: #f8fafc !important;
+      color: #334155 !important;
+      font-size: 10px !important;
+      font-weight: 650 !important;
+    }
+
+    .apexcharts-tooltip-text {
+      color: #475569 !important;
+      font-size: 10px !important;
+    }
+
+    .apexcharts-xaxis-label,
+    .apexcharts-yaxis-label {
+      fill: #94a3b8 !important;
+      font-size: 9px !important;
+    }
+
+    .apexcharts-gridline {
+      stroke: #eef2f7 !important;
+    }
+  }
+}
+
+/* VACÍO */
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 30px;
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+
+  h4 {
+    margin: 10px 0 3px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  p {
+    max-width: 320px;
+    margin: 0;
+    color: #94a3b8;
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+
+.empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  background: #fffbeb;
+  color: #d97706;
+
+  mat-icon {
+    width: 27px;
+    height: 27px;
+    font-size: 27px;
+    line-height: 27px;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .purchase-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .best-month-item {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .monthly-purchases-panel {
+    min-height: 400px;
+  }
+
+  .panel-header {
+    align-items: flex-start;
+    padding: 11px;
+  }
+
+  .panel-title {
+    align-items: flex-start;
+
+    p {
+      display: none;
+    }
+  }
+
+  .months-badge {
+    min-width: 29px;
+    padding: 0 7px;
+    font-size: 0;
+  }
+
+  .purchase-summary {
+    grid-template-columns: 1fr;
+    padding: 9px 10px 3px;
+  }
+
+  .best-month-item {
+    grid-column: auto;
+  }
+
+  .chart-container {
+    padding-right: 2px;
+    padding-left: 2px;
+  }
 }

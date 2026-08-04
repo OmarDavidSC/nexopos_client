@@ -1,22 +1,81 @@
-<app-adm-header [descripcion]="'Administra el inventario de productos por cada sucursal de la empresa.'" [breadcrumbs]="[
-        { nombre: 'Almacén' },
-        { nombre: 'Inventario por sucursal' }
-    ]" [visible]="false" [rutaRegreso]="'/inicio'">
+<app-adm-header [descripcion]="
+    'Administra el inventario de productos por cada sucursal de la empresa.'
+  " [breadcrumbs]="[{ nombre: 'Almacén' }, { nombre: 'Inventario por sucursal' }]" [visible]="false"
+    [rutaRegreso]="'/inicio'">
 </app-adm-header>
-<div class="branches-container">
-    <div class="branch-card" *ngFor="let item of ListaSucursales" (click)="OnEventoAbrirSucursal(item)">
-        <div class="icon">
-            <mat-icon>store</mat-icon>
+
+<section class="container-fluid">
+    <div class="section-header">
+        <div class="section-header__info">
+            <div class="section-icon">
+                <mat-icon>warehouse</mat-icon>
+            </div>
+
+            <div>
+                <h2>Sucursales disponibles</h2>
+                <p>
+                    Selecciona una sucursal para consultar y administrar su inventario.
+                </p>
+            </div>
         </div>
-        <div class="content">
-            <h3>{{item.Nombre}}</h3>
-            <p>
-                Código:
-                <strong>{{item.Codigo}}</strong>
-            </p>
-        </div>
-        <div class="arrow">
-            <mat-icon>chevron_right</mat-icon>
-        </div>
+
+        <span class="branch-count">
+            {{ ListaSucursales.length }}
+            {{ ListaSucursales.length === 1 ? "sucursal" : "sucursales" }}
+        </span>
     </div>
-</div>
+
+    <div class="branches-grid" *ngIf="ListaSucursales.length > 0">
+        <article class="branch-card" *ngFor="let item of ListaSucursales" tabindex="0" role="button"
+            (click)="OnEventoAbrirSucursal(item)" (keydown.enter)="OnEventoAbrirSucursal(item)">
+            <div class="branch-card__header">
+                <div class="branch-icon">
+                    <mat-icon>storefront</mat-icon>
+                </div>
+
+                <span class="branch-type"> Inventario </span>
+            </div>
+
+            <div class="branch-card__content">
+                <span class="branch-label"> Sucursal </span>
+
+                <h3>
+                    {{ item.Nombre }}
+                </h3>
+
+                <div class="branch-code">
+                    <mat-icon>qr_code_2</mat-icon>
+
+                    <span>
+                        Código:
+                        <strong>
+                            {{ item.Codigo || "Sin código" }}
+                        </strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="branch-card__footer">
+                <div class="inventory-access">
+                    <mat-icon>inventory_2</mat-icon>
+
+                    <span> Ver inventario </span>
+                </div>
+
+                <div class="branch-arrow">
+                    <mat-icon>arrow_forward</mat-icon>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <div class="empty-state" *ngIf="ListaSucursales.length === 0">
+        <div class="empty-icon">
+            <mat-icon>storefront</mat-icon>
+        </div>
+
+        <h3>No existen sucursales disponibles</h3>
+
+        <p>Registra una sucursal para poder administrar su inventario.</p>
+    </div>
+</section>

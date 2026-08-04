@@ -1,54 +1,88 @@
-<div class="filters-card">
-    <div class="row g-3 align-items-end">
-        <!-- Buscar -->
-        <div class="col-xl-5 col-lg-12">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Buscar producto</mat-label>
-                <mat-icon matPrefix>search</mat-icon>
-                <input matInput placeholder="Nombre, código o código de barras..." [(ngModel)]="filter.search"
-                    (keyup.enter)="search.emit()">
-            </mat-form-field>
+<section class="filters-panel">
+    <div class="filters-header">
+        <div class="filters-title">
+            <div class="filters-icon">
+                <mat-icon>filter_alt</mat-icon>
+            </div>
+
+            <div>
+                <h3>Filtrar productos</h3>
+
+                <p>Busca por nombre, código, categoría, marca o estado.</p>
+            </div>
         </div>
-        <!-- Categoría -->
-        <div class="col-xl-2 col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Categoría</mat-label>
-                <mat-select [(ngModel)]="filter.category_id" (selectionChange)="categoryChange.emit()">
-                    <mat-option [value]="null">Todas</mat-option>
-                    <mat-option *ngFor="let item of categories" [value]="item.Id">
-                        {{ item.Nombre }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <!-- Marca -->
-        <div class="col-xl-2 col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Marca</mat-label>
-                <mat-select [(ngModel)]="filter.brand_id" (selectionChange)="brandChange.emit()">
-                    <mat-option [value]="null">Todas</mat-option>
-                    <mat-option *ngFor="let item of brands" [value]="item.Id">
-                        {{ item.Nombre }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <!-- Estado -->
-        <div class="col-xl-2 col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Estado</mat-label>
-                <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
-                    <mat-option [value]="null">Todos</mat-option>
-                    <mat-option [value]="1">Activos</mat-option>
-                    <mat-option [value]="0">Inactivos</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <!-- Limpiar -->
-        <div class="col-xl-1 col-md-12 d-grid">
-            <button matTooltip="Limpiar Filtros" mat-stroked-button color="warn" class="btn-clear" (click)="clear.emit()">
-                <mat-icon>filter_alt_off</mat-icon>
-            </button>
-        </div>
+
+        <button mat-button type="button" class="clear-filter-button" matTooltip="Limpiar todos los filtros"
+            (click)="clear.emit()">
+            <mat-icon>filter_alt_off</mat-icon>
+            Limpiar
+        </button>
     </div>
-</div>
+
+    <div class="filters-grid">
+        <!-- BUSCADOR -->
+        <mat-form-field appearance="outline" class="filter-field search-field">
+            <mat-label>Buscar producto</mat-label>
+
+            <mat-icon matPrefix> search </mat-icon>
+
+            <input matInput autocomplete="off" placeholder="Nombre, código o código de barras"
+                [(ngModel)]="filter.search" (keyup.enter)="search.emit()" />
+
+            <button *ngIf="filter.search" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                (click)="filter.search = ''; search.emit()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <!-- CATEGORÍA -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Categoría</mat-label>
+
+            <mat-icon matPrefix> category </mat-icon>
+
+            <mat-select [(ngModel)]="filter.category_id" (selectionChange)="categoryChange.emit()">
+                <mat-option [value]="null"> Todas las categorías </mat-option>
+
+                <mat-option *ngFor="let item of categories" [value]="item.Id">
+                    {{ item.Nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- MARCA -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Marca</mat-label>
+
+            <mat-icon matPrefix> sell </mat-icon>
+
+            <mat-select [(ngModel)]="filter.brand_id" (selectionChange)="brandChange.emit()">
+                <mat-option [value]="null"> Todas las marcas </mat-option>
+
+                <mat-option *ngFor="let item of brands" [value]="item.Id">
+                    {{ item.Nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- ESTADO -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Estado</mat-label>
+
+            <mat-icon matPrefix> toggle_on </mat-icon>
+
+            <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
+                <mat-option [value]="null"> Todos los estados </mat-option>
+
+                <mat-option [value]="1"> Activos </mat-option>
+
+                <mat-option [value]="0"> Inactivos </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="button" class="search-button" (click)="search.emit()">
+            <mat-icon>search</mat-icon>
+            Buscar
+        </button>
+    </div>
+</section>

@@ -1,0 +1,264 @@
+:host {
+    display: block;
+    min-height: 100%;
+}
+
+.sales-report-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 14px;
+    background: #f6f8fc;
+}
+
+/* =========================================
+   SECCIONES
+========================================= */
+
+.report-section {
+    width: 100%;
+    margin-top: 11px;
+}
+
+.filters-section {
+    margin-top: 9px;
+}
+
+.summary-section,
+.charts-section,
+.ranking-section,
+.distribution-section {
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.025),
+        0 5px 15px rgba(15, 23, 42, 0.035);
+}
+
+/* =========================================
+   ENCABEZADOS DE SECCIÓN
+========================================= */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 45px;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.section-heading__left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 10px;
+
+    >div:last-child {
+        min-width: 0;
+    }
+
+    h2 {
+        margin: 1px 0 0;
+        color: #0f172a;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 19px;
+    }
+
+    p {
+        margin: 1px 0 0;
+        color: #94a3b8;
+        font-size: 10px;
+        line-height: 14px;
+    }
+}
+
+.section-label {
+    display: block;
+    color: #94a3b8;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+
+    mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+        line-height: 20px;
+    }
+}
+
+.summary-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.chart-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.ranking-icon {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.distribution-icon {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+.section-badge {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: 25px;
+    padding: 0 8px;
+    border-radius: 7px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.report-grid {
+    display: grid;
+    width: 100%;
+    gap: 11px;
+}
+
+.report-grid-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.report-widget {
+    min-width: 0;
+    height: 100%;
+}
+
+/* Hace que el componente hijo pueda ocupar toda la altura */
+
+.report-widget>* {
+    display: block;
+    height: 100%;
+}
+
+/* =========================================
+   SECCIONES ESPECÍFICAS
+========================================= */
+
+.summary-section {
+    border-top: 3px solid #2563eb;
+}
+
+.charts-section {
+    border-top: 3px solid #10b981;
+}
+
+.ranking-section {
+    border-top: 3px solid #f59e0b;
+}
+
+.distribution-section {
+    border-top: 3px solid #7c3aed;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+    .report-grid-two {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sales-report-page {
+        padding: 9px;
+    }
+
+    .summary-section,
+    .charts-section,
+    .ranking-section,
+    .distribution-section {
+        padding: 11px;
+        border-radius: 12px;
+    }
+
+    .section-heading {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sales-report-page {
+        padding: 6px;
+    }
+
+    .summary-section,
+    .charts-section,
+    .ranking-section,
+    .distribution-section {
+        padding: 10px;
+        border-radius: 11px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .section-heading__left {
+        align-items: flex-start;
+    }
+
+    .section-heading__left {
+        h2 {
+            font-size: 13px;
+        }
+
+        p {
+            display: none;
+        }
+    }
+
+    .section-icon {
+        flex-basis: 33px;
+        width: 33px;
+        height: 33px;
+
+        mat-icon {
+            width: 18px;
+            height: 18px;
+            font-size: 18px;
+            line-height: 18px;
+        }
+    }
+
+    .section-badge {
+        display: none;
+    }
+
+    .report-grid {
+        gap: 8px;
+    }
+}

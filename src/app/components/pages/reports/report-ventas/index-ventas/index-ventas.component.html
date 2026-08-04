@@ -1,40 +1,131 @@
-<app-adm-header [descripcion]="'Consualta los reportes de las ventas'"
-    [breadcrumbs]="[{nombre:'Reporte'},{nombre:'Reporte de Ventas'}]" [visible]="false" [rutaRegreso]="'/inicio'">
-</app-adm-header>
-<app-filtros-reporte [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Clientes]="ListaClientes"
-    [Usuarios]="ListaUsuarios" (buscar)="obtenerMaestros()" (limpiar)="clearFilters()">
-</app-filtros-reporte>
+<div class="container-fluid">
+    <app-adm-header [descripcion]="'Consulta y analiza los reportes de ventas del sistema.'"
+        [breadcrumbs]="[{ nombre: 'Reportes' }, { nombre: 'Reporte de Ventas' }]" [visible]="false"
+        [rutaRegreso]="'/inicio'">
+    </app-adm-header>
 
-<app-resumen-reporte [Resumen]="Resumen"> </app-resumen-reporte>
+    <!-- FILTROS -->
+    <section class="report-section filters-section">
+        <app-filtros-reporte [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Clientes]="ListaClientes"
+            [Usuarios]="ListaUsuarios" (buscar)="obtenerMaestros()" (limpiar)="clearFilters()">
+        </app-filtros-reporte>
+    </section>
 
-<div class="row">
-    <div class="col-lg-6">
-        <app-grafico-ventas-dia [Datos]="VentasPorDia"> </app-grafico-ventas-dia>
-    </div>
+    <!-- RESUMEN -->
+    <section class="report-section summary-section">
+        <div class="section-heading">
+            <div class="section-heading__left">
+                <div class="section-icon summary-icon">
+                    <mat-icon>analytics</mat-icon>
+                </div>
 
-    <div class="col-lg-6">
-        <app-grafico-ventas-mes [Datos]="VentasPorMes"> </app-grafico-ventas-mes>
-    </div>
+                <div>
+                    <span class="section-label"> Resumen general </span>
+
+                    <h2>Indicadores de ventas</h2>
+
+                    <p>Consulta los principales resultados del periodo seleccionado.</p>
+                </div>
+            </div>
+
+            <span class="section-badge"> KPIs </span>
+        </div>
+
+        <app-resumen-reporte [Resumen]="Resumen"> </app-resumen-reporte>
+    </section>
+
+    <!-- EVOLUCIÓN DE VENTAS -->
+    <section class="report-section charts-section">
+        <div class="section-heading">
+            <div class="section-heading__left">
+                <div class="section-icon chart-icon">
+                    <mat-icon>monitoring</mat-icon>
+                </div>
+
+                <div>
+                    <span class="section-label"> Tendencias </span>
+
+                    <h2>Evolución de ventas</h2>
+
+                    <p>Analiza el comportamiento de las ventas por día y por mes.</p>
+                </div>
+            </div>
+
+            <span class="section-badge"> Evolución </span>
+        </div>
+
+        <div class="report-grid report-grid-two">
+            <div class="report-widget">
+                <app-grafico-ventas-dia [Datos]="VentasPorDia">
+                </app-grafico-ventas-dia>
+            </div>
+
+            <div class="report-widget">
+                <app-grafico-ventas-mes [Datos]="VentasPorMes">
+                </app-grafico-ventas-mes>
+            </div>
+        </div>
+    </section>
+
+    <!-- RANKINGS -->
+    <section class="report-section ranking-section">
+        <div class="section-heading">
+            <div class="section-heading__left">
+                <div class="section-icon ranking-icon">
+                    <mat-icon>leaderboard</mat-icon>
+                </div>
+
+                <div>
+                    <span class="section-label"> Rendimiento </span>
+
+                    <h2>Rankings principales</h2>
+
+                    <p>Revisa los productos y clientes con mayor participación.</p>
+                </div>
+            </div>
+
+            <span class="section-badge"> Top resultados </span>
+        </div>
+
+        <div class="report-grid report-grid-two">
+            <div class="report-widget">
+                <app-top-productos [Datos]="TopProductos"> </app-top-productos>
+            </div>
+
+            <div class="report-widget">
+                <app-top-clientes [Datos]="TopClientes"> </app-top-clientes>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISTRIBUCIÓN -->
+    <section class="report-section distribution-section">
+        <div class="section-heading">
+            <div class="section-heading__left">
+                <div class="section-icon distribution-icon">
+                    <mat-icon>donut_large</mat-icon>
+                </div>
+
+                <div>
+                    <span class="section-label"> Distribución </span>
+
+                    <h2>Composición de ventas</h2>
+
+                    <p>Compara los métodos de pago y tipos de comprobantes utilizados.</p>
+                </div>
+            </div>
+
+            <span class="section-badge"> Participación </span>
+        </div>
+
+        <div class="report-grid report-grid-two">
+            <div class="report-widget">
+                <app-metodos-pago [Datos]="MetodosDePago"> </app-metodos-pago>
+            </div>
+
+            <div class="report-widget">
+                <app-tipos-voucher [Datos]="TiposDeVoucher"> </app-tipos-voucher>
+            </div>
+        </div>
+    </section>
 </div>
-
-<div class="row mt-2">
-    <div class="col-lg-6">
-        <app-top-productos [Datos]="TopProductos"> </app-top-productos>
-    </div>
-
-    <div class="col-lg-6">
-        <app-top-clientes [Datos]="TopClientes"> </app-top-clientes>
-    </div>
-</div>
-
-<div class="row mt-2">
-    <div class="col-lg-6">
-        <app-metodos-pago [Datos]="MetodosDePago"> </app-metodos-pago>
-    </div>
-
-    <div class="col-lg-6">
-        <app-tipos-voucher [Datos]="TiposDeVoucher"> </app-tipos-voucher>
-    </div>
-</div>
-
-<!-- <app-tabla-ventas [Ventas]="Ventas"> </app-tabla-ventas> -->
