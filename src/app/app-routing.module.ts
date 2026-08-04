@@ -26,6 +26,9 @@ import { DashboardComponent } from './components/pages/home/dashboard/dashboard.
 import { IndexVentasComponent } from './components/pages/reports/report-ventas/index-ventas/index-ventas.component';
 import { IndexComprasComponent } from './components/pages/reports/report-compras/index-compras/index-compras.component';
 import { IndexInventarioComponent } from './components/pages/reports/report-inventario/index-inventario/index-inventario.component';
+import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
+import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
+import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, },
@@ -36,6 +39,7 @@ const routes: Routes = [
   { path: 'mi-compania', component: PanelCompanyComponent, canActivate: [AuthGuard] },
   { path: 'mis-sucursales', component: AdmSucursalComponent, canActivate: [AuthGuard] },
   { path: 'mis-usuarios', component: AdmUsuarioComponent, canActivate: [AuthGuard] },
+  { path: 'ayuda', component: HelpCenterComponent, canActivate: [AuthGuard] },
 
   //almacen
   { path: 'administracion-productos', component: AdmProductosComponent, canActivate: [AuthGuard] },
@@ -56,9 +60,11 @@ const routes: Routes = [
   { path: 'bandeja-ventas/:id/detalle-venta', component: VerDetalleVentaComponent, canActivate: [AuthGuard] },
 
   //reportes
+  { path: 'reporte-ganancias', component: IndexGananciasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-ventas', component: IndexVentasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-compras', component: IndexComprasComponent, canActivate: [AuthGuard] },
   { path: 'reporte-inventarios', component: IndexInventarioComponent, canActivate: [AuthGuard] },
+  // { path: 'notificaciones-alertas', component: IndexStockAlertsComponent, canActivate: [AuthGuard] },
   {
     path: '**', pathMatch: 'full', redirectTo: ''
   }

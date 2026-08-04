@@ -1,0 +1,172 @@
+<div class="notifications-modal">
+
+    <div class="notifications-header">
+        <div class="header-information">
+            <div class="header-icon">
+                <mat-icon>notifications_active</mat-icon>
+            </div>
+
+            <div>
+                <h5>Alertas de inventario</h5>
+                <span>Productos con stock bajo por sucursal</span>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button mat-icon-button type="button" matTooltip="Actualizar" (click)="obtenerAlertas()"
+                [disabled]="Loading">
+                <mat-icon [class.rotating]="Loading">refresh</mat-icon>
+            </button>
+
+            <button mat-icon-button type="button" matTooltip="Cerrar" (click)="cerrar()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="notifications-summary">
+        <div class="summary-item">
+            <span class="summary-dot summary-dot-primary"></span>
+            <span>Total</span>
+            <strong>{{ totalAlertas }}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span class="summary-dot summary-dot-danger"></span>
+            <span>Sin stock</span>
+            <strong>{{ totalSinStock }}</strong>
+        </div>
+
+        <div class="summary-item">
+            <span class="summary-dot summary-dot-warning"></span>
+            <span>Críticos</span>
+            <strong>{{ totalCriticos }}</strong>
+        </div>
+    </div>
+
+    <div class="notifications-filters">
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar producto</mat-label>
+            <input matInput [(ngModel)]="Filtro.search" placeholder="Nombre o código" (keyup.enter)="aplicarFiltros()">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="branch-field">
+            <mat-label>Sucursal</mat-label>
+            <mat-select [(ngModel)]="Filtro.branch_id" (selectionChange)="aplicarFiltros()">
+                <mat-option [value]="null">Todas las sucursales</mat-option>
+
+                <mat-option *ngFor="let sucursal of ListaSucursales" [value]="sucursal.Id">
+                    {{ sucursal.Nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="button" class="filter-button" (click)="aplicarFiltros()"
+            [disabled]="Loading">
+            <mat-icon>search</mat-icon>
+            Buscar
+        </button>
+
+        <button mat-icon-button type="button" class="clear-button" matTooltip="Limpiar filtros"
+            (click)="limpiarFiltros()" [disabled]="Loading">
+            <mat-icon>restart_alt</mat-icon>
+        </button>
+    </div>
+
+    <div class="notifications-content">
+
+        <div *ngIf="Loading" class="loading-container">
+            <mat-spinner diameter="38"></mat-spinner>
+            <strong>Cargando alertas</strong>
+            <span>Consultando productos con stock bajo...</span>
+        </div>
+
+        <div *ngIf="!Loading && ListaAlertas.length === 0" class="empty-container">
+            <div class="empty-icon">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
+
+            <strong>No hay alertas de inventario</strong>
+            <span>No se encontraron productos con stock bajo.</span>
+        </div>
+
+        <div *ngIf="!Loading && ListaAlertas.length > 0" class="notifications-list">
+
+            <div class="notification-item" *ngFor="let item of ListaAlertas; trackBy: trackById">
+
+                <div class="notification-icon" [class.notification-icon-danger]="item.current_stock <= 0"
+                    [class.notification-icon-warning]="item.current_stock > 0">
+                    <mat-icon>{{ getEstadoIcono(item) }}</mat-icon>
+                </div>
+
+                <div class="notification-information">
+                    <div class="product-header">
+                        <strong>{{ item.product.name }}</strong>
+
+                        <span [class]="getEstadoClase(item)">
+                            {{ getEstado(item) }}
+                        </span>
+                    </div>
+
+                    <div class="product-code">
+                        Código: {{ item.product.code || 'Sin código' }}
+                    </div>
+
+                    <div class="product-branch">
+                        <mat-icon>storefront</mat-icon>
+                        <span>{{ item.branch.name }}</span>
+
+                        <span class="metadata-separator"></span>
+
+                        <mat-icon>category</mat-icon>
+                        <span>{{ item.product.category?.name || 'Sin categoría' }}</span>
+                    </div>
+                </div>
+
+                <div class="stock-information">
+                    <div class="stock-number">
+                        <span>Actual</span>
+                        <strong [class.stock-zero]="item.current_stock <= 0">
+                            {{ item.current_stock | number:'1.0-2' }}
+                        </strong>
+                    </div>
+
+                    <div class="stock-number">
+                        <span>Mínimo</span>
+                        <strong>{{ item.minimum_stock | number:'1.0-2' }}</strong>
+                    </div>
+
+                    <div class="stock-number stock-missing">
+                        <span>Faltan</span>
+                        <strong>{{ getFaltante(item) | number:'1.0-2' }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="notifications-footer">
+        <span>
+            {{ ListaAlertas.length }}
+            {{ ListaAlertas.length === 1 ? 'producto requiere' : 'productos requieren' }}
+            atención
+        </span>
+
+        <div class="footer-actions">
+            <button mat-stroked-button type="button" (click)="cerrar()">
+                Cerrar
+            </button>
+            <button *ngIf="tienePermiso(Role, ['support'])" mat-flat-button color="primary" type="button"
+                class="whatsapp-button" (click)="enviarAlertasWhatsApp()"
+                [disabled]="Loading || ListaAlertas.length === 0">
+                <mat-icon>send</mat-icon>
+                Enviar por WhatsApp
+            </button>
+        </div>
+    </div>
+
+</div>

@@ -18,7 +18,15 @@
         <!-- Empresa -->
         <mat-form-field class="col-12 col-md-8" appearance="outline">
             <mat-label>Número de Documento <span class="text-danger">(*)</span></mat-label>
-            <input matInput formControlName="document_number" [disabled]="Loading" maxlength="255" autocomplete="off">
+
+            <input matInput formControlName="document_number" [disabled]="Loading" [maxlength]="getMaxLengthDocumento()"
+                [attr.inputmode]="Form.get('document_type')?.value === 'DNI' || Form.get('document_type')?.value === 'RUC' ? 'numeric' : 'text'"
+                autocomplete="off" (keydown)="soloNumerosDocumento($event)" (input)="limpiarDocumentoPegado()">
+
+            <mat-hint align="end">
+                {{Form.get('document_number')?.value?.length || 0}} / {{getMaxLengthDocumento()}}
+            </mat-hint>
+
             <mat-error>
                 <app-error-validation-display [FormControl]="Form.get('document_number')">
                 </app-error-validation-display>

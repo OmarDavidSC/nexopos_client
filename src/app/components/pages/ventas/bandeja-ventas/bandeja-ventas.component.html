@@ -3,14 +3,47 @@
     (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')" [rutaRegreso]="'/inicio'">
 </app-adm-header>
 
-<app-sale-summary [moneda]="CompaniaActual.SimboloMoneda" [summary]="Resumen">
+<app-sale-summary [moneda]="CompaniaActual?.SimboloMoneda" [summary]="Resumen">
 </app-sale-summary>
-
-<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales" (search)="OnSearchFiltro()"
-    (customerChange)="OnCustomerChange()" (branchChange)="OnBranchChange()" (statusChange)="onStatusChange()" (payment_methodChange)="onPayMethodChange()"
-    (clear)="clearFilters()">
+<app-sale-filters [filter]="Filtro" [customers]="ListaClientes" [branches]="ListaSucursales" (search)="aplicarFiltro()"
+    (customerChange)="aplicarFiltro()" (branchChange)="aplicarFiltro()" (sunatChange)="aplicarFiltro()"
+    (statusChange)="aplicarFiltro()" (payment_methodChange)="aplicarFiltro()" (clear)="clearFilters()">
 </app-sale-filters>
-
-<app-sale-timeline [moneda]="CompaniaActual.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading" (view)="OnEventoVerDetalle($event)"
-    (cancel)="OnEventoCancelar($event)" (cancel)="null">
-</app-sale-timeline> 
+<app-sale-timeline [moneda]="CompaniaActual?.SimboloMoneda" [sales]="ListaVentas" [loading]="Loading"
+    (view)="OnEventoVerDetalle($event)" (cancel)="OnEventoCancelar($event)">
+</app-sale-timeline>
+<div class="sales-pagination" *ngIf="!Loading && TotalRegistros > 0">
+    <div class="pagination-information">
+        <span>Mostrando<strong> {{DesdeRegistro}} </strong>a<strong> {{HastaRegistro}} </strong>de<strong>
+                {{TotalRegistros}} </strong>ventas</span>
+        <small> Página {{PaginaActual}} de {{TotalPaginas}}</small>
+    </div>
+    <div class="pagination-actions">
+        <button mat-icon-button matTooltip="Primera página" [disabled]="PaginaActual === 1" (click)="OnchangedPage(1)">
+            <mat-icon>first_page</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Página anterior" [disabled]="PaginaActual === 1"
+            (click)="OnchangedPage(PaginaActual - 1)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button *ngIf="PaginasVisibles[0] > 1" mat-button class="page-button" (click)="OnchangedPage(1)">1</button>
+        <span class="pagination-dots" *ngIf="PaginasVisibles[0] > 2"> ...</span>
+        <button *ngFor="let pagina of PaginasVisibles" mat-button class="page-button"
+            [class.active]="pagina === PaginaActual" (click)="OnchangedPage(pagina)">
+            {{pagina}}
+        </button>
+        <span class="pagination-dots" *ngIf="PaginasVisibles[PaginasVisibles.length - 1] < TotalPaginas - 1">...</span>
+        <button *ngIf="PaginasVisibles[PaginasVisibles.length - 1] < TotalPaginas" mat-button class="page-button"
+            (click)="OnchangedPage(TotalPaginas)">
+            {{TotalPaginas}}
+        </button>
+        <button mat-icon-button matTooltip="Página siguiente" [disabled]="PaginaActual === TotalPaginas"
+            (click)="OnchangedPage(PaginaActual + 1)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Última página" [disabled]="PaginaActual === TotalPaginas"
+            (click)="OnchangedPage(TotalPaginas)">
+            <mat-icon>last_page</mat-icon>
+        </button>
+    </div>
+</div>

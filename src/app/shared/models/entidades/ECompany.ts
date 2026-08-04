@@ -5,6 +5,10 @@ import { EPermisos } from "./EPemisos";
 export class ECompany {
     Id: any;
     Nombre: string;
+    Ruc: string;
+    NombreComercial: string;
+    DireccionReal: string;
+    Telefono: string;
     IconId: number;
     IconoUrl: string;
     LogoId: number;
@@ -20,6 +24,10 @@ export class ECompany {
     constructor() {
         this.Id = "";
         this.Nombre = "";
+        this.Ruc = "";
+        this.NombreComercial = "";
+        this.DireccionReal = "";
+        this.Telefono = "";
         this.IconId = 0;
         this.IconoUrl = "";
         this.LogoId = 0;
@@ -35,9 +43,12 @@ export class ECompany {
 
     public static parseJson(element: any): ECompany {
         const objeto = new ECompany();
-
         objeto.Id = SPParse.getNumber(element["id"]);
         objeto.Nombre = SPParse.getString(element["name"]);
+        objeto.Ruc = SPParse.getString(element['ruc']);
+        objeto.NombreComercial = SPParse.getString(element['business_name']);
+        objeto.DireccionReal = SPParse.getString(element['fiscal_address']);
+        objeto.Telefono = SPParse.getString(element["phone"]);
         objeto.IconId = SPParse.getNumber(element["favicon_id"]);
         objeto.IconoUrl = SPParse.getString(element["favicon_path"]);
         objeto.LogoId = SPParse.getNumber(element["logo_id"]);

@@ -107,6 +107,14 @@ import { InventoryLowStockComponent } from './components/pages/reports/report-in
 import { InventoryCategoryComponent } from './components/pages/reports/report-inventario/partials/inventory-category/inventory-category.component';
 import { InventoryBranchComponent } from './components/pages/reports/report-inventario/partials/inventory-branch/inventory-branch.component';
 import { InventorySummaryReportComponent } from './components/pages/reports/report-inventario/partials/inventory-summary-report/inventory-summary-report.component';
+import { ModalComprobanteVentaComponent } from './components/pages/ventas/modals/modal-comprobante-venta/modal-comprobante-venta.component';
+import { IndexGananciasComponent } from './components/pages/reports/report-ganancias/index-ganancias/index-ganancias.component';
+import { ProfitPeriodSummaryComponent } from './components/pages/reports/report-ganancias/partials/profit-period-summary/profit-period-summary.component';
+import { ProfitCustomRangeComponent } from './components/pages/reports/report-ganancias/partials/profit-custom-range/profit-custom-range.component';
+import { ProfitFiltersComponent } from './components/pages/reports/report-ganancias/partials/profit-filters/profit-filters.component';
+import { IndexStockAlertsComponent } from './components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
+import { HelpCenterComponent } from './components/pages/widzard/help-center/help-center.component';
+import { ModalHelpTutorialComponent } from './components/pages/widzard/help-center/modals/modal-help-tutorial/modal-help-tutorial.component';
 
 @NgModule({
   declarations: [
@@ -204,6 +212,14 @@ import { InventorySummaryReportComponent } from './components/pages/reports/repo
     InventoryCategoryComponent,
     InventoryBranchComponent,
     InventorySummaryReportComponent,
+    ModalComprobanteVentaComponent,
+    IndexGananciasComponent,
+    ProfitPeriodSummaryComponent,
+    ProfitCustomRangeComponent,
+    ProfitFiltersComponent,
+    IndexStockAlertsComponent,
+    HelpCenterComponent,
+    ModalHelpTutorialComponent,
   ],
   imports: [
     ComunModule,

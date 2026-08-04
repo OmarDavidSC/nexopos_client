@@ -1,0 +1,188 @@
+<div class="comprobante-modal">
+    <div class="modal-header">
+        <div class="header-icon">
+            <mat-icon>check_circle</mat-icon>
+        </div>
+
+        <div class="header-content">
+            <span class="success-label">VENTA COMPLETADA</span>
+            <h2>Venta registrada correctamente</h2>
+            <p>El comprobante fue generado y enviado correctamente.</p>
+        </div>
+
+        <button mat-icon-button class="close-button" matTooltip="Cerrar" (click)="cerrar()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div class="sunat-message" [ngClass]="{
+            'accepted': venta.sunat_status === 'ACEPTADO',
+            'pending': venta.sunat_status === 'PENDIENTE',
+            'error': venta.sunat_status === 'RECHAZADO' || venta.sunat_status === 'ERROR'
+        }">
+
+        <mat-icon *ngIf="venta.sunat_status === 'ACEPTADO'">verified</mat-icon>
+        <mat-icon *ngIf="venta.sunat_status === 'PENDIENTE'">schedule</mat-icon>
+        <mat-icon *ngIf="venta.sunat_status === 'RECHAZADO' || venta.sunat_status === 'ERROR'">
+            error_outline
+        </mat-icon>
+
+        <div>
+            <strong *ngIf="venta.sunat_status === 'ACEPTADO'">
+                Comprobante aceptado por SUNAT
+            </strong>
+
+            <strong *ngIf="venta.sunat_status === 'PENDIENTE'">
+                Comprobante enviado a SUNAT
+            </strong>
+
+            <strong *ngIf="venta.sunat_status === 'RECHAZADO'">
+                Comprobante rechazado por SUNAT
+            </strong>
+
+            <strong *ngIf="venta.sunat_status === 'ERROR'">
+                No se pudo completar la emisión
+            </strong>
+
+            <span *ngIf="venta.sunat_status === 'ACEPTADO'">
+                La venta y el comprobante fueron procesados correctamente.
+            </span>
+
+            <span *ngIf="venta.sunat_status === 'PENDIENTE'">
+                El comprobante fue generado. La validación final continúa en proceso.
+            </span>
+
+            <span *ngIf="venta.sunat_status === 'RECHAZADO'">
+                La venta fue guardada, pero el comprobante necesita revisión.
+            </span>
+
+            <span *ngIf="venta.sunat_status === 'ERROR'">
+                La venta fue guardada, pero ocurrió un problema con SUNAT.
+            </span>
+        </div>
+
+        <span class="status-badge">
+            {{venta.sunat_status || 'NO ENVIADO'}}
+        </span>
+    </div>
+
+    <div class="comprobante-info">
+        <div class="info-item">
+            <span>Comprobante</span>
+            <strong>{{venta.voucher_series}}-{{venta.voucher_number}}</strong>
+        </div>
+
+        <div class="info-item">
+            <span>Tipo</span>
+            <strong>{{venta.voucher_type}}</strong>
+        </div>
+
+        <div class="info-item">
+            <span>Método de pago</span>
+            <strong>{{venta.payment_method || 'No especificado'}}</strong>
+        </div>
+
+        <div class="info-item total-item">
+            <span>Total</span>
+            <strong>S/ {{venta.total | number:'1.2-2'}}</strong>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <div>
+            <mat-icon>print</mat-icon>
+            <h3>Imprimir comprobante</h3>
+        </div>
+        <span>Seleccione el formato de su impresora</span>
+    </div>
+
+    <div class="format-grid">
+        <button mat-stroked-button (click)="imprimirPdf(venta.pdf_58mm)" [disabled]="!venta.pdf_58mm">
+
+            <mat-icon>receipt</mat-icon>
+
+            <div>
+                <strong>Ticket 58 mm</strong>
+                <span>Impresora compacta</span>
+            </div>
+        </button>
+
+        <button mat-stroked-button (click)="imprimirPdf(venta.pdf_80mm)" [disabled]="!venta.pdf_80mm">
+
+            <mat-icon>receipt_long</mat-icon>
+
+            <div>
+                <strong>Ticket 80 mm</strong>
+                <span>Formato recomendado</span>
+            </div>
+        </button>
+
+        <button mat-stroked-button (click)="imprimirPdf(venta.pdf_a5)" [disabled]="!venta.pdf_a5">
+
+            <mat-icon>description</mat-icon>
+
+            <div>
+                <strong>Formato A5</strong>
+                <span>Hoja mediana</span>
+            </div>
+        </button>
+
+        <button mat-stroked-button (click)="imprimirPdf(venta.pdf_a4)" [disabled]="!venta.pdf_a4">
+
+            <mat-icon>article</mat-icon>
+
+            <div>
+                <strong>Formato A4</strong>
+                <span>Documento completo</span>
+            </div>
+        </button>
+    </div>
+
+    <div class="quick-actions">
+        <button mat-raised-button color="primary" class="print-button" (click)="imprimirPdf(venta.pdf_80mm)"
+            [disabled]="!venta.pdf_80mm">
+
+            <mat-icon>print</mat-icon>
+
+            <div>
+                <strong>Imprimir ticket</strong>
+                <span>Usar formato 80 mm</span>
+            </div>
+        </button>
+
+        <button mat-raised-button class="whatsapp-button" (click)="compartirWhatsApp(venta.pdf_a4)"
+            [disabled]="!venta.pdf_a4">
+
+            <mat-icon>send</mat-icon>
+
+            <div>
+                <strong>Enviar por WhatsApp</strong>
+                <span>Compartir PDF con el cliente</span>
+            </div>
+        </button>
+    </div>
+
+    <div class="secondary-actions">
+        <button mat-button (click)="abrirPdf(venta.pdf_a4)" [disabled]="!venta.pdf_a4">
+            <mat-icon>visibility</mat-icon>
+            Vista previa
+        </button>
+
+        <button mat-button (click)="abrirPdf(venta.pdf_a4)" [disabled]="!venta.pdf_a4">
+            <mat-icon>download</mat-icon>
+            Descargar PDF
+        </button>
+    </div>
+
+    <div class="modal-footer">
+        <div class="footer-info">
+            <mat-icon>info_outline</mat-icon>
+            <span>También podrá consultar este comprobante desde la bandeja de ventas.</span>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="cerrar()">
+            Finalizar
+            <mat-icon>arrow_forward</mat-icon>
+        </button>
+    </div>
+</div>

@@ -7,6 +7,8 @@ import { Eusuario } from '../../models/entidades/Eusuario';
 import { AuthStoreService } from '../../stores/auth-store.service';
 import { ECompany } from '../../models/entidades/ECompany';
 import { ESucursal } from '../../models/entidades/ESucursal';
+import { MatDialog } from '@angular/material/dialog';
+import { IndexStockAlertsComponent } from 'src/app/components/pages/notificaciones/alertas-stocks/index-stock-alerts/index-stock-alerts.component';
 
 interface MenuItem {
   label: string;
@@ -40,8 +42,8 @@ export class MenuLateralComponent implements OnInit {
   menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
     {
-      label: 'Mi Empresa',
-      icon: 'business',
+      label: 'Configuración',
+      icon: 'settings',
       children: [
         { label: 'Mi Compañía', icon: 'corporate_fare', route: '/mi-compania' },
         { label: 'Mis Sucursales', icon: 'place', route: '/mis-sucursales' },
@@ -88,6 +90,7 @@ export class MenuLateralComponent implements OnInit {
       label: 'Reportes',
       icon: 'assessment',
       children: [
+        { label: 'Mis Ganancias', icon: 'trending_up', route: '/reporte-ganancias' },
         { label: 'Ventas', icon: 'bar_chart', route: '/reporte-ventas' },
         { label: 'Compras', icon: 'shopping_bag', route: '/reporte-compras' },
         { label: 'Inventario', icon: 'inventory', route: '/reporte-inventarios' }
@@ -100,7 +103,8 @@ export class MenuLateralComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private spinnerService: NgxSpinnerService,
     private authService: AuthService,
-    private authStore: AuthStoreService
+    private authStore: AuthStoreService,
+    private dialog: MatDialog
   ) { }
 
   ngOnDestroy(): void {
@@ -131,6 +135,19 @@ export class MenuLateralComponent implements OnInit {
 
   irAPerfil() {
     this.router.navigate(['/mi-perfil']);
+  }
+
+  abrirNotificacionesStock(): void {
+    this.dialog.open(IndexStockAlertsComponent, {
+      width: '900px',
+      maxWidth: '96vw',
+      height: '82vh',
+      maxHeight: '900px',
+      autoFocus: false,
+      restoreFocus: false,
+      disableClose: false,
+      panelClass: 'stock-alerts-dialog'
+    });
   }
 
   navigateTo(route: string) {

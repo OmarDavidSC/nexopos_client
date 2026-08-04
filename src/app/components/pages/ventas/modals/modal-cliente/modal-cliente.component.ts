@@ -45,7 +45,15 @@ export class ModalClienteComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.configurarValidacionDocumento();
+
+    this.Form.get('document_type')?.valueChanges.subscribe(() => {
+      this.Form.get('document_number')?.setValue('');
+      this.configurarValidacionDocumento();
+    });
+  }
 
   async eventoGuardar(): Promise<void> {
     if (this.Loading) return;
@@ -101,5 +109,80 @@ export class ModalClienteComponent implements OnInit {
         }
       }
     });
+  }
+
+  private configurarValidacionDocumento(): void {
+    const tipoDocumento: string = this.Form.get('document_type')?.value;
+    const numeroDocumento = this.Form.get('document_number');
+    if (!numeroDocumento) return;
+    let validators = [Validators.required];
+
+    switch (tipoDocumento) {
+      case 'DNI':
+        validators = [Validators.required, Validators.pattern(/^[0-9]{8}$/), Validators.minLength(8), Validators.maxLength(8)];
+        break;
+      case 'RUC':
+        validators = [Validators.required, Validators.pattern(/^[0-9]{11}$/), Validators.minLength(11), Validators.maxLength(11)];
+        break;
+      case 'CE':
+        validators = [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{1,12}$/), Validators.maxLength(12)];
+        break;
+      case 'PASSPORT':
+        validators = [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{1,20}$/), Validators.maxLength(20)];
+        break;
+    }
+    numeroDocumento.setValidators(validators);
+    numeroDocumento.updateValueAndValidity();
+  }
+
+  getMaxLengthDocumento(): number {
+    const tipoDocumento: string = this.Form.get('document_type')?.value;
+
+    switch (tipoDocumento) {
+      case 'DNI':
+        return 8;
+      case 'RUC':
+        return 11;
+      case 'CE':
+        return 12;
+      case 'PASSPORT':
+        return 20;
+      default:
+        return 20;
+    }
+  }
+
+  soloNumerosDocumento(event: KeyboardEvent): void {
+    const tipoDocumento: string = this.Form.get('document_type')?.value;
+
+    if (tipoDocumento !== 'DNI' && tipoDocumento !== 'RUC') return;
+    const teclasPermitidas: string[] = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+    if (teclasPermitidas.includes(event.key)) return;
+    if (!/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  limpiarDocumentoPegado(): void {
+    const control = this.Form.get('document_number');
+    const tipoDocumento: string = this.Form.get('document_type')?.value;
+    let valor: string = control?.value ?? '';
+
+    if (tipoDocumento === 'DNI') {
+      valor = valor.replace(/\D/g, '').slice(0, 8);
+    }
+
+    if (tipoDocumento === 'RUC') {
+      valor = valor.replace(/\D/g, '').slice(0, 11);
+    }
+
+    if (tipoDocumento === 'CE') {
+      valor = valor.replace(/[^a-zA-Z0-9]/g, '').slice(0, 12);
+    }
+
+    if (tipoDocumento === 'PASSPORT') {
+      valor = valor.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+    }
+    control?.setValue(valor, { emitEvent: false });
   }
 }

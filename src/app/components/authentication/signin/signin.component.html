@@ -1,76 +1,181 @@
 <div class="login-container">
-    <!-- PANEL IZQUIERDO -->
-    <div class="login-banner d-none d-lg-flex">
-        <div class="overlay"></div>
+    <section class="login-banner d-none d-lg-flex">
+        <div class="banner-decoration banner-decoration-one"></div>
+        <div class="banner-decoration banner-decoration-two"></div>
+
         <div class="banner-content">
-            <img src="../../../assets/img/logo-sf.jpeg" alt="Logo" class="banner-logo">
-            <h1 class="banner-title">
-                Bienvenido
-            </h1>
-            <p class="banner-description">
-                NexosPos una plataforma para controlar tu negocio de cualquier lugar, en cualquier momento y desde cualquier
-                dispositivo.
-                Controla tus ventas, productos y clientes de manera fácil y rápida.
-            </p>
-            <div class="banner-footer">
-                <mat-icon>verified_user</mat-icon>
-                <span>Acceso seguro y protegido</span>
-            </div>
-        </div>
-    </div>
-    <!-- PANEL DERECHO -->
-    <div class="login-form-section">
-        <div class="login-card">
-            <!-- MOBILE LOGO -->
-            <div class="mobile-logo d-lg-none">
-                <img src="../../../assets/img/logo.png" alt="Logo">
-            </div>
-            <div class="login-header">
-                <h2> Iniciar Sesión </h2>
-                <p> Ingresa tus credenciales para continuar </p>
-            </div>
-            <form [formGroup]="Form" (ngSubmit)="login()">
-                <!-- USUARIO -->
-                <div class="mb-3">
-                    <label class="form-label"> Usuario </label>
-                    <mat-form-field appearance="outline" class="w-100 custom-field">
-                        <mat-icon matPrefix>person_outline</mat-icon>
-                        <input matInput formControlName="username" placeholder="Ingrese su usuario">
-                    </mat-form-field>
+            <!-- <div class="brand-container">
+                <div class="brand-logo">
+                    <img src="../../../assets/img/logo-sf.jpeg" alt="C. Software Solutions">
                 </div>
-                <!-- PASSWORD -->
-                <div class="mb-2">
-                    <label class="form-label"> Contraseña</label>
-                    <mat-form-field appearance="outline" class="w-100 custom-field">
-                        <mat-icon matPrefix> lock_outline</mat-icon>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
-                            placeholder="Ingrese su contraseña">
-                        <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-                            <mat-icon> {{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                    </mat-form-field>
+
+                <div class="brand-text">
+                    <span>Sistema de gestión empresarial</span>
                 </div>
-                <!-- OPCIONES -->
-                <!-- <div class="login-options">
-                    <a role="button" class="forgot-password" (click)="irRecuperarPassword()">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                </div> -->
-                <!-- BUTTON -->
-                <button mat-raised-button color="primary" type="submit" class="login-button" [disabled]="Loading">
-                    <ng-container *ngIf="!Loading">
-                        <span> Ingresar al Sistema</span>
-                        <mat-icon class="ms-2"> login </mat-icon>
-                    </ng-container>
-                    <ng-container *ngIf="Loading">
-                        <div class="d-flex align-items-center justify-content-center gap-2">
-                            <mat-spinner diameter="20"></mat-spinner>
-                            <span> Ingresando... </span>
+            </div> -->
+
+            <div class="banner-main">
+                <span class="welcome-badge">
+                    <mat-icon>auto_awesome</mat-icon>
+                    Sistema de gestión empresarial
+                </span>
+
+                <h1 class="banner-title">
+                    Administra tu negocio de manera
+                    <span>eficiente.</span>
+                </h1>
+
+                <p class="banner-description">
+                    NexoPOS te permite controlar tus ventas, compras, productos, inventario y clientes desde cualquier
+                    lugar y dispositivo.
+                </p>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>point_of_sale</mat-icon>
                         </div>
-                    </ng-container>
-                </button>
-            </form>
+
+                        <div>
+                            <strong>Control de ventas</strong>
+                            <span>Registra y consulta tus operaciones fácilmente.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div>
+                            <strong>Inventario actualizado</strong>
+                            <span>Conoce el stock disponible en cada sucursal.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <mat-icon>insights</mat-icon>
+                        </div>
+
+                        <div>
+                            <strong>Información en tiempo real</strong>
+                            <span>Toma mejores decisiones con reportes claros.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="banner-footer">
+                <div class="security-message">
+                    <mat-icon>verified_user</mat-icon>
+
+                    <div>
+                        <strong>Acceso seguro</strong>
+                        <span>Tus datos se encuentran protegidos.</span>
+                    </div>
+                </div>
+
+                <span class="copyright">© 2026 NexoPOS</span>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section class="login-form-section">
+        <div class="login-form-wrapper">
+            <div class="mobile-brand d-lg-none">
+                <img src="../../../assets/img/logo.png" alt="NexoPOS">
+
+                <span>Sistema de gestión empresarial</span>
+            </div>
+
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon">
+                        <mat-icon>lock_open</mat-icon>
+                    </div>
+
+                    <h2>Bienvenido nuevamente</h2>
+
+                    <p>
+                        Ingresa tus credenciales para acceder a tu cuenta.
+                    </p>
+                </div>
+
+                <form [formGroup]="Form" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <label class="form-label" for="username">
+                            Usuario
+                        </label>
+
+                        <mat-form-field appearance="outline" class="w-100 custom-field">
+                            <mat-icon matPrefix>person_outline</mat-icon>
+
+                            <input id="username" matInput formControlName="username" autocomplete="username"
+                                placeholder="Ingresa tu usuario">
+
+                            <mat-error *ngIf="Form.get('username')?.hasError('required')">
+                                El usuario es obligatorio
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="password-label">
+                            <label class="form-label" for="password">
+                                Contraseña
+                            </label>
+
+                            <!--
+                            <button type="button" class="forgot-password" (click)="irRecuperarPassword()">
+                                ¿Olvidaste tu contraseña?
+                            </button>
+                            -->
+                        </div>
+
+                        <mat-form-field appearance="outline" class="w-100 custom-field">
+                            <mat-icon matPrefix>lock_outline</mat-icon>
+
+                            <input id="password" matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                autocomplete="current-password" placeholder="Ingresa tu contraseña">
+
+                            <button mat-icon-button matSuffix type="button" class="visibility-button"
+                                (click)="hide = !hide"
+                                [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+
+                            <mat-error *ngIf="Form.get('password')?.hasError('required')">
+                                La contraseña es obligatoria
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <button mat-raised-button color="primary" type="submit" class="login-button"
+                        [disabled]="Loading || Form.invalid">
+                        <ng-container *ngIf="!Loading">
+                            <span>Ingresar al sistema</span>
+                            <mat-icon>arrow_forward</mat-icon>
+                        </ng-container>
+
+                        <ng-container *ngIf="Loading">
+                            <mat-spinner diameter="21"></mat-spinner>
+                            <span>Validando acceso...</span>
+                        </ng-container>
+                    </button>
+                </form>
+
+                <div class="login-security">
+                    <mat-icon>shield</mat-icon>
+                    <span>Conexión segura y protegida</span>
+                </div>
+            </div>
+
+            <div class="support-text">
+                <span>¿Conoce mas sobre nosostros?</span>
+                <a target="_blank" href="https://coronadosoftwaresolutions.netlify.app">Contactanos</a>
+            </div>
+        </div>
+    </section>
 </div>
+
 <app-spinner *ngIf="Loading"></app-spinner>

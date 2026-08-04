@@ -1,126 +1,415 @@
 <app-adm-header
-    [descripcion]="'Consulta la información completa de la venta, incluyendo clientes, productos vendidos, cantidades, precios y estado del registro.'"
-    [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Bandeja de Ventas', ruta:'/bandeja-ventas'}, {nombre:'Detalle de Venta'}]"
-    [visible]="true" [textoBoton]="'Nueva Venta'" (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')"
+    [descripcion]="'Consulta la información completa de la venta, el cliente, productos, comprobante electrónico y estado SUNAT.'"
+    [breadcrumbs]="[
+        {nombre:'Ventas'},
+        {nombre:'Bandeja de Ventas', ruta:'/bandeja-ventas'},
+        {nombre:'Detalle de Venta'}
+    ]" [visible]="true" [textoBoton]="'Nueva Venta'" (accionNuevo)="Navegar('bandeja-ventas/nueva-venta')"
     [rutaRegreso]="'/bandeja-ventas'">
 </app-adm-header>
-<div class="container-fluid" *ngIf="!Loading && Venta">
-    <!-- HEADER -->
-    <div class="header-card">
-        <div class="left">
-            <div class="title">
-                <mat-icon>receipt_long</mat-icon>
-                Venta {{Venta.voucher_series}}-{{Venta.voucher_number}}
-            </div>
-            <div class="status" [ngClass]="Venta.status.toLowerCase()">
-                <mat-icon>{{Venta.status=='COMPLETED' ? 'check_circle' :Venta.status=='CANCELLED' ? 'cancel'
-                    :'schedule'}}</mat-icon>
-                {{Venta.status=='COMPLETED' ? 'Completada' :Venta.status=='CANCELLED' ? 'Anulada' :'Pendiente'}}
-            </div>
+
+<div class="sunat-loading-container" *ngIf="Loading && ConsultandoSunat">
+    <div class="sunat-loading-card">
+        <div class="sunat-loading-icon">
+            <mat-spinner diameter="38"></mat-spinner>
         </div>
-        <div class="right">
-            <div class="amount">{{CompaniaActual.SimboloMoneda}} {{Venta.total}}</div>
-            <small>Total Venta</small>
+
+        <div class="sunat-loading-content">
+            <span class="loading-label">CONSULTA EN PROCESO</span>
+
+            <h2>Consultando comprobante electrónico</h2>
+
+            <p>
+                Estamos verificando el estado actualizado del documento
+                en SUNAT. Este proceso puede tardar unos segundos.
+            </p>
+
+            <div class="loading-steps">
+                <span class="active">
+                    <mat-icon>check_circle</mat-icon>
+                    Venta encontrada
+                </span>
+
+                <span class="processing">
+                    <mat-icon>sync</mat-icon>
+                    Consultando SUNAT
+                </span>
+
+                <span>
+                    <mat-icon>receipt_long</mat-icon>
+                    Preparando detalle
+                </span>
+            </div>
         </div>
     </div>
-    <div class="info-grid">
-        <div class="info-card">
-            <div class="icon">
+</div>
+
+<div class="sale-detail-container" *ngIf="!Loading && Venta">
+
+    <section class="sale-header-card">
+        <div class="sale-header-main">
+            <div class="document-icon">
+                <mat-icon>receipt_long</mat-icon>
+            </div>
+
+            <div class="sale-header-content">
+                <span class="header-label">DETALLE DE VENTA</span>
+
+                <h1>
+                    {{Venta.voucher_series}}-{{Venta.voucher_number}}
+                </h1>
+
+                <div class="header-statuses">
+                    <span class="status-badge sale-status" [ngClass]="Venta.status?.toLowerCase()">
+
+                        <mat-icon>{{obtenerIconoVenta()}}</mat-icon>
+                        {{obtenerEstadoVenta()}}
+                    </span>
+
+                    <span class="status-badge sunat-status" [ngClass]="Venta.sunat_status?.toLowerCase()">
+
+                        <mat-icon *ngIf="Venta.sunat_status === 'ACEPTADO'">verified</mat-icon>
+                        <mat-icon *ngIf="Venta.sunat_status === 'PENDIENTE'">schedule</mat-icon>
+                        <mat-icon *ngIf="Venta.sunat_status === 'RECHAZADO'">error</mat-icon>
+                        <mat-icon *ngIf="Venta.sunat_status === 'ERROR'">warning</mat-icon>
+                        <mat-icon *ngIf="!Venta.sunat_status">remove_circle_outline</mat-icon>
+
+                        SUNAT: {{Venta.sunat_status || 'NO ENVIADO'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sale-total-header">
+            <span>Total de la venta</span>
+            <strong>
+                {{CompaniaActual?.SimboloMoneda}}
+                {{Venta.total | number:'1.2-2'}}
+            </strong>
+
+            <small>
+                {{Venta.sale_date | date:'dd/MM/yyyy'}}
+            </small>
+        </div>
+    </section>
+
+    <section class="sunat-result-card" [ngClass]="Venta.sunat_status?.toLowerCase()">
+
+        <div class="sunat-result-icon">
+            <mat-icon *ngIf="Venta.sunat_status === 'ACEPTADO'">verified</mat-icon>
+            <mat-icon *ngIf="Venta.sunat_status === 'PENDIENTE'">hourglass_top</mat-icon>
+            <mat-icon *ngIf="Venta.sunat_status === 'RECHAZADO'">report_problem</mat-icon>
+            <mat-icon *ngIf="Venta.sunat_status === 'ERROR'">error_outline</mat-icon>
+            <mat-icon *ngIf="!Venta.sunat_status">info_outline</mat-icon>
+        </div>
+
+        <div class="sunat-result-content">
+            <span>COMPROBANTE ELECTRÓNICO</span>
+
+            <strong *ngIf="Venta.sunat_status === 'ACEPTADO'">
+                Comprobante aceptado por SUNAT
+            </strong>
+
+            <strong *ngIf="Venta.sunat_status === 'PENDIENTE'">
+                Comprobante enviado a SUNAT
+            </strong>
+
+            <strong *ngIf="Venta.sunat_status === 'RECHAZADO'">
+                Comprobante rechazado por SUNAT
+            </strong>
+
+            <strong *ngIf="Venta.sunat_status === 'ERROR'">
+                Error durante la emisión
+            </strong>
+
+            <strong *ngIf="!Venta.sunat_status">
+                Comprobante no enviado
+            </strong>
+
+            <p>{{obtenerDescripcionSunat()}}</p>
+        </div>
+
+        <span class="sunat-result-badge">
+            {{Venta.sunat_status || 'NO ENVIADO'}}
+        </span>
+    </section>
+
+    <section class="information-grid">
+        <article class="information-card">
+            <div class="information-icon">
                 <mat-icon>person</mat-icon>
             </div>
+
             <div>
                 <span>Cliente</span>
-                <strong>{{Venta.customer}}</strong>
+                <strong>{{Venta.customer || 'Cliente no especificado'}}</strong>
             </div>
-        </div>
-        <div class="info-card">
-            <div class="icon">
+        </article>
+
+        <article class="information-card">
+            <div class="information-icon">
                 <mat-icon>event</mat-icon>
             </div>
+
             <div>
-                <span>Fecha</span>
+                <span>Fecha de venta</span>
                 <strong>{{Venta.sale_date}}</strong>
             </div>
-        </div>
-        <div class="info-card">
-            <div class="icon">
+        </article>
+
+        <article class="information-card">
+            <div class="information-icon">
                 <mat-icon>payments</mat-icon>
             </div>
+
             <div>
-                <span>Método Pago</span>
-                <strong>{{Venta.payment_method}}</strong>
+                <span>Método de pago</span>
+                <strong>{{Venta.payment_method || 'No especificado'}}</strong>
             </div>
-        </div>
-        <div class="info-card">
-            <div class="icon">
+        </article>
+
+        <article class="information-card">
+            <div class="information-icon">
                 <mat-icon>description</mat-icon>
             </div>
+
             <div>
-                <span>Documento</span>
-                <strong>
-                    {{Venta.voucher_type}}
-                    {{Venta.voucher_series}}-{{Venta.voucher_number}}
-                </strong>
+                <span>Tipo de comprobante</span>
+                <strong>{{Venta.voucher_type}}</strong>
+            </div>
+        </article>
+    </section>
+
+    <section class="pdf-card" *ngIf="tieneComprobantesPdf()">
+        <div class="section-header">
+            <div>
+                <div class="section-icon">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Comprobante electrónico</h2>
+                    <p>Visualice, imprima o comparta el comprobante con el cliente.</p>
+                </div>
+            </div>
+
+            <span class="available-badge">
+                <mat-icon>cloud_done</mat-icon>
+                PDF disponible
+            </span>
+        </div>
+        <div class="pdf-actions-grid">
+            <button mat-stroked-button class="pdf-action-button" [disabled]="!Venta.pdf_58mm"
+                (click)="abrirPdf(Venta.pdf_58mm)">
+
+                <div class="pdf-icon ticket">
+                    <mat-icon>receipt</mat-icon>
+                </div>
+
+                <div class="pdf-action-content">
+                    <strong>Ticket 58 mm</strong>
+                    <span>Ideal para impresoras compactas</span>
+                </div>
+
+                <mat-icon class="action-icon">open_in_new</mat-icon>
+            </button>
+
+            <button mat-stroked-button class="pdf-action-button recommended" [disabled]="!Venta.pdf_80mm"
+                (click)="abrirPdf(Venta.pdf_80mm)">
+
+                <div class="pdf-icon ticket">
+                    <mat-icon>receipt_long</mat-icon>
+                </div>
+
+                <div class="pdf-action-content">
+                    <strong>Ticket 80 mm</strong>
+                    <span>Formato recomendado para POS</span>
+                </div>
+
+                <span class="recommended-label">RECOMENDADO</span>
+            </button>
+
+            <button mat-stroked-button class="pdf-action-button" [disabled]="!Venta.pdf_a5"
+                (click)="abrirPdf(Venta.pdf_a5)">
+
+                <div class="pdf-icon document">
+                    <mat-icon>description</mat-icon>
+                </div>
+
+                <div class="pdf-action-content">
+                    <strong>Formato A5</strong>
+                    <span>Documento en tamaño mediano</span>
+                </div>
+
+                <mat-icon class="action-icon">open_in_new</mat-icon>
+            </button>
+
+            <button mat-stroked-button class="pdf-action-button" [disabled]="!Venta.pdf_a4"
+                (click)="abrirPdf(Venta.pdf_a4)">
+
+                <div class="pdf-icon document">
+                    <mat-icon>article</mat-icon>
+                </div>
+
+                <div class="pdf-action-content">
+                    <strong>Formato A4</strong>
+                    <span>Documento completo para archivo</span>
+                </div>
+
+                <mat-icon class="action-icon">open_in_new</mat-icon>
+            </button>
+        </div>
+
+        <div class="main-pdf-actions">
+            <button mat-raised-button color="primary" [disabled]="!Venta.pdf_80mm"
+                (click)="imprimirPdf(Venta.pdf_80mm)">
+
+                <mat-icon>print</mat-icon>
+
+                <div>
+                    <strong>Imprimir ticket</strong>
+                    <span>Formato 80 mm</span>
+                </div>
+            </button>
+
+            <button mat-raised-button class="whatsapp-button" [disabled]="!Venta.pdf_a4"
+                (click)="compartirWhatsApp(Venta.pdf_a4)">
+
+                <mat-icon>send</mat-icon>
+
+                <div>
+                    <strong>Enviar por WhatsApp</strong>
+                    <span>Compartir enlace del PDF</span>
+                </div>
+            </button>
+        </div>
+    </section>
+
+    <section class="no-pdf-card" *ngIf="!tieneComprobantesPdf()">
+        <mat-icon>info_outline</mat-icon>
+
+        <div>
+            <strong>No hay documentos PDF disponibles</strong>
+            <p>Esta venta no posee formatos electrónicos para visualizar o imprimir.</p>
+        </div>
+    </section>
+
+    <section class="products-card">
+        <div class="section-header">
+            <div>
+                <div class="section-icon products">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <div>
+                    <h2>Productos vendidos</h2>
+                    <p>{{DetalleVenta.length}} producto(s) registrado(s) en esta venta.</p>
+                </div>
+            </div>
+
+            <span class="products-count">{{DetalleVenta.length}}</span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table sale-products-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-end">Precio</th>
+                        <th class="text-end">Descuento</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of DetalleVenta; let i=index">
+                        <td>
+                            <span class="row-number">{{i + 1}}</span>
+                        </td>
+
+                        <td>
+                            <span class="product-code">{{item.code}}</span>
+                        </td>
+
+                        <td>
+                            <div class="product-name">
+                                <div class="product-avatar">
+                                    <mat-icon>inventory_2</mat-icon>
+                                </div>
+
+                                <strong>{{item.product}}</strong>
+                            </div>
+                        </td>
+
+                        <td class="text-center">
+                            <span class="quantity-badge">{{item.quantity}}</span>
+                        </td>
+
+                        <td class="text-end">
+                            {{CompaniaActual?.SimboloMoneda}}
+                            {{item.sale_price | number:'1.2-2'}}
+                        </td>
+
+                        <td class="text-end">
+                            {{CompaniaActual?.SimboloMoneda}}
+                            {{item.discount | number:'1.2-2'}}
+                        </td>
+
+                        <td class="text-end subtotal-cell">
+                            {{CompaniaActual?.SimboloMoneda}}
+                            {{item.subtotal | number:'1.2-2'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="summary-layout">
+        <div class="summary-message">
+            <mat-icon>verified_user</mat-icon>
+
+            <div>
+                <strong>Información de la venta</strong>
+                <p>Todos los importes mostrados corresponden al registro original de la operación.</p>
             </div>
         </div>
-    </div>
-    <div class="products-card">
-        <div class="section-title">
-            <mat-icon>inventory_2</mat-icon>
-            Productos vendidos
-        </div>
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Código</th>
-                    <th>Producto</th>
-                    <th class="text-center">Cant.</th>
-                    <th class="text-end">Precio</th>
-                    <th class="text-end">Desc.</th>
-                    <th class="text-end">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of DetalleVenta; let i=index">
-                    <td>{{i+1}}</td>
-                    <td>{{item.code}}</td>
-                    <td>
-                        <strong>{{item.product}}</strong>
-                    </td>
-                    <td class="text-center">
-                        {{item.quantity}}
-                    </td>
-                    <td class="text-end">
-                        {{CompaniaActual.SimboloMoneda}} {{item.sale_price}}
-                    </td>
-                    <td class="text-end">
-                        {{CompaniaActual.SimboloMoneda}} {{item.discount}}
-                    </td>
-                    <td class="text-end fw-bold">
-                        {{CompaniaActual.SimboloMoneda}} {{item.subtotal}}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="totals">
-        <div>
 
-            <span>Subtotal</span>
-            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.subtotal}}</strong>
-        </div>
-        <div>
-            <span>Impuesto</span>
-            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.tax}}</strong>
-        </div>
-        <div>
-            <span>Descuento</span>
-            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.discount}}</strong>
-        </div>
-        <div class="grand">
-            <span>Total</span>
-            <strong>{{CompaniaActual.SimboloMoneda}} {{Venta.total}}</strong>
-        </div>
+        <section class="totals-card">
+            <div>
+                <span>Subtotal</span>
+                <strong>
+                    {{CompaniaActual?.SimboloMoneda}}
+                    {{Venta.subtotal | number:'1.2-2'}}
+                </strong>
+            </div>
+
+            <div>
+                <span>Impuesto</span>
+                <strong>
+                    {{CompaniaActual?.SimboloMoneda}}
+                    {{Venta.tax | number:'1.2-2'}}
+                </strong>
+            </div>
+
+            <div>
+                <span>Descuento</span>
+                <strong>
+                    - {{CompaniaActual?.SimboloMoneda}}
+                    {{Venta.discount | number:'1.2-2'}}
+                </strong>
+            </div>
+
+            <div class="grand-total">
+                <span>Total pagado</span>
+                <strong>
+                    {{CompaniaActual?.SimboloMoneda}}
+                    {{Venta.total | number:'1.2-2'}}
+                </strong>
+            </div>
+        </section>
     </div>
 </div>

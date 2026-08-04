@@ -16,8 +16,8 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { SaleService } from 'src/app/shared/services/sale.service';
 import { AuthStoreService } from 'src/app/shared/stores/auth-store.service';
 import { ModalClienteComponent } from '../modals/modal-cliente/modal-cliente.component';
-import { ModalProductoComponent } from '../../almacen/modals/modal-producto/modal-producto.component';
 import { ECompany } from 'src/app/shared/models/entidades/ECompany';
+import { ModalComprobanteVentaComponent } from '../modals/modal-comprobante-venta/modal-comprobante-venta.component';
 
 @Component({
   selector: 'app-formulario-nueva-venta',
@@ -111,13 +111,13 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
 
   cambiarSerie() {
     switch (this.venta.voucher_type) {
-      case 'FACTURA': this.venta.voucher_series = 'FA';
+      case 'FACTURA': this.venta.voucher_series = 'F001';
         break;
-      case 'BOLETA': this.venta.voucher_series = 'BO';
+      case 'BOLETA': this.venta.voucher_series = 'B001';
         break;
       case 'NOTA': this.venta.voucher_series = 'NT';
         break;
-      case 'TICKET': this.venta.voucher_series = 'TK';
+      case 'TICKET': this.venta.voucher_series = 'TK01';
         break;
       default: this.venta.voucher_series = '';
         break;
@@ -233,11 +233,8 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
       this.toastService.clear();
       this.Loading = true;
       this.LoadingToast = this.toastService.show(
-        `<div>
-              <strong>Registrando venta...</strong><br>
-              Actualizando inventario...
-           </div>`,
-        '',
+        `Registrando venta...`,
+        'Actualizando inventario...',
         { toastComponent: ToastLoadingComponent, positionClass: 'toast-center-center', disableTimeOut: true, tapToDismiss: false, closeButton: false, enableHtml: true }
       );
 
@@ -246,7 +243,23 @@ export class FormularioNuevaVentaComponent extends FormularioBase implements OnI
         this.Loading = false;
         this.toastService.clear();
         if (response.success) {
+          // this.toastService.success(response.message);
+          // this.router.navigate(['/bandeja-ventas']);
+
           this.toastService.success(response.message);
+          const ventaRegistrada = response.data;
+          const tieneComprobanteSunat = ventaRegistrada?.pdf_58mm || ventaRegistrada?.pdf_80mm || ventaRegistrada?.pdf_a5 || ventaRegistrada?.pdf_a4;
+          if (tieneComprobanteSunat) {
+            const dialogRef = this.dialog.open(ModalComprobanteVentaComponent, {
+              width: '620px',
+              maxWidth: '95vw',
+              disableClose: true,
+              data: {
+                venta: ventaRegistrada
+              }
+            });
+            await dialogRef.afterClosed().toPromise();
+          }
           this.router.navigate(['/bandeja-ventas']);
         } else {
           this.toastService.error(response.message);

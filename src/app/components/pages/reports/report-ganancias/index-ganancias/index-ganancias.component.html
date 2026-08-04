@@ -1,0 +1,44 @@
+<app-adm-header
+    [descripcion]="'Analiza las ganancias de tu negocio mediante diferentes periodos y filtros personalizados.'"
+    [breadcrumbs]="[{ nombre: 'Reportes' }, { nombre: 'Reporte de Ganancias' }]" [visible]="false"
+    [rutaRegreso]="'/inicio'">
+</app-adm-header>
+
+<div class="container-fluid py-2">
+
+    <div class="alert alert-primary d-flex align-items-start mb-3 shadow-sm report-info">
+
+        <mat-icon class="me-2 mt-1">info</mat-icon>
+
+        <div>
+            <strong>Información del reporte</strong>
+
+            <div class="small mt-1">
+                Este reporte muestra las ganancias consolidadas de todas las sucursales.
+                Utiliza los filtros para consultar las ganancias de una sucursal específica
+                o analizar un periodo de tiempo determinado.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        <app-profit-filters [filtro]="Filtro" [sucursales]="ListaSucursales" [loading]="Loading"
+            (buscar)="aplicarFiltros($event)" (limpiar)="clearFilters()">
+        </app-profit-filters>
+    </div>
+
+    <div class="mb-3">
+        <app-profit-period-summary [summary]="Data?.summary || null" [periods]="Data?.periods || null"
+            [loading]="Loading">
+        </app-profit-period-summary>
+    </div>
+
+    <div>
+        <app-profit-custom-range [summary]="Data?.summary?.custom_range || null"
+            [period]="Data?.periods?.custom_range || null" [customRangeApplied]="RangoPersonalizadoAplicado"
+            [dateStart]="Filtro.date_start" [dateEnd]="Filtro.date_end" [loading]="Loading">
+        </app-profit-custom-range>
+    </div>
+
+</div>

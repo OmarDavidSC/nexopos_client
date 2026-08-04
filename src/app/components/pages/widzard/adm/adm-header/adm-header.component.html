@@ -1,28 +1,32 @@
 <div class="header-admin">
     <div class="header-top">
-        <div class="breadcrumb">
+        <div class="breadcrumb-admin">
             <button mat-icon-button class="btn-back" (click)="regresar()" matTooltip="Regresar">
                 <mat-icon>arrow_back</mat-icon>
             </button>
+
             <ng-container *ngFor="let item of breadcrumbs; let last = last">
-                <span class="breadcrumb-item" [class.active]="last"
+                <span class="breadcrumb-item-admin" [class.active]="last"
                     [matTooltip]="!last ? 'Ir a ' + item.nombre : 'Página actual'" matTooltipPosition="below"
                     (click)="!last && navegar(item.ruta)">
-                    {{item.nombre}}
+                    {{ item.nombre }}
                 </span>
+
                 <mat-icon class="separator" *ngIf="!last">
                     chevron_right
                 </mat-icon>
             </ng-container>
         </div>
+
         <div class="header-actions" *ngIf="visible">
-            <button mat-raised-button class="btn-nuevo" (click)="accionNuevo.emit()">
+            <button mat-flat-button class="btn-nuevo" (click)="accionNuevo.emit()">
                 <mat-icon>add</mat-icon>
-                {{textoBoton}}
+                {{ textoBoton }}
             </button>
         </div>
     </div>
-    <p class="subtitulo-admin">
-        {{descripcion}}
+
+    <p class="subtitulo-admin" *ngIf="descripcion">
+        {{ descripcion }}
     </p>
 </div>

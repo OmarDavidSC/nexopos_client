@@ -1,21 +1,45 @@
-<div class="paginador-container">
-    <!-- ANTERIOR -->
-    <button mat-stroked-button class="btn-page" (click)="cambiarPagina(PaginaActual - 1)"
-        [disabled]="PaginaActual === 1">
-        <mat-icon>chevron_left</mat-icon>
-        Anterior
-    </button>
-    <!-- INFO -->
-    <div class="page-info">
-        <span>Página</span>
-        <strong>{{PaginaActual}}</strong>
-        <span> de</span>
-        <strong>{{TotalPaginas}}</strong>
+<div class="pagination-bar">
+    <div class="pagination-info d-none d-md-flex">
+        <mat-icon>description</mat-icon>
+
+        <span>
+            Página
+            <strong>{{ PaginaActual }}</strong>
+            de
+            <strong>{{ TotalPaginas }}</strong>
+        </span>
     </div>
-    <!-- SIGUIENTE -->
-    <button mat-stroked-button class="btn-page" (click)="cambiarPagina(PaginaActual + 1)"
-        [disabled]="PaginaActual === TotalPaginas">
-        Siguiente
-        <mat-icon>chevron_right</mat-icon>
-    </button>
+
+    <div class="pagination-controls">
+
+        <button mat-icon-button class="pagination-arrow" matTooltip="Ir a la página anterior" matTooltipPosition="above"
+            (click)="cambiarPagina(PaginaActual - 1)" [disabled]="PaginaActual === 1">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="pagination-current">
+            <small>Página</small>
+            <strong>{{ PaginaActual }}</strong>
+            <span>/ {{ TotalPaginas }}</span>
+        </div>
+
+        <button mat-icon-button class="pagination-arrow" matTooltip="Ir a la página siguiente"
+            matTooltipPosition="above" (click)="cambiarPagina(PaginaActual + 1)"
+            [disabled]="PaginaActual === TotalPaginas || TotalPaginas === 0">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+
+    </div>
+
+    <div class="pagination-actions d-none d-md-flex">
+        <button mat-button class="pagination-text-button" matTooltip="Volver a la primera página"
+            (click)="cambiarPagina(1)" [disabled]="PaginaActual === 1">
+            Primera
+        </button>
+
+        <button mat-button class="pagination-text-button" matTooltip="Ir a la última página"
+            (click)="cambiarPagina(TotalPaginas)" [disabled]="PaginaActual === TotalPaginas || TotalPaginas === 0">
+            Última
+        </button>
+    </div>
 </div>
