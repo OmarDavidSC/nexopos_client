@@ -1,73 +1,87 @@
-<div class="summary-grid">
-  <!-- Total Ventas -->
-  <mat-card class="summary-card">
-    <div class="icon blue">
-      <mat-icon>receipt_long</mat-icon>
+<section class="report-summary">
+  <!-- TOTAL DE VENTAS -->
+  <article class="summary-card summary-sales">
+    <div class="summary-card__header">
+      <div class="summary-icon">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+
+      <span class="summary-badge"> Ventas </span>
     </div>
 
-    <div class="content">
-      <span class="title">Total Ventas</span>
-      <h2>{{ Resumen?.sales_count || 0 }}</h2>
-    </div>
-  </mat-card>
+    <div class="summary-card__content">
+      <span class="summary-label"> Total de ventas </span>
 
-  <!-- Total Vendido -->
-  <mat-card class="summary-card">
-    <div class="icon green">
-      <mat-icon>payments</mat-icon>
-    </div>
+      <strong class="summary-value">
+        {{ Resumen?.sales_count || 0 }}
+      </strong>
 
-    <div class="content">
-      <span class="title">Total Vendido</span>
-      <h2>S/. {{ Resumen?.total_amount || 0 | number: "1.2-2" }}</h2>
+      <small> Operaciones registradas </small>
     </div>
-  </mat-card>
+  </article>
 
-  <!-- Productos -->
-  <mat-card class="summary-card">
-    <div class="icon orange">
-      <mat-icon>shopping_bag</mat-icon>
+  <!-- TOTAL VENDIDO -->
+  <article class="summary-card summary-amount">
+    <div class="summary-card__header">
+      <div class="summary-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <span class="summary-badge"> Ingresos </span>
     </div>
 
-    <div class="content">
-      <span class="title">Productos</span>
-      <h2>{{ Resumen?.total_products || 0 }}</h2>
-    </div>
-  </mat-card>
+    <div class="summary-card__content">
+      <span class="summary-label"> Total vendido </span>
 
-  <!-- Ticket -->
-  <!-- <mat-card class="summary-card">
-    <div class="icon purple">
-      <mat-icon>trending_up</mat-icon>
-    </div>
+      <strong class="summary-value monetary-value">
+        S/
+        {{ Resumen?.total_amount || 0 | number: "1.2-2" }}
+      </strong>
 
-    <div class="content">
-      <span class="title">Ticket Promedio</span>
-      <h2>S/. {{ Resumen?.average_ticket || 0 | number: "1.2-2" }}</h2>
+      <small> Importe acumulado </small>
     </div>
-  </mat-card> -->
+  </article>
 
-  <!-- Subtotal -->
-  <mat-card class="summary-card">
-    <div class="icon cyan">
-      <mat-icon>account_balance_wallet</mat-icon>
+  <!-- PRODUCTOS -->
+  <article class="summary-card summary-products">
+    <div class="summary-card__header">
+      <div class="summary-icon">
+        <mat-icon>shopping_bag</mat-icon>
+      </div>
+
+      <span class="summary-badge"> Productos </span>
     </div>
 
-    <div class="content">
-      <span class="title">Subtotal</span>
-      <h2>S/. {{ Resumen?.subtotal_amount || 0 | number: "1.2-2" }}</h2>
-    </div>
-  </mat-card>
+    <div class="summary-card__content">
+      <span class="summary-label"> Productos vendidos </span>
 
-  <!-- Descuento -->
-  <!-- <mat-card class="summary-card">
-    <div class="icon red">
-      <mat-icon>local_offer</mat-icon>
+      <strong class="summary-value">
+        {{ Resumen?.total_products || 0 }}
+      </strong>
+
+      <small> Unidades comercializadas </small>
+    </div>
+  </article>
+
+  <!-- SUBTOTAL -->
+  <article class="summary-card summary-subtotal">
+    <div class="summary-card__header">
+      <div class="summary-icon">
+        <mat-icon>account_balance_wallet</mat-icon>
+      </div>
+
+      <span class="summary-badge"> Subtotal </span>
     </div>
 
-    <div class="content">
-      <span class="title">Descuentos</span>
-      <h2>S/. {{ Resumen?.discount_amount || 0 | number: "1.2-2" }}</h2>
+    <div class="summary-card__content">
+      <span class="summary-label"> Subtotal acumulado </span>
+
+      <strong class="summary-value monetary-value">
+        S/
+        {{ Resumen?.subtotal_amount || 0 | number: "1.2-2" }}
+      </strong>
+
+      <small> Importe antes de impuestos </small>
     </div>
-  </mat-card> -->
-</div>
+  </article>
+</section>

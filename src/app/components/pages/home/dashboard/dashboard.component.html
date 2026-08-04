@@ -1,48 +1,91 @@
 <div class="container-fluid">
-    <!-- Loading -->
+    <!-- LOADING -->
     <div class="dashboard-loading" *ngIf="Loading">
-        <mat-spinner diameter="45"></mat-spinner>
+        <div class="loading-content">
+            <mat-spinner diameter="42"></mat-spinner>
+
+            <span> Cargando información del negocio... </span>
+        </div>
     </div>
+
     <ng-container *ngIf="!Loading">
-        <!-- Bienvenida -->
-        <app-welcome-card [moneda]="CompaniaActual.SimboloMoneda" [usuario]="UsuarioActual" [resumen]="Resumen">
-        </app-welcome-card>
+        <!-- BIENVENIDA -->
+        <section class="welcome-section">
+            <app-welcome-card [moneda]="CompaniaActual?.SimboloMoneda" [usuario]="UsuarioActual" [resumen]="Resumen">
+            </app-welcome-card>
+        </section>
 
-        <div *ngIf="tienePermiso(Role, ['administrator'])" class="row mt-1">
-            <div class="col-lg-12">
-                <mat-card class="quick-access-card">
-                    <mat-card-header>
-                        <mat-card-title>
-                            <mat-icon color="primary" class="me-2">bolt</mat-icon>
-                            Accesos rápidos
-                        </mat-card-title>
-                        <mat-card-subtitle>
-                            Funciones más utilizadas
-                        </mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <div class="row g-2">
-                            <div class="col-3" *ngFor="let item of AccesosRapidos">
-                                <button mat-stroked-button class="quick-btn w-100" [routerLink]="item.ruta">
-                                    <mat-icon color="primary">{{item.icono}}</mat-icon>
-                                    <small>{{item.nombre}}</small>
-                                </button>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
+        <!-- ACCESOS RÁPIDOS -->
+        <section class="dashboard-section quick-access-section" *ngIf="tienePermiso(Role, ['administrator'])">
+            <div class="section-header">
+                <div class="section-header__left">
+                    <div class="section-icon quick-icon">
+                        <mat-icon>bolt</mat-icon>
+                    </div>
 
-        <div *ngIf="tienePermiso(Role, ['administrator'])" class="row mt-1">
-            <div class="col-lg-6">
-                <app-top-products [moneda]="CompaniaActual.SimboloMoneda" [data]="ProductosDestacados">
-                </app-top-products>
+                    <div>
+                        <h2>Accesos rápidos</h2>
+
+                        <p>Ingresa directamente a las funciones más utilizadas.</p>
+                    </div>
+                </div>
+
+                <span class="section-badge">
+                    {{ AccesosRapidos.length }} opciones
+                </span>
             </div>
-            <div class="col-lg-6">
-                <app-top-categories [moneda]="CompaniaActual.SimboloMoneda" [data]="CategoriasDestacadas">
-                </app-top-categories>
+
+            <div class="quick-access-grid">
+                <button mat-button type="button" class="quick-access-item" *ngFor="let item of AccesosRapidos"
+                    [routerLink]="item.ruta">
+                    <div class="quick-access-icon">
+                        <mat-icon>
+                            {{ item.icono }}
+                        </mat-icon>
+                    </div>
+
+                    <div class="quick-access-info">
+                        <strong>
+                            {{ item.nombre }}
+                        </strong>
+
+                        <span> Abrir módulo </span>
+                    </div>
+
+                    <mat-icon class="quick-access-arrow"> arrow_forward </mat-icon>
+                </button>
             </div>
-        </div>
+        </section>
+
+        <!-- INFORMACIÓN DESTACADA -->
+        <section class="dashboard-section analytics-section" *ngIf="tienePermiso(Role, ['administrator'])">
+            <div class="section-header">
+                <div class="section-header__left">
+                    <div class="section-icon analytics-icon">
+                        <mat-icon>monitoring</mat-icon>
+                    </div>
+
+                    <div>
+                        <h2>Actividad destacada</h2>
+
+                        <p>Resumen de productos y categorías con mayor movimiento.</p>
+                    </div>
+                </div>
+
+                <span class="section-badge"> Rendimiento </span>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <app-top-products [moneda]="CompaniaActual?.SimboloMoneda" [data]="ProductosDestacados">
+                    </app-top-products>
+                </div>
+
+                <div class="analytics-card">
+                    <app-top-categories [moneda]="CompaniaActual?.SimboloMoneda" [data]="CategoriasDestacadas">
+                    </app-top-categories>
+                </div>
+            </div>
+        </section>
     </ng-container>
 </div>

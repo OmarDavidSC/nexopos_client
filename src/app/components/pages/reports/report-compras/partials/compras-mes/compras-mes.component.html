@@ -1,19 +1,86 @@
-<div class="card reporte-card">
-    <div class="card-header">
-        <div class="titulo">
-            <mat-icon> date_range </mat-icon>
+<section class="monthly-purchases-panel">
+    <header class="panel-header">
+        <div class="panel-title">
+            <div class="panel-icon">
+                <mat-icon>date_range</mat-icon>
+            </div>
 
-            Compras por mes
+            <div>
+                <span class="panel-label"> Comparativo mensual </span>
+
+                <h3>Compras por mes</h3>
+
+                <p>Compara la inversión realizada en compras durante cada mes.</p>
+            </div>
         </div>
+
+        <span class="months-badge">
+            <mat-icon>calendar_month</mat-icon>
+
+            {{ totalMeses }}
+            {{ totalMeses === 1 ? "mes" : "meses" }}
+        </span>
+    </header>
+
+    <div class="purchase-summary" *ngIf="Datos.length > 0">
+        <article class="summary-item">
+            <div class="summary-icon total-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Total comprado</span>
+
+                <strong> S/ {{ totalComprado | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <article class="summary-item">
+            <div class="summary-icon average-icon">
+                <mat-icon>calculate</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Promedio mensual</span>
+
+                <strong> S/ {{ promedioMensual | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <article class="summary-item best-month-item">
+            <div class="summary-icon best-icon">
+                <mat-icon>emoji_events</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Mes con mayor compra</span>
+
+                <strong>
+                    {{ mejorMesNombre }}
+                </strong>
+
+                <small> S/ {{ mejorMesMonto | number: "1.2-2" }} </small>
+            </div>
+        </article>
     </div>
 
-    <div class="card-body">
-        <apx-chart *ngIf="chartOptions.series" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
-            [xaxis]="chartOptions.xaxis!" [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!">
+    <div class="chart-container" *ngIf="Datos.length > 0 && chartOptions">
+        <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+            [plotOptions]="chartOptions.plotOptions!" [dataLabels]="chartOptions.dataLabels!"
+            [xaxis]="chartOptions.xaxis!" [yaxis]="chartOptions.yaxis!" [tooltip]="chartOptions.tooltip!"
+            [grid]="chartOptions.grid!" [fill]="chartOptions.fill!" [colors]="chartOptions.colors!">
         </apx-chart>
-
-        <div class="empty" *ngIf="!Datos || Datos.length === 0">
-            No hay información disponible
-        </div>
     </div>
-</div>
+
+    <div class="empty-state" *ngIf="Datos.length === 0">
+        <div class="empty-icon">
+            <mat-icon>calendar_month</mat-icon>
+        </div>
+
+        <h4>No hay compras mensuales</h4>
+
+        <p>
+            Modifica los filtros o el periodo para visualizar el comparativo mensual.
+        </p>
+    </div>
+</section>

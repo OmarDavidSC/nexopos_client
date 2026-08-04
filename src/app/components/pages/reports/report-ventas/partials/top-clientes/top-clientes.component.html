@@ -1,80 +1,276 @@
-<mat-card class="top-card">
-    <div class="card-header">
-        <div>
-            <h3>Top Clientes</h3>
+<section class="top-customers">
+    <header class="top-customers__header">
+        <div class="header-title">
+            <div class="header-icon">
+                <mat-icon>groups</mat-icon>
+            </div>
 
-            <span>Clientes con mayor facturación</span>
+            <div>
+                <span class="header-label"> Rendimiento comercial </span>
+
+                <h3>Clientes destacados</h3>
+
+                <p>Clientes con mayor facturación durante el periodo seleccionado.</p>
+            </div>
         </div>
 
-        <div class="icon">
+        <span class="customers-count">
+            {{ Datos.length }}
+            {{ Datos.length === 1 ? "cliente" : "clientes" }}
+        </span>
+    </header>
+
+    <ng-container *ngIf="Datos.length > 0">
+        <!-- PODIO -->
+        <div class="customers-podium">
+            <!-- SEGUNDO LUGAR -->
+            <article class="podium-item podium-second" *ngIf="Datos.length > 1">
+                <div class="podium-position">
+                    <mat-icon>workspace_premium</mat-icon>
+                    <span>2</span>
+                </div>
+
+                <div class="customer-avatar">
+                    {{ obtenerIniciales(Datos[1]?.name) }}
+                </div>
+
+                <div class="customer-information">
+                    <strong [matTooltip]="Datos[1]?.name">
+                        {{ Datos[1]?.name || "Cliente sin nombre" }}
+                    </strong>
+
+                    <span> Cliente destacado </span>
+                </div>
+
+                <div class="customer-total">
+                    <span>Total facturado</span>
+
+                    <strong>
+                        S/
+                        {{ Datos[1]?.total_amount || 0 | number: "1.2-2" }}
+                    </strong>
+                </div>
+
+                <div class="customer-metrics">
+                    <div>
+                        <span>Compras</span>
+                        <strong>{{ Datos[1]?.total_sales || 0 }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Ticket prom.</span>
+
+                        <strong>
+                            S/
+                            {{ Datos[1]?.average_ticket || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="last-purchase">
+                    <mat-icon>event</mat-icon>
+
+                    <span>
+                        Última compra:
+                        <strong>
+                            {{ Datos[1]?.last_purchase | date: "dd/MM/yyyy" }}
+                        </strong>
+                    </span>
+                </div>
+            </article>
+
+            <!-- PRIMER LUGAR -->
+            <article class="podium-item podium-first">
+                <div class="winner-crown">
+                    <mat-icon>emoji_events</mat-icon>
+                </div>
+
+                <div class="podium-position">
+                    <mat-icon>workspace_premium</mat-icon>
+                    <span>1</span>
+                </div>
+
+                <div class="customer-avatar">
+                    {{ obtenerIniciales(Datos[0]?.name) }}
+                </div>
+
+                <div class="customer-information">
+                    <strong [matTooltip]="Datos[0]?.name">
+                        {{ Datos[0]?.name || "Cliente sin nombre" }}
+                    </strong>
+
+                    <span> Mejor cliente del periodo </span>
+                </div>
+
+                <div class="customer-total">
+                    <span>Total facturado</span>
+
+                    <strong>
+                        S/
+                        {{ Datos[0]?.total_amount || 0 | number: "1.2-2" }}
+                    </strong>
+                </div>
+
+                <div class="customer-metrics">
+                    <div>
+                        <span>Compras</span>
+                        <strong>{{ Datos[0]?.total_sales || 0 }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Ticket prom.</span>
+
+                        <strong>
+                            S/
+                            {{ Datos[0]?.average_ticket || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="last-purchase">
+                    <mat-icon>event</mat-icon>
+
+                    <span>
+                        Última compra:
+                        <strong>
+                            {{ Datos[0]?.last_purchase | date: "dd/MM/yyyy" }}
+                        </strong>
+                    </span>
+                </div>
+            </article>
+
+            <!-- TERCER LUGAR -->
+            <article class="podium-item podium-third" *ngIf="Datos.length > 2">
+                <div class="podium-position">
+                    <mat-icon>workspace_premium</mat-icon>
+                    <span>3</span>
+                </div>
+
+                <div class="customer-avatar">
+                    {{ obtenerIniciales(Datos[2]?.name) }}
+                </div>
+
+                <div class="customer-information">
+                    <strong [matTooltip]="Datos[2]?.name">
+                        {{ Datos[2]?.name || "Cliente sin nombre" }}
+                    </strong>
+
+                    <span> Cliente destacado </span>
+                </div>
+
+                <div class="customer-total">
+                    <span>Total facturado</span>
+
+                    <strong>
+                        S/
+                        {{ Datos[2]?.total_amount || 0 | number: "1.2-2" }}
+                    </strong>
+                </div>
+
+                <div class="customer-metrics">
+                    <div>
+                        <span>Compras</span>
+                        <strong>{{ Datos[2]?.total_sales || 0 }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Ticket prom.</span>
+
+                        <strong>
+                            S/
+                            {{ Datos[2]?.average_ticket || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="last-purchase">
+                    <mat-icon>event</mat-icon>
+
+                    <span>
+                        Última compra:
+                        <strong>
+                            {{ Datos[2]?.last_purchase | date: "dd/MM/yyyy" }}
+                        </strong>
+                    </span>
+                </div>
+            </article>
+        </div>
+
+        <!-- RESTO DEL RANKING -->
+        <div class="customers-ranking" *ngIf="Datos.length > 3">
+            <div class="ranking-header">
+                <div>
+                    <mat-icon>leaderboard</mat-icon>
+
+                    <span>Otros clientes destacados</span>
+                </div>
+
+                <small> Desde la posición 4 </small>
+            </div>
+
+            <article class="ranking-item" *ngFor="let cliente of Datos.slice(3); let i = index">
+                <div class="ranking-position">
+                    {{ i + 4 }}
+                </div>
+
+                <div class="ranking-customer">
+                    <div class="ranking-avatar">
+                        {{ obtenerIniciales(cliente.name) }}
+                    </div>
+
+                    <div class="ranking-customer__info">
+                        <strong [matTooltip]="cliente.name">
+                            {{ cliente.name || "Cliente sin nombre" }}
+                        </strong>
+
+                        <span>
+                            Última compra:
+                            {{ cliente.last_purchase | date: "dd/MM/yyyy" }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="ranking-metric">
+                    <span>Compras</span>
+
+                    <strong>
+                        {{ cliente.total_sales || 0 }}
+                    </strong>
+
+                    <small>registradas</small>
+                </div>
+
+                <div class="ranking-metric">
+                    <span>Ticket promedio</span>
+
+                    <strong>
+                        S/
+                        {{ cliente.average_ticket || 0 | number: "1.2-2" }}
+                    </strong>
+
+                    <small>por compra</small>
+                </div>
+
+                <div class="ranking-total">
+                    <span>Total facturado</span>
+
+                    <strong>
+                        S/
+                        {{ cliente.total_amount || 0 | number: "1.2-2" }}
+                    </strong>
+                </div>
+            </article>
+        </div>
+    </ng-container>
+
+    <!-- ESTADO VACÍO -->
+    <div class="empty-state" *ngIf="Datos.length === 0">
+        <div class="empty-icon">
             <mat-icon>groups</mat-icon>
         </div>
+
+        <h4>No hay clientes destacados</h4>
+
+        <p>No existen ventas suficientes para generar el ranking de clientes.</p>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Cliente</th>
-                    <th class="text-center">Compras</th>
-                    <th class="text-end">Total</th>
-                    <th class="text-end">Ticket Prom.</th>
-                    <th>Última Compra</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let cliente of Datos; let i = index">
-                    <td>
-
-                        <div class="ranking" [ngClass]="{
-            'gold': i === 0,
-            'silver': i === 1,
-            'bronze': i === 2
-        }">
-
-                            <mat-icon *ngIf="i === 0">workspace_premium</mat-icon>
-
-                            <mat-icon *ngIf="i === 1">workspace_premium</mat-icon>
-
-                            <mat-icon *ngIf="i === 2">workspace_premium</mat-icon>
-
-                            <span *ngIf="i > 2">
-                                {{ i + 1 }}
-                            </span>
-
-                        </div>
-
-                    </td>
-
-                    <td>
-                        <strong>
-                            {{ cliente.name }}
-                        </strong>
-                    </td>
-
-                    <td class="text-center">
-                        {{ cliente.total_sales }}
-                    </td>
-
-                    <td class="text-end">
-                        S/. {{ cliente.total_amount | number: "1.2-2" }}
-                    </td>
-
-                    <td class="text-end">
-                        S/. {{ cliente.average_ticket | number: "1.2-2" }}
-                    </td>
-
-                    <td>
-                        {{ cliente.last_purchase | date: "dd/MM/yyyy" }}
-                    </td>
-                </tr>
-
-                <tr *ngIf="Datos.length == 0">
-                    <td colspan="6" class="empty">No existen registros.</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</mat-card>
+</section>

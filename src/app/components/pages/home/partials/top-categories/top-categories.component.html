@@ -1,31 +1,43 @@
-<div class="card-dashboard">
+<section class="top-categories-card">
   <div class="card-header">
-    <div class="icon">
-      <mat-icon> category </mat-icon>
+    <div class="header-left">
+      <div class="header-icon">
+        <mat-icon>category</mat-icon>
+      </div>
+
+      <div>
+        <h3>Categorías destacadas</h3>
+        <p>Categorías con mayor movimiento</p>
+      </div>
     </div>
 
-    <div>
-      <h3>Categorías destacadas</h3>
-
-      <p>Categorías con mayor movimiento</p>
-    </div>
+    <span class="header-badge"> Top {{ data.length }} </span>
   </div>
 
   <div class="categories-list" *ngIf="data.length > 0">
-    <div class="category-item" *ngFor="let item of data; let i = index">
-      <div class="position">
+    <article class="category-item" *ngFor="let item of data; let i = index">
+      <div class="position" [class.position-first]="i === 0" [class.position-second]="i === 1"
+        [class.position-third]="i === 2">
         {{ i + 1 }}
       </div>
 
-      <div class="category-info">
-        <h4>
-          {{ item.category }}
-        </h4>
+      <div class="category-main">
+        <div class="category-icon">
+          <mat-icon>category</mat-icon>
+        </div>
 
-        <small> Ventas realizadas </small>
+        <div class="category-info">
+          <strong [matTooltip]="item.category">
+            {{ item.category }}
+          </strong>
+
+          <span> Movimiento registrado </span>
+        </div>
       </div>
 
-      <div class="quantity">
+      <div class="category-quantity">
+        <span>Cantidad</span>
+
         <strong>
           {{ item.quantity }}
         </strong>
@@ -33,13 +45,24 @@
         <small> unidades </small>
       </div>
 
-      <div class="amount">{{ moneda }} {{ item.amount }}</div>
+      <div class="category-amount">
+        <span>Importe</span>
+
+        <strong>
+          {{ moneda }}
+          {{ item.amount | number: "1.2-2" }}
+        </strong>
+      </div>
+    </article>
+  </div>
+
+  <div class="empty-state" *ngIf="data.length === 0">
+    <div class="empty-icon">
+      <mat-icon>category</mat-icon>
     </div>
-  </div>
 
-  <div class="empty" *ngIf="data.length === 0">
-    <mat-icon> category </mat-icon>
+    <strong> Sin categorías destacadas </strong>
 
-    <p>No hay categorías registradas</p>
+    <span> Aún no hay movimientos suficientes para mostrar categorías. </span>
   </div>
-</div>
+</section>

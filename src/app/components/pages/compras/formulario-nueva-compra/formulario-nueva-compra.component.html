@@ -1,230 +1,625 @@
-<app-adm-header [descripcion]="'Registra una nueva compra y actualiza automáticamente el inventario.'" [breadcrumbs]="[
-        {nombre:'Compras'},
-        {nombre:'Bandeja de Compras',ruta:'/bandeja-compras'},
-        {nombre:'Nueva compra'}
-    ]" [visible]="false" [rutaRegreso]="'/bandeja-compras'">
+<app-adm-header [descripcion]="
+    'Registra una nueva compra y actualiza automáticamente el inventario.'
+  " [breadcrumbs]="[
+    { nombre: 'Compras' },
+    { nombre: 'Bandeja de Compras', ruta: '/bandeja-compras' },
+    { nombre: 'Nueva compra' },
+  ]" [visible]="false" [rutaRegreso]="'/bandeja-compras'">
 </app-adm-header>
 
-<div class="container-fluid purchase-page">
-    <div class="row">
-        <!-- IZQUIERDA -->
-        <div class="col-xl-8">
-            <!-- DATOS GENERALES -->
-            <mat-card class="card-section">
-                <div class="section-header">
-                    <mat-icon>receipt_long</mat-icon>
-                    <div>
-                        <h3>Información de la compra</h3>
-                        <span>Complete los datos generales.</span>
+<section class="container-fluid">
+    <!-- ENCABEZADO DEL FLUJO -->
+    <header class="purchase-intro">
+        <div class="purchase-intro__main">
+            <div class="intro-icon">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </div>
+
+            <div>
+                <span class="intro-label"> Registro de compra </span>
+
+                <h1>Nueva compra</h1>
+
+                <p>
+                    Selecciona un proveedor, agrega los productos adquiridos y verifica
+                    los importes antes de registrar la compra.
+                </p>
+            </div>
+        </div>
+
+        <div class="purchase-progress">
+            <div class="progress-step" [class.completed]="compra?.supplier_id">
+                <span>1</span>
+                <strong>Proveedor</strong>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step" [class.completed]="DetallesCompra.length > 0">
+                <span>2</span>
+                <strong>Productos</strong>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step" [class.completed]="DetallesCompra.length > 0 && compra?.total > 0">
+                <span>3</span>
+                <strong>Confirmar</strong>
+            </div>
+        </div>
+    </header>
+
+    <div class="purchase-layout">
+        <!-- COLUMNA PRINCIPAL -->
+        <main class="purchase-main">
+            <!-- INFORMACIÓN GENERAL -->
+            <section class="purchase-panel">
+                <div class="panel-header">
+                    <div class="panel-header__left">
+                        <div class="panel-icon general-icon">
+                            <mat-icon>receipt_long</mat-icon>
+                        </div>
+
+                        <div>
+                            <span class="panel-step">Paso 1</span>
+                            <h2>Información de la compra</h2>
+                            <p>Selecciona el proveedor y registra el comprobante.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="row g-3 align-items-center">
-                    <div class="col-lg-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Proveedor</mat-label>
-                            <input matInput [(ngModel)]="textoProveedor" (input)="filtrarProveedor()"
-                                [matAutocomplete]="autoProveedor">
-                            <mat-autocomplete #autoProveedor="matAutocomplete" [displayWith]="mostrarProveedor"
-                                (optionSelected)="seleccionarProveedor($event.option.value)">
-                                <mat-option *ngFor="let item of proveedoresFiltrados" [value]="item">
-                                    {{item.NombreEmpresa}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Fecha compra</mat-label>
-                            <input matInput [matDatepicker]="picker" [(ngModel)]="compra.purchase_date">
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row g-3 mt-1">
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>N° Documento</mat-label>
-                            <input matInput [(ngModel)]="compra.document_number" readonly>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Nombre de Proveedor</mat-label>
-                            <input matInput [(ngModel)]="compra.business_name" readonly>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row g-3 mt-1">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Tipo</mat-label>
-                            <mat-select [(ngModel)]="compra.voucher_type" (selectionChange)="cambiarSerie()">
-                                <mat-option value="FACTURA">Factura</mat-option>
-                                <mat-option value="BOLETA">Boleta</mat-option>
-                                <mat-option value="NOTA">Nota</mat-option>
-                                <mat-option value="TICKET">Ticket</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Serie</mat-label>
-                            <input matInput [(ngModel)]="compra.voucher_series">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Número</mat-label>
-                            <input matInput [(ngModel)]="compra.voucher_number">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </mat-card>
-            <!-- PRODUCTO -->
-            <mat-card class="purchase-card mb-4">
-                <div class="card-title">
-                    <mat-icon>add_shopping_cart</mat-icon>
-                    Agregar producto
-                </div>
-                <div class="row g-3 align-items-end">
-                    <div class="col-lg-10">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Buscar producto</mat-label>
-                            <input matInput [(ngModel)]="textoProducto" (input)="filtrarProducto()"
-                                [matAutocomplete]="autoProducto">
-                            <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="mostrarProducto"
-                                (optionSelected)="seleccionarProducto($event.option.value)">
-                                <mat-option *ngFor="let producto of productosFiltrados" [value]="producto">
-                                    <div class="product-option">
-                                        <strong>{{producto.Nombre}}</strong>
-                                        <small>Stock:{{producto.StockActual}}</small>
-                                    </div>
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div>
-                       <div class="col-lg-2 d-grid">
-                        <button mat-raised-button color="primary" class="btn-add-product"
-                            (click)="OnEventoAgregarProducto()">
-                            <mat-icon>add</mat-icon>
-                            Agregar
-                        </button>
-                    </div>                    
-                </div>
-                <div class="row g-3 mt-1">
-                    <div class="col-md-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Código</mat-label>
-                            <input matInput [(ngModel)]="productoTemporal.code" readonly>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Producto</mat-label>
-                            <input matInput [(ngModel)]="productoTemporal.name" readonly>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Stock</mat-label>
-                            <input matInput [(ngModel)]="productoTemporal.stock" readonly>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Costo Compra</mat-label>
-                            <input matInput [(ngModel)]="productoTemporal.purchase_price">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-2">
-                        <mat-form-field appearance="outline" class="w-100">
-                            <mat-label>Cantidad</mat-label>
-                            <input matInput type="number" min="1" [(ngModel)]="productoTemporal.quantity">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </mat-card>
-            <mat-card class="purchase-card mb-4">
-                <div class="card-title">
-                    <mat-icon>inventory_2</mat-icon>
-                    Productos agregados
-                    <span class="badge-total">
-                        {{DetallesCompra.length}}
+
+                    <span class="panel-status" [class.ready]="compra?.supplier_id">
+                        <mat-icon>
+                            {{ compra?.supplier_id ? "check_circle" : "pending" }}
+                        </mat-icon>
+
+                        {{ compra?.supplier_id ? "Proveedor seleccionado" : "Pendiente" }}
                     </span>
                 </div>
-                <div class="table-responsive">
+
+                <!-- PROVEEDOR Y FECHA -->
+                <div class="form-grid form-grid-provider">
+                    <mat-form-field appearance="outline" class="form-field provider-field">
+                        <mat-label>Buscar proveedor</mat-label>
+
+                        <mat-icon matPrefix>business</mat-icon>
+
+                        <input matInput autocomplete="off" placeholder="Nombre o razón social"
+                            [(ngModel)]="textoProveedor" (input)="filtrarProveedor()"
+                            [matAutocomplete]="autoProveedor" />
+
+                        <mat-autocomplete #autoProveedor="matAutocomplete" [displayWith]="mostrarProveedor"
+                            (optionSelected)="seleccionarProveedor($event.option.value)">
+                            <mat-option *ngFor="let item of proveedoresFiltrados" [value]="item">
+                                <div class="supplier-option">
+                                    <div class="supplier-option__icon">
+                                        <mat-icon>business</mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <strong>{{ item.NombreEmpresa }}</strong>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Fecha de compra</mat-label>
+
+                        <mat-icon matPrefix>calendar_today</mat-icon>
+
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="compra.purchase_date" />
+
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <!-- PROVEEDOR SELECCIONADO -->
+                <div class="selected-supplier" *ngIf="compra?.business_name">
+                    <div class="selected-supplier__icon">
+                        <mat-icon>verified</mat-icon>
+                    </div>
+
+                    <div class="selected-supplier__main">
+                        <span>Proveedor seleccionado</span>
+
+                        <strong>
+                            {{ compra.business_name }}
+                        </strong>
+                    </div>
+
+                    <div class="supplier-document">
+                        <span>Documento</span>
+
+                        <strong>
+                            {{ compra.document_number || "No registrado" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <!-- COMPROBANTE -->
+                <div class="subsection-title">
+                    <mat-icon>description</mat-icon>
+
+                    <div>
+                        <strong>Datos del comprobante</strong>
+                        <span>Ingresa el tipo, serie y número del documento.</span>
+                    </div>
+                </div>
+
+                <div class="form-grid voucher-grid">
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Tipo de comprobante</mat-label>
+
+                        <mat-icon matPrefix>receipt</mat-icon>
+
+                        <mat-select [(ngModel)]="compra.voucher_type" (selectionChange)="cambiarSerie()">
+                            <mat-option value="FACTURA"> Factura </mat-option>
+
+                            <mat-option value="BOLETA"> Boleta </mat-option>
+
+                            <mat-option value="NOTA"> Nota </mat-option>
+
+                            <mat-option value="TICKET"> Ticket </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Serie</mat-label>
+
+                        <mat-icon matPrefix>tag</mat-icon>
+
+                        <input matInput autocomplete="off" placeholder="Ej. F001" [(ngModel)]="compra.voucher_series" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Número</mat-label>
+
+                        <mat-icon matPrefix>pin</mat-icon>
+
+                        <input matInput autocomplete="off" placeholder="Ej. 00000125"
+                            [(ngModel)]="compra.voucher_number" />
+                    </mat-form-field>
+                </div>
+            </section>
+
+            <!-- AGREGAR PRODUCTO -->
+            <section class="purchase-panel product-selector-panel">
+                <div class="panel-header">
+                    <div class="panel-header__left">
+                        <div class="panel-icon product-add-icon">
+                            <mat-icon>add_shopping_cart</mat-icon>
+                        </div>
+
+                        <div>
+                            <span class="panel-step">Paso 2</span>
+                            <h2>Agregar productos</h2>
+                            <p>Busca el producto y registra su costo y cantidad.</p>
+                        </div>
+                    </div>
+
+                    <span class="product-counter">
+                        {{ DetallesCompra.length }}
+                        {{ DetallesCompra.length === 1 ? "producto" : "productos" }}
+                    </span>
+                </div>
+
+                <!-- BUSCADOR -->
+                <div class="product-search-row">
+                    <mat-form-field appearance="outline" class="form-field product-search-field">
+                        <mat-label>Buscar producto</mat-label>
+
+                        <mat-icon matPrefix>search</mat-icon>
+
+                        <input matInput autocomplete="off" placeholder="Nombre, código o código de barras"
+                            [(ngModel)]="textoProducto" (input)="filtrarProducto()" [matAutocomplete]="autoProducto" />
+
+                        <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="mostrarProducto"
+                            (optionSelected)="seleccionarProducto($event.option.value)">
+                            <mat-option *ngFor="let producto of productosFiltrados" [value]="producto">
+                                <div class="product-option">
+                                    <div class="product-option__icon">
+                                        <mat-icon>inventory_2</mat-icon>
+                                    </div>
+
+                                    <div class="product-option__info">
+                                        <strong>
+                                           {{ producto.Codigo || "Sin código" }} - {{ producto.Nombre }}
+                                        </strong>
+                                    </div>
+                                    <div class="product-option__stock">
+                                        <strong>{{ producto.StockActual }}</strong>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+                <!-- PRODUCTO SELECCIONADO -->
+                <div class="selected-product" [class.empty-selection]="!productoTemporal?.name">
+                    <div class="selected-product__empty" *ngIf="!productoTemporal?.name">
+                        <div class="empty-selection-icon">
+                            <mat-icon>search</mat-icon>
+                        </div>
+
+                        <div>
+                            <strong>Selecciona un producto</strong>
+
+                            <span>
+                                Busca un producto para configurar su cantidad y costo.
+                            </span>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="productoTemporal?.name">
+                        <div class="selected-product__header">
+                            <div class="selected-product__identity">
+                                <div class="selected-product-icon">
+                                    <mat-icon>inventory_2</mat-icon>
+                                </div>
+
+                                <div>
+                                    <span>Producto seleccionado</span>
+
+                                    <strong>
+                                        {{ productoTemporal.name }}
+                                    </strong>
+
+                                    <small>
+                                        Código: {{ productoTemporal.code || "Sin código" }}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="available-stock">
+                                <span>Stock disponible</span>
+
+                                <strong>
+                                    {{ productoTemporal.stock || 0 }}
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="product-configuration">
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Costo de compra</mat-label>
+
+                                <span matPrefix class="currency-prefix">
+                                    {{ CompaniaActual?.SimboloMoneda }}
+                                </span>
+
+                                <input matInput type="number" min="0" step="0.01"
+                                    [(ngModel)]="productoTemporal.purchase_price" />
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>Cantidad</mat-label>
+
+                                <mat-icon matPrefix>numbers</mat-icon>
+
+                                <input matInput type="number" min="1" [(ngModel)]="productoTemporal.quantity" />
+                            </mat-form-field>
+
+                            <div class="temporary-subtotal">
+                                <span>Subtotal estimado</span>
+
+                                <strong>
+                                    {{ CompaniaActual?.SimboloMoneda }}
+                                    {{
+                                    (productoTemporal.purchase_price || 0) *
+                                    (productoTemporal.quantity || 0) | number: "1.2-2"
+                                    }}
+                                </strong>
+                            </div>
+
+                            <button mat-flat-button color="primary" type="button" class="add-product-button"
+                                (click)="OnEventoAgregarProducto()">
+                                <mat-icon>add</mat-icon>
+                                Agregar producto
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+            </section>
+
+            <!-- PRODUCTOS AGREGADOS -->
+            <section class="purchase-panel products-panel">
+                <div class="panel-header">
+                    <div class="panel-header__left">
+                        <div class="panel-icon products-icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div>
+                            <span class="panel-step">Detalle</span>
+                            <h2>Productos agregados</h2>
+                            <p>Revisa las cantidades y costos antes de registrar.</p>
+                        </div>
+                    </div>
+
+                    <span class="product-counter">
+                        {{ DetallesCompra.length }}
+                    </span>
+                </div>
+
+                <div class="products-table-wrapper" *ngIf="DetallesCompra.length > 0">
                     <table mat-table [dataSource]="DetallesCompra" class="purchase-table">
+                        <!-- PRODUCTO -->
                         <ng-container matColumnDef="producto">
                             <th mat-header-cell *matHeaderCellDef>Producto</th>
-                            <td mat-cell *matCellDef="let item"><strong>{{item.name}}</strong></td>
-                        </ng-container>
-                        <ng-container matColumnDef="cantidad">
-                            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-                            <td mat-cell *matCellDef="let item">{{item.quantity}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="precio">
-                            <th mat-header-cell *matHeaderCellDef>Costo Unit.</th>
-                            <td mat-cell *matCellDef="let item">{{CompaniaActual.SimboloMoneda}} {{item.purchase_price | number:'1.2-2'}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="total">
-                            <th mat-header-cell *matHeaderCellDef>Total</th>
+
                             <td mat-cell *matCellDef="let item">
-                                <strong>{{CompaniaActual.SimboloMoneda}} {{item.total | number:'1.2-2'}}</strong>
+                                <div class="table-product">
+                                    <div class="table-product__icon">
+                                        <mat-icon>inventory_2</mat-icon>
+                                    </div>
+
+                                    <div>
+                                        <strong>{{ item.name }}</strong>
+
+                                        <span>
+                                            {{ item.code || "Sin código" }}
+                                        </span>
+                                    </div>
+                                </div>
                             </td>
                         </ng-container>
+
+                        <!-- CANTIDAD -->
+                        <ng-container matColumnDef="cantidad">
+                            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+
+                            <td mat-cell *matCellDef="let item">
+                                <span class="quantity-badge">
+                                    {{ item.quantity }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- PRECIO -->
+                        <ng-container matColumnDef="precio">
+                            <th mat-header-cell *matHeaderCellDef>Costo unitario</th>
+
+                            <td mat-cell *matCellDef="let item">
+                                <div class="table-price">
+                                    <span>Costo</span>
+
+                                    <strong>
+                                        {{ CompaniaActual?.SimboloMoneda }}
+                                        {{ item.purchase_price | number: "1.2-2" }}
+                                    </strong>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- TOTAL -->
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef>Total</th>
+
+                            <td mat-cell *matCellDef="let item">
+                                <div class="table-total">
+                                    <span>Subtotal</span>
+
+                                    <strong>
+                                        {{ CompaniaActual?.SimboloMoneda }}
+                                        {{ item.total | number: "1.2-2" }}
+                                    </strong>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- ACCIÓN -->
                         <ng-container matColumnDef="accion">
-                            <th mat-header-cell *matHeaderCellDef></th>
-                            <td mat-cell *matCellDef="let item; let i=index">
-                                <button mat-icon-button color="warn" matTooltip="Eliminar"
-                                    (click)="OnEventoEliminarProducto(i)">
+                            <th mat-header-cell *matHeaderCellDef class="action-header"></th>
+
+                            <td mat-cell *matCellDef="let item; let i = index">
+                                <button mat-icon-button type="button" class="delete-product-button"
+                                    matTooltip="Eliminar producto" (click)="OnEventoEliminarProducto(i)">
                                     <mat-icon>delete_outline</mat-icon>
                                 </button>
                             </td>
                         </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-                        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+
+                        <tr mat-row *matRowDef="let row; columns: columnas" class="product-row"></tr>
                     </table>
                 </div>
-            </mat-card>
-            <!-- OBSERVACION -->
-            <mat-card class="card-section">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Observación</mat-label>
-                    <textarea matInput rows="4" [(ngModel)]="compra.observation"></textarea>
+
+                <!-- VACÍO -->
+                <div class="empty-products" *ngIf="DetallesCompra.length === 0">
+                    <div class="empty-products__icon">
+                        <mat-icon>shopping_cart</mat-icon>
+                    </div>
+
+                    <strong>No agregaste productos</strong>
+
+                    <span> Busca y agrega al menos un producto para continuar. </span>
+                </div>
+            </section>
+
+            <!-- OBSERVACIÓN -->
+            <section class="purchase-panel observation-panel">
+                <div class="panel-header observation-header">
+                    <div class="panel-header__left">
+                        <div class="panel-icon observation-icon">
+                            <mat-icon>notes</mat-icon>
+                        </div>
+
+                        <div>
+                            <h2>Observación</h2>
+                            <p>Información adicional o comentarios de la compra.</p>
+                        </div>
+                    </div>
+
+                    <span class="optional-label"> Opcional </span>
+                </div>
+
+                <mat-form-field appearance="outline" class="form-field observation-field">
+                    <mat-label>Escribe una observación</mat-label>
+
+                    <textarea matInput rows="3" maxlength="500"
+                        placeholder="Ej. Entrega parcial, condiciones acordadas..." [(ngModel)]="compra.observation">
+          </textarea>
+
+                    <mat-hint align="end">
+                        {{ compra.observation?.length || 0 }}/500
+                    </mat-hint>
                 </mat-form-field>
-            </mat-card>
-        </div>
-        <!-- DERECHA -->
-        <div class="col-xl-4">
-            <mat-card class="summary-card">
-                <h3>Resumen</h3>
-                <div class="summary-item">
-                    <span>Productos</span>
-                    <strong>{{DetallesCompra.length}}</strong>
+            </section>
+        </main>
+
+        <!-- RESUMEN LATERAL -->
+        <aside class="purchase-sidebar">
+            <section class="summary-panel">
+                <div class="summary-header">
+                    <div class="summary-header__icon">
+                        <mat-icon>payments</mat-icon>
+                    </div>
+
+                    <div>
+                        <span>Paso 3</span>
+                        <h2>Resumen de compra</h2>
+                    </div>
                 </div>
-                <div class="summary-item">
-                    <span>Subtotal</span>
-                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.subtotal}}</strong>
-                </div>
-                <div class="summary-item">
-                    <span>IGV</span>
-                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.tax}}</strong>
-                </div>
-                <div class="summary-item">
-                    <span>Descuento</span>
-                    <strong>{{CompaniaActual.SimboloMoneda}} {{compra.discount}}</strong>
-                </div>
-                <div class="summary-total">
-                    <span>Total</span>
-                    <strong>{{CompaniaActual.SimboloMoneda}}{{compra.total}}
+
+                <div class="summary-provider">
+                    <span>Proveedor</span>
+
+                    <strong [matTooltip]="compra.business_name">
+                        {{ compra.business_name || "No seleccionado" }}
                     </strong>
                 </div>
-                <button mat-raised-button color="primary" class="w-100 mt-3" (click)="OnEventoGuardarCompra()">
-                    <mat-icon>save</mat-icon>Registrar compra
+
+                <div class="summary-document">
+                    <div>
+                        <span>Comprobante</span>
+
+                        <strong>
+                            {{ compra.voucher_type || "-" }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Serie y número</span>
+
+                        <strong>
+                            {{ compra.voucher_series || "-" }}-{{
+                            compra.voucher_number || "-"
+                            }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="summary-items">
+                    <div class="summary-line">
+                        <span>
+                            <mat-icon>inventory_2</mat-icon>
+                            Productos
+                        </span>
+
+                        <strong>
+                            {{ DetallesCompra.length }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+
+                        <strong>
+                            {{ CompaniaActual?.SimboloMoneda }}
+                            {{ compra.subtotal || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-line">
+                        <span>IGV</span>
+
+                        <strong>
+                            {{ CompaniaActual?.SimboloMoneda }}
+                            {{ compra.tax || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+
+                    <div class="summary-line discount-line">
+                        <span>Descuento</span>
+
+                        <strong>
+                            - {{ CompaniaActual?.SimboloMoneda }}
+                            {{ compra.discount || 0 | number: "1.2-2" }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total a pagar</span>
+
+                    <strong>
+                        {{ CompaniaActual?.SimboloMoneda }}
+                        {{ compra.total || 0 | number: "1.2-2" }}
+                    </strong>
+                </div>
+
+                <div class="summary-validation">
+                    <div class="validation-item" [class.valid]="compra?.supplier_id">
+                        <mat-icon>
+                            {{
+                            compra?.supplier_id ? "check_circle" : "radio_button_unchecked"
+                            }}
+                        </mat-icon>
+
+                        <span>Proveedor seleccionado</span>
+                    </div>
+
+                    <div class="validation-item" [class.valid]="DetallesCompra.length > 0">
+                        <mat-icon>
+                            {{
+                            DetallesCompra.length > 0
+                            ? "check_circle"
+                            : "radio_button_unchecked"
+                            }}
+                        </mat-icon>
+
+                        <span>Productos agregados</span>
+                    </div>
+
+                    <div class="validation-item" [class.valid]="compra?.voucher_number">
+                        <mat-icon>
+                            {{
+                            compra?.voucher_number
+                            ? "check_circle"
+                            : "radio_button_unchecked"
+                            }}
+                        </mat-icon>
+
+                        <span>Comprobante completado</span>
+                    </div>
+                </div>
+
+                <button mat-flat-button color="primary" type="button" class="save-purchase-button"
+                    [disabled]="DetallesCompra.length === 0" (click)="OnEventoGuardarCompra()">
+                    <mat-icon>save</mat-icon>
+                    Registrar compra
                 </button>
-            </mat-card>
-        </div>
+
+                <button mat-stroked-button type="button" class="cancel-purchase-button" routerLink="/bandeja-compras">
+                    <mat-icon>arrow_back</mat-icon>
+                    Cancelar y volver
+                </button>
+
+                <div class="inventory-note">
+                    <mat-icon>info</mat-icon>
+
+                    <span>
+                        Al registrar la compra, el inventario de la sucursal se actualizará
+                        automáticamente.
+                    </span>
+                </div>
+            </section>
+        </aside>
     </div>
-</div>
+</section>

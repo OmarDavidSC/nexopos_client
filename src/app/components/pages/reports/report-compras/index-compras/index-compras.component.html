@@ -1,38 +1,194 @@
-<app-adm-header [descripcion]="'Consualta los reportes de las compras'"
-    [breadcrumbs]="[{nombre:'Reporte'},{nombre:'Reporte de Compras'}]" [visible]="false" [rutaRegreso]="'/inicio'">
-</app-adm-header>
 <div class="container-fluid">
+    <app-adm-header [descripcion]="
+      'Consulta y analiza los reportes de compras registradas en el sistema.'
+    " [breadcrumbs]="[{ nombre: 'Reportes' }, { nombre: 'Reporte de Compras' }]" [visible]="false"
+        [rutaRegreso]="'/inicio'">
+    </app-adm-header>
+
+    <!-- CABECERA DEL REPORTE -->
+    <!-- <section class="report-hero">
+        <div class="report-hero__content">
+            <div class="report-main-icon">
+                <mat-icon>shopping_cart_checkout</mat-icon>
+            </div>
+
+            <div class="report-hero__information">
+                <span class="report-eyebrow"> Centro de análisis </span>
+
+                <h1>Reporte de compras</h1>
+
+                <p>
+                    Analiza el comportamiento de las compras, proveedores, productos
+                    adquiridos, comprobantes y estados del periodo seleccionado.
+                </p>
+            </div>
+        </div>
+
+        <div class="report-hero__badges">
+            <span class="hero-badge">
+                <mat-icon>query_stats</mat-icon>
+                Análisis de compras
+            </span>
+
+            <span class="hero-badge">
+                <mat-icon>inventory_2</mat-icon>
+                Inventario y proveedores
+            </span>
+        </div>
+    </section> -->
+
     <!-- FILTROS -->
+
     <app-filtros-compras [Filtro]="Filtro" [Sucursales]="ListaSucursales" [Proveedores]="ListaProveedores"
         [Usuarios]="ListaUsuarios" (Buscar)="obtenerMaestros()" (Limpiar)="clearFilters()">
     </app-filtros-compras>
 
     <!-- RESUMEN -->
-    <app-resumen-compras [Datos]="Resumen"> </app-resumen-compras>
+    <section class="purchase-summary-section">
+        <div class="section-header">
+            <div class="section-header__main">
+                <div class="section-icon summary-icon">
+                    <mat-icon>dashboard</mat-icon>
+                </div>
 
-    <div class="row mt-2">
-        <div class="col-lg-6 mb-4">
-            <app-compras-dia [Datos]="ComprasPorDia"> </app-compras-dia>
+                <div>
+                    <span class="section-kicker"> Vista general </span>
+
+                    <h2>Resumen de compras</h2>
+
+                    <p>Principales indicadores del periodo seleccionado.</p>
+                </div>
+            </div>
+
+            <span class="section-tag"> Indicadores </span>
         </div>
 
-        <div class="col-lg-6 mb-4">
-            <app-compras-mes [Datos]="ComprasPorMes"> </app-compras-mes>
+        <div class="summary-wrapper">
+            <app-resumen-compras [Datos]="Resumen"> </app-resumen-compras>
+        </div>
+    </section>
+
+    <!-- EVOLUCIÓN -->
+    <section class="analytics-section">
+        <div class="analytics-section__header">
+            <div class="analytics-section__number">01</div>
+
+            <div class="analytics-section__title">
+                <span> Comportamiento temporal </span>
+
+                <h2>Evolución de las compras</h2>
+
+                <p>Compara el movimiento diario y mensual de las compras realizadas.</p>
+            </div>
+
+            <div class="analytics-section__icon trend-section-icon">
+                <mat-icon>monitoring</mat-icon>
+            </div>
         </div>
 
-        <div class="col-lg-6 mb-4">
-            <app-top-productos-compras [Datos]="TopProductos"> </app-top-productos-compras>
+        <div class="analytics-grid evolution-grid">
+            <article class="analytics-widget analytics-widget-large">
+                <div class="widget-label">
+                    <mat-icon>calendar_today</mat-icon>
+                    Compras diarias
+                </div>
+
+                <app-compras-dia [Datos]="ComprasPorDia"> </app-compras-dia>
+            </article>
+
+            <article class="analytics-widget analytics-widget-large">
+                <div class="widget-label">
+                    <mat-icon>date_range</mat-icon>
+                    Comparativo mensual
+                </div>
+
+                <app-compras-mes [Datos]="ComprasPorMes"> </app-compras-mes>
+            </article>
+        </div>
+    </section>
+
+    <!-- RENDIMIENTO -->
+    <!-- <section class="analytics-section performance-section">
+        <div class="analytics-section__header">
+            <div class="analytics-section__number">02</div>
+
+            <div class="analytics-section__title">
+                <span> Rendimiento comercial </span>
+
+                <h2>Productos y proveedores</h2>
+
+                <p>
+                    Identifica los productos más comprados y los proveedores con mayor
+                    participación.
+                </p>
+            </div>
+
+            <div class="analytics-section__icon performance-section-icon">
+                <mat-icon>leaderboard</mat-icon>
+            </div>
         </div>
 
-        <div class="col-lg-6 mb-4">
-            <app-top-proveedores [Datos]="TopProveedores"> </app-top-proveedores>
+        <div class="analytics-grid performance-grid">
+            <article class="analytics-widget products-widget">
+                <div class="widget-label">
+                    <mat-icon>inventory_2</mat-icon>
+                    Productos destacados
+                </div>
+
+                <app-top-productos-compras [Datos]="TopProductos">
+                </app-top-productos-compras>
+            </article>
+
+            <article class="analytics-widget suppliers-widget">
+                <div class="widget-label">
+                    <mat-icon>local_shipping</mat-icon>
+                    Proveedores destacados
+                </div>
+
+                <app-top-proveedores [Datos]="TopProveedores"> </app-top-proveedores>
+            </article>
+        </div>
+    </section> -->
+
+    <!-- DISTRIBUCIÓN -->
+    <!-- <section class="analytics-section distribution-section">
+        <div class="analytics-section__header">
+            <div class="analytics-section__number">03</div>
+
+            <div class="analytics-section__title">
+                <span> Distribución operativa </span>
+
+                <h2>Comprobantes y estados</h2>
+
+                <p>
+                    Revisa cómo se distribuyen las compras según el comprobante y su
+                    estado.
+                </p>
+            </div>
+
+            <div class="analytics-section__icon distribution-section-icon">
+                <mat-icon>donut_large</mat-icon>
+            </div>
         </div>
 
-        <div class="col-lg-6 mb-4">
-            <app-tipos-voucher [Datos]="TipoDeVoucher"> </app-tipos-voucher>
-        </div>
+        <div class="distribution-layout">
+            <article class="analytics-widget voucher-widget">
+                <div class="widget-label">
+                    <mat-icon>receipt_long</mat-icon>
+                    Tipos de comprobante
+                </div>
 
-        <div class="col-lg-6 mb-4">
-            <app-estado-compras [Datos]="CompraEstado"> </app-estado-compras>
+                <app-tipos-voucher [Datos]="TipoDeVoucher"> </app-tipos-voucher>
+            </article>
+
+            <article class="analytics-widget status-widget">
+                <div class="widget-label">
+                    <mat-icon>task_alt</mat-icon>
+                    Estado de compras
+                </div>
+
+                <app-estado-compras [Datos]="CompraEstado"> </app-estado-compras>
+            </article>
         </div>
-    </div>
+    </section> -->
 </div>

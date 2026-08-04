@@ -1,52 +1,434 @@
-.resumen-card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
+.purchase-summary {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 0.9fr) minmax(0, 0.9fr);
+    width: 100%;
+    gap: 10px;
 }
 
-.resumen-card:hover {
-    transform: translateY(-4px);
+/* =========================================
+   INDICADOR GENERAL
+========================================= */
+
+.summary-item {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 122px;
+    padding: 13px 14px 12px;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    background: #ffffff;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.025),
+        0 5px 14px rgba(15, 23, 42, 0.035);
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+
+    &::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 4px;
+        content: "";
+    }
+
+    &:hover {
+        box-shadow:
+            0 2px 5px rgba(15, 23, 42, 0.04),
+            0 10px 22px rgba(15, 23, 42, 0.07);
+        transform: translateY(-2px);
+    }
 }
 
-.card-body {
+.summary-decoration {
+    position: absolute;
+    top: -42px;
+    right: -38px;
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    opacity: 0.55;
+
+    &::after {
+        position: absolute;
+        top: 19px;
+        left: 19px;
+        width: 66px;
+        height: 66px;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        border-radius: 50%;
+        content: "";
+    }
+}
+
+/* =========================================
+   CABECERA
+========================================= */
+
+.summary-item__header {
+    position: relative;
+    z-index: 2;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    justify-content: space-between;
+    gap: 9px;
 }
 
-.icon-container {
-    width: 55px;
-    height: 55px;
-    border-radius: 12px;
-
+.summary-icon {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 0 0 37px;
+    width: 37px;
+    height: 37px;
+    border-radius: 10px;
 
-    background: #f1f5f9;
+    mat-icon {
+        width: 21px;
+        height: 21px;
+        font-size: 21px;
+        line-height: 21px;
+    }
 }
 
-.icon-container mat-icon {
-    font-size: 30px;
-    width: 30px;
-    height: 30px;
+.summary-category {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    padding: 0 7px;
+    border-radius: 6px;
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
 
-.info {
+/* =========================================
+   CONTENIDO
+========================================= */
+
+.summary-content {
+    position: relative;
+    z-index: 2;
     display: flex;
+    min-width: 0;
+    margin-top: 10px;
     flex-direction: column;
 }
 
-.titulo {
+.summary-title {
+    overflow: hidden;
     color: #64748b;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 10.5px;
+    font-weight: 650;
+    line-height: 15px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.info h3 {
-    margin: 5px 0 0;
+.summary-value {
+    margin-top: 2px;
+    overflow: hidden;
+    color: #0f172a;
     font-size: 25px;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.monetary-value {
+    font-size: 20px;
+}
+
+.summary-footer {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin-top: 4px;
+    gap: 4px;
+    color: #94a3b8;
+
+    mat-icon {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        font-size: 14px;
+        line-height: 14px;
+    }
+
+    span {
+        overflow: hidden;
+        font-size: 8.5px;
+        line-height: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+/* =========================================
+   TOTAL COMPRAS
+========================================= */
+
+.summary-purchases {
+    &::before {
+        background: #059669;
+    }
+
+    .summary-decoration {
+        background: #d1fae5;
+    }
+
+    .summary-icon {
+        background: #ecfdf5;
+        color: #059669;
+    }
+
+    .summary-category {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .summary-footer mat-icon {
+        color: #059669;
+    }
+
+    &:hover {
+        border-color: #a7f3d0;
+    }
+}
+
+/* =========================================
+   MONTO TOTAL
+========================================= */
+
+.summary-amount {
+    border-color: #bfdbfe;
+    background:
+        radial-gradient(circle at 100% 0%,
+            rgba(59, 130, 246, 0.08),
+            transparent 42%),
+        #ffffff;
+
+    &::before {
+        background: #2563eb;
+    }
+
+    .summary-decoration {
+        background: #dbeafe;
+    }
+
+    .summary-icon {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        color: #ffffff;
+        box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+    }
+
+    .summary-category {
+        background: #eff6ff;
+        color: #1d4ed8;
+    }
+
+    .summary-value {
+        color: #1d4ed8;
+    }
+
+    .summary-footer mat-icon {
+        color: #2563eb;
+    }
+
+    &:hover {
+        border-color: #93c5fd;
+    }
+}
+
+/* =========================================
+   PRODUCTOS
+========================================= */
+
+.summary-products {
+    &::before {
+        background: #f59e0b;
+    }
+
+    .summary-decoration {
+        background: #fef3c7;
+    }
+
+    .summary-icon {
+        background: #fffbeb;
+        color: #d97706;
+    }
+
+    .summary-category {
+        background: #fffbeb;
+        color: #b45309;
+    }
+
+    .summary-footer mat-icon {
+        color: #d97706;
+    }
+
+    &:hover {
+        border-color: #fde68a;
+    }
+}
+
+/* =========================================
+   PROVEEDORES
+========================================= */
+
+.summary-suppliers {
+    &::before {
+        background: #7c3aed;
+    }
+
+    .summary-decoration {
+        background: #ede9fe;
+    }
+
+    .summary-icon {
+        background: #f5f3ff;
+        color: #7c3aed;
+    }
+
+    .summary-category {
+        background: #f5f3ff;
+        color: #6d28d9;
+    }
+
+    .summary-footer mat-icon {
+        color: #7c3aed;
+    }
+
+    &:hover {
+        border-color: #ddd6fe;
+    }
+}
+
+/* =========================================
+   ESTADO VACÍO
+========================================= */
+
+.summary-empty {
+    display: flex;
+    align-items: center;
+    min-height: 84px;
+    padding: 13px 14px;
+    gap: 10px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+
+    >div:last-child {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+    }
+
+    strong {
+        color: #334155;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    span {
+        margin-top: 2px;
+        color: #94a3b8;
+        font-size: 9.5px;
+    }
+}
+
+.summary-empty__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #ecfdf5;
+    color: #059669;
+
+    mat-icon {
+        width: 21px;
+        height: 21px;
+        font-size: 21px;
+        line-height: 21px;
+    }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+    .purchase-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .purchase-summary {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .summary-item {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        min-height: 85px;
+        padding: 10px 11px;
+        column-gap: 10px;
+    }
+
+    .summary-item::before {
+        top: 0;
+        right: 0;
+        bottom: auto;
+        width: auto;
+        height: 3px;
+    }
+
+    .summary-decoration {
+        top: -46px;
+        right: -42px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .summary-item__header {
+        display: block;
+    }
+
+    .summary-category {
+        display: none;
+    }
+
+    .summary-content {
+        margin-top: 0;
+    }
+
+    .summary-value {
+        font-size: 21px;
+        line-height: 25px;
+    }
+
+    .monetary-value {
+        font-size: 18px;
+    }
+
+    .summary-footer {
+        margin-top: 2px;
+    }
 }

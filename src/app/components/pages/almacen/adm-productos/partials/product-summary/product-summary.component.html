@@ -1,47 +1,81 @@
-<div class="row g-4 mb-4">
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="summary-card total">
+<section class="inventory-summary">
+    <article class="summary-card summary-total">
+        <div class="summary-card__header">
             <div class="summary-icon">
-                <i class="fa-solid fa-boxes-stacked"></i>
+                <mat-icon>inventory_2</mat-icon>
             </div>
-            <div class="summary-info">
-                <span>Total Productos</span>
-                <h3>{{summary?.total_products || 0}}</h3>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="summary-card active">
-            <div class="summary-icon">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <div class="summary-info">
-                <span>Productos Activos</span>
-                <h3>{{summary?.active_products || 0}}</h3>
-            </div>
+            <span class="summary-badge"> Inventario </span>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="summary-card warning">
-            <div class="summary-icon">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="summary-info">
-                <span>Stock Bajo</span>
-                <h3>{{summary?.low_stock || 0}}</h3>
-            </div>
+
+        <div class="summary-card__content">
+            <span class="summary-label"> Total de productos </span>
+
+            <strong class="summary-value">
+                {{ summary?.total_products || 0 }}
+            </strong>
+
+            <small> Productos registrados </small>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="summary-card danger">
+    </article>
+
+    <article class="summary-card summary-active">
+        <div class="summary-card__header">
             <div class="summary-icon">
-                <i class="fa-solid fa-ban"></i>
+                <mat-icon>check_circle</mat-icon>
             </div>
-            <div class="summary-info">
-                <span>Productos Agotados</span>
-                <h3>{{summary?.out_stock || 0}}</h3>
-            </div>
+
+            <span class="summary-badge"> Activos </span>
         </div>
-    </div>
-</div>
+
+        <div class="summary-card__content">
+            <span class="summary-label"> Productos activos </span>
+
+            <strong class="summary-value">
+                {{ summary?.active_products || 0 }}
+            </strong>
+
+            <small> Disponibles para operar </small>
+        </div>
+    </article>
+
+    <article class="summary-card summary-warning">
+        <div class="summary-card__header">
+            <div class="summary-icon">
+                <mat-icon>warning_amber</mat-icon>
+            </div>
+
+            <span class="summary-badge"> Atención </span>
+        </div>
+
+        <div class="summary-card__content">
+            <span class="summary-label"> Stock bajo </span>
+
+            <strong class="summary-value">
+                {{ summary?.low_stock || 0 }}
+            </strong>
+
+            <small> Requieren reposición </small>
+        </div>
+    </article>
+
+    <article class="summary-card summary-danger">
+        <div class="summary-card__header">
+            <div class="summary-icon">
+                <mat-icon>remove_shopping_cart</mat-icon>
+            </div>
+
+            <span class="summary-badge"> Crítico </span>
+        </div>
+
+        <div class="summary-card__content">
+            <span class="summary-label"> Productos agotados </span>
+
+            <strong class="summary-value">
+                {{ summary?.out_stock || 0 }}
+            </strong>
+
+            <small> Sin unidades disponibles </small>
+        </div>
+    </article>
+</section>

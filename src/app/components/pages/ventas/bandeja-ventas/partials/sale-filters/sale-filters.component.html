@@ -1,108 +1,173 @@
-<mat-accordion class="filter-accordion">
-    <mat-expansion-panel [expanded]="false" class="shadow-sm border-0">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <div class="d-flex align-items-center gap-2">
-                    <mat-icon>filter_alt</mat-icon>
-                    <span class="fw-semibold">Filtros de ventas</span>
-                </div>
-            </mat-panel-title>
+<section class="container-fluid">
+    <mat-accordion class="filters-accordion">
+        <mat-expansion-panel [expanded]="false" class="filters-panel">
+            <mat-expansion-panel-header class="filters-panel-header">
+                <mat-panel-title>
+                    <div class="filters-title">
+                        <div class="filters-title__icon">
+                            <mat-icon>filter_alt</mat-icon>
+                        </div>
 
-            <mat-panel-description class="d-none d-md-flex justify-content-end">
-                Busca y filtra las ventas registradas
-            </mat-panel-description>
-        </mat-expansion-panel-header>
+                        <div class="filters-title__content">
+                            <strong>Filtros de ventas</strong>
 
-        <div class="row g-2 align-items-center">
+                            <span> Busca y filtra las ventas registradas </span>
+                        </div>
+                    </div>
+                </mat-panel-title>
 
-            <div class="col-12 col-xl-3">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Buscar venta</mat-label>
-                    <mat-icon matPrefix>search</mat-icon>
-                    <input matInput placeholder="Cliente o comprobante" [(ngModel)]="filter.search"
-                        (keyup.enter)="search.emit()">
-                </mat-form-field>
-            </div>
+                <mat-panel-description class="filters-description">
+                    <span class="filters-status">
+                        <mat-icon>tune</mat-icon>
+                        Opciones de búsqueda
+                    </span>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-            <div class="col-12 col-md-6 col-lg-4 col-xl-2">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Cliente</mat-label>
-                    <mat-select [(ngModel)]="filter.customer_id" (selectionChange)="customerChange.emit()">
-                        <mat-option [value]="null">Todos</mat-option>
-                        <mat-option *ngFor="let item of customers" [value]="item.Id">
-                            {{ item.NombreCliente }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <div class="filters-content">
+                <!-- BUSCADOR PRINCIPAL -->
+                <div class="search-section">
+                    <mat-form-field appearance="outline" class="filter-field search-field">
+                        <mat-label>Buscar venta</mat-label>
 
-            <div class="col-12 col-md-6 col-lg-4 col-xl-2">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Sucursal</mat-label>
-                    <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
-                        <mat-option [value]="null">Todas</mat-option>
-                        <mat-option *ngFor="let item of branches" [value]="item.Id">
-                            {{ item.Nombre }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+                        <mat-icon matPrefix> search </mat-icon>
 
-            <div class="col-6 col-md-4 col-lg-3 col-xl">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Estado</mat-label>
-                    <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
-                        <mat-option [value]="null">Todos</mat-option>
-                        <mat-option value="PENDING">Pendiente</mat-option>
-                        <mat-option value="COMPLETED">Completada</mat-option>
-                        <mat-option value="CANCELLED">Cancelada</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+                        <input matInput autocomplete="off" placeholder="Cliente, comprobante, serie o número"
+                            [(ngModel)]="filter.search" (keyup.enter)="search.emit()" />
 
-            <div class="col-6 col-md-4 col-lg-3 col-xl">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>SUNAT</mat-label>
-                    <mat-select [(ngModel)]="filter.sunat_status" (selectionChange)="sunatChange.emit()">
-                        <mat-option [value]="null">Todos</mat-option>
-                        <mat-option value="NO_ENVIADO">No enviado</mat-option>
-                        <mat-option value="PENDIENTE">Pendiente</mat-option>
-                        <mat-option value="ACEPTADO">Aceptado</mat-option>
-                        <mat-option value="RECHAZADO">Rechazado</mat-option>
-                        <mat-option value="ERROR">Error</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+                        <button *ngIf="filter.search" mat-icon-button matSuffix type="button"
+                            matTooltip="Limpiar búsqueda" (click)="filter.search = ''; search.emit()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
 
-            <div class="col-12 col-md-4 col-lg-3 col-xl">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Pago</mat-label>
-                    <mat-select [(ngModel)]="filter.payment_method" (selectionChange)="payment_methodChange.emit()">
-                        <mat-option [value]="null">Todos</mat-option>
-                        <mat-option value="CASH">Efectivo</mat-option>
-                        <mat-option value="CARD">Tarjeta</mat-option>
-                        <mat-option value="TRANSFER">Transferencia</mat-option>
-                        <mat-option value="YAPE">Yape</mat-option>
-                        <mat-option value="PLIN">Plin</mat-option>
-                        <mat-option value="OTHER">Otro</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-12 col-md-auto">
-                <div class="d-flex gap-2">
-                    <button mat-stroked-button class="flex-fill" matTooltip="Limpiar filtros" (click)="clear.emit()">
-                        <mat-icon>restart_alt</mat-icon>
-                        <span class="d-md-none d-xl-inline">Limpiar</span>
-                    </button>
-
-                    <button mat-flat-button color="primary" class="flex-fill" (click)="search.emit()">
+                    <button mat-flat-button color="primary" type="button" class="main-search-button"
+                        (click)="search.emit()">
                         <mat-icon>search</mat-icon>
-                        <span class="d-md-none d-xl-inline">Buscar</span>
+                        Buscar venta
                     </button>
                 </div>
-            </div>
 
-        </div>
-    </mat-expansion-panel>
-</mat-accordion>
+                <!-- FILTROS SECUNDARIOS -->
+                <div class="filters-grid">
+                    <!-- CLIENTE -->
+                    <mat-form-field appearance="outline" class="filter-field">
+                        <mat-label>Cliente</mat-label>
+
+                        <mat-icon matPrefix> person_outline </mat-icon>
+
+                        <mat-select [(ngModel)]="filter.customer_id" (selectionChange)="customerChange.emit()">
+                            <mat-option [value]="null"> Todos los clientes </mat-option>
+
+                            <mat-option *ngFor="let item of customers" [value]="item.Id">
+                                {{ item.NombreCliente }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- SUCURSAL -->
+                    <mat-form-field appearance="outline" class="filter-field">
+                        <mat-label>Sucursal</mat-label>
+
+                        <mat-icon matPrefix> storefront </mat-icon>
+
+                        <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
+                            <mat-option [value]="null"> Todas las sucursales </mat-option>
+
+                            <mat-option *ngFor="let item of branches" [value]="item.Id">
+                                {{ item.Nombre }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- ESTADO -->
+                    <mat-form-field appearance="outline" class="filter-field">
+                        <mat-label>Estado de venta</mat-label>
+
+                        <mat-icon matPrefix> task_alt </mat-icon>
+
+                        <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
+                            <mat-option [value]="null"> Todos los estados </mat-option>
+
+                            <mat-option value="PENDING"> Pendiente </mat-option>
+
+                            <mat-option value="COMPLETED"> Completada </mat-option>
+
+                            <mat-option value="CANCELLED"> Cancelada </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- SUNAT -->
+                    <mat-form-field appearance="outline" class="filter-field">
+                        <mat-label>Estado SUNAT</mat-label>
+
+                        <mat-icon matPrefix> verified </mat-icon>
+
+                        <mat-select [(ngModel)]="filter.sunat_status" (selectionChange)="sunatChange.emit()">
+                            <mat-option [value]="null"> Todos los estados </mat-option>
+
+                            <mat-option value="NO_ENVIADO"> No enviado </mat-option>
+
+                            <mat-option value="PENDIENTE"> Pendiente </mat-option>
+
+                            <mat-option value="ACEPTADO"> Aceptado </mat-option>
+
+                            <mat-option value="RECHAZADO"> Rechazado </mat-option>
+
+                            <mat-option value="ERROR"> Error </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- MÉTODO DE PAGO -->
+                    <mat-form-field appearance="outline" class="filter-field">
+                        <mat-label>Método de pago</mat-label>
+
+                        <mat-icon matPrefix> payments </mat-icon>
+
+                        <mat-select [(ngModel)]="filter.payment_method" (selectionChange)="payment_methodChange.emit()">
+                            <mat-option [value]="null"> Todos los métodos </mat-option>
+
+                            <mat-option value="CASH"> Efectivo </mat-option>
+
+                            <mat-option value="CARD"> Tarjeta </mat-option>
+
+                            <mat-option value="TRANSFER"> Transferencia </mat-option>
+
+                            <mat-option value="YAPE"> Yape </mat-option>
+
+                            <mat-option value="PLIN"> Plin </mat-option>
+
+                            <mat-option value="OTHER"> Otro </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <!-- ACCIONES -->
+                <div class="filters-footer">
+                    <div class="filters-help">
+                        <mat-icon>info</mat-icon>
+
+                        <span>
+                            Los filtros desplegables se aplican automáticamente. También
+                            puedes presionar Enter para buscar.
+                        </span>
+                    </div>
+
+                    <div class="filters-actions">
+                        <button mat-stroked-button type="button" class="clear-button"
+                            matTooltip="Limpiar todos los filtros" (click)="clear.emit()">
+                            <mat-icon>restart_alt</mat-icon>
+                            Limpiar filtros
+                        </button>
+
+                        <button mat-flat-button color="primary" type="button" class="apply-button"
+                            (click)="search.emit()">
+                            <mat-icon>filter_alt</mat-icon>
+                            Aplicar filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</section>

@@ -1,57 +1,85 @@
-<div class="welcome-card">
-  <div class="welcome-content">
-    <div class="welcome-icon">
-      <mat-icon> store </mat-icon>
-    </div>
+<section class="welcome-card">
+  <div class="welcome-main">
+    <div class="welcome-info">
+      <div class="welcome-badge">
+        <mat-icon>dashboard</mat-icon>
+        Resumen general
+      </div>
 
-    <div class="welcome-text">
-      <h1>Bienvenido a NexoPOS</h1>
+      <h1>
+        Bienvenido,
+        <span>{{ nombreUsuario }}</span>
+      </h1>
 
-      <p>
-        Hola
-        <strong>{{ nombreUsuario }}</strong
-        >, aquí tienes el resumen general de tu negocio.
-      </p>
+      <p>Consulta rápidamente el estado general de tu negocio.</p>
 
-      <span class="date">
+      <div class="welcome-date">
         <mat-icon>calendar_today</mat-icon>
 
-        {{ FechaActual | date: "EEEE, dd MMMM yyyy" }}
-      </span>
+        <span>
+          {{ FechaActual | date: "EEEE, dd MMMM yyyy" }}
+        </span>
+      </div>
+    </div>
+
+    <div class="welcome-illustration">
+      <div class="illustration-icon">
+        <mat-icon>storefront</mat-icon>
+      </div>
+
+      <span>NexoPOS</span>
     </div>
   </div>
 
   <div class="welcome-stats">
-    <div class="stat">
-      <mat-icon> inventory_2 </mat-icon>
+    <article class="stat-card stat-products">
+      <div class="stat-icon">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
 
-      <div>
-        <span> Productos </span>
+      <div class="stat-content">
+        <span>Productos registrados</span>
 
         <strong>
           {{ resumen?.total_products || 0 }}
         </strong>
+
+        <small> Productos disponibles </small>
       </div>
-    </div>
+    </article>
 
-    <div class="stat">
-      <mat-icon> point_of_sale </mat-icon>
-
-      <div>
-        <span> Ventas del mes </span>
-
-        <strong> {{ moneda }} {{ resumen?.sales_month || "0.00" }} </strong>
+    <article class="stat-card stat-sales">
+      <div class="stat-icon">
+        <mat-icon>trending_up</mat-icon>
       </div>
-    </div>
 
-    <div class="stat">
-      <mat-icon> shopping_cart </mat-icon>
+      <div class="stat-content">
+        <span>Ventas del mes</span>
 
-      <div>
-        <span> Compras del mes </span>
+        <strong>
+          {{ moneda }}
+          {{ resumen?.sales_month || "0.00" }}
+        </strong>
 
-        <strong> {{ moneda }} {{ resumen?.purchases_month || "0.00" }} </strong>
+        <small> Ingresos acumulados </small>
       </div>
-    </div>
+    </article>
+
+    <article class="stat-card stat-purchases">
+      <div class="stat-icon">
+        <mat-icon>shopping_cart</mat-icon>
+      </div>
+
+      <div class="stat-content">
+        <span>Compras del mes</span>
+
+        <strong>
+          {{ moneda }}
+          {{ resumen?.purchases_month || "0.00" }}
+        </strong>
+
+        <small> Egresos registrados </small>
+      </div>
+    </article>
   </div>
-</div>
+</section>

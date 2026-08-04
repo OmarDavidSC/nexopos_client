@@ -1,24 +1,139 @@
-<mat-card class="chart-card">
-  <div class="card-header">
-    <div>
-      <h3>Métodos de Pago</h3>
+<section class="payment-methods-panel">
+  <!-- CABECERA -->
+  <header class="panel-header">
+    <div class="panel-title">
+      <div class="panel-title__icon">
+        <mat-icon>payments</mat-icon>
+      </div>
 
-      <span>Distribución de ventas por método de pago</span>
+      <div>
+        <span class="panel-label"> Distribución de ingresos </span>
+
+        <h3>Métodos de pago</h3>
+
+        <p>Compara los importes recibidos por cada método de pago.</p>
+      </div>
     </div>
 
-    <div class="icon">
-      <mat-icon>payments</mat-icon>
+    <span class="methods-count">
+      <mat-icon>account_balance_wallet</mat-icon>
+
+      {{ totalMetodos }}
+      {{ totalMetodos === 1 ? "método" : "métodos" }}
+    </span>
+  </header>
+
+  <!-- INDICADORES -->
+  <div class="payment-summary" *ngIf="Datos.length > 0">
+    <!-- TOTAL -->
+    <article class="summary-item">
+      <div class="summary-icon total-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Total recibido</span>
+
+        <strong> S/ {{ totalRecaudado | number: "1.2-2" }} </strong>
+      </div>
+    </article>
+
+    <!-- MÉTODO PRINCIPAL -->
+    <article class="summary-item">
+      <div class="summary-icon main-icon">
+        <mat-icon>emoji_events</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Método principal</span>
+
+        <strong>
+          {{ metodoPrincipal }}
+        </strong>
+
+        <small> S/ {{ montoMetodoPrincipal | number: "1.2-2" }} </small>
+      </div>
+    </article>
+
+    <!-- PARTICIPACIÓN -->
+    <article class="summary-item">
+      <div class="summary-icon percentage-icon">
+        <mat-icon>percent</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Mayor participación</span>
+
+        <strong> {{ porcentajePrincipal | number: "1.1-1" }}% </strong>
+
+        <small> Del importe total </small>
+      </div>
+    </article>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="payment-content" *ngIf="Datos.length > 0">
+    <!-- GRÁFICO -->
+    <div class="chart-container" *ngIf="chartOptions">
+      <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions"
+        [dataLabels]="chartOptions.dataLabels" [xaxis]="chartOptions.xaxis" [yaxis]="chartOptions.yaxis"
+        [tooltip]="chartOptions.tooltip" [grid]="chartOptions.grid" [colors]="chartOptions.colors">
+      </apx-chart>
+    </div>
+
+    <!-- DETALLE -->
+    <div class="methods-list">
+      <div class="methods-list__header">
+        <div>
+          <mat-icon>list_alt</mat-icon>
+          <strong>Detalle por método</strong>
+        </div>
+
+        <span> Participación </span>
+      </div>
+
+      <article class="method-item" *ngFor="let item of metodosProcesados; let i = index">
+        <div class="method-icon" [ngClass]="getMetodoClase(item.payment_method)">
+          <mat-icon>
+            {{ getMetodoIcono(item.payment_method) }}
+          </mat-icon>
+        </div>
+
+        <div class="method-information">
+          <div class="method-name">
+            <strong>
+              {{ item.nombre }}
+            </strong>
+
+            <span> {{ item.porcentaje | number: "1.1-1" }}% </span>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-value" [style.width.%]="item.porcentaje"
+              [ngClass]="getMetodoClase(item.payment_method)"></div>
+          </div>
+
+          <div class="method-amount">
+            <span> Total recibido </span>
+
+            <strong> S/ {{ item.total_amount | number: "1.2-2" }} </strong>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 
-  <apx-chart
-    *ngIf="chartOptions"
-    [series]="chartOptions.series"
-    [chart]="chartOptions.chart"
-    [labels]="chartOptions.labels"
-    [legend]="chartOptions.legend"
-    [tooltip]="chartOptions.tooltip"
-    [dataLabels]="chartOptions.dataLabels"
-  >
-  </apx-chart>
-</mat-card>
+  <!-- ESTADO VACÍO -->
+  <div class="empty-state" *ngIf="Datos.length === 0">
+    <div class="empty-icon">
+      <mat-icon>payments</mat-icon>
+    </div>
+
+    <h4>No hay métodos de pago registrados</h4>
+
+    <p>
+      Modifica los filtros o el periodo para visualizar la distribución de
+      pagos.
+    </p>
+  </div>
+</section>
