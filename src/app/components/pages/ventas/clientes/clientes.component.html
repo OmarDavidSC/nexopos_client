@@ -1,123 +1,157 @@
-<!-- administracion-tipo-incidencias.component.html -->
-
-<div class="contenedor-admin">
-    <!-- HEADER -->
-    <app-adm-header [descripcion]="'Gestión y mantenimiento de clientes registrados'"
-        [breadcrumbs]="[{nombre:'Ventas'},{nombre:'Administración de Clientes'}]" [visible]="true"
-        [textoBoton]="'Nuevo Cliente'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
+<div class="container-fluid">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de clientes registrados'" [breadcrumbs]="[
+      { nombre: 'Ventas' },
+      { nombre: 'Administración de Clientes' },
+    ]" [visible]="true" [textoBoton]="'Nuevo Cliente'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+        [rutaRegreso]="'/inicio'">
     </app-adm-header>
-    <!-- TABLA -->
-    <div class="table-container">
-        <!-- LOADING -->
-        <div *ngIf="Loading" class="loading-overlay">
-            <div class="loading-box">
-                <mat-spinner diameter="42"></mat-spinner>
-                <span>
-                    Cargando clientes...
-                </span>
+
+    <section class="clients-panel">
+        <!-- RESUMEN -->
+        <div class="clients-toolbar">
+            <div class="clients-summary">
+                <div class="summary-icon">
+                    <mat-icon>groups</mat-icon>
+                </div>
+                <div>
+                    <strong>Clientes registrados</strong>
+                    <span> {{ ListaClientes.length }} {{ ListaClientes.length === 1 ? "cliente" : "clientes" }} </span>
+                </div>
+            </div>
+            <div class="toolbar-label">
+                <mat-icon>table_rows</mat-icon>
+                Vista de tabla
             </div>
         </div>
-        <!-- TABLA -->
-        <div class="table-responsive">
-            <table mat-table [dataSource]="ListaClientes" class="tabla-admin">
-                <ng-container matColumnDef="TipoDocumento">
-                    <th mat-header-cell *matHeaderCellDef> Tipo Documento </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.TipoDocumento}}
+        <!-- CONTENEDOR -->
+        <div class="table-container">
+            <!-- LOADING -->
+            <div *ngIf="Loading" class="loading-overlay">
+                <div class="loading-box">
+                    <mat-spinner diameter="40"></mat-spinner>
+                    <span> Cargando clientes... </span>
+                </div>
+            </div>
+            <!-- TABLA -->
+            <div class="table-responsive" *ngIf="ListaClientes.length > 0">
+                <table mat-table [dataSource]="ListaClientes" class="tabla-admin">
+                    <!-- CLIENTE -->
+                    <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef>Cliente</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="client-cell">
+                                <div class="client-avatar">
+                                    <mat-icon> {{element.TipoDocumento === "RUC" ? "business" : "person" }}</mat-icon>
+                                </div>
+                                <div class="client-info">
+                                    <strong [matTooltip]="element.Nombre">
+                                        {{ element.NombreCliente || "Cliente sin nombre" }}
+                                    </strong>
+                                    <span> {{ element.TipoDocumento === "RUC"? "Cliente empresarial": "Cliente registrado"}} </span>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="NumeroDocumento">
-                    <th mat-header-cell *matHeaderCellDef> Numero Documento </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.NumeroDocumento}}
-                                </div>
+                        </td>
+                    </ng-container>
+                    <!-- TIPO DOCUMENTO -->
+                    <ng-container matColumnDef="TipoDocumento">
+                        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="document-type-badge" [class.document-ruc]="element.TipoDocumento === 'RUC'"
+                                [class.document-dni]="element.TipoDocumento === 'DNI'">
+                                {{ element.TipoDocumento || "SIN TIPO" }}
+                            </span>
+                        </td>
+                    </ng-container>
+                    <!-- NÚMERO DOCUMENTO -->
+                    <ng-container matColumnDef="NumeroDocumento">
+                        <th mat-header-cell *matHeaderCellDef>Documento</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="document-value">
+                                <mat-icon>badge</mat-icon>
+                                <strong>
+                                    {{ element.NumeroDocumento || "No registrado" }}
+                                </strong>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Nombre}}
-                                </div>
+                        </td>
+                    </ng-container>
+                    <!-- TELÉFONO -->
+                    <ng-container matColumnDef="Telefono">
+                        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="contact-value">
+                                <mat-icon>phone</mat-icon>
+                                <span>
+                                    {{ element.Telefono || "No registrado" }}
+                                </span>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Telefono">
-                    <th mat-header-cell *matHeaderCellDef> Telefono</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Telefono}}
-                                </div>
+                        </td>
+                    </ng-container>
+                    <!-- CORREO -->
+                    <ng-container matColumnDef="Correo">
+                        <th mat-header-cell *matHeaderCellDef>Correo electrónico</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="contact-value email-value" [matTooltip]="element.Correo">
+                                <mat-icon>mail_outline</mat-icon>
+                                <span>
+                                    {{ element.Correo || "No registrado" }}
+                                </span>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Correo">
-                    <th mat-header-cell *matHeaderCellDef> Correo</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Correo}}
-                                </div>
+                        </td>
+                    </ng-container>
+                    <!-- DIRECCIÓN -->
+                    <ng-container matColumnDef="Direccion">
+                        <th mat-header-cell *matHeaderCellDef>Dirección</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="address-value" [matTooltip]="element.Direccion">
+                                <mat-icon>location_on</mat-icon>
+                                <span>{{ element.Direccion || "No registrada" }} </span>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Direccion">
-                    <th mat-header-cell *matHeaderCellDef> Direccion</th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Direccion}}
-                                </div>
+                        </td>
+                    </ng-container>
+                    <!-- ACCIONES -->
+                    <ng-container matColumnDef="Acciones">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header">
+                            Acciones
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="actions-box">
+                                <button mat-icon-button type="button" class="action-button edit-action"
+                                    matTooltip="Editar cliente" (click)="eventoMostrarPopupEditar(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button *ngIf="tienePermiso(Role, ['administrator'])" mat-icon-button type="button"
+                                    class="action-button delete-action" matTooltip="Eliminar cliente"
+                                    (click)="eventoEliminar(element)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <!-- ACCIONES -->
-                <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Acciones
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="acciones-box">
-                            <button (click)="eventoMostrarPopupEditar(element)" mat-icon-button
-                                class="btn-accion btn-editar" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button *ngIf="tienePermiso(Role, ['administrator'])" (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
-                                matTooltip="Eliminar">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="fila-tabla">
-                </tr>
-            </table>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+                </table>
+            </div>
+            <!-- ESTADO VACÍO -->
+            <div class="empty-state" *ngIf="!Loading && ListaClientes.length === 0">
+                <div class="empty-icon">
+                    <mat-icon>groups</mat-icon>
+                </div>
+                <h3>No hay clientes registrados</h3>
+                <p>
+                    Registra clientes para asociarlos a ventas, comprobantes y operaciones
+                    comerciales.
+                </p>
+                <button mat-flat-button color="primary" type="button" (click)="eventoMostrarPopupRegistrar()">
+                    <mat-icon>person_add</mat-icon>
+                    Nuevo cliente
+                </button>
+            </div>
+            <!-- PAGINADOR -->
+            <div class="paginator-container" *ngIf="ListaClientes.length > 0">
+                <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
+                    (cambiarPaginaEvent)="OnchangedPage($event)">
+                </app-adm-paginator>
+            </div>
         </div>
-        <!-- PAGINADOR -->
-        <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
-            (cambiarPaginaEvent)="OnchangedPage($event)">
-        </app-adm-paginator>
-    </div>
+    </section>
 </div>

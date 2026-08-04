@@ -1,30 +1,87 @@
-<mat-card class="chart-card">
+<section class="daily-sales-card">
+    <header class="chart-header">
+        <div class="chart-title">
+            <div class="chart-title__icon">
+                <mat-icon>monitoring</mat-icon>
+            </div>
 
-    <div class="card-header">
+            <div>
+                <span class="chart-label"> Rendimiento diario </span>
 
-        <div>
+                <h3>Ventas por día</h3>
 
-            <h3>Ventas por Día</h3>
-
-            <span>Evolución diaria de las ventas</span>
-
+                <p>Evolución de los ingresos durante el periodo seleccionado.</p>
+            </div>
         </div>
 
-        <div class="icon">
+        <span class="chart-period-badge">
+            <mat-icon>calendar_today</mat-icon>
 
-            <mat-icon>show_chart</mat-icon>
+            {{ totalDias }}
+            {{ totalDias === 1 ? "día" : "días" }}
+        </span>
+    </header>
 
-        </div>
+    <div class="chart-summary" *ngIf="Datos.length > 0">
+        <article class="summary-item">
+            <div class="summary-icon total-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
 
+            <div>
+                <span>Total vendido</span>
+
+                <strong> S/ {{ totalVendido | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <article class="summary-item">
+            <div class="summary-icon average-icon">
+                <mat-icon>query_stats</mat-icon>
+            </div>
+
+            <div>
+                <span>Promedio diario</span>
+
+                <strong> S/ {{ promedioDiario | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <article class="summary-item best-day-item">
+            <div class="summary-icon best-icon">
+                <mat-icon>emoji_events</mat-icon>
+            </div>
+
+            <div>
+                <span>Mejor día</span>
+
+                <strong>
+                    {{ mejorDiaFecha }}
+                </strong>
+
+                <small> S/ {{ mejorDiaMonto | number: "1.2-2" }} </small>
+            </div>
+        </article>
     </div>
 
-    <div class="chart-container">
-
-        <apx-chart *ngIf="chartOptions" [series]="chartOptions.series" [chart]="chartOptions.chart"
-            [stroke]="chartOptions.stroke" [dataLabels]="chartOptions.dataLabels" [xaxis]="chartOptions.xaxis"
-            [yaxis]="chartOptions.yaxis" [tooltip]="chartOptions.tooltip">
+    <div class="chart-container" *ngIf="Datos.length > 0 && chartOptions">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [stroke]="chartOptions.stroke"
+            [dataLabels]="chartOptions.dataLabels" [xaxis]="chartOptions.xaxis" [yaxis]="chartOptions.yaxis"
+            [tooltip]="chartOptions.tooltip" [fill]="chartOptions.fill" [grid]="chartOptions.grid"
+            [markers]="chartOptions.markers" [colors]="chartOptions.colors">
         </apx-chart>
-
     </div>
 
-</mat-card>
+    <div class="empty-state" *ngIf="Datos.length === 0">
+        <div class="empty-icon">
+            <mat-icon>monitoring</mat-icon>
+        </div>
+
+        <h4>No hay ventas para mostrar</h4>
+
+        <p>
+            Selecciona otro periodo o modifica los filtros para visualizar
+            información.
+        </p>
+    </div>
+</section>

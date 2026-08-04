@@ -1,79 +1,134 @@
-<!-- administracion-tipo-incidencias.component.html -->
-
-<div class="contenedor-admin">
-    <!-- HEADER -->
-    <app-adm-header [descripcion]="'Gestión y mantenimiento de marcas registradas'"
-        [breadcrumbs]="[{nombre:'Almacen'},{nombre:'Administración de Marcas'}]" [visible]="true"
-        [textoBoton]="'Nueva Marca'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
+<div class="container-fluid">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de marcas registradas'" [breadcrumbs]="[
+      { nombre: 'Almacén' },
+      { nombre: 'Administración de Marcas' },
+    ]" [visible]="true" [textoBoton]="'Nueva Marca'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+        [rutaRegreso]="'/inicio'">
     </app-adm-header>
-    <!-- TABLA -->
-    <div class="table-container">
-        <!-- LOADING -->
-        <div *ngIf="Loading" class="loading-overlay">
-            <div class="loading-box">
-                <mat-spinner diameter="42"></mat-spinner>
-                <span>
-                    Cargando marcas...
-                </span>
+
+    <section class="brands-panel">
+        <div class="brands-toolbar">
+            <div class="brands-summary">
+                <div class="summary-icon">
+                    <mat-icon>sell</mat-icon>
+                </div>
+
+                <div>
+                    <strong>Marcas registradas</strong>
+
+                    <span>
+                        {{ ListaMarcas.length }}
+                        {{ ListaMarcas.length === 1 ? "marca" : "marcas" }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="toolbar-label">
+                <mat-icon>table_rows</mat-icon>
+                Vista de tabla
             </div>
         </div>
-        <!-- TABLA -->
-        <div class="table-responsive">
-            <table mat-table [dataSource]="ListaMarcas" class="tabla-admin">
-                <!-- NOMBRE -->
-                <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Nombre}}
+
+        <div class="table-container">
+            <!-- LOADING -->
+            <div *ngIf="Loading" class="loading-overlay">
+                <div class="loading-box">
+                    <mat-spinner diameter="38"></mat-spinner>
+
+                    <span> Cargando marcas... </span>
+                </div>
+            </div>
+
+            <!-- TABLA -->
+            <div class="table-responsive">
+                <table mat-table [dataSource]="ListaMarcas" class="tabla-admin">
+                    <!-- MARCA -->
+                    <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef>Marca</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="brand-cell">
+                                <div class="brand-icon">
+                                    <mat-icon>sell</mat-icon>
                                 </div>
-                                <!-- <div class="codigo-secundario">
-                                    Tipo de incidencia
-                                </div> -->
+
+                                <div class="brand-info">
+                                    <strong>
+                                        {{ element.Nombre }}
+                                    </strong>
+
+                                    <span> Marca comercial </span>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <!-- ESTADO -->
-                <ng-container matColumnDef="Estado">
-                    <th mat-header-cell *matHeaderCellDef>Estado</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span class="badge-estado" [ngClass]="{
-                                'estado-activo': element.Estado === 'Activo',
-                                'estado-inactivo': element.Estado !== 'Activo'
-                            }">
-                            {{element.Estado}}
-                        </span>
-                    </td>
-                </ng-container>
-                <!-- ACCIONES -->
-                <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Acciones
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="acciones-box">
-                            <button (click)="eventoMostrarPopupEditar(element)" mat-icon-button
-                                class="btn-accion btn-editar" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
-                                matTooltip="Eliminar">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="fila-tabla">
-                </tr>
-            </table>
+                        </td>
+                    </ng-container>
+
+                    <!-- ESTADO -->
+                    <ng-container matColumnDef="Estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <span class="status-badge" [class.status-active]="element.Estado === 'Activo'"
+                                [class.status-inactive]="element.Estado !== 'Activo'">
+                                <span class="status-dot"></span>
+
+                                {{ element.Estado }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- ACCIONES -->
+                    <ng-container matColumnDef="Acciones">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header">
+                            Acciones
+                        </th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="actions-box">
+                                <button type="button" mat-icon-button class="action-button edit-action"
+                                    matTooltip="Editar marca" (click)="eventoMostrarPopupEditar(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button type="button" mat-icon-button class="action-button delete-action"
+                                    matTooltip="Eliminar marca" (click)="eventoEliminar(element)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+                </table>
+            </div>
+
+            <!-- ESTADO VACÍO -->
+            <div class="empty-state" *ngIf="!Loading && ListaMarcas.length === 0">
+                <div class="empty-icon">
+                    <mat-icon>sell</mat-icon>
+                </div>
+
+                <h3>No hay marcas registradas</h3>
+
+                <p>
+                    Registra una marca para organizar mejor los productos de tu
+                    inventario.
+                </p>
+
+                <button mat-flat-button color="primary" type="button" (click)="eventoMostrarPopupRegistrar()">
+                    <mat-icon>add</mat-icon>
+                    Nueva marca
+                </button>
+            </div>
+
+            <!-- PAGINADOR -->
+            <div class="paginator-container" *ngIf="ListaMarcas.length > 0">
+                <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
+                    (cambiarPaginaEvent)="OnchangedPage($event)">
+                </app-adm-paginator>
+            </div>
         </div>
-        <!-- PAGINADOR -->
-        <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
-            (cambiarPaginaEvent)="OnchangedPage($event)">
-        </app-adm-paginator>
-    </div>
+    </section>
 </div>

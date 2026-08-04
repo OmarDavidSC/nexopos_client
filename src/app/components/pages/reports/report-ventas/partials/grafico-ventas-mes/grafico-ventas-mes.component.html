@@ -1,27 +1,93 @@
-<mat-card class="chart-card">
-  <div class="card-header">
-    <div>
-      <h3>Ventas por Mes</h3>
+<section class="monthly-sales-card">
+  <!-- CABECERA -->
+  <header class="chart-header">
+    <div class="chart-title">
+      <div class="chart-title__icon">
+        <mat-icon>bar_chart</mat-icon>
+      </div>
 
-      <span>Comparativo mensual de ventas</span>
+      <div>
+        <span class="chart-label"> Comparativo mensual </span>
+
+        <h3>Ventas por mes</h3>
+
+        <p>Compara los ingresos y el rendimiento obtenido durante cada mes.</p>
+      </div>
     </div>
 
-    <div class="icon">
-      <mat-icon>bar_chart</mat-icon>
-    </div>
+    <span class="chart-period-badge">
+      <mat-icon>date_range</mat-icon>
+
+      {{ totalMeses }}
+      {{ totalMeses === 1 ? "mes" : "meses" }}
+    </span>
+  </header>
+
+  <!-- INDICADORES -->
+  <div class="chart-summary" *ngIf="Datos.length > 0">
+    <!-- TOTAL -->
+    <article class="summary-item">
+      <div class="summary-icon total-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Total vendido</span>
+
+        <strong> S/ {{ totalVendido | number: "1.2-2" }} </strong>
+      </div>
+    </article>
+
+    <!-- PROMEDIO -->
+    <article class="summary-item">
+      <div class="summary-icon average-icon">
+        <mat-icon>calculate</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Promedio mensual</span>
+
+        <strong> S/ {{ promedioMensual | number: "1.2-2" }} </strong>
+      </div>
+    </article>
+
+    <!-- MEJOR MES -->
+    <article class="summary-item best-month-item">
+      <div class="summary-icon best-icon">
+        <mat-icon>emoji_events</mat-icon>
+      </div>
+
+      <div class="summary-content">
+        <span>Mejor mes</span>
+
+        <strong>
+          {{ mejorMesNombre }}
+        </strong>
+
+        <small> S/ {{ mejorMesMonto | number: "1.2-2" }} </small>
+      </div>
+    </article>
   </div>
 
-  <div class="chart-container">
-    <apx-chart
-      *ngIf="chartOptions"
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [plotOptions]="chartOptions.plotOptions"
-      [dataLabels]="chartOptions.dataLabels"
-      [xaxis]="chartOptions.xaxis"
-      [yaxis]="chartOptions.yaxis"
-      [tooltip]="chartOptions.tooltip"
-    >
+  <!-- GRÁFICO -->
+  <div class="chart-container" *ngIf="Datos.length > 0 && chartOptions">
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions"
+      [dataLabels]="chartOptions.dataLabels" [xaxis]="chartOptions.xaxis" [yaxis]="chartOptions.yaxis"
+      [tooltip]="chartOptions.tooltip" [grid]="chartOptions.grid" [colors]="chartOptions.colors"
+      [fill]="chartOptions.fill">
     </apx-chart>
   </div>
-</mat-card>
+
+  <!-- ESTADO VACÍO -->
+  <div class="empty-state" *ngIf="Datos.length === 0">
+    <div class="empty-icon">
+      <mat-icon>bar_chart</mat-icon>
+    </div>
+
+    <h4>No hay ventas mensuales</h4>
+
+    <p>
+      Modifica el periodo o los filtros para visualizar el comparativo mensual.
+    </p>
+  </div>
+</section>

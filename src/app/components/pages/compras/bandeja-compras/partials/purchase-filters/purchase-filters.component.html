@@ -1,54 +1,91 @@
-<div class="filters-card">
-    <div class="row g-3">
-        <!-- Buscar -->
-        <div class="col-xl-3 col-lg-12">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Buscar compra</mat-label>
-                <mat-icon matPrefix>search</mat-icon>
-                <input matInput placeholder="Proveedor, comprobante o serie..." [(ngModel)]="filter.search"
-                    (keyup.enter)="search.emit()">
-            </mat-form-field>
+<section class="purchase-filters">
+    <div class="filters-header">
+        <div class="filters-title">
+            <div class="filters-title__icon">
+                <mat-icon>filter_alt</mat-icon>
+            </div>
+
+            <div>
+                <h3>Filtrar compras</h3>
+
+                <p>Busca por proveedor, comprobante, sucursal o estado.</p>
+            </div>
         </div>
-        <!-- Proveedor -->
-        <div class="col-xl-3 col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Proveedor</mat-label>
-                <mat-select [(ngModel)]="filter.supplier_id" (selectionChange)="supplierChange.emit()">
-                    <mat-option [value]="null">Todos</mat-option>
-                    <mat-option *ngFor="let item of suppliers" [value]="item.Id">
-                        {{item.NombreEmpresa}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-xl-2 col-md-6">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Sucursal</mat-label>
-                <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
-                    <mat-option [value]="null">Todos</mat-option>
-                    <mat-option *ngFor="let item of branches" [value]="item.Id">
-                        {{item.Nombre}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <!-- Estado -->
-        <div class="col-xl-2 col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Estado</mat-label>
-                <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
-                    <mat-option [value]="null">Todos</mat-option>
-                    <mat-option value="PENDING">Pendiente</mat-option>
-                    <mat-option value="COMPLETED">Completada</mat-option>
-                    <mat-option value="CANCELLED">Cancelada</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <!-- Limpiar -->
-        <div class="col-xl-2 col-md-2 d-grid">
-            <button mat-icon-button class="btn-clear" matTooltip="Limpiar filtros" (click)="clear.emit()">
-                <mat-icon>restart_alt</mat-icon>
-            </button>
-        </div>
+
+        <button mat-button type="button" class="clear-all-button" matTooltip="Limpiar todos los filtros"
+            (click)="clear.emit()">
+            <mat-icon>restart_alt</mat-icon>
+            Limpiar filtros
+        </button>
     </div>
-</div>
+
+    <div class="filters-grid">
+        <!-- BUSCAR -->
+        <mat-form-field appearance="outline" class="filter-field search-field">
+            <mat-label>Buscar compra</mat-label>
+
+            <mat-icon matPrefix> search </mat-icon>
+
+            <input matInput autocomplete="off" placeholder="Proveedor, comprobante o serie" [(ngModel)]="filter.search"
+                (keyup.enter)="search.emit()" />
+
+            <button *ngIf="filter.search" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                (click)="filter.search = ''; search.emit()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <!-- PROVEEDOR -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Proveedor</mat-label>
+
+            <mat-icon matPrefix> local_shipping </mat-icon>
+
+            <mat-select [(ngModel)]="filter.supplier_id" (selectionChange)="supplierChange.emit()">
+                <mat-option [value]="null"> Todos los proveedores </mat-option>
+
+                <mat-option *ngFor="let item of suppliers" [value]="item.Id">
+                    {{ item.NombreEmpresa }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- SUCURSAL -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Sucursal</mat-label>
+
+            <mat-icon matPrefix> storefront </mat-icon>
+
+            <mat-select [(ngModel)]="filter.branch_id" (selectionChange)="branchChange.emit()">
+                <mat-option [value]="null"> Todas las sucursales </mat-option>
+
+                <mat-option *ngFor="let item of branches" [value]="item.Id">
+                    {{ item.Nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- ESTADO -->
+        <mat-form-field appearance="outline" class="filter-field">
+            <mat-label>Estado</mat-label>
+
+            <mat-icon matPrefix> task_alt </mat-icon>
+
+            <mat-select [(ngModel)]="filter.status" (selectionChange)="statusChange.emit()">
+                <mat-option [value]="null"> Todos los estados </mat-option>
+
+                <mat-option value="PENDING"> Pendiente </mat-option>
+
+                <mat-option value="COMPLETED"> Completada </mat-option>
+
+                <mat-option value="CANCELLED"> Cancelada </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- BUSCAR -->
+        <button mat-flat-button color="primary" type="button" class="search-button" (click)="search.emit()">
+            <mat-icon>search</mat-icon>
+            Buscar
+        </button>
+    </div>
+</section>

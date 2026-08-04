@@ -1,75 +1,86 @@
-<div class="row g-0 border-top border-bottom bg-white sales-summary">
-
-    <div class="col-6 col-md-3">
-        <div class="d-flex align-items-center gap-3 px-3 py-2 summary-item">
-            <div class="summary-icon total">
+<section class="container-fluid sale-summary">
+    <!-- TOTAL VENTAS -->
+    <article class="summary-card summary-total">
+        <div class="summary-card__top">
+            <div class="summary-icon">
                 <mat-icon>point_of_sale</mat-icon>
             </div>
 
-            <div class="min-width-0">
-                <small class="d-block text-muted">Total ventas</small>
-                <strong class="summary-value">
-                    {{ summary?.total_sales || 0 }}
-                </strong>
-                <span class="d-block text-muted summary-description">
-                    Ventas registradas
-                </span>
-            </div>
+            <span class="summary-badge"> Ventas </span>
         </div>
-    </div>
 
-    <div class="col-6 col-md-3">
-        <div class="d-flex align-items-center gap-3 px-3 py-2 summary-item">
-            <div class="summary-icon completed">
+        <div class="summary-card__content">
+            <span class="summary-label"> Total de ventas </span>
+
+            <strong class="summary-value">
+                {{ summary?.total_sales || 0 }}
+            </strong>
+
+            <small> Ventas registradas </small>
+        </div>
+    </article>
+
+    <!-- COMPLETADAS -->
+    <article class="summary-card summary-completed">
+        <div class="summary-card__top">
+            <div class="summary-icon">
                 <mat-icon>check_circle</mat-icon>
             </div>
 
-            <div class="min-width-0">
-                <small class="d-block text-muted">Completadas</small>
-                <strong class="summary-value">
-                    {{ summary?.completed || 0 }}
-                </strong>
-                <span class="d-block text-muted summary-description">
-                    Ventas finalizadas
-                </span>
-            </div>
+            <span class="summary-badge"> Completadas </span>
         </div>
-    </div>
 
-    <div class="col-6 col-md-3">
-        <div class="d-flex align-items-center gap-3 px-3 py-2 summary-item">
-            <div class="summary-icon cancelled">
+        <div class="summary-card__content">
+            <span class="summary-label"> Ventas completadas </span>
+
+            <strong class="summary-value">
+                {{ summary?.completed || 0 }}
+            </strong>
+
+            <small> Ventas finalizadas </small>
+        </div>
+    </article>
+
+    <!-- ANULADAS -->
+    <article class="summary-card summary-cancelled">
+        <div class="summary-card__top">
+            <div class="summary-icon">
                 <mat-icon>cancel</mat-icon>
             </div>
 
-            <div class="min-width-0">
-                <small class="d-block text-muted">Anuladas</small>
-                <strong class="summary-value">
-                    {{ summary?.cancelled || 0 }}
-                </strong>
-                <span class="d-block text-muted summary-description">
-                    Ventas anuladas
-                </span>
-            </div>
+            <span class="summary-badge"> Anuladas </span>
         </div>
-    </div>
 
-    <div class="col-6 col-md-3">
-        <div class="d-flex align-items-center gap-3 px-3 py-2 summary-item">
-            <div class="summary-icon amount">
+        <div class="summary-card__content">
+            <span class="summary-label"> Ventas anuladas </span>
+
+            <strong class="summary-value">
+                {{ summary?.cancelled || 0 }}
+            </strong>
+
+            <small> Operaciones canceladas </small>
+        </div>
+    </article>
+
+    <!-- IMPORTE TOTAL -->
+    <article class="summary-card summary-amount">
+        <div class="summary-card__top">
+            <div class="summary-icon">
                 <mat-icon>payments</mat-icon>
             </div>
 
-            <div class="min-width-0">
-                <small class="d-block text-muted">Importe total</small>
-                <strong class="summary-value amount-value">
-                    {{ moneda }} {{ summary?.total_amount || 0 | number:'1.2-2' }}
-                </strong>
-                <span class="d-block text-muted summary-description">
-                    Monto acumulado
-                </span>
-            </div>
+            <span class="summary-badge"> Ingresos </span>
         </div>
-    </div>
 
-</div>
+        <div class="summary-card__content">
+            <span class="summary-label"> Importe total </span>
+
+            <strong class="summary-value amount-value">
+                {{ moneda }}
+                {{ summary?.total_amount || 0 | number: "1.2-2" }}
+            </strong>
+
+            <small> Monto acumulado </small>
+        </div>
+    </article>
+</section>

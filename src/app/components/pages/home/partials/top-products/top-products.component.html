@@ -1,32 +1,43 @@
-<div class="card-dashboard">
+<section class="top-products-card">
   <div class="card-header">
-    <div class="icon">
-      <mat-icon>inventory_2</mat-icon>
+    <div class="header-left">
+      <div class="header-icon">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+
+      <div>
+        <h3>Productos destacados</h3>
+        <p>Productos con mayor venta</p>
+      </div>
     </div>
 
-    <div>
-      <h3>Productos destacados</h3>
-      <p>Productos con mayor venta</p>
-    </div>
+    <span class="header-badge"> Top {{ data.length }} </span>
   </div>
 
   <div class="products-list" *ngIf="data.length > 0">
-    <div class="product-item" *ngFor="let item of data; let i = index">
-      <div class="position">
-        <span>
-          {{ i + 1 }}
-        </span>
+    <article class="product-item" *ngFor="let item of data; let i = index">
+      <div class="position" [class.position-first]="i === 0" [class.position-second]="i === 1"
+        [class.position-third]="i === 2">
+        {{ i + 1 }}
       </div>
 
-      <div class="product-info">
-        <h4>
-          {{ item.name }}
-        </h4>
+      <div class="product-main">
+        <div class="product-icon">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
 
-        <small> Código: {{ item.code }} </small>
+        <div class="product-info">
+          <strong [matTooltip]="item.name">
+            {{ item.name }}
+          </strong>
+
+          <span> Código: {{ item.code || "Sin código" }} </span>
+        </div>
       </div>
 
-      <div class="product-data">
+      <div class="product-quantity">
+        <span>Cantidad</span>
+
         <strong>
           {{ item.quantity }}
         </strong>
@@ -34,13 +45,24 @@
         <small> unidades </small>
       </div>
 
-      <div class="amount">{{ moneda }} {{ item.amount }}</div>
+      <div class="product-amount">
+        <span>Importe</span>
+
+        <strong>
+          {{ moneda }}
+          {{ item.amount | number: "1.2-2" }}
+        </strong>
+      </div>
+    </article>
+  </div>
+
+  <div class="empty-state" *ngIf="data.length === 0">
+    <div class="empty-icon">
+      <mat-icon>inventory_2</mat-icon>
     </div>
-  </div>
 
-  <div class="empty" *ngIf="data.length === 0">
-    <mat-icon> inventory </mat-icon>
+    <strong> Sin productos destacados </strong>
 
-    <p>No hay ventas registradas</p>
+    <span> Aún no hay ventas registradas para mostrar. </span>
   </div>
-</div>
+</section>

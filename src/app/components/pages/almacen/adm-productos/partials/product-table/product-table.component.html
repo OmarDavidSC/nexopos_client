@@ -1,91 +1,161 @@
-<div class="table-card">
-    <!-- <div class="table-header">
-        <div>
-            <h5>Productos</h5>
-            <small>{{ total }} registros encontrados</small>
+<section class="products-table-panel">
+    <div class="table-toolbar">
+        <div class="table-summary">
+            <div class="table-summary-icon">
+                <mat-icon>inventory_2</mat-icon>
+            </div>
+
+            <div>
+                <strong>Productos registrados</strong>
+
+                <span>
+                    {{ total }}
+                    {{ total === 1 ? "producto encontrado" : "productos encontrados" }}
+                </span>
+            </div>
         </div>
-    </div> -->
-    <div class="loading-container" *ngIf="loading">
-        <mat-spinner diameter="55"></mat-spinner>
-        <p>Cargando productos...</p>
-    </div>
-    <div *ngIf="!loading">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th style="width:120px;">Código</th>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Marca</th>
-                        <th>Unidad</th>
-                        <th class="text-end">Precio Compra</th>
-                        <th class="text-end">Precio Venta</th>
-                        <th class="text-center" width="130">
-                            Acciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of products">
-                        <!-- Código -->
-                        <td>
-                            <span class="code">{{ item.Codigo }}</span>
-                        </td>
-                        <!-- Producto -->
-                        <td>
-                            <div class="fw-semibold">{{ item.Nombre }}</div>
-                        </td>
-                        <!-- Categoria -->
-                        <td>
-                            {{ item.NombreCategoria }}
-                        </td>
-                        <!-- Marca -->
-                        <td>
-                            {{ item.NombreMarca }}
-                        </td>
-                        <!-- Unidad -->
-                        <td>
-                            {{ item.NombreUnidad }}
-                        </td>
-                        <!-- Precio Compra -->
-                        <td class="text-end">
-                            {{companiaActual.SimboloMoneda}} {{ item.PrecioCompra }}
-                        </td>
-                        <!-- Precio Venta -->
-                        <td class="text-end">
-                            <strong>{{companiaActual.SimboloMoneda}} {{ item.PrecioVenta }}</strong>
-                        </td>
-                        <!-- Acciones -->
-                        <td class="text-center">
-                            <button mat-icon-button color="primary" matTooltip="Editar" (click)="edit.emit(item)">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="remove.emit(item)">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr *ngIf="products.length === 0">
-                        <td colspan="10">
-                            <div class="empty">
-                                <mat-icon style="font-size:50px;width:50px;height:50px;color:#bdbdbd;">
-                                    inventory_2
-                                </mat-icon>
-                                <h5 class="mt-3">
-                                    No existen productos registrados
-                                </h5>
-                                <p class="text-muted mb-0">
-                                    Cuando registres un producto aparecerá aquí.
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+        <div class="table-view-label">
+            <mat-icon>table_rows</mat-icon>
+            Vista de tabla
         </div>
-        <mat-paginator [length]="total" [pageSize]="10" [pageIndex]="currentPage - 1" [hidePageSize]="true"
-            showFirstLastButtons (page)="pageChange.emit($event.pageIndex + 1)">
-        </mat-paginator>
     </div>
-</div>
+
+    <div class="table-card">
+        <!-- LOADING -->
+        <div class="loading-container" *ngIf="loading">
+            <mat-spinner diameter="40"></mat-spinner>
+
+            <span> Cargando productos... </span>
+        </div>
+
+        <ng-container *ngIf="!loading">
+            <div class="table-responsive" *ngIf="products.length > 0">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Marca</th>
+                            <th>Unidad</th>
+                            <th class="text-end">Precio compra</th>
+                            <th class="text-end">Precio venta</th>
+                            <th class="text-center actions-column">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of products">
+                            <!-- PRODUCTO -->
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-icon">
+                                        <mat-icon>inventory_2</mat-icon>
+                                    </div>
+
+                                    <div class="product-info">
+                                        <strong [matTooltip]="item.Nombre">
+                                            {{ item.Nombre }}
+                                        </strong>
+
+                                        <div class="product-code-row">
+                                            <span class="product-code">
+                                                {{ item.Codigo || "SIN CÓDIGO" }}
+                                            </span>
+
+                                            <span class="barcode" *ngIf="item.CodigoBarras">
+                                                {{ item.CodigoBarras }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- CATEGORÍA -->
+                            <td>
+                                <span class="category-badge">
+                                    <mat-icon>category</mat-icon>
+
+                                    {{ item.NombreCategoria || "Sin categoría" }}
+                                </span>
+                            </td>
+
+                            <!-- MARCA -->
+                            <td>
+                                <span class="brand-value">
+                                    <mat-icon>sell</mat-icon>
+
+                                    {{ item.NombreMarca || "Sin marca" }}
+                                </span>
+                            </td>
+
+                            <!-- UNIDAD -->
+                            <td>
+                                <span class="unit-badge">
+                                    {{ item.NombreUnidad || "-" }}
+                                </span>
+                            </td>
+
+                            <!-- PRECIO COMPRA -->
+                            <td class="text-end">
+                                <div class="price-value purchase-price">
+                                    <span>Compra</span>
+
+                                    <strong>
+                                        {{ companiaActual?.SimboloMoneda }}
+                                        {{ item.PrecioCompra | number: "1.2-2" }}
+                                    </strong>
+                                </div>
+                            </td>
+
+                            <!-- PRECIO VENTA -->
+                            <td class="text-end">
+                                <div class="price-value sale-price">
+                                    <span>Venta</span>
+
+                                    <strong>
+                                        {{ companiaActual?.SimboloMoneda }}
+                                        {{ item.PrecioVenta | number: "1.2-2" }}
+                                    </strong>
+                                </div>
+                            </td>
+
+                            <!-- ACCIONES -->
+                            <td class="text-center">
+                                <div class="actions-box">
+                                    <button mat-icon-button type="button" class="action-button edit-action"
+                                        matTooltip="Editar producto" (click)="edit.emit(item)">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button type="button" class="action-button delete-action"
+                                        matTooltip="Eliminar producto" (click)="remove.emit(item)">
+                                        <mat-icon>delete_outline</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- VACÍO -->
+            <div class="empty-state" *ngIf="products.length === 0">
+                <div class="empty-icon">
+                    <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <h3>No existen productos registrados</h3>
+
+                <p>Cuando registres un producto, aparecerá en este listado.</p>
+            </div>
+
+            <!-- PAGINADOR -->
+            <div class="paginator-container" *ngIf="products.length > 0">
+                <mat-paginator [length]="total" [pageSize]="10" [pageIndex]="currentPage - 1" [hidePageSize]="true"
+                    showFirstLastButtons (page)="pageChange.emit($event.pageIndex + 1)">
+                </mat-paginator>
+            </div>
+        </ng-container>
+    </div>
+</section>

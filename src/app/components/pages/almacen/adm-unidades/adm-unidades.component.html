@@ -1,94 +1,133 @@
-<div class="contenedor-admin">
-    <!-- HEADER -->
-    <!-- <app-adm-header [titulo]="''"
-        [descripcion]="''" [totalRegistros]="TotalRegistros"
-        [textoBoton]="'Nueva Unidad'" [rutaRegreso]="'/inicio'" (accionNuevo)="eventoMostrarPopupRegistrar()"
-        [visible]="true">
-    </app-adm-header> -->
-     <app-adm-header [descripcion]="'Gestión y mantenimiento de unidades registradas'"
-        [breadcrumbs]="[{nombre:'Almacen'},{nombre:'Administración de Unidades'}]" [visible]="true"
-        [textoBoton]="'Nueva Unidad'" (accionNuevo)="eventoMostrarPopupRegistrar()" [rutaRegreso]="'/inicio'">
+<div class="container-fluid">
+    <app-adm-header [descripcion]="'Gestión y mantenimiento de unidades registradas'" [breadcrumbs]="[
+      { nombre: 'Almacén' },
+      { nombre: 'Administración de Unidades' },
+    ]" [visible]="true" [textoBoton]="'Nueva Unidad'" (accionNuevo)="eventoMostrarPopupRegistrar()"
+        [rutaRegreso]="'/inicio'">
     </app-adm-header>
-    <!-- TABLA -->
-    <div class="table-container">
-        <!-- LOADING -->
-        <div *ngIf="Loading" class="loading-overlay">
-            <div class="loading-box">
-                <mat-spinner diameter="42"></mat-spinner>
-                <span>
-                    Cargando unidades...
-                </span>
+
+    <section class="units-panel">
+        <div class="units-toolbar">
+            <div class="units-summary">
+                <div class="summary-icon">
+                    <mat-icon>straighten</mat-icon>
+                </div>
+
+                <div>
+                    <strong>Unidades registradas</strong>
+                    <span>
+                        {{ ListaUnidades.length }}
+                        {{ ListaUnidades.length === 1 ? "unidad" : "unidades" }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="toolbar-label">
+                <mat-icon>table_rows</mat-icon>
+                Vista de tabla
             </div>
         </div>
-        <!-- TABLA -->
-        <div class="table-responsive">
-            <table mat-table [dataSource]="ListaUnidades" class="tabla-admin">
-                <!-- NOMBRE -->
-                <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Nombre}}
+
+        <div class="table-container">
+            <div *ngIf="Loading" class="loading-overlay">
+                <div class="loading-box">
+                    <mat-spinner diameter="38"></mat-spinner>
+                    <span>Cargando unidades...</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table mat-table [dataSource]="ListaUnidades" class="tabla-admin">
+                    <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef>Unidad</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="unit-cell">
+                                <div class="unit-icon">
+                                    <mat-icon>straighten</mat-icon>
                                 </div>
-                                <!-- <div class="codigo-secundario">
-                                    Tipo de incidencia
-                                </div> -->
-                            </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Abreviacion">
-                    <th mat-header-cell *matHeaderCellDef> Abreviacion </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="nombre-box">
-                            <div>
-                                <div class="nombre-principal">
-                                    {{element.Abreviacion}}
+
+                                <div class="unit-info">
+                                    <strong>
+                                        {{ element.Nombre }}
+                                    </strong>
+
+                                    <span> Unidad de medida </span>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </ng-container>
-                <!-- ESTADO -->
-                <ng-container matColumnDef="Estado">
-                    <th mat-header-cell *matHeaderCellDef>Estado</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span class="badge-estado" [ngClass]="{
-                                'estado-activo': element.Estado === 'Activo',
-                                'estado-inactivo': element.Estado !== 'Activo'
-                            }">
-                            {{element.Estado}}
-                        </span>
-                    </td>
-                </ng-container>
-                <!-- ACCIONES -->
-                <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Acciones
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="acciones-box">
-                            <button (click)="eventoMostrarPopupEditar(element)" mat-icon-button
-                                class="btn-accion btn-editar" matTooltip="Editar">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                            <button (click)="eventoEliminar(element)" mat-icon-button class="btn-accion btn-eliminar"
-                                matTooltip="Eliminar">
-                                <mat-icon>delete</mat-icon>
-                            </button>
-                        </div>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="fila-tabla">
-                </tr>
-            </table>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Abreviacion">
+                        <th mat-header-cell *matHeaderCellDef>Abreviación</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <span class="abbreviation-badge">
+                                {{ element.Abreviacion }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <span class="status-badge" [class.status-active]="element.Estado === 'Activo'"
+                                [class.status-inactive]="element.Estado !== 'Activo'">
+                                <span class="status-dot"></span>
+                                {{ element.Estado }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Acciones">
+                        <th mat-header-cell *matHeaderCellDef class="actions-header">
+                            Acciones
+                        </th>
+
+                        <td mat-cell *matCellDef="let element">
+                            <div class="actions-box">
+                                <button type="button" mat-icon-button class="action-button edit-action"
+                                    matTooltip="Editar unidad" (click)="eventoMostrarPopupEditar(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button type="button" mat-icon-button class="action-button delete-action"
+                                    matTooltip="Eliminar unidad" (click)="eventoEliminar(element)">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+                </table>
+            </div>
+
+            <div class="empty-state" *ngIf="!Loading && ListaUnidades.length === 0">
+                <div class="empty-icon">
+                    <mat-icon>straighten</mat-icon>
+                </div>
+
+                <h3>No hay unidades registradas</h3>
+
+                <p>
+                    Registra una unidad para utilizarla en tus productos e inventario.
+                </p>
+
+                <button mat-flat-button color="primary" type="button" (click)="eventoMostrarPopupRegistrar()">
+                    <mat-icon>add</mat-icon>
+                    Nueva unidad
+                </button>
+            </div>
+
+            <div class="paginator-container" *ngIf="ListaUnidades.length > 0">
+                <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
+                    (cambiarPaginaEvent)="OnchangedPage($event)">
+                </app-adm-paginator>
+            </div>
         </div>
-        <!-- PAGINADOR -->
-        <app-adm-paginator [PaginaActual]="PaginaActual" [TotalPaginas]="TotalPaginas"
-            (cambiarPaginaEvent)="OnchangedPage($event)">
-        </app-adm-paginator>
-    </div>
+    </section>
 </div>

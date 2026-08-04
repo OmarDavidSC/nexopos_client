@@ -1,17 +1,97 @@
-<div class="card reporte-card">
-    <div class="card-header">
-        <div class="titulo">
-            <mat-icon> calendar_today </mat-icon>
+<section class="daily-purchases-panel">
+    <!-- CABECERA -->
+    <header class="panel-header">
+        <div class="panel-title">
+            <div class="panel-icon">
+                <mat-icon>calendar_today</mat-icon>
+            </div>
 
-            Compras por día
+            <div>
+                <span class="panel-label"> Evolución diaria </span>
+
+                <h3>Compras por día</h3>
+
+                <p>
+                    Analiza el importe invertido diariamente durante el periodo
+                    seleccionado.
+                </p>
+            </div>
         </div>
+
+        <span class="days-badge">
+            <mat-icon>date_range</mat-icon>
+
+            {{ totalDias }}
+            {{ totalDias === 1 ? "día" : "días" }}
+        </span>
+    </header>
+
+    <!-- INDICADORES -->
+    <div class="purchase-summary" *ngIf="Datos.length > 0">
+        <!-- TOTAL -->
+        <article class="summary-item">
+            <div class="summary-icon total-icon">
+                <mat-icon>payments</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Total comprado</span>
+
+                <strong> S/ {{ totalComprado | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <!-- PROMEDIO -->
+        <article class="summary-item">
+            <div class="summary-icon average-icon">
+                <mat-icon>calculate</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Promedio diario</span>
+
+                <strong> S/ {{ promedioDiario | number: "1.2-2" }} </strong>
+            </div>
+        </article>
+
+        <!-- MEJOR DÍA -->
+        <article class="summary-item best-day-item">
+            <div class="summary-icon best-icon">
+                <mat-icon>trending_up</mat-icon>
+            </div>
+
+            <div class="summary-content">
+                <span>Día con mayor compra</span>
+
+                <strong>
+                    {{ mejorDiaFecha }}
+                </strong>
+
+                <small> S/ {{ mejorDiaMonto | number: "1.2-2" }} </small>
+            </div>
+        </article>
     </div>
 
-    <div class="card-body">
-        <apx-chart *ngIf="chartOptions && Datos.length" [series]="chartOptions.series!" [chart]="chartOptions.chart!"
-            [xaxis]="chartOptions.xaxis!" [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!">
+    <!-- GRÁFICO -->
+    <div class="chart-container" *ngIf="Datos.length > 0 && chartOptions">
+        <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!" [xaxis]="chartOptions.xaxis!"
+            [yaxis]="chartOptions.yaxis!" [stroke]="chartOptions.stroke!" [tooltip]="chartOptions.tooltip!"
+            [fill]="chartOptions.fill!" [grid]="chartOptions.grid!" [dataLabels]="chartOptions.dataLabels!"
+            [markers]="chartOptions.markers!" [colors]="chartOptions.colors!">
         </apx-chart>
-
-        <div class="empty" *ngIf="!Datos.length">No hay información disponible</div>
     </div>
-</div>
+
+    <!-- ESTADO VACÍO -->
+    <div class="empty-state" *ngIf="Datos.length === 0">
+        <div class="empty-icon">
+            <mat-icon>shopping_cart</mat-icon>
+        </div>
+
+        <h4>No hay compras para mostrar</h4>
+
+        <p>
+            Selecciona otro periodo o modifica los filtros para visualizar las compras
+            diarias.
+        </p>
+    </div>
+</section>

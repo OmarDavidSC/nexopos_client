@@ -1,141 +1,533 @@
 <app-adm-header
     [descripcion]="'Consulta la información completa de la compra, incluyendo proveedor, productos adquiridos, cantidades, costos y estado del registro.'"
-    [breadcrumbs]="[{nombre:'Compras'},{nombre:'Bandeja de compras', ruta:'/bandeja-compras'}, {nombre:'Detalle de Compra'}]"
-    [visible]="true" [textoBoton]="'Nueva compra'" (accionNuevo)="Navegar('bandeja-compras/nueva-compra')"
+    [breadcrumbs]="[
+        { nombre: 'Compras' },
+        { nombre: 'Bandeja de compras', ruta: '/bandeja-compras' },
+        { nombre: 'Detalle de Compra' }
+    ]" [visible]="true" [textoBoton]="'Nueva compra'" (accionNuevo)="Navegar('bandeja-compras/nueva-compra')"
     [rutaRegreso]="'/bandeja-compras'">
 </app-adm-header>
 
-<div class="container-fluid py-3" *ngIf="Compra">
-    <!-- CABECERA -->
-    <mat-card class="purchase-header">
-        <div class="header-left">
-            <h2>
-                Compra #{{Compra.id}}
-            </h2>
-            <span class="document">
-                {{Compra.voucher_type}}
-                {{Compra.voucher_series}}-{{Compra.voucher_number}}
-            </span>
-        </div>
-        <div class="header-right">
-            <span class="status" [ngClass]="{
-                    'completed':Compra.status=='COMPLETED',
-                    'pending':Compra.status=='PENDING',
-                    'cancelled':Compra.status=='CANCELLED'
-                }">
-                {{Compra.status}}
-            </span>
-        </div>
-    </mat-card>
-    <!-- INFORMACIÓN -->
-    <mat-card class="mt-3">
-        <mat-card-title>
-            Información General
-        </mat-card-title>
-        <mat-card-content>
-            <div class="row mt-3">
-                <div class="col-md-4 info-item">
-                    <mat-icon>business</mat-icon>
-                    <div>
-                        <small>Proveedor</small>
-                        <strong>{{Compra.supplier}}</strong>
-                    </div>
+<section class="container-fluid" *ngIf="Compra">
+
+    <!-- CABECERA PRINCIPAL -->
+    <header class="purchase-hero" [class.purchase-completed]="Compra.status === 'COMPLETED'"
+        [class.purchase-pending]="Compra.status === 'PENDING'"
+        [class.purchase-cancelled]="Compra.status === 'CANCELLED'">
+
+        <div class="purchase-hero__left">
+
+            <div class="purchase-main-icon">
+
+                <mat-icon *ngIf="Compra.status === 'COMPLETED'">
+                    shopping_cart_checkout
+                </mat-icon>
+
+                <mat-icon *ngIf="Compra.status === 'PENDING'">
+                    schedule
+                </mat-icon>
+
+                <mat-icon *ngIf="Compra.status === 'CANCELLED'">
+                    remove_shopping_cart
+                </mat-icon>
+
+            </div>
+
+            <div class="purchase-heading">
+
+                <div class="purchase-heading__top">
+
+                    <span class="purchase-label">
+                        Registro de compra
+                    </span>
+
+                    <span class="purchase-status" [class.status-completed]="Compra.status === 'COMPLETED'"
+                        [class.status-pending]="Compra.status === 'PENDING'"
+                        [class.status-cancelled]="Compra.status === 'CANCELLED'">
+
+                        <span class="status-dot"></span>
+
+                        <ng-container [ngSwitch]="Compra.status">
+
+                            <span *ngSwitchCase="'COMPLETED'">
+                                Completada
+                            </span>
+
+                            <span *ngSwitchCase="'PENDING'">
+                                Pendiente
+                            </span>
+
+                            <span *ngSwitchCase="'CANCELLED'">
+                                Cancelada
+                            </span>
+
+                            <span *ngSwitchDefault>
+                                {{ Compra.status }}
+                            </span>
+
+                        </ng-container>
+
+                    </span>
+
                 </div>
-                <div class="col-md-4 info-item">
-                    <mat-icon>calendar_today</mat-icon>
-                    <div>
-                        <small>Fecha</small>
-                        <strong>{{Compra.purchase_date}}</strong>
-                    </div>
-                </div>
-                <div class="col-md-4 info-item">
+
+                <h1>
+                    Compra #{{ Compra.id }}
+                </h1>
+
+                <div class="purchase-document">
+
                     <mat-icon>description</mat-icon>
-                    <div>
-                        <small>Documento</small>
+
+                    <span>
+                        {{ Compra.voucher_type }}
+                        {{ Compra.voucher_series }}-{{ Compra.voucher_number }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="purchase-hero__right">
+
+            <span class="hero-total-label">
+                Total de compra
+            </span>
+
+            <strong class="hero-total-value">
+                {{ CompaniaActual?.SimboloMoneda }}
+                {{ Compra.total | number:'1.2-2' }}
+            </strong>
+
+            <span class="hero-date">
+                <mat-icon>calendar_today</mat-icon>
+                {{ Compra.purchase_date }}
+            </span>
+
+        </div>
+
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="purchase-layout">
+
+        <main class="purchase-main-content">
+
+            <!-- INFORMACIÓN GENERAL -->
+            <section class="detail-card information-card">
+
+                <div class="card-header">
+
+                    <div class="card-header__left">
+
+                        <div class="card-icon information-icon">
+                            <mat-icon>info</mat-icon>
+                        </div>
+
+                        <div>
+                            <h2>Información general</h2>
+
+                            <p>
+                                Datos principales asociados a esta compra.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="information-grid">
+
+                    <article class="information-item">
+
+                        <div class="information-item__icon">
+                            <mat-icon>business</mat-icon>
+                        </div>
+
+                        <div class="information-item__content">
+                            <span>Proveedor</span>
+
+                            <strong [matTooltip]="Compra.supplier">
+
+                                {{ Compra.supplier || 'No registrado' }}
+
+                            </strong>
+                        </div>
+
+                    </article>
+
+                    <article class="information-item">
+
+                        <div class="information-item__icon">
+                            <mat-icon>calendar_today</mat-icon>
+                        </div>
+
+                        <div class="information-item__content">
+                            <span>Fecha de compra</span>
+
+                            <strong>
+                                {{ Compra.purchase_date || '-' }}
+                            </strong>
+                        </div>
+
+                    </article>
+
+                    <article class="information-item">
+
+                        <div class="information-item__icon">
+                            <mat-icon>receipt_long</mat-icon>
+                        </div>
+
+                        <div class="information-item__content">
+                            <span>Comprobante</span>
+
+                            <strong>
+                                {{ Compra.voucher_type }}
+                                {{ Compra.voucher_series }}-{{ Compra.voucher_number }}
+                            </strong>
+                        </div>
+
+                    </article>
+
+                    <article class="information-item">
+
+                        <div class="information-item__icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div class="information-item__content">
+                            <span>Productos</span>
+
+                            <strong>
+                                {{ DetalleCompra.length }}
+                                {{ DetalleCompra.length === 1 ? 'producto' : 'productos' }}
+                            </strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- OBSERVACIÓN -->
+            <section class="detail-card observation-card" *ngIf="Compra.observation">
+
+                <div class="observation-icon">
+                    <mat-icon>notes</mat-icon>
+                </div>
+
+                <div>
+                    <strong>Observación</strong>
+
+                    <p>
+                        {{ Compra.observation }}
+                    </p>
+                </div>
+
+            </section>
+
+            <!-- PRODUCTOS -->
+            <section class="detail-card products-card">
+
+                <div class="card-header">
+
+                    <div class="card-header__left">
+
+                        <div class="card-icon products-icon">
+                            <mat-icon>inventory_2</mat-icon>
+                        </div>
+
+                        <div>
+                            <h2>Productos comprados</h2>
+
+                            <p>
+                                Detalle de cantidades, costos y subtotales.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <span class="products-count">
+                        {{ DetalleCompra.length }}
+                        {{ DetalleCompra.length === 1 ? 'producto' : 'productos' }}
+                    </span>
+
+                </div>
+
+                <div class="table-responsive" *ngIf="DetalleCompra.length > 0">
+
+                    <table class="purchase-products-table">
+
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-end">Costo unitario</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr *ngFor="let item of DetalleCompra">
+
+                                <td>
+
+                                    <div class="product-cell">
+
+                                        <div class="product-icon">
+                                            <mat-icon>inventory_2</mat-icon>
+                                        </div>
+
+                                        <div class="product-information">
+
+                                            <strong [matTooltip]="item.product">
+
+                                                {{ item.product }}
+
+                                            </strong>
+
+                                            <span>
+                                                Código: {{ item.code || 'Sin código' }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    <span class="quantity-badge">
+                                        {{ item.quantity | number:'1.0-2' }}
+                                    </span>
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <div class="price-value">
+
+                                        <span>Costo</span>
+
+                                        <strong>
+                                            {{ CompaniaActual?.SimboloMoneda }}
+                                            {{ item.unit_cost | number:'1.2-2' }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <div class="subtotal-value">
+
+                                        <span>Subtotal</span>
+
+                                        <strong>
+                                            {{ CompaniaActual?.SimboloMoneda }}
+                                            {{ item.subtotal | number:'1.2-2' }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="empty-products" *ngIf="DetalleCompra.length === 0">
+
+                    <div class="empty-products__icon">
+                        <mat-icon>inventory_2</mat-icon>
+                    </div>
+
+                    <strong>
+                        No existen productos registrados
+                    </strong>
+
+                    <span>
+                        Esta compra no contiene productos asociados.
+                    </span>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- COLUMNA LATERAL -->
+        <aside class="purchase-sidebar">
+
+            <!-- RESUMEN -->
+            <section class="detail-card summary-card">
+
+                <div class="card-header summary-header">
+
+                    <div class="card-header__left">
+
+                        <div class="card-icon summary-icon">
+                            <mat-icon>payments</mat-icon>
+                        </div>
+
+                        <div>
+                            <h2>Resumen</h2>
+
+                            <p>
+                                Importes de la compra.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="summary-lines">
+
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+
                         <strong>
-                            {{Compra.voucher_type}}
-                            {{Compra.voucher_series}}-{{Compra.voucher_number}}
+                            {{ CompaniaActual?.SimboloMoneda }}
+                            {{ Compra.subtotal | number:'1.2-2' }}
                         </strong>
                     </div>
-                </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <!-- OBSERVACIÓN -->
-    <mat-card class="mt-3" *ngIf="Compra.observation">
-        <mat-card-title>Observación</mat-card-title>
-        <mat-card-content>{{Compra.observation}}</mat-card-content>
-    </mat-card>
-    <!-- PRODUCTOS -->
-    <mat-card class="mt-3">
-        <mat-card-title>Productos Comprados</mat-card-title>
-        <mat-card-content>
-            <div class="table-responsive mt-3">
-                <table class="table table-hover align-middle">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Producto</th>
-                            <th class="text-center"> Cantidad</th>
-                            <th class="text-end">Costo</th>
-                            <th class="text-end">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of DetalleCompra">
-                            <td>{{item.code}}</td>
-                            <td>{{item.product}} </td>
-                            <td class="text-center">
-                                {{item.quantity}}
-                            </td>
-                            <td class="text-end">
-                                {{CompaniaActual.SimboloMoneda}} {{item.unit_cost}}
-                            </td>
-                            <td class="text-end">
-                                {{CompaniaActual.SimboloMoneda}} {{item.subtotal}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <!-- RESUMEN -->
-    <div class="row mt-3">
-        <div class="col-lg-5 ms-auto">
-            <mat-card>
-                <mat-card-title>Resumen</mat-card-title>
-                <mat-card-content>
-                    <div class="resume-line">
-                        <span>Subtotal</span>
-                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.subtotal}}</strong>
-                    </div>
-                    <div class="resume-line">
+
+                    <div class="summary-line">
                         <span>IGV</span>
-                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.tax}}</strong>
+
+                        <strong>
+                            {{ CompaniaActual?.SimboloMoneda }}
+                            {{ Compra.tax | number:'1.2-2' }}
+                        </strong>
                     </div>
-                    <div class="resume-line">
+
+                    <div class="summary-line discount-line">
                         <span>Descuento</span>
-                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.discount}}</strong>
+
+                        <strong>
+                            - {{ CompaniaActual?.SimboloMoneda }}
+                            {{ Compra.discount | number:'1.2-2' }}
+                        </strong>
                     </div>
-                    <hr>
-                    <div class="resume-total">
-                        <span>Total</span>
-                        <strong>{{CompaniaActual.SimboloMoneda}} {{Compra.total}}</strong>
+
+                </div>
+
+                <div class="summary-total">
+
+                    <span>Total</span>
+
+                    <strong>
+                        {{ CompaniaActual?.SimboloMoneda }}
+                        {{ Compra.total | number:'1.2-2' }}
+                    </strong>
+
+                </div>
+
+            </section>
+
+            <!-- ESTADO -->
+            <section class="detail-card status-card">
+
+                <div class="status-card__header">
+
+                    <div class="status-card__icon" [class.completed-icon]="Compra.status === 'COMPLETED'"
+                        [class.pending-icon]="Compra.status === 'PENDING'"
+                        [class.cancelled-icon]="Compra.status === 'CANCELLED'">
+
+                        <mat-icon *ngIf="Compra.status === 'COMPLETED'">
+                            check_circle
+                        </mat-icon>
+
+                        <mat-icon *ngIf="Compra.status === 'PENDING'">
+                            schedule
+                        </mat-icon>
+
+                        <mat-icon *ngIf="Compra.status === 'CANCELLED'">
+                            cancel
+                        </mat-icon>
+
                     </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+
+                    <div>
+                        <span>Estado de compra</span>
+
+                        <strong>
+
+                            <ng-container [ngSwitch]="Compra.status">
+
+                                <span *ngSwitchCase="'COMPLETED'">
+                                    Completada
+                                </span>
+
+                                <span *ngSwitchCase="'PENDING'">
+                                    Pendiente
+                                </span>
+
+                                <span *ngSwitchCase="'CANCELLED'">
+                                    Cancelada
+                                </span>
+
+                                <span *ngSwitchDefault>
+                                    {{ Compra.status }}
+                                </span>
+
+                            </ng-container>
+
+                        </strong>
+                    </div>
+
+                </div>
+
+                <p *ngIf="Compra.status === 'COMPLETED'">
+                    La compra fue completada y el stock correspondiente fue actualizado.
+                </p>
+
+                <p *ngIf="Compra.status === 'PENDING'">
+                    La compra está pendiente y todavía requiere confirmación.
+                </p>
+
+                <p *ngIf="Compra.status === 'CANCELLED'">
+                    La compra fue cancelada y ya no puede continuar su flujo.
+                </p>
+
+            </section>
+
+            <!-- ACCIONES -->
+            <section class="detail-card actions-card">
+
+                <span class="actions-title">
+                    Acciones
+                </span>
+
+                <button mat-flat-button color="primary" type="button" class="print-button">
+
+                    <mat-icon>print</mat-icon>
+                    Imprimir compra
+
+                </button>
+
+                <button mat-stroked-button type="button" class="back-button" routerLink="/bandeja-compras">
+
+                    <mat-icon>arrow_back</mat-icon>
+                    Volver a compras
+
+                </button>
+
+            </section>
+
+        </aside>
+
     </div>
-    <!-- BOTONES -->
-    <div class="actions mt-4">
-        <button mat-stroked-button routerLink="/bandeja-compras">
-            <mat-icon>arrow_back</mat-icon>
-            Volver
-        </button>
-        <button mat-flat-button color="primary">
-            <mat-icon>print</mat-icon>
-            Imprimir
-        </button>
-    </div>
-</div>
+
+</section>
