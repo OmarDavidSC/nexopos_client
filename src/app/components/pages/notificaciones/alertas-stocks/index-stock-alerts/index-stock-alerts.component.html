@@ -1,172 +1,336 @@
-<div class="notifications-modal">
-
-    <div class="notifications-header">
-        <div class="header-information">
+<section class="notification-center">
+    <!-- CABECERA -->
+    <header class="notification-header">
+        <div class="header-main">
             <div class="header-icon">
-                <mat-icon>notifications_active</mat-icon>
+                <mat-icon>notifications</mat-icon>
+
+                <span class="header-indicator" *ngIf="totalAlertas > 0"> </span>
             </div>
 
-            <div>
-                <h5>Alertas de inventario</h5>
-                <span>Productos con stock bajo por sucursal</span>
+            <div class="header-content">
+                <span class="header-eyebrow"> Centro de notificaciones </span>
+
+                <h2>Alertas de inventario</h2>
+
+                <p>Revisa los productos que requieren reposición por cada sucursal.</p>
             </div>
         </div>
 
         <div class="header-actions">
-            <button mat-icon-button type="button" matTooltip="Actualizar" (click)="obtenerAlertas()"
-                [disabled]="Loading">
-                <mat-icon [class.rotating]="Loading">refresh</mat-icon>
+            <button mat-icon-button type="button" class="header-action refresh-action" matTooltip="Actualizar alertas"
+                [disabled]="Loading" (click)="obtenerAlertas()">
+                <mat-icon [class.rotating]="Loading"> refresh </mat-icon>
             </button>
 
-            <button mat-icon-button type="button" matTooltip="Cerrar" (click)="cerrar()">
+            <button mat-icon-button type="button" class="header-action close-action" matTooltip="Cerrar"
+                (click)="cerrar()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
-    </div>
+    </header>
 
-    <div class="notifications-summary">
-        <div class="summary-item">
-            <span class="summary-dot summary-dot-primary"></span>
-            <span>Total</span>
-            <strong>{{ totalAlertas }}</strong>
-        </div>
-
-        <div class="summary-item">
-            <span class="summary-dot summary-dot-danger"></span>
-            <span>Sin stock</span>
-            <strong>{{ totalSinStock }}</strong>
-        </div>
-
-        <div class="summary-item">
-            <span class="summary-dot summary-dot-warning"></span>
-            <span>Críticos</span>
-            <strong>{{ totalCriticos }}</strong>
-        </div>
-    </div>
-
-    <div class="notifications-filters">
-        <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Buscar producto</mat-label>
-            <input matInput [(ngModel)]="Filtro.search" placeholder="Nombre o código" (keyup.enter)="aplicarFiltros()">
-            <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="branch-field">
-            <mat-label>Sucursal</mat-label>
-            <mat-select [(ngModel)]="Filtro.branch_id" (selectionChange)="aplicarFiltros()">
-                <mat-option [value]="null">Todas las sucursales</mat-option>
-
-                <mat-option *ngFor="let sucursal of ListaSucursales" [value]="sucursal.Id">
-                    {{ sucursal.Nombre }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <button mat-flat-button color="primary" type="button" class="filter-button" (click)="aplicarFiltros()"
-            [disabled]="Loading">
-            <mat-icon>search</mat-icon>
-            Buscar
-        </button>
-
-        <button mat-icon-button type="button" class="clear-button" matTooltip="Limpiar filtros"
-            (click)="limpiarFiltros()" [disabled]="Loading">
-            <mat-icon>restart_alt</mat-icon>
-        </button>
-    </div>
-
-    <div class="notifications-content">
-
-        <div *ngIf="Loading" class="loading-container">
-            <mat-spinner diameter="38"></mat-spinner>
-            <strong>Cargando alertas</strong>
-            <span>Consultando productos con stock bajo...</span>
-        </div>
-
-        <div *ngIf="!Loading && ListaAlertas.length === 0" class="empty-container">
-            <div class="empty-icon">
-                <mat-icon>inventory_2</mat-icon>
+    <!-- RESUMEN -->
+    <section class="notification-overview">
+        <article class="overview-item overview-total">
+            <div class="overview-icon">
+                <mat-icon>notifications_active</mat-icon>
             </div>
 
-            <strong>No hay alertas de inventario</strong>
-            <span>No se encontraron productos con stock bajo.</span>
+            <div class="overview-content">
+                <span>Total de alertas</span>
+                <strong>{{ totalAlertas || 0 }}</strong>
+            </div>
+        </article>
+
+        <article class="overview-item overview-danger">
+            <div class="overview-icon">
+                <mat-icon>remove_shopping_cart</mat-icon>
+            </div>
+
+            <div class="overview-content">
+                <span>Sin stock</span>
+                <strong>{{ totalSinStock || 0 }}</strong>
+            </div>
+        </article>
+
+        <article class="overview-item overview-warning">
+            <div class="overview-icon">
+                <mat-icon>warning_amber</mat-icon>
+            </div>
+
+            <div class="overview-content">
+                <span>Stock crítico</span>
+                <strong>{{ totalCriticos || 0 }}</strong>
+            </div>
+        </article>
+
+        <div class="overview-message">
+            <mat-icon>info</mat-icon>
+
+            <span>
+                Prioriza los productos sin stock y luego los que se encuentran por
+                debajo del mínimo.
+            </span>
+        </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="notification-filters">
+        <div class="filters-title">
+            <div class="filters-title-icon">
+                <mat-icon>filter_alt</mat-icon>
+            </div>
+
+            <div>
+                <strong>Filtrar alertas</strong>
+                <span>Encuentra productos o sucursales rápidamente</span>
+            </div>
         </div>
 
-        <div *ngIf="!Loading && ListaAlertas.length > 0" class="notifications-list">
+        <div class="filters-fields">
+            <mat-form-field appearance="outline" class="filter-field search-field">
+                <mat-label>Buscar producto</mat-label>
 
-            <div class="notification-item" *ngFor="let item of ListaAlertas; trackBy: trackById">
+                <mat-icon matPrefix> search </mat-icon>
 
-                <div class="notification-icon" [class.notification-icon-danger]="item.current_stock <= 0"
-                    [class.notification-icon-warning]="item.current_stock > 0">
-                    <mat-icon>{{ getEstadoIcono(item) }}</mat-icon>
+                <input matInput autocomplete="off" [(ngModel)]="Filtro.search" placeholder="Nombre o código"
+                    (keyup.enter)="aplicarFiltros()" />
+
+                <button *ngIf="Filtro.search" mat-icon-button matSuffix type="button" matTooltip="Limpiar búsqueda"
+                    (click)="Filtro.search = ''; aplicarFiltros()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="filter-field branch-field">
+                <mat-label>Sucursal</mat-label>
+
+                <mat-icon matPrefix> storefront </mat-icon>
+
+                <mat-select [(ngModel)]="Filtro.branch_id" (selectionChange)="aplicarFiltros()">
+                    <mat-option [value]="null"> Todas las sucursales </mat-option>
+
+                    <mat-option *ngFor="let sucursal of ListaSucursales" [value]="sucursal.Id">
+                        {{ sucursal.Nombre }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="filter-actions">
+            <button mat-icon-button type="button" class="clear-filter-button" matTooltip="Limpiar filtros"
+                [disabled]="Loading" (click)="limpiarFiltros()">
+                <mat-icon>restart_alt</mat-icon>
+            </button>
+
+            <button mat-flat-button type="button" class="search-filter-button" [disabled]="Loading"
+                (click)="aplicarFiltros()">
+                <mat-icon>
+                    {{ Loading ? "hourglass_top" : "search" }}
+                </mat-icon>
+
+                {{ Loading ? "Buscando..." : "Buscar" }}
+            </button>
+        </div>
+    </section>
+
+    <!-- CONTENIDO -->
+    <main class="notification-content">
+        <!-- CARGANDO -->
+        <div class="state-container loading-state" *ngIf="Loading">
+            <div class="state-visual">
+                <mat-spinner diameter="38"></mat-spinner>
+            </div>
+
+            <strong> Consultando inventario </strong>
+
+            <span>
+                Estamos verificando las existencias de todas las sucursales.
+            </span>
+        </div>
+
+        <!-- VACÍO -->
+        <div class="state-container empty-state" *ngIf="!Loading && ListaAlertas.length === 0">
+            <div class="state-icon">
+                <mat-icon>inventory_2</mat-icon>
+
+                <span class="state-check">
+                    <mat-icon>check</mat-icon>
+                </span>
+            </div>
+
+            <strong> Inventario sin alertas </strong>
+
+            <span>
+                No se encontraron productos con stock bajo para los filtros
+                seleccionados.
+            </span>
+
+            <button mat-stroked-button type="button" (click)="limpiarFiltros()">
+                <mat-icon>restart_alt</mat-icon>
+                Ver todas las alertas
+            </button>
+        </div>
+
+        <!-- LISTADO -->
+        <section class="notification-list" *ngIf="!Loading && ListaAlertas.length > 0">
+            <div class="list-heading">
+                <div>
+                    <mat-icon>priority_high</mat-icon>
+
+                    <div>
+                        <strong>Productos que requieren atención</strong>
+
+                        <span> Ordena la reposición según el nivel de criticidad. </span>
+                    </div>
                 </div>
 
-                <div class="notification-information">
-                    <div class="product-header">
-                        <strong>{{ item.product.name }}</strong>
+                <span class="list-counter">
+                    {{ ListaAlertas.length }}
+                    {{ ListaAlertas.length === 1 ? "alerta" : "alertas" }}
+                </span>
+            </div>
 
-                        <span [class]="getEstadoClase(item)">
-                            {{ getEstado(item) }}
+            <article class="notification-item" *ngFor="let item of ListaAlertas; trackBy: trackById"
+                [class.notification-danger]="item.current_stock <= 0"
+                [class.notification-warning]="item.current_stock > 0">
+                <!-- PRIORIDAD -->
+                <div class="priority-column">
+                    <div class="priority-icon" [class.priority-danger]="item.current_stock <= 0"
+                        [class.priority-warning]="item.current_stock > 0">
+                        <mat-icon>
+                            {{ getEstadoIcono(item) }}
+                        </mat-icon>
+                    </div>
+
+                    <span class="priority-line" [class.priority-line-danger]="item.current_stock <= 0"
+                        [class.priority-line-warning]="item.current_stock > 0">
+                    </span>
+                </div>
+
+                <!-- INFORMACIÓN DEL PRODUCTO -->
+                <div class="product-information">
+                    <div class="product-heading">
+                        <div class="product-title">
+                            <strong [matTooltip]="item.product.name">
+                                {{ item.product.name }}
+                            </strong>
+
+                            <span [class]="getEstadoClase(item)">
+                                {{ getEstado(item) }}
+                            </span>
+                        </div>
+
+                        <span class="product-code">
+                            {{ item.product.code || "Sin código" }}
                         </span>
                     </div>
 
-                    <div class="product-code">
-                        Código: {{ item.product.code || 'Sin código' }}
+                    <div class="product-metadata">
+                        <span class="metadata-item">
+                            <mat-icon>storefront</mat-icon>
+
+                            {{ item.branch.name }}
+                        </span>
+
+                        <span class="metadata-divider"></span>
+
+                        <span class="metadata-item">
+                            <mat-icon>category</mat-icon>
+
+                            {{ item.product.category?.name || "Sin categoría" }}
+                        </span>
                     </div>
 
-                    <div class="product-branch">
-                        <mat-icon>storefront</mat-icon>
-                        <span>{{ item.branch.name }}</span>
+                    <div class="stock-progress">
+                        <div class="progress-heading">
+                            <span>Nivel actual de stock</span>
 
-                        <span class="metadata-separator"></span>
+                            <strong>
+                                {{ getPorcentajeStock(item) }}%
+                            </strong>
+                        </div>
 
-                        <mat-icon>category</mat-icon>
-                        <span>{{ item.product.category?.name || 'Sin categoría' }}</span>
+                        <div class="progress-track">
+                            <div class="progress-value" [class.progress-danger]="item.current_stock <= 0"
+                                [class.progress-warning]="item.current_stock > 0"
+                                [style.width.%]="getPorcentajeStock(item)"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="stock-information">
-                    <div class="stock-number">
+                <!-- MÉTRICAS -->
+                <div class="stock-metrics">
+                    <div class="stock-metric current-stock">
                         <span>Actual</span>
-                        <strong [class.stock-zero]="item.current_stock <= 0">
-                            {{ item.current_stock | number:'1.0-2' }}
+
+                        <strong [class.metric-danger]="item.current_stock <= 0">
+                            {{ item.current_stock }}
                         </strong>
                     </div>
 
-                    <div class="stock-number">
+                    <div class="stock-metric">
                         <span>Mínimo</span>
-                        <strong>{{ item.minimum_stock | number:'1.0-2' }}</strong>
+
+                        <strong>
+                            {{ item.minimum_stock }}
+                        </strong>
                     </div>
 
-                    <div class="stock-number stock-missing">
-                        <span>Faltan</span>
-                        <strong>{{ getFaltante(item) | number:'1.0-2' }}</strong>
+                    <div class="stock-metric missing-stock">
+                        <span>Faltante</span>
+
+                        <strong>
+                            {{ getFaltante(item) }}
+                        </strong>
                     </div>
                 </div>
 
+                <!-- INDICADOR FINAL -->
+                <div class="notification-status">
+                    <mat-icon [class.status-danger]="item.current_stock <= 0"
+                        [class.status-warning]="item.current_stock > 0">
+                        {{ item.current_stock <= 0 ? "error" : "warning" }} </mat-icon>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <!-- PIE -->
+    <footer class="notification-footer">
+        <div class="footer-information">
+            <div class="footer-icon">
+                <mat-icon>inventory</mat-icon>
             </div>
 
+            <div>
+                <strong>
+                    {{ ListaAlertas.length }}
+                    {{
+                    ListaAlertas.length === 1
+                    ? "producto requiere"
+                    : "productos requieren"
+                    }}
+                    atención
+                </strong>
+
+                <span>
+                    Mantén actualizado el stock para evitar interrupciones en las ventas.
+                </span>
+            </div>
         </div>
 
-    </div>
-
-    <div class="notifications-footer">
-        <span>
-            {{ ListaAlertas.length }}
-            {{ ListaAlertas.length === 1 ? 'producto requiere' : 'productos requieren' }}
-            atención
-        </span>
-
         <div class="footer-actions">
-            <button mat-stroked-button type="button" (click)="cerrar()">
+            <button mat-stroked-button type="button" class="close-footer-button" (click)="cerrar()">
                 Cerrar
             </button>
-            <button *ngIf="tienePermiso(Role, ['support'])" mat-flat-button color="primary" type="button"
-                class="whatsapp-button" (click)="enviarAlertasWhatsApp()"
-                [disabled]="Loading || ListaAlertas.length === 0">
+
+            <button *ngIf="tienePermiso(Role, ['support'])" mat-flat-button type="button" class="whatsapp-button"
+                [disabled]="Loading || ListaAlertas.length === 0" (click)="enviarAlertasWhatsApp()">
                 <mat-icon>send</mat-icon>
                 Enviar por WhatsApp
             </button>
         </div>
-    </div>
-
-</div>
+    </footer>
+</section>

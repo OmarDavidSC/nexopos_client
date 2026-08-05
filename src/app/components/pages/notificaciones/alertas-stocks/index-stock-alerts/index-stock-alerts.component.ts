@@ -256,6 +256,16 @@ export class IndexStockAlertsComponent extends FormularioBase implements OnInit 
     );
   }
 
+  getPorcentajeStock(item: any): number {
+    const actual = Number(item?.current_stock || 0);
+    const minimo = Number(item?.minimum_stock || 0);
+
+    if (actual <= 0 || minimo <= 0) {
+      return 0;
+    }
+    return Math.min((actual / minimo) * 100, 100);
+  }
+
   private formatearCantidad(cantidad: number): string {
     return cantidad.toLocaleString('es-PE', {
       minimumFractionDigits: 0,
