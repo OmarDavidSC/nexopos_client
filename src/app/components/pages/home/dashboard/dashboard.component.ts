@@ -36,6 +36,7 @@ export class DashboardComponent extends FormularioBase implements OnInit {
 
   AccesosRapidos = [
     { nombre: 'Nueva Venta', icono: 'point_of_sale', ruta: '/bandeja-ventas/nueva-venta' },
+    { nombre: 'Nueva Cotización', icono: 'add_circle', ruta: '/bandeja-cotizaciones/nueva-cotizacion' },
     { nombre: 'Nueva Compra', icono: 'shopping_cart', ruta: '/bandeja-compras/nueva-compra' },
     { nombre: 'Productos', icono: 'add_box', ruta: '/administracion-productos' },
     { nombre: 'Usuarios', icono: 'person_add', ruta: '/mis-usuarios' },
@@ -43,7 +44,8 @@ export class DashboardComponent extends FormularioBase implements OnInit {
     { nombre: 'Inventario', icono: 'warehouse', ruta: '/stock-sucursales' },
     { nombre: 'Mi Empresa', icono: 'business', ruta: '/mi-compania' },
     { nombre: 'Mi Perfil', icono: 'account_circle', ruta: '/mi-perfil' },
-    { nombre: 'Ventas', icono: 'receipt_long', ruta: '/bandeja-ventas' }
+    { nombre: 'Ventas', icono: 'receipt_long', ruta: '/bandeja-ventas' },
+    { nombre: 'Cotizaciones', icono: 'list_alt', ruta: '/bandeja-cotizaciones' },
   ];
 
   constructor(
