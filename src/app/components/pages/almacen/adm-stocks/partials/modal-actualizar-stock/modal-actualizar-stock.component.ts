@@ -47,11 +47,11 @@ export class ModalActualizarStockComponent implements OnInit {
     const stock = this.data.stock;
 
     this.TituloPopup = 'Actualizar Stock del Producto';
-    this.TituloButton = 'Registrar';
+    this.TituloButton = 'Actualizar';
 
     this.Form = this.formBuilder.group({
-      current_stock: new FormControl('', [Validators.required]),
-      minimum_stock: new FormControl('', [Validators.required]),
+      current_stock: new FormControl(stock.StockActual, [Validators.required]),
+      minimum_stock: new FormControl(stock.StockMinimo, [Validators.required]),
     });
   }
 
